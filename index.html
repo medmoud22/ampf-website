@@ -1,0 +1,736 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>الجمعية الموريتانية لترقية الأسرة | AMPF</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = { theme: { extend: { colors: { brandGreen: '#10B981', brandDark: '#065F46', brandLight: '#D1FAE5', brandBlue: '#1E3A8A' } } } }
+    </script>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@300;400;600;700;800;900&display=swap" rel="stylesheet">
+    <style>
+        * { font-family: 'Cairo', sans-serif; }
+        html { scroll-behavior: smooth; }
+        .hero-gradient { background: linear-gradient(135deg, #065F46 0%, #10B981 50%, #065F46 100%); }
+        .card-hover { transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275); }
+        .card-hover:hover { transform: translateY(-10px); box-shadow: 0 25px 50px -12px rgba(0,0,0,0.25); }
+        .fade-up { opacity: 0; transform: translateY(40px); transition: all 0.8s ease-out; }
+        .fade-up.visible { opacity: 1; transform: translateY(0); }
+        .modal { opacity: 0; pointer-events: none; transition: all 0.3s ease; }
+        .modal.active { opacity: 1; pointer-events: all; }
+        .mobile-menu { transform: translateX(100%); transition: transform 0.4s cubic-bezier(0.4, 0, 0.2, 1); }
+        .mobile-menu.active { transform: translateX(0); }
+        .lang-btn { padding: 6px 12px; border-radius: 6px; font-size: 13px; font-weight: 700; cursor: pointer; transition: all 0.3s; border: 2px solid transparent; }
+        .lang-btn.active { background: #10B981; color: white; border-color: #10B981; }
+        .lang-btn:not(.active) { background: white; color: #374151; border-color: #e5e7eb; }
+        .strategy-line { width: 60px; height: 4px; background: #10B981; border-radius: 2px; }
+        .stat-counter { background: linear-gradient(135deg, #065F46, #10B981); }
+        .news-img { height: 208px; object-fit: cover; width: 100%; }
+        .gallery-img { aspect-ratio: 1 / 1; object-fit: cover; width: 100%; border-radius: 12px; }
+        .loading-spinner { display: flex; justify-content: center; align-items: center; padding: 40px; color: #9CA3AF; }
+        .loading-spinner i { font-size: 32px; animation: spin 1s linear infinite; }
+        @keyframes spin { from { transform: rotate(0deg); } to { transform: rotate(360deg); } }
+        html[lang="en"] { direction: ltr; text-align: left; }
+        html[lang="fr"] { direction: ltr; text-align: left; }
+    </style>
+</head>
+<body class="bg-white text-gray-800">
+
+    <!-- Top Bar -->
+    <div class="bg-brandDark text-white py-2 text-sm">
+        <div class="container mx-auto px-6 flex justify-between items-center">
+            <div class="flex items-center gap-4">
+                <span><i class="fas fa-envelope ml-1"></i> <span id="topEmail">contact@ampf.mr</span></span>
+                <span class="hidden sm:inline"><i class="fas fa-phone ml-1"></i> <span id="topPhone">+222 45 25 XX XX</span></span>
+            </div>
+            <div class="flex items-center gap-2">
+                <button class="lang-btn active text-xs py-1 px-2" onclick="setLang('ar')">AR</button>
+                <button class="lang-btn text-xs py-1 px-2" onclick="setLang('fr')">FR</button>
+                <button class="lang-btn text-xs py-1 px-2" onclick="setLang('en')">EN</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Header -->
+    <header class="bg-white shadow-lg sticky top-0 z-50">
+        <div class="container mx-auto px-6 py-3 flex justify-between items-center">
+            <div class="flex items-center gap-4">
+                <img src="LOGO AMPF.png" alt="AMPF Logo" class="h-16 w-auto" onerror="this.style.display='none'">
+                <div>
+                    <h1 class="text-lg font-bold text-brandDark" id="siteTitle">الجمعية الموريتانية لترقية الأسرة</h1>
+                    <p class="text-xs text-gray-500">Association Mauritanienne pour la Promotion de la Famille</p>
+                </div>
+            </div>
+            <div class="flex items-center gap-4">
+                <nav class="hidden lg:flex items-center gap-6 font-semibold text-gray-700">
+                    <a href="#hero" class="hover:text-brandGreen transition" data-i18n="nav_home">الرئيسية</a>
+                    <a href="#strategy" class="hover:text-brandGreen transition" data-i18n="nav_strategy">استراتيجيتنا</a>
+                    <a href="#programs" class="hover:text-brandGreen transition" data-i18n="nav_programs">البرامج</a>
+                    <a href="#news" class="hover:text-brandGreen transition" data-i18n="nav_news">الأخبار</a>
+                    <a href="#gallery" class="hover:text-brandGreen transition" data-i18n="nav_gallery">المعرض</a>
+                    <a href="#contact" class="hover:text-brandGreen transition" data-i18n="nav_contact">اتصل بنا</a>
+                </nav>
+                <a href="/admin" class="hidden lg:flex bg-brandGreen text-white px-5 py-2 rounded-full font-bold hover:bg-brandDark transition items-center gap-2">
+                    <i class="fas fa-user-shield text-sm"></i> <span data-i18n="nav_admin">الإدارة</span>
+                </a>
+                <button id="menuBtn" class="lg:hidden text-brandDark text-2xl"><i class="fas fa-bars"></i></button>
+            </div>
+        </div>
+    </header>
+
+    <!-- Mobile Menu -->
+    <div id="mobileMenu" class="mobile-menu fixed inset-0 bg-white z-50 p-6 lg:hidden overflow-y-auto">
+        <div class="flex justify-between items-center mb-8">
+            <img src="LOGO AMPF.png" alt="AMPF" class="h-14 w-auto" onerror="this.style.display='none'">
+            <button id="closeMenu" class="text-3xl text-gray-600"><i class="fas fa-times"></i></button>
+        </div>
+        <nav class="flex flex-col space-y-5 text-lg font-bold text-brandDark">
+            <a href="#hero" class="mobile-link" data-i18n="nav_home">الرئيسية</a>
+            <a href="#strategy" class="mobile-link" data-i18n="nav_strategy">استراتيجيتنا</a>
+            <a href="#programs" class="mobile-link" data-i18n="nav_programs">البرامج</a>
+            <a href="#news" class="mobile-link" data-i18n="nav_news">الأخبار</a>
+            <a href="#gallery" class="mobile-link" data-i18n="nav_gallery">المعرض</a>
+            <a href="#contact" class="mobile-link" data-i18n="nav_contact">اتصل بنا</a>
+            <a href="/admin" class="text-brandGreen" data-i18n="nav_admin">الإدارة</a>
+        </nav>
+    </div>
+
+    <!-- Hero -->
+    <section id="hero" class="hero-gradient text-white py-24 relative overflow-hidden">
+        <div class="absolute inset-0 opacity-10">
+            <div class="absolute top-10 right-10 w-72 h-72 bg-white rounded-full blur-3xl"></div>
+            <div class="absolute bottom-10 left-10 w-96 h-96 bg-white rounded-full blur-3xl"></div>
+        </div>
+        <div class="container mx-auto px-6 relative z-10">
+            <div class="max-w-4xl">
+                <span id="heroBadge" class="bg-white/20 backdrop-blur-sm text-white text-sm px-4 py-2 rounded-full inline-block mb-6 font-bold">تأسست سنة 1988</span>
+                <h2 id="heroTitle" class="text-4xl md:text-6xl font-black leading-tight mb-6">رائدة في مجال الصحة الإنجابية والأسرية</h2>
+                <p id="heroDesc" class="text-xl text-white/90 mb-10 max-w-2xl leading-relaxed">نعمل على تحسين صحة الأسرة الموريتانية ونشر التوعية الصحية وخدمات الصحة الإنجابية في كافة الولايات منذ أكثر من 35 عاماً.</p>
+                <div class="flex flex-wrap gap-4">
+                    <a href="#strategy" class="bg-white text-brandDark px-8 py-4 rounded-full font-bold hover:bg-brandLight transition inline-flex items-center gap-2" data-i18n="hero_btn_strategy">استراتيجيتنا <i class="fas fa-arrow-left"></i></a>
+                    <a href="#programs" class="border-2 border-white text-white px-8 py-4 rounded-full font-bold hover:bg-white hover:text-brandDark transition" data-i18n="hero_btn_programs">برامجنا</a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Stats -->
+    <section class="stat-counter py-12">
+        <div class="container mx-auto px-6">
+            <div class="grid grid-cols-2 md:grid-cols-4 gap-8 text-center text-white">
+                <div class="fade-up"><div class="text-4xl font-black mb-2">35+</div><div class="text-sm font-semibold opacity-90" data-i18n="stat_years">سنة من العمل</div></div>
+                <div class="fade-up"><div class="text-4xl font-black mb-2">8</div><div class="text-sm font-semibold opacity-90" data-i18n="stat_branches">فروع في الولايات</div></div>
+                <div class="fade-up"><div class="text-4xl font-black mb-2">50K+</div><div class="text-sm font-semibold opacity-90" data-i18n="stat_beneficiaries">مستفيد</div></div>
+                <div class="fade-up"><div class="text-4xl font-black mb-2">120+</div><div class="text-sm font-semibold opacity-90" data-i18n="stat_workers">عامل صحي</div></div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Strategy -->
+    <section id="strategy" class="py-20 bg-gray-50">
+        <div class="container mx-auto px-6">
+            <div class="text-center mb-16 fade-up">
+                <span class="text-brandGreen font-bold text-sm uppercase tracking-wider" data-i18n="strategy_badge">استراتيجيتنا</span>
+                <h2 class="text-3xl md:text-4xl font-black text-brandDark mt-3 mb-4" data-i18n="strategy_title">نبني رؤية شاملة للصحة الأسرية</h2>
+                <div class="strategy-line mx-auto"></div>
+            </div>
+            <div class="grid md:grid-cols-3 gap-8 mb-16">
+                <div class="bg-white p-8 rounded-2xl shadow-lg card-hover fade-up">
+                    <div class="w-14 h-14 bg-brandLight rounded-xl flex items-center justify-center mb-5"><i class="fas fa-eye text-brandGreen text-xl"></i></div>
+                    <h3 class="text-xl font-bold text-brandDark mb-3" data-i18n="vision_heading">الرؤية</h3>
+                    <p id="visionText" class="text-gray-600 leading-relaxed"></p>
+                </div>
+                <div class="bg-white p-8 rounded-2xl shadow-lg card-hover fade-up">
+                    <div class="w-14 h-14 bg-brandLight rounded-xl flex items-center justify-center mb-5"><i class="fas fa-bullseye text-brandGreen text-xl"></i></div>
+                    <h3 class="text-xl font-bold text-brandDark mb-3" data-i18n="mission_heading">الرسالة</h3>
+                    <p id="missionText" class="text-gray-600 leading-relaxed"></p>
+                </div>
+                <div class="bg-white p-8 rounded-2xl shadow-lg card-hover fade-up">
+                    <div class="w-14 h-14 bg-brandLight rounded-xl flex items-center justify-center mb-5"><i class="fas fa-gem text-brandGreen text-xl"></i></div>
+                    <h3 class="text-xl font-bold text-brandDark mb-3" data-i18n="values_heading">القيم</h3>
+                    <ul id="valuesList" class="text-gray-600 space-y-2"></ul>
+                </div>
+            </div>
+            <div id="strategyCards" class="grid md:grid-cols-2 lg:grid-cols-4 gap-6"></div>
+        </div>
+    </section>
+
+    <!-- Programs -->
+    <section id="programs" class="py-20 bg-white">
+        <div class="container mx-auto px-6">
+            <div class="text-center mb-16 fade-up">
+                <span class="text-brandGreen font-bold text-sm uppercase tracking-wider" data-i18n="programs_badge">البرامج والخدمات</span>
+                <h2 class="text-3xl md:text-4xl font-black text-brandDark mt-3 mb-4" data-i18n="programs_title">نقدم مجموعة متكاملة من الخدمات الصحية</h2>
+                <div class="strategy-line mx-auto"></div>
+            </div>
+            <div id="programsGrid" class="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
+                <div class="loading-spinner"><i class="fas fa-spinner"></i></div>
+            </div>
+        </div>
+    </section>
+
+    <!-- News -->
+    <section id="news" class="py-20 bg-gray-50">
+        <div class="container mx-auto px-6">
+            <div class="text-center mb-16 fade-up">
+                <span class="text-brandGreen font-bold text-sm uppercase tracking-wider" data-i18n="news_badge">آخر الأخبار</span>
+                <h2 class="text-3xl font-black text-brandDark mt-3" data-i18n="news_title">أخبارنا وأنشطتنا</h2>
+                <div class="strategy-line mx-auto mt-4"></div>
+            </div>
+            <div id="newsGrid" class="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
+                <div class="loading-spinner"><i class="fas fa-spinner"></i></div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Gallery -->
+    <section id="gallery" class="py-20 bg-white">
+        <div class="container mx-auto px-6">
+            <div class="text-center mb-16 fade-up">
+                <span class="text-brandGreen font-bold text-sm uppercase tracking-wider" data-i18n="gallery_badge">معرض الصور</span>
+                <h2 class="text-3xl font-black text-brandDark mt-3" data-i18n="gallery_title">صور من أنشطتنا</h2>
+                <div class="strategy-line mx-auto mt-4"></div>
+            </div>
+            <div id="galleryGrid" class="grid grid-cols-2 md:grid-cols-4 gap-4">
+                <div class="loading-spinner col-span-full"><i class="fas fa-spinner"></i></div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Branches -->
+    <section id="branches" class="py-20 bg-gray-50">
+        <div class="container mx-auto px-6">
+            <div class="text-center mb-16 fade-up">
+                <span class="text-brandGreen font-bold text-sm uppercase tracking-wider" data-i18n="branches_badge">فروعنا</span>
+                <h2 class="text-3xl font-black text-brandDark mt-3 mb-4" data-i18n="branches_title">شبكة فروع الجمعية</h2>
+                <div class="strategy-line mx-auto"></div>
+            </div>
+            <div class="grid md:grid-cols-2 gap-8">
+                <div class="bg-white rounded-2xl p-8 shadow-sm border border-gray-100">
+                    <h3 class="text-xl font-bold text-brandGreen mb-6 border-b pb-3"><i class="fas fa-map-marker-alt ml-2"></i> <span data-i18n="branches_nouakchott">فروع نواكشوط</span></h3>
+                    <ul class="grid grid-cols-2 gap-3">
+                        <li class="bg-gray-50 p-4 rounded-xl flex items-center gap-2"><i class="fas fa-check-circle text-brandGreen"></i> دار النعيم</li>
+                        <li class="bg-gray-50 p-4 rounded-xl flex items-center gap-2"><i class="fas fa-check-circle text-brandGreen"></i> تيارت</li>
+                        <li class="bg-gray-50 p-4 rounded-xl flex items-center gap-2"><i class="fas fa-check-circle text-brandGreen"></i> عرفات</li>
+                        <li class="bg-gray-50 p-4 rounded-xl flex items-center gap-2"><i class="fas fa-check-circle text-brandGreen"></i> كرفور</li>
+                    </ul>
+                </div>
+                <div class="bg-white rounded-2xl p-8 shadow-sm border border-gray-100">
+                    <h3 class="text-xl font-bold text-brandGreen mb-6 border-b pb-3"><i class="fas fa-map-marked-alt ml-2"></i> <span data-i18n="branches_states">فروع الولايات</span></h3>
+                    <ul class="grid grid-cols-2 gap-3">
+                        <li class="bg-gray-50 p-4 rounded-xl flex items-center gap-2"><i class="fas fa-check-circle text-brandGreen"></i> نواذيبو</li>
+                        <li class="bg-gray-50 p-4 rounded-xl flex items-center gap-2"><i class="fas fa-check-circle text-brandGreen"></i> روصو</li>
+                        <li class="bg-gray-50 p-4 rounded-xl flex items-center gap-2"><i class="fas fa-check-circle text-brandGreen"></i> كيهيدي</li>
+                        <li class="bg-gray-50 p-4 rounded-xl flex items-center gap-2"><i class="fas fa-check-circle text-brandGreen"></i> باسكنو</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Contact -->
+    <section id="contact" class="py-20 bg-white">
+        <div class="container mx-auto px-6">
+            <div class="grid md:grid-cols-2 gap-12">
+                <div class="fade-up">
+                    <span class="text-brandGreen font-bold text-sm uppercase tracking-wider" data-i18n="contact_badge">تواصل معنا</span>
+                    <h2 class="text-3xl font-black text-brandDark mt-3 mb-8" data-i18n="contact_title">يسعدنا تواصلكم</h2>
+                    <div class="space-y-6">
+                        <div class="flex items-center gap-4">
+                            <div class="w-12 h-12 bg-brandLight rounded-xl flex items-center justify-center"><i class="fas fa-map-marker-alt text-brandGreen"></i></div>
+                            <div><div class="font-bold text-brandDark" data-i18n="contact_address_label">العنوان</div><div id="contactAddress" class="text-gray-600 text-sm"></div></div>
+                        </div>
+                        <div class="flex items-center gap-4">
+                            <div class="w-12 h-12 bg-brandLight rounded-xl flex items-center justify-center"><i class="fas fa-phone text-brandGreen"></i></div>
+                            <div><div class="font-bold text-brandDark" data-i18n="contact_phone_label">الهاتف</div><div id="contactPhone" class="text-gray-600 text-sm"></div></div>
+                        </div>
+                        <div class="flex items-center gap-4">
+                            <div class="w-12 h-12 bg-brandLight rounded-xl flex items-center justify-center"><i class="fas fa-envelope text-brandGreen"></i></div>
+                            <div><div class="font-bold text-brandDark" data-i18n="contact_email_label">البريد الإلكتروني</div><div id="contactEmail" class="text-gray-600 text-sm"></div></div>
+                        </div>
+                    </div>
+                    <div class="flex gap-3 mt-8">
+                        <a href="#" class="w-12 h-12 bg-brandDark rounded-xl flex items-center justify-center text-white hover:bg-brandGreen transition"><i class="fab fa-facebook-f"></i></a>
+                        <a href="#" class="w-12 h-12 bg-brandDark rounded-xl flex items-center justify-center text-white hover:bg-brandGreen transition"><i class="fab fa-twitter"></i></a>
+                        <a href="#" class="w-12 h-12 bg-brandDark rounded-xl flex items-center justify-center text-white hover:bg-brandGreen transition"><i class="fab fa-instagram"></i></a>
+                        <a href="#" class="w-12 h-12 bg-brandDark rounded-xl flex items-center justify-center text-white hover:bg-brandGreen transition"><i class="fab fa-whatsapp"></i></a>
+                    </div>
+                </div>
+                <div class="fade-up">
+                    <form id="contactForm" class="bg-gray-50 p-8 rounded-2xl shadow-sm space-y-5">
+                        <div><label class="block text-sm font-bold text-brandDark mb-2" data-i18n="form_name_label">الاسم الكامل</label><input id="cf_name" type="text" class="w-full border-2 border-gray-200 rounded-xl px-4 py-3 focus:outline-none focus:border-brandGreen transition bg-white" required></div>
+                        <div><label class="block text-sm font-bold text-brandDark mb-2" data-i18n="form_email_label">البريد الإلكتروني</label><input id="cf_email" type="email" class="w-full border-2 border-gray-200 rounded-xl px-4 py-3 focus:outline-none focus:border-brandGreen transition bg-white" required></div>
+                        <div><label class="block text-sm font-bold text-brandDark mb-2" data-i18n="form_subject_label">الموضوع</label><select id="cf_subject" class="w-full border-2 border-gray-200 rounded-xl px-4 py-3 focus:outline-none focus:border-brandGreen transition bg-white"><option value="general" data-i18n-option="form_subject_general">استفسار عام</option><option value="partnership" data-i18n-option="form_subject_partnership">طلب شراكة</option><option value="volunteer" data-i18n-option="form_subject_volunteer">التطوع</option><option value="complaint" data-i18n-option="form_subject_complaint">الشكاوى والمقترحات</option></select></div>
+                        <div><label class="block text-sm font-bold text-brandDark mb-2" data-i18n="form_message_label">الرسالة</label><textarea id="cf_message" rows="4" class="w-full border-2 border-gray-200 rounded-xl px-4 py-3 focus:outline-none focus:border-brandGreen transition bg-white resize-none" required></textarea></div>
+                        <button type="submit" class="w-full bg-brandGreen text-white py-4 rounded-xl font-bold hover:bg-brandDark transition text-lg"><i class="fas fa-paper-plane ml-2"></i> <span data-i18n="form_submit">إرسال الرسالة</span></button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="bg-brandDark text-white py-16">
+        <div class="container mx-auto px-6 grid md:grid-cols-4 gap-8 mb-12">
+            <div>
+                <div class="flex items-center gap-3 mb-5"><img src="LOGO AMPF.png" alt="AMPF" class="h-14 w-auto" onerror="this.style.display='none'"></div>
+                <p class="text-white/70 text-sm leading-relaxed" data-i18n="footer_about">منظمة غير حكومية تسعى لترقية الصحة الإنجابية وتنظيم الأسرة ودعم الفئات المحتاجة في موريتانيا منذ 1988.</p>
+            </div>
+            <div><h4 class="font-bold text-lg mb-5" data-i18n="footer_quick_links">روابط سريعة</h4><ul class="space-y-3 text-white/70 text-sm"><li><a href="#strategy" class="hover:text-brandGreen transition" data-i18n="nav_strategy">استراتيجيتنا</a></li><li><a href="#programs" class="hover:text-brandGreen transition" data-i18n="nav_programs">البرامج</a></li><li><a href="#news" class="hover:text-brandGreen transition" data-i18n="nav_news">الأخبار</a></li><li><a href="#gallery" class="hover:text-brandGreen transition" data-i18n="nav_gallery">المعرض</a></li></ul></div>
+            <div><h4 class="font-bold text-lg mb-5" data-i18n="footer_services">خدماتنا</h4><ul class="space-y-3 text-white/70 text-sm" id="footerServices"><li data-i18n="service1">الصحة الإنجابية</li><li data-i18n="service2">تنظيم الأسرة</li><li data-i18n="service3">التوعية الصحية</li><li data-i18n="service4">الدعم الاجتماعي</li></ul></div>
+            <div><h4 class="font-bold text-lg mb-5" data-i18n="footer_contact_us">تواصل معنا</h4><ul class="space-y-3 text-white/70 text-sm"><li><i class="fas fa-map-marker-alt ml-2"></i> <span id="footerAddress"></span></li><li><i class="fas fa-phone ml-2"></i> <span id="footerPhone"></span></li><li><i class="fas fa-envelope ml-2"></i> contact@ampf.mr</li></ul></div>
+        </div>
+        <div class="border-t border-white/10 pt-8 text-center text-white/50 text-sm" data-i18n="footer_copyright">جميع الحقوق محفوظة © الجمعية الموريتانية لترقية الأسرة 2026</div>
+    </footer>
+
+    <!-- Login Modal -->
+    <div id="loginModal" class="modal fixed inset-0 bg-black/60 z-50 flex items-center justify-center p-4 backdrop-blur-sm">
+        <div class="bg-white rounded-3xl p-8 w-full max-w-md relative shadow-2xl">
+            <button id="closeLogin" class="absolute top-4 left-4 text-gray-400 hover:text-gray-600 transition"><i class="fas fa-times text-xl"></i></button>
+            <div class="text-center mb-6">
+                <div class="w-20 h-20 bg-brandGreen rounded-full flex items-center justify-center mx-auto mb-4"><i class="fas fa-user-shield text-white text-3xl"></i></div>
+                <h3 class="text-xl font-bold text-brandDark" data-i18n="login_title">الدخول إلى لوحة الإدارة</h3>
+                <p class="text-gray-500 text-sm mt-1" data-i18n="login_subtitle">أدخل بياناتك للوصول إلى النظام</p>
+            </div>
+            <form id="loginForm" class="space-y-4">
+                <div><label class="block text-sm font-bold text-gray-700 mb-2" data-i18n="login_username_label">اسم المستخدم</label><input type="text" class="w-full border-2 border-gray-200 rounded-xl px-4 py-3 focus:outline-none focus:border-brandGreen transition bg-gray-50" placeholder="admin" id="loginUser"></div>
+                <div><label class="block text-sm font-bold text-gray-700 mb-2" data-i18n="login_password_label">كلمة المرور</label><input type="password" class="w-full border-2 border-gray-200 rounded-xl px-4 py-3 focus:outline-none focus:border-brandGreen transition bg-gray-50" placeholder="••••••••" id="loginPass"></div>
+                <button type="submit" class="w-full bg-brandGreen text-white py-4 rounded-xl font-bold hover:bg-brandDark transition text-lg"><i class="fas fa-sign-in-alt ml-2"></i> <span data-i18n="login_btn">دخول</span></button>
+            </form>
+        </div>
+    </div>
+
+    <div id="toast" class="fixed bottom-6 left-1/2 -translate-x-1/2 bg-brandDark text-white px-8 py-4 rounded-full shadow-2xl flex items-center gap-3 opacity-0 transition-opacity duration-300 z-50"><i class="fas fa-check-circle text-brandGreen text-xl"></i><span id="toastMsg" class="font-bold"></span></div>
+
+    <button id="backToTop" class="fixed bottom-6 right-6 w-14 h-14 bg-brandGreen text-white rounded-full shadow-lg hover:bg-brandDark transition opacity-0 z-40 flex items-center justify-center"><i class="fas fa-arrow-up"></i></button>
+
+    <script>
+        // ══════════════════════════════════════════════════
+        //  TRANSLATIONS
+        // ══════════════════════════════════════════════════
+        const translations = {
+            ar: {
+                siteTitle: 'الجمعية الموريتانية لترقية الأسرة | AMPF',
+                nav_home: 'الرئيسية', nav_strategy: 'استراتيجيتنا', nav_programs: 'البرامج',
+                nav_news: 'الأخبار', nav_gallery: 'المعرض', nav_contact: 'اتصل بنا', nav_admin: 'الإدارة',
+                hero_badge: 'تأسست سنة 1988', hero_btn_strategy: 'استراتيجيتنا  <i class="fas fa-arrow-left"></i>', hero_btn_programs: 'برامجنا',
+                stat_years: 'سنة من العمل', stat_branches: 'فروع في الولايات', stat_beneficiaries: 'مستفيد', stat_workers: 'عامل صحي',
+                strategy_badge: 'استراتيجيتنا', strategy_title: 'نبني رؤية شاملة للصحة الأسرية',
+                vision_heading: 'الرؤية', mission_heading: 'الرسالة', values_heading: 'القيم',
+                programs_badge: 'البرامج والخدمات', programs_title: 'نقدم مجموعة متكاملة من الخدمات الصحية',
+                news_badge: 'آخر الأخبار', news_title: 'أخبارنا وأنشطتنا',
+                gallery_badge: 'معرض الصور', gallery_title: 'صور من أنشطتنا',
+                branches_badge: 'فروعنا', branches_title: 'شبكة فروع الجمعية',
+                branches_nouakchott: 'فروع نواكشوط', branches_states: 'فروع الولايات',
+                contact_badge: 'تواصل معنا', contact_title: 'يسعدنا تواصلكم',
+                contact_address_label: 'العنوان', contact_phone_label: 'الهاتف', contact_email_label: 'البريد الإلكتروني',
+                form_name_label: 'الاسم الكامل', form_email_label: 'البريد الإلكتروني', form_subject_label: 'الموضوع',
+                form_message_label: 'الرسالة', form_submit: 'إرسال الرسالة',
+                form_subject_general: 'استفسار عام', form_subject_partnership: 'طلب شراكة',
+                form_subject_volunteer: 'التطوع', form_subject_complaint: 'الشكاوى والمقترحات',
+                footer_about: 'منظمة غير حكومية تسعى لترقية الصحة الإنجابية وتنظيم الأسرة ودعم الفئات المحتاجة في موريتانيا منذ 1988.',
+                footer_quick_links: 'روابط سريعة', footer_services: 'خدماتنا', footer_contact_us: 'تواصل معنا',
+                footer_copyright: 'جميع الحقوق محفوظة © الجمعية الموريتانية لترقية الأسرة 2026',
+                service1: 'الصحة الإنجابية', service2: 'تنظيم الأسرة', service3: 'التوعية الصحية', service4: 'الدعم الاجتماعي',
+                login_title: 'الدخول إلى لوحة الإدارة', login_subtitle: 'أدخل بياناتك للوصول إلى النظام',
+                login_username_label: 'اسم المستخدم', login_password_label: 'كلمة المرور', login_btn: 'دخول',
+                toast_login_error: 'بيانات الدخول غير صحيحة', toast_conn_error: 'خطأ في الاتصال',
+                toast_msg_sent: 'تم إرسال رسالتك بنجاح!', toast_error: 'حدث خطأ',
+                programs_empty: 'لا توجد برامج بعد', news_empty: 'لا توجد أخبار بعد',
+                gallery_empty: 'لا توجد صور في المعرض بعد',
+                load_error_programs: 'تعذر تحميل البرامج', load_error_news: 'تعذر تحميل الأخبار',
+                load_error_gallery: 'تعذر تحميل المعرض',
+                news_category_blog: 'المدونة', news_category_youth: 'الشباب', news_category_advocacy: 'المناصرة',
+                news_category_general: 'عام',
+                strategy_card_1_title: 'رعاية متمحور حول الفرد',
+                strategy_card_1_items: ['تعزيز الخيارات الصحية', 'توسيع الوصول للخدمات', 'الرعاية الرقمية'],
+                strategy_card_2_title: 'تطوير حقوق الصحة الأسرية',
+                strategy_card_2_items: ['تعزيز المناصرة', 'تطوير المعايير', 'العمل مع الشباب'],
+                strategy_card_3_title: 'التضامن من أجل التغيير',
+                strategy_card_3_items: ['دعم الحركات الاجتماعية', 'شراكات استراتيجية', 'الابتكار ومشاركة المعرفة'],
+                strategy_card_4_title: 'العناية بالجمعية',
+                strategy_card_4_items: ['تعزيز الهوية', 'نمو الجمعية', 'القدوة في العمل'],
+            },
+            fr: {
+                siteTitle: 'AMPF | Association Mauritanienne pour la Promotion de la Famille',
+                nav_home: 'Accueil', nav_strategy: 'Notre Stratégie', nav_programs: 'Programmes',
+                nav_news: 'Actualités', nav_gallery: 'Galerie', nav_contact: 'Contact', nav_admin: 'Admin',
+                hero_badge: 'Fondée en 1988', hero_btn_strategy: 'Notre Stratégie  <i class="fas fa-arrow-right"></i>', hero_btn_programs: 'Nos Programmes',
+                stat_years: 'ans d\'expérience', stat_branches: 'branches', stat_beneficiaries: 'bénéficiaires', stat_workers: 'agents de santé',
+                strategy_badge: 'Notre Stratégie', strategy_title: 'Construire une vision globale de la santé familiale',
+                vision_heading: 'Vision', mission_heading: 'Mission', values_heading: 'Valeurs',
+                programs_badge: 'Programmes et services', programs_title: 'Nous offrons des services de santé intégrés',
+                news_badge: 'Dernières nouvelles', news_title: 'Nos actualités et activités',
+                gallery_badge: 'Galerie photos', gallery_title: 'Photos de nos activités',
+                branches_badge: 'Nos branches', branches_title: 'Réseau des branches',
+                branches_nouakchott: 'Branches de Nouakchott', branches_states: 'Branches régionales',
+                contact_badge: 'Contactez-nous', contact_title: 'Nous sommes à votre écoute',
+                contact_address_label: 'Adresse', contact_phone_label: 'Téléphone', contact_email_label: 'Email',
+                form_name_label: 'Nom complet', form_email_label: 'Email', form_subject_label: 'Sujet',
+                form_message_label: 'Message', form_submit: 'Envoyer le message',
+                form_subject_general: 'Demande générale', form_subject_partnership: 'Demande de partenariat',
+                form_subject_volunteer: 'Bénévolat', form_subject_complaint: 'Réclamations et suggestions',
+                footer_about: 'ONG œuvrant pour la promotion de la santé reproductive, le planning familial et le soutien aux personnes nécessiteuses en Mauritanie depuis 1988.',
+                footer_quick_links: 'Liens rapides', footer_services: 'Nos services', footer_contact_us: 'Contact',
+                footer_copyright: 'Tous droits réservés © AMPF 2026',
+                service1: 'Santé reproductive', service2: 'Planning familial', service3: 'Sensibilisation sanitaire', service4: 'Soutien social',
+                login_title: 'Connexion à l\'administration', login_subtitle: 'Entrez vos identifiants',
+                login_username_label: 'Nom d\'utilisateur', login_password_label: 'Mot de passe', login_btn: 'Connexion',
+                toast_login_error: 'Identifiants incorrects', toast_conn_error: 'Erreur de connexion',
+                toast_msg_sent: 'Message envoyé avec succès!', toast_error: 'Une erreur est survenue',
+                programs_empty: 'Aucun programme pour le moment', news_empty: 'Aucune actualité pour le moment',
+                gallery_empty: 'Aucune image dans la galerie',
+                load_error_programs: 'Impossible de charger les programmes', load_error_news: 'Impossible de charger les actualités',
+                load_error_gallery: 'Impossible de charger la galerie',
+                news_category_blog: 'Blog', news_category_youth: 'Jeunesse', news_category_advocacy: 'Plaidoyer',
+                news_category_general: 'Général',
+                strategy_card_1_title: 'Soins centrés sur la personne',
+                strategy_card_1_items: ['Renforcer les choix de santé', 'Élargir l\'accès aux services', 'Soins numériques'],
+                strategy_card_2_title: 'Développement des droits en santé familiale',
+                strategy_card_2_items: ['Renforcer le plaidoyer', 'Développer les normes', 'Travailler avec les jeunes'],
+                strategy_card_3_title: 'Solidarité pour le changement',
+                strategy_card_3_items: ['Soutenir les mouvements sociaux', 'Partenariats stratégiques', 'Innovation et partage des connaissances'],
+                strategy_card_4_title: 'Soin de l\'association',
+                strategy_card_4_items: ['Renforcer l\'identité', 'Croissance de l\'association', 'Être un modèle'],
+            },
+            en: {
+                siteTitle: 'AMPF | Mauritanian Association for Family Promotion',
+                nav_home: 'Home', nav_strategy: 'Our Strategy', nav_programs: 'Programs',
+                nav_news: 'News', nav_gallery: 'Gallery', nav_contact: 'Contact', nav_admin: 'Admin',
+                hero_badge: 'Founded in 1988', hero_btn_strategy: 'Our Strategy  <i class="fas fa-arrow-right"></i>', hero_btn_programs: 'Our Programs',
+                stat_years: 'years of experience', stat_branches: 'branches', stat_beneficiaries: 'beneficiaries', stat_workers: 'health workers',
+                strategy_badge: 'Our Strategy', strategy_title: 'Building a comprehensive vision for family health',
+                vision_heading: 'Vision', mission_heading: 'Mission', values_heading: 'Values',
+                programs_badge: 'Programs & Services', programs_title: 'We offer integrated health services',
+                news_badge: 'Latest News', news_title: 'Our news and activities',
+                gallery_badge: 'Photo Gallery', gallery_title: 'Photos of our activities',
+                branches_badge: 'Our Branches', branches_title: 'Association branch network',
+                branches_nouakchott: 'Nouakchott Branches', branches_states: 'Regional Branches',
+                contact_badge: 'Contact Us', contact_title: 'We are happy to hear from you',
+                contact_address_label: 'Address', contact_phone_label: 'Phone', contact_email_label: 'Email',
+                form_name_label: 'Full Name', form_email_label: 'Email', form_subject_label: 'Subject',
+                form_message_label: 'Message', form_submit: 'Send Message',
+                form_subject_general: 'General Inquiry', form_subject_partnership: 'Partnership Request',
+                form_subject_volunteer: 'Volunteering', form_subject_complaint: 'Complaints & Suggestions',
+                footer_about: 'An NGO working to promote reproductive health, family planning, and support for needy groups in Mauritania since 1988.',
+                footer_quick_links: 'Quick Links', footer_services: 'Our Services', footer_contact_us: 'Contact Us',
+                footer_copyright: 'All rights reserved © AMPF 2026',
+                service1: 'Reproductive Health', service2: 'Family Planning', service3: 'Health Awareness', service4: 'Social Support',
+                login_title: 'Admin Login', login_subtitle: 'Enter your credentials to access the system',
+                login_username_label: 'Username', login_password_label: 'Password', login_btn: 'Login',
+                toast_login_error: 'Invalid credentials', toast_conn_error: 'Connection error',
+                toast_msg_sent: 'Message sent successfully!', toast_error: 'An error occurred',
+                programs_empty: 'No programs yet', news_empty: 'No news yet',
+                gallery_empty: 'No images in the gallery yet',
+                load_error_programs: 'Failed to load programs', load_error_news: 'Failed to load news',
+                load_error_gallery: 'Failed to load gallery',
+                news_category_blog: 'Blog', news_category_youth: 'Youth', news_category_advocacy: 'Advocacy',
+                news_category_general: 'General',
+                strategy_card_1_title: 'Person-centered Care',
+                strategy_card_1_items: ['Enhancing health choices', 'Expanding access to services', 'Digital care'],
+                strategy_card_2_title: 'Advancing Family Health Rights',
+                strategy_card_2_items: ['Strengthening advocacy', 'Developing standards', 'Working with youth'],
+                strategy_card_3_title: 'Solidarity for Change',
+                strategy_card_3_items: ['Supporting social movements', 'Strategic partnerships', 'Innovation and knowledge sharing'],
+                strategy_card_4_title: 'Caring for the Association',
+                strategy_card_4_items: ['Strengthening identity', 'Association growth', 'Being a role model'],
+            }
+        };
+
+        // ══════════════════════════════════════════════════
+        //  UTILITY HELPERS
+        // ══════════════════════════════════════════════════
+        let currentLang = localStorage.getItem('ampf_lang') || 'ar';
+
+        function t(key) {
+            return translations[currentLang]?.[key] ?? translations['ar'][key] ?? key;
+        }
+
+        // Get localized text from API content object (handles both string and {ar,fr,en} formats)
+        function getLocalizedText(obj) {
+            if (!obj) return '';
+            if (typeof obj === 'string') return obj;
+            return obj[currentLang] || obj.ar || obj.fr || obj.en || '';
+        }
+
+        function showToast(msg) {
+            const t = document.getElementById('toast');
+            document.getElementById('toastMsg').textContent = msg;
+            t.style.opacity = '1';
+            setTimeout(() => t.style.opacity = '0', 3000);
+        }
+
+        // ══════════════════════════════════════════════════
+        //  PAGE TRANSLATION
+        // ══════════════════════════════════════════════════
+        function translateStaticText() {
+            // Translate all data-i18n elements
+            document.querySelectorAll('[data-i18n]').forEach(el => {
+                const key = el.getAttribute('data-i18n');
+                el.innerHTML = t(key);
+            });
+            // Translate select option text
+            document.querySelectorAll('[data-i18n-option]').forEach(el => {
+                const key = el.getAttribute('data-i18n-option');
+                el.textContent = t(key);
+            });
+            document.title = t('siteTitle');
+        }
+
+        function renderStrategyCards(lang) {
+            const colors = [
+                { from: 'from-brandGreen', to: 'to-brandDark', icon: 'fa-heartbeat' },
+                { from: 'from-blue-500', to: 'to-blue-800', icon: 'fa-balance-scale' },
+                { from: 'from-purple-500', to: 'to-purple-800', icon: 'fa-handshake' },
+                { from: 'from-orange-500', to: 'to-red-600', icon: 'fa-users-cog' },
+            ];
+            const container = document.getElementById('strategyCards');
+            container.innerHTML = [1,2,3,4].map(i => {
+                const title = t(`strategy_card_${i}_title`);
+                const items = translations[lang][`strategy_card_${i}_items`] || [];
+                return `
+                    <div class="bg-white rounded-2xl overflow-hidden shadow-lg card-hover fade-up">
+                        <div class="h-48 bg-gradient-to-br ${colors[i-1].from} ${colors[i-1].to} flex items-center justify-center">
+                            <i class="fas ${colors[i-1].icon} text-white text-6xl"></i>
+                        </div>
+                        <div class="p-6">
+                            <h4 class="font-bold text-brandDark mb-2">${title}</h4>
+                            <ul class="text-sm text-gray-600 space-y-1">${items.map(item => `<li>• ${item}</li>`).join('')}</ul>
+                        </div>
+                    </div>
+                `;
+            }).join('');
+        }
+
+        // ══════════════════════════════════════════════════
+        //  DYNAMIC CONTENT RENDERING (language-aware)
+        // ══════════════════════════════════════════════════
+        const programIcons = [
+            { icon: 'fa-baby', bg: 'bg-emerald-100', color: 'text-brandGreen' },
+            { icon: 'fa-syringe', bg: 'bg-blue-100', color: 'text-blue-600' },
+            { icon: 'fa-venus', bg: 'bg-pink-100', color: 'text-pink-500' },
+            { icon: 'fa-book-medical', bg: 'bg-yellow-100', color: 'text-yellow-600' },
+            { icon: 'fa-hands-helping', bg: 'bg-purple-100', color: 'text-purple-600' },
+            { icon: 'fa-heart', bg: 'bg-red-100', color: 'text-red-500' },
+            { icon: 'fa-user-md', bg: 'bg-blue-100', color: 'text-blue-600' },
+            { icon: 'fa-stethoscope', bg: 'bg-indigo-100', color: 'text-indigo-600' },
+            { icon: 'fa-hospital', bg: 'bg-teal-100', color: 'text-teal-600' },
+        ];
+
+        let _contentData = null;
+
+        function renderContent() {
+            const data = _contentData;
+            if (!data) return;
+            const sc = data.site_content || {};
+            const lang = currentLang;
+
+            // Hero
+            if (sc.hero) {
+                document.getElementById('heroTitle').textContent = getLocalizedText(sc.hero.title);
+                document.getElementById('heroDesc').textContent = getLocalizedText(sc.hero.desc);
+                document.getElementById('heroBadge').textContent = getLocalizedText(sc.hero.badge) || t('hero_badge');
+                document.getElementById('siteTitle').textContent = getLocalizedText(sc.hero.title) || t('siteTitle');
+            }
+
+            // About
+            if (sc.about) {
+                document.getElementById('visionText').textContent = getLocalizedText(sc.about.vision);
+                document.getElementById('missionText').textContent = getLocalizedText(sc.about.mission);
+                const vals = getLocalizedText(sc.about.values);
+                if (vals) {
+                    const lines = vals.split('\n').filter(v => v.trim());
+                    document.getElementById('valuesList').innerHTML = lines.map(v => `<li>• ${v.trim()}</li>`).join('');
+                }
+            }
+
+            // Contact
+            if (sc.contact) {
+                const addr = getLocalizedText(sc.contact.address);
+                if (addr) {
+                    document.getElementById('contactAddress').textContent = addr;
+                    document.getElementById('footerAddress').textContent = addr;
+                }
+                if (sc.contact.phone) {
+                    const phone = typeof sc.contact.phone === 'string' ? sc.contact.phone : getLocalizedText(sc.contact.phone);
+                    document.getElementById('topPhone').textContent = phone;
+                    document.getElementById('contactPhone').textContent = phone;
+                    document.getElementById('footerPhone').textContent = phone;
+                }
+                if (sc.contact.email) {
+                    const email = typeof sc.contact.email === 'string' ? sc.contact.email : getLocalizedText(sc.contact.email);
+                    document.getElementById('topEmail').textContent = email;
+                    document.getElementById('contactEmail').textContent = email;
+                }
+            }
+
+            // Programs
+            if (data.programs && data.programs.length) {
+                document.getElementById('programsGrid').innerHTML = data.programs.slice(0, 9).map((p, i) => {
+                    const pi = programIcons[i % programIcons.length];
+                    return `
+                        <div class="bg-gray-50 rounded-2xl p-8 card-hover fade-up border border-gray-100">
+                            <div class="w-16 h-16 ${pi.bg} rounded-2xl flex items-center justify-center mb-5">
+                                <i class="fas ${pi.icon} ${pi.color} text-2xl"></i>
+                            </div>
+                            <h3 class="text-xl font-bold text-brandDark mb-3">${getLocalizedText(p.title)}</h3>
+                            <p class="text-gray-600 text-sm leading-relaxed">${getLocalizedText(p.desc)}</p>
+                        </div>
+                    `;
+                }).join('');
+            } else {
+                document.getElementById('programsGrid').innerHTML = `<div class="col-span-full text-center text-gray-400 py-8">${t('programs_empty')}</div>`;
+            }
+
+            // News
+            if (data.news && data.news.length) {
+                document.getElementById('newsGrid').innerHTML = data.news.slice(0, 6).map(n => {
+                    const catKey = 'news_category_' + (n.category || 'general');
+                    const catLabel = t(catKey) || n.category || t('news_category_general');
+                    return `
+                        <div class="bg-white rounded-2xl overflow-hidden shadow-lg card-hover fade-up">
+                            <div class="overflow-hidden">
+                                ${n.image
+                                    ? `<img src="${n.image}" alt="${getLocalizedText(n.title)}" class="news-img" onerror="this.parentElement.innerHTML='<div class=\\'news-img bg-gradient-to-br from-brandGreen to-emerald-600 flex items-center justify-center\\'><i class=\\'fas fa-calendar-check text-white text-5xl\\'></i></div>'">`
+                                    : `<div class="news-img bg-gradient-to-br from-brandGreen to-emerald-600 flex items-center justify-center"><i class="fas fa-calendar-check text-white text-5xl"></i></div>`
+                                }
+                            </div>
+                            <div class="p-6">
+                                <span class="text-xs bg-brandLight text-brandDark px-3 py-1 rounded-full font-bold">${catLabel}</span>
+                                <h3 class="text-lg font-bold text-brandDark mt-3 mb-2">${getLocalizedText(n.title)}</h3>
+                                <p class="text-gray-600 text-sm mb-3">${getLocalizedText(n.desc)}</p>
+                                <div class="flex items-center gap-2 text-sm text-gray-500"><i class="fas fa-clock"></i> ${n.date || ''}</div>
+                            </div>
+                        </div>
+                    `;
+                }).join('');
+            } else {
+                document.getElementById('newsGrid').innerHTML = `<div class="col-span-full text-center text-gray-400 py-8">${t('news_empty')}</div>`;
+            }
+
+            // Gallery
+            if (data.gallery && data.gallery.length) {
+                document.getElementById('galleryGrid').innerHTML = data.gallery.map(g => `
+                    <div class="rounded-2xl overflow-hidden card-hover fade-up group relative">
+                        <img src="${g.image}" alt="${getLocalizedText(g.title) || 'صورة'}" class="gallery-img" onerror="this.parentElement.innerHTML='<div class=\\'gallery-img bg-gradient-to-br from-brandGreen to-brandDark flex items-center justify-center\\'><i class=\\'fas fa-image text-white text-3xl\\'></i></div>'">
+                        ${getLocalizedText(g.title) ? `<div class="absolute bottom-0 right-0 left-0 bg-gradient-to-t from-black/60 to-transparent p-4"><div class="text-white text-sm font-bold">${getLocalizedText(g.title)}</div></div>` : ''}
+                    </div>
+                `).join('');
+            } else {
+                document.getElementById('galleryGrid').innerHTML = `<div class="col-span-full text-center text-gray-400 py-8">${t('gallery_empty')}</div>`;
+            }
+
+            // Re-run observer
+            document.querySelectorAll('.fade-up').forEach(el => observer.observe(el));
+        }
+
+        // ══════════════════════════════════════════════════
+        //  LANGUAGE SWITCHER
+        // ══════════════════════════════════════════════════
+        function setLang(lang) {
+            currentLang = lang;
+            document.documentElement.lang = lang;
+            document.documentElement.dir = (lang === 'ar') ? 'rtl' : 'ltr';
+
+            // Update button active states
+            document.querySelectorAll('.lang-btn').forEach(b => b.classList.remove('active'));
+            document.querySelectorAll('.lang-btn').forEach(b => {
+                if ((lang === 'ar' && b.textContent.trim() === 'AR') ||
+                    (lang === 'fr' && b.textContent.trim() === 'FR') ||
+                    (lang === 'en' && b.textContent.trim() === 'EN')) b.classList.add('active');
+            });
+
+            // Translate static text
+            translateStaticText();
+
+            // Re-render strategy cards
+            renderStrategyCards(lang);
+
+            // Re-render dynamic content from API
+            renderContent();
+
+            localStorage.setItem('ampf_lang', lang);
+        }
+
+        // ══════════════════════════════════════════════════
+        //  FETCH CONTENT FROM API
+        // ══════════════════════════════════════════════════
+        async function loadAllContent() {
+            try {
+                const res = await fetch('/api/public-content');
+                if (!res.ok) throw new Error('HTTP ' + res.status);
+                _contentData = await res.json();
+                renderContent();
+            } catch (e) {
+                console.error('Failed to load content:', e);
+                document.getElementById('programsGrid').innerHTML = `<div class="col-span-full text-center text-gray-400 py-8">${t('load_error_programs')}</div>`;
+                document.getElementById('newsGrid').innerHTML = `<div class="col-span-full text-center text-gray-400 py-8">${t('load_error_news')}</div>`;
+                document.getElementById('galleryGrid').innerHTML = `<div class="col-span-full text-center text-gray-400 py-8">${t('load_error_gallery')}</div>`;
+            }
+        }
+
+        // ══════════════════════════════════════════════════
+        //  EVENT LISTENERS
+        // ══════════════════════════════════════════════════
+
+        // Mobile Menu
+        document.getElementById('menuBtn').addEventListener('click', () => document.getElementById('mobileMenu').classList.add('active'));
+        document.getElementById('closeMenu').addEventListener('click', () => document.getElementById('mobileMenu').classList.remove('active'));
+        document.querySelectorAll('.mobile-link').forEach(l => l.addEventListener('click', () => document.getElementById('mobileMenu').classList.remove('active')));
+
+        // Login Modal
+        document.getElementById('loginForm').addEventListener('submit', async (e) => {
+            e.preventDefault();
+            try {
+                const res = await fetch('/api/login', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ username: document.getElementById('loginUser').value, password: document.getElementById('loginPass').value }) });
+                const data = await res.json();
+                if (data.success) window.location.href = '/admin';
+                else showToast(t('toast_login_error'));
+            } catch(e) { showToast(t('toast_conn_error')); }
+        });
+
+        // Contact Form
+        document.getElementById('contactForm').addEventListener('submit', async (e) => {
+            e.preventDefault();
+            try {
+                const res = await fetch('/api/messages', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({
+                    name: document.getElementById('cf_name').value,
+                    email: document.getElementById('cf_email').value,
+                    subject: document.getElementById('cf_subject').value,
+                    message: document.getElementById('cf_message').value
+                })});
+                const data = await res.json();
+                showToast(data.success ? t('toast_msg_sent') : t('toast_error'));
+                if (data.success) e.target.reset();
+            } catch(e) { showToast(t('toast_conn_error')); }
+        });
+
+        // Back to Top
+        const backToTop = document.getElementById('backToTop');
+        window.addEventListener('scroll', () => { backToTop.style.opacity = window.scrollY > 500 ? '1' : '0'; });
+        backToTop.addEventListener('click', () => window.scrollTo({ top: 0, behavior: 'smooth' }));
+
+        // Animations
+        const observer = new IntersectionObserver(entries => { entries.forEach(entry => { if (entry.isIntersecting) entry.target.classList.add('visible'); }); }, { threshold: 0.1 });
+
+        // ══════════════════════════════════════════════════
+        //  INIT
+        // ══════════════════════════════════════════════════
+        // Render strategy cards in initial language
+        renderStrategyCards(currentLang);
+
+        // Load dynamic content
+        if (document.readyState === 'loading') {
+            document.addEventListener('DOMContentLoaded', loadAllContent);
+        } else {
+            loadAllContent();
+        }
+
+        // Apply initial language
+        setLang(currentLang);
+    </script>
+
+</body>
+</html>

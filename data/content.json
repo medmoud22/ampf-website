@@ -1,0 +1,45 @@
+{
+  "news": [],
+  "programs": [],
+  "documents": [
+    {
+      "id": "1785251374943",
+      "name": { "ar": "وثيقة ", "fr": "Document", "en": "Document" },
+      "type": "PDF",
+      "file": "",
+      "createdAt": "2026-07-28T15:09:34.943Z"
+    }
+  ],
+  "messages": [],
+  "site_content": {
+    "hero": {
+      "title": { "ar": "حدث تجريبي ", "fr": "Événement test", "en": "Test event" },
+      "desc": { "ar": "نحن الان نقوم بتصميم موقع للجمعية الموريتانية لترقية الاسرة", "fr": "Nous concevons actuellement le site de l'AMPF", "en": "We are currently designing the AMPF website" },
+      "badge": { "ar": "", "fr": "", "en": "" }
+    },
+    "contact": {
+      "address": { "ar": "نواكشوط، موريتانيا", "fr": "Nouakchott, Mauritanie", "en": "Nouakchott, Mauritania" },
+      "phone": "+222 45 25 XX XX",
+      "email": "contact@ampf.mr"
+    },
+    "about": {
+      "vision": { "ar": "الجمعية الموريتانية لترقية الأسرة هي منظمة وطنية ملتزمة بالعمل من أجل صحة الأسرة والمجتمع.", "fr": "L'AMPF est une organisation nationale engagée pour la santé de la famille et de la communauté.", "en": "AMPF is a national organization committed to family and community health." },
+      "mission": { "ar": "صحة إنجابية وأسرية وحقوق نوعية لجميع الأفراد في جميع أنحاء موريتانيا.", "fr": "Santé reproductive et familiale et droits de qualité pour tous en Mauritanie.", "en": "Quality reproductive and family health and rights for all individuals throughout Mauritania." },
+      "values": { "ar": "الشفافية والمساءلة\nالشمولية والعدالة\nالعدالة النوعية\nالالتزام والتفاني\nالتسامح واحترام الفروق", "fr": "Transparence et redevabilité\nInclusivité et équité\nJustice de genre\nEngagement et dévouement\nTolérance et respect des différences", "en": "Transparency and accountability\nInclusiveness and equity\nGender justice\nCommitment and dedication\nTolerance and respect for differences" }
+    }
+  },
+  "gallery": [
+    {
+      "id": "1785251230400",
+      "title": { "ar": "صور من نشاط اليوم ", "fr": "Photos de l'activité du jour", "en": "Photos from today's activity" },
+      "image": "/uploads/1785251230393-Weixin_Image_20251130164617.jpg",
+      "createdAt": "2026-07-28T15:07:10.400Z"
+    },
+    {
+      "id": "1785251249938",
+      "title": { "ar": "صور من نشاط اليوم ", "fr": "Photos de l'activité du jour", "en": "Photos from today's activity" },
+      "image": "/uploads/1785251249930-MZ_APP.jpg",
+      "createdAt": "2026-07-28T15:07:29.938Z"
+    }
+  ]
+}

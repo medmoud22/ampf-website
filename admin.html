@@ -1,0 +1,816 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>لوحة الإدارة | AMPF CMS</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = { theme: { extend: { colors: { brandGreen: '#10B981', brandDark: '#065F46', brandLight: '#D1FAE5' } } } }
+    </script>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@300;400;600;700;800&display=swap" rel="stylesheet">
+    <style>
+        * { font-family: 'Cairo', sans-serif; }
+        .sidebar { transition: transform 0.3s; }
+        .sidebar.active { transform: translateX(0); }
+        .tab-content { display: none; }
+        .tab-content.active { display: block; }
+        .fade-in { animation: fadeIn 0.3s ease; }
+        @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
+        .modal-overlay { display: none; }
+        .modal-overlay.active { display: flex; }
+        .gallery-img { width: 100%; height: 200px; object-fit: cover; border-radius: 12px; }
+        .preview-img { max-width: 200px; max-height: 150px; border-radius: 8px; margin-top: 8px; }
+        .stat-icon { width: 48px; height: 48px; border-radius: 12px; display: flex; align-items: center; justify-content: center; }
+        .btn { transition: all 0.2s; cursor: pointer; }
+        .btn:hover { transform: translateY(-1px); }
+        .toast { position: fixed; bottom: 24px; left: 50%; transform: translateX(-50%); background: #065F46; color: white; padding: 12px 24px; border-radius: 50px; box-shadow: 0 10px 30px rgba(0,0,0,0.2); display: flex; align-items: center; gap: 10px; opacity: 0; transition: opacity 0.3s; z-index: 100; }
+        .toast.show { opacity: 1; }
+        .empty-state { text-align: center; padding: 40px; color: #9CA3AF; }
+        .loading { opacity: 0.5; pointer-events: none; }
+    </style>
+</head>
+<body class="bg-gray-50">
+
+<!-- ========================================= -->
+<!-- LOGIN SCREEN -->
+<!-- ========================================= -->
+<div id="loginScreen" class="fixed inset-0 bg-gradient-to-br from-brandDark to-brandGreen z-50 flex items-center justify-center p-4">
+    <div class="bg-white rounded-3xl p-8 w-full max-w-sm shadow-2xl fade-in">
+        <div class="text-center mb-8">
+            <div class="w-20 h-20 bg-brandDark rounded-2xl flex items-center justify-center mx-auto mb-4 shadow-lg">
+                <i class="fas fa-user-shield text-white text-3xl"></i>
+            </div>
+            <h1 class="text-2xl font-black text-brandDark">لوحة الإدارة</h1>
+            <p class="text-gray-500 mt-1">الجمعية الموريتانية لترقية الأسرة</p>
+        </div>
+        <form id="loginForm" class="space-y-4">
+            <div>
+                <label class="block text-sm font-bold text-gray-700 mb-2">اسم المستخدم</label>
+                <input id="loginUser" type="text" class="w-full border-2 border-gray-200 rounded-xl px-4 py-3 focus:outline-none focus:border-brandGreen transition bg-gray-50" placeholder="admin" value="admin">
+            </div>
+            <div>
+                <label class="block text-sm font-bold text-gray-700 mb-2">كلمة المرور</label>
+                <input id="loginPass" type="password" class="w-full border-2 border-gray-200 rounded-xl px-4 py-3 focus:outline-none focus:border-brandGreen transition bg-gray-50" placeholder="••••••••" value="ampf2026">
+            </div>
+            <div id="loginError" class="text-red-500 text-sm font-bold hidden text-center"></div>
+            <button type="submit" class="w-full bg-brandDark text-white py-3.5 rounded-xl font-bold hover:bg-brandGreen transition text-lg"><i class="fas fa-sign-in-alt ml-2"></i> دخول</button>
+        </form>
+        <div class="text-center mt-6"><a href="/" class="text-sm text-gray-500 hover:text-brandGreen transition"><i class="fas fa-arrow-left ml-1"></i> العودة للموقع</a></div>
+    </div>
+</div>
+
+<!-- ========================================= -->
+<!-- DASHBOARD -->
+<!-- ========================================= -->
+<div id="dashboard" class="hidden min-h-screen">
+
+<!-- Sidebar -->
+<aside class="fixed right-0 top-0 h-full w-64 bg-white shadow-xl z-40 hidden lg:block">
+    <div class="p-6 border-b">
+        <div class="flex items-center gap-3">
+            <div class="w-10 h-10 bg-brandDark rounded-xl flex items-center justify-center text-white font-bold">AM</div>
+            <div><div class="font-bold text-brandDark">AMPF CMS</div><div class="text-xs text-gray-500">نظام إدارة المحتوى</div></div>
+        </div>
+    </div>
+    <nav class="p-4 space-y-1" id="sidebarNav">
+        <a onclick="showTab('dashboard')" class="tab-link flex items-center gap-3 px-4 py-3 rounded-xl text-gray-600 hover:bg-gray-50 hover:text-brandDark transition cursor-pointer active-tab" data-tab="dashboard"><i class="fas fa-home w-5"></i> الرئيسية</a>
+        <a onclick="showTab('news')" class="tab-link flex items-center gap-3 px-4 py-3 rounded-xl text-gray-600 hover:bg-gray-50 hover:text-brandDark transition cursor-pointer" data-tab="news"><i class="fas fa-newspaper w-5"></i> الأخبار والأنشطة</a>
+        <a onclick="showTab('gallery')" class="tab-link flex items-center gap-3 px-4 py-3 rounded-xl text-gray-600 hover:bg-gray-50 hover:text-brandDark transition cursor-pointer" data-tab="gallery"><i class="fas fa-images w-5"></i> معرض الصور</a>
+        <a onclick="showTab('programs')" class="tab-link flex items-center gap-3 px-4 py-3 rounded-xl text-gray-600 hover:bg-gray-50 hover:text-brandDark transition cursor-pointer" data-tab="programs"><i class="fas fa-heartbeat w-5"></i> البرامج</a>
+        <a onclick="showTab('documents')" class="tab-link flex items-center gap-3 px-4 py-3 rounded-xl text-gray-600 hover:bg-gray-50 hover:text-brandDark transition cursor-pointer" data-tab="documents"><i class="fas fa-file-alt w-5"></i> الوثائق</a>
+        <a onclick="showTab('content')" class="tab-link flex items-center gap-3 px-4 py-3 rounded-xl text-gray-600 hover:bg-gray-50 hover:text-brandDark transition cursor-pointer" data-tab="content"><i class="fas fa-edit w-5"></i> تعديل النصوص</a>
+        <a onclick="showTab('messages')" class="tab-link flex items-center gap-3 px-4 py-3 rounded-xl text-gray-600 hover:bg-gray-50 hover:text-brandDark transition cursor-pointer" data-tab="messages"><i class="fas fa-envelope w-5"></i> الرسائل</a>
+        <a onclick="showTab('settings')" class="tab-link flex items-center gap-3 px-4 py-3 rounded-xl text-gray-600 hover:bg-gray-50 hover:text-brandDark transition cursor-pointer" data-tab="settings"><i class="fas fa-cog w-5"></i> الإعدادات</a>
+        <hr class="my-4">
+        <a href="/" target="_blank" class="flex items-center gap-3 px-4 py-3 rounded-xl text-brandGreen hover:bg-green-50 transition"><i class="fas fa-globe w-5"></i> عرض الموقع</a>
+        <a onclick="logout()" class="flex items-center gap-3 px-4 py-3 rounded-xl text-red-500 hover:bg-red-50 transition cursor-pointer"><i class="fas fa-sign-out-alt w-5"></i> تسجيل الخروج</a>
+    </nav>
+</aside>
+
+<!-- Mobile sidebar -->
+<div id="mobileSidebar" class="fixed inset-0 bg-black/50 z-50 hidden" onclick="toggleSidebar()">
+    <div class="w-72 bg-white h-full p-6" onclick="event.stopPropagation()">
+        <div class="flex justify-between items-center mb-6">
+            <div class="font-bold text-brandDark text-lg">AMPF CMS</div>
+            <button onclick="toggleSidebar()" class="text-gray-500"><i class="fas fa-times text-xl"></i></button>
+        </div>
+        <div class="space-y-1">
+            <a onclick="showTab('dashboard');toggleSidebar()" class="flex items-center gap-3 px-4 py-3 rounded-xl text-gray-600 hover:bg-gray-50 cursor-pointer"><i class="fas fa-home w-5"></i> الرئيسية</a>
+            <a onclick="showTab('news');toggleSidebar()" class="flex items-center gap-3 px-4 py-3 rounded-xl text-gray-600 hover:bg-gray-50 cursor-pointer"><i class="fas fa-newspaper w-5"></i> الأخبار</a>
+            <a onclick="showTab('gallery');toggleSidebar()" class="flex items-center gap-3 px-4 py-3 rounded-xl text-gray-600 hover:bg-gray-50 cursor-pointer"><i class="fas fa-images w-5"></i> المعرض</a>
+            <a onclick="showTab('programs');toggleSidebar()" class="flex items-center gap-3 px-4 py-3 rounded-xl text-gray-600 hover:bg-gray-50 cursor-pointer"><i class="fas fa-heartbeat w-5"></i> البرامج</a>
+            <a onclick="showTab('documents');toggleSidebar()" class="flex items-center gap-3 px-4 py-3 rounded-xl text-gray-600 hover:bg-gray-50 cursor-pointer"><i class="fas fa-file-alt w-5"></i> الوثائق</a>
+            <a onclick="showTab('content');toggleSidebar()" class="flex items-center gap-3 px-4 py-3 rounded-xl text-gray-600 hover:bg-gray-50 cursor-pointer"><i class="fas fa-edit w-5"></i> تعديل النصوص</a>
+            <a onclick="showTab('messages');toggleSidebar()" class="flex items-center gap-3 px-4 py-3 rounded-xl text-gray-600 hover:bg-gray-50 cursor-pointer"><i class="fas fa-envelope w-5"></i> الرسائل</a>
+            <a onclick="showTab('settings');toggleSidebar()" class="flex items-center gap-3 px-4 py-3 rounded-xl text-gray-600 hover:bg-gray-50 cursor-pointer"><i class="fas fa-cog w-5"></i> الإعدادات</a>
+            <hr class="my-4">
+            <a href="/" target="_blank" class="flex items-center gap-3 px-4 py-3 rounded-xl text-brandGreen"><i class="fas fa-globe w-5"></i> عرض الموقع</a>
+            <a onclick="logout()" class="flex items-center gap-3 px-4 py-3 rounded-xl text-red-500 cursor-pointer"><i class="fas fa-sign-out-alt w-5"></i> خروج</a>
+        </div>
+    </div>
+</div>
+
+<!-- Main Area -->
+<div class="lg:mr-64 min-h-screen">
+    <!-- Top Bar -->
+    <header class="bg-white shadow-sm px-6 py-4 flex items-center justify-between sticky top-0 z-30">
+        <div class="flex items-center gap-3">
+            <button onclick="toggleSidebar()" class="lg:hidden text-brandDark text-xl"><i class="fas fa-bars"></i></button>
+            <h2 id="pageTitle" class="text-lg font-bold text-brandDark">الرئيسية</h2>
+        </div>
+        <div class="flex items-center gap-3">
+            <span class="text-sm text-gray-500 hidden sm:block" id="userDisplay">مرحباً، admin</span>
+            <button onclick="logout()" class="text-sm text-red-500 hover:underline hidden sm:block">خروج</button>
+        </div>
+    </header>
+
+    <div class="p-6">
+
+        <!-- ===== TAB: DASHBOARD ===== -->
+        <div id="tab-dashboard" class="tab-content active fade-in">
+            <div class="grid grid-cols-2 md:grid-cols-4 gap-4 md:gap-6 mb-8">
+                <div class="bg-white p-5 md:p-6 rounded-xl shadow-sm"><div class="flex items-center justify-between"><div><div class="text-gray-500 text-xs md:text-sm">الأخبار</div><div id="statNews" class="text-2xl md:text-3xl font-black text-brandDark mt-1">0</div></div><div class="stat-icon bg-blue-100 text-blue-600"><i class="fas fa-newspaper text-lg md:text-xl"></i></div></div></div>
+                <div class="bg-white p-5 md:p-6 rounded-xl shadow-sm"><div class="flex items-center justify-between"><div><div class="text-gray-500 text-xs md:text-sm">الصور</div><div id="statGallery" class="text-2xl md:text-3xl font-black text-brandDark mt-1">0</div></div><div class="stat-icon bg-purple-100 text-purple-600"><i class="fas fa-images text-lg md:text-xl"></i></div></div></div>
+                <div class="bg-white p-5 md:p-6 rounded-xl shadow-sm"><div class="flex items-center justify-between"><div><div class="text-gray-500 text-xs md:text-sm">البرامج</div><div id="statPrograms" class="text-2xl md:text-3xl font-black text-brandDark mt-1">0</div></div><div class="stat-icon bg-green-100 text-brandGreen"><i class="fas fa-heartbeat text-lg md:text-xl"></i></div></div></div>
+                <div class="bg-white p-5 md:p-6 rounded-xl shadow-sm"><div class="flex items-center justify-between"><div><div class="text-gray-500 text-xs md:text-sm">الرسائل</div><div id="statMessages" class="text-2xl md:text-3xl font-black text-brandDark mt-1">0</div></div><div class="stat-icon bg-pink-100 text-pink-600"><i class="fas fa-envelope text-lg md:text-xl"></i></div></div></div>
+            </div>
+            <div class="grid md:grid-cols-2 gap-6">
+                <div class="bg-white p-6 rounded-xl shadow-sm">
+                    <h3 class="font-bold text-brandDark mb-4">آخر الأخبار</h3>
+                    <div id="recentNews" class="space-y-3"></div>
+                </div>
+                <div class="bg-white p-6 rounded-xl shadow-sm">
+                    <h3 class="font-bold text-brandDark mb-4">آخر معرض الصور</h3>
+                    <div id="recentGallery" class="space-y-3"></div>
+                </div>
+            </div>
+        </div>
+
+        <!-- ===== TAB: NEWS ===== -->
+        <div id="tab-news" class="tab-content fade-in">
+            <div class="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-3 mb-6">
+                <h3 class="text-xl font-bold text-brandDark">إدارة الأخبار والأنشطة</h3>
+                <button onclick="openNewsModal()" class="bg-brandGreen text-white px-5 py-2.5 rounded-xl font-bold hover:bg-brandDark transition text-sm w-full sm:w-auto"><i class="fas fa-plus ml-1"></i> إضافة خبر جديد</button>
+            </div>
+            <div class="overflow-x-auto bg-white rounded-xl shadow-sm">
+                <table class="w-full text-right min-w-[600px]">
+                    <thead class="bg-gray-50 border-b">
+                        <tr>
+                            <th class="px-4 md:px-6 py-4 text-sm font-bold text-gray-600">الصورة</th>
+                            <th class="px-4 md:px-6 py-4 text-sm font-bold text-gray-600">العنوان</th>
+                            <th class="px-4 md:px-6 py-4 text-sm font-bold text-gray-600 hidden md:table-cell">التاريخ</th>
+                            <th class="px-4 md:px-6 py-4 text-sm font-bold text-gray-600 hidden md:table-cell">التصنيف</th>
+                            <th class="px-4 md:px-6 py-4 text-sm font-bold text-gray-600">إجراءات</th>
+                        </tr>
+                    </thead>
+                    <tbody id="newsTableBody"></tbody>
+                </table>
+            </div>
+        </div>
+
+        <!-- ===== TAB: GALLERY ===== -->
+        <div id="tab-gallery" class="tab-content fade-in">
+            <div class="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-3 mb-6">
+                <h3 class="text-xl font-bold text-brandDark">معرض الصور</h3>
+                <button onclick="openGalleryModal()" class="bg-brandGreen text-white px-5 py-2.5 rounded-xl font-bold hover:bg-brandDark transition text-sm w-full sm:w-auto"><i class="fas fa-upload ml-1"></i> رفع صورة جديدة</button>
+            </div>
+            <div id="galleryGrid" class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-4"></div>
+        </div>
+
+        <!-- ===== TAB: PROGRAMS ===== -->
+        <div id="tab-programs" class="tab-content fade-in">
+            <div class="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-3 mb-6">
+                <h3 class="text-xl font-bold text-brandDark">إدارة البرامج</h3>
+                <button onclick="openProgramModal()" class="bg-brandGreen text-white px-5 py-2.5 rounded-xl font-bold hover:bg-brandDark transition text-sm w-full sm:w-auto"><i class="fas fa-plus ml-1"></i> إضافة برنامج</button>
+            </div>
+            <div class="overflow-x-auto bg-white rounded-xl shadow-sm">
+                <table class="w-full text-right min-w-[500px]">
+                    <thead class="bg-gray-50 border-b">
+                        <tr><th class="px-6 py-4 text-sm font-bold text-gray-600">الاسم</th><th class="px-6 py-4 text-sm font-bold text-gray-600 hidden md:table-cell">الوصف</th><th class="px-6 py-4 text-sm font-bold text-gray-600">إجراءات</th></tr>
+                    </thead>
+                    <tbody id="programsTableBody"></tbody>
+                </table>
+            </div>
+        </div>
+
+        <!-- ===== TAB: DOCUMENTS ===== -->
+        <div id="tab-documents" class="tab-content fade-in">
+            <div class="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-3 mb-6">
+                <h3 class="text-xl font-bold text-brandDark">إدارة الوثائق</h3>
+                <button onclick="openDocModal()" class="bg-brandGreen text-white px-5 py-2.5 rounded-xl font-bold hover:bg-brandDark transition text-sm w-full sm:w-auto"><i class="fas fa-plus ml-1"></i> رفع وثيقة</button>
+            </div>
+            <div class="overflow-x-auto bg-white rounded-xl shadow-sm">
+                <table class="w-full text-right min-w-[500px]">
+                    <thead class="bg-gray-50 border-b">
+                        <tr><th class="px-6 py-4 text-sm font-bold text-gray-600">الاسم</th><th class="px-6 py-4 text-sm font-bold text-gray-600 hidden md:table-cell">النوع</th><th class="px-6 py-4 text-sm font-bold text-gray-600">إجراءات</th></tr>
+                    </thead>
+                    <tbody id="docsTableBody"></tbody>
+                </table>
+            </div>
+        </div>
+
+        <!-- ===== TAB: CONTENT EDITOR ===== -->
+        <div id="tab-content" class="tab-content fade-in">
+            <h3 class="text-xl font-bold text-brandDark mb-6">تعديل النصوص والمعلومات العامة</h3>
+            <form id="contentForm" class="space-y-6">
+                <div class="grid md:grid-cols-2 gap-6">
+                    <div class="bg-white p-6 rounded-xl shadow-sm space-y-4">
+                        <h4 class="font-bold text-brandDark pb-2 border-b">القسم الرئيسي (Hero)</h4>
+                        <div><label class="block text-sm font-bold text-gray-700 mb-2">العنوان AR</label><input id="c_hero_title_ar" type="text" class="w-full border-2 border-gray-200 rounded-xl px-4 py-3 focus:outline-none focus:border-brandGreen transition"></div>
+                        <div><label class="block text-sm font-bold text-gray-700 mb-2">Titre FR</label><input id="c_hero_title_fr" type="text" class="w-full border-2 border-gray-200 rounded-xl px-4 py-3 focus:outline-none focus:border-brandGreen transition"></div>
+                        <div><label class="block text-sm font-bold text-gray-700 mb-2">Title EN</label><input id="c_hero_title_en" type="text" class="w-full border-2 border-gray-200 rounded-xl px-4 py-3 focus:outline-none focus:border-brandGreen transition"></div>
+                        <div><label class="block text-sm font-bold text-gray-700 mb-2">الوصف AR</label><textarea id="c_hero_desc_ar" rows="2" class="w-full border-2 border-gray-200 rounded-xl px-4 py-3 focus:outline-none focus:border-brandGreen transition"></textarea></div>
+                        <div><label class="block text-sm font-bold text-gray-700 mb-2">Description FR</label><textarea id="c_hero_desc_fr" rows="2" class="w-full border-2 border-gray-200 rounded-xl px-4 py-3 focus:outline-none focus:border-brandGreen transition"></textarea></div>
+                        <div><label class="block text-sm font-bold text-gray-700 mb-2">Description EN</label><textarea id="c_hero_desc_en" rows="2" class="w-full border-2 border-gray-200 rounded-xl px-4 py-3 focus:outline-none focus:border-brandGreen transition"></textarea></div>
+                        <div><label class="block text-sm font-bold text-gray-700 mb-2">الشارة AR</label><input id="c_hero_badge_ar" type="text" class="w-full border-2 border-gray-200 rounded-xl px-4 py-3 focus:outline-none focus:border-brandGreen transition"></div>
+                        <div><label class="block text-sm font-bold text-gray-700 mb-2">Badge FR</label><input id="c_hero_badge_fr" type="text" class="w-full border-2 border-gray-200 rounded-xl px-4 py-3 focus:outline-none focus:border-brandGreen transition"></div>
+                        <div><label class="block text-sm font-bold text-gray-700 mb-2">Badge EN</label><input id="c_hero_badge_en" type="text" class="w-full border-2 border-gray-200 rounded-xl px-4 py-3 focus:outline-none focus:border-brandGreen transition"></div>
+                    </div>
+                    <div class="bg-white p-6 rounded-xl shadow-sm space-y-4">
+                        <h4 class="font-bold text-brandDark pb-2 border-b">معلومات الاتصال</h4>
+                        <div><label class="block text-sm font-bold text-gray-700 mb-2">العنوان AR</label><input id="c_address_ar" type="text" class="w-full border-2 border-gray-200 rounded-xl px-4 py-3 focus:outline-none focus:border-brandGreen transition"></div>
+                        <div><label class="block text-sm font-bold text-gray-700 mb-2">Adresse FR</label><input id="c_address_fr" type="text" class="w-full border-2 border-gray-200 rounded-xl px-4 py-3 focus:outline-none focus:border-brandGreen transition"></div>
+                        <div><label class="block text-sm font-bold text-gray-700 mb-2">Address EN</label><input id="c_address_en" type="text" class="w-full border-2 border-gray-200 rounded-xl px-4 py-3 focus:outline-none focus:border-brandGreen transition"></div>
+                        <div><label class="block text-sm font-bold text-gray-700 mb-2">الهاتف</label><input id="c_phone" type="text" class="w-full border-2 border-gray-200 rounded-xl px-4 py-3 focus:outline-none focus:border-brandGreen transition"></div>
+                        <div><label class="block text-sm font-bold text-gray-700 mb-2">البريد الإلكتروني</label><input id="c_email" type="text" class="w-full border-2 border-gray-200 rounded-xl px-4 py-3 focus:outline-none focus:border-brandGreen transition"></div>
+                    </div>
+                </div>
+                <div class="bg-white p-6 rounded-xl shadow-sm space-y-4">
+                    <h4 class="font-bold text-brandDark pb-2 border-b">قسم الرؤية والرسالة والقيم</h4>
+                    <div class="grid md:grid-cols-3 gap-4">
+                        <div class="space-y-3">
+                            <div><label class="block text-sm font-bold text-gray-700 mb-2">الرؤية AR</label><textarea id="c_vision_ar" rows="4" class="w-full border-2 border-gray-200 rounded-xl px-4 py-3 focus:outline-none focus:border-brandGreen transition"></textarea></div>
+                            <div><label class="block text-sm font-bold text-gray-700 mb-2">Vision FR</label><textarea id="c_vision_fr" rows="4" class="w-full border-2 border-gray-200 rounded-xl px-4 py-3 focus:outline-none focus:border-brandGreen transition"></textarea></div>
+                            <div><label class="block text-sm font-bold text-gray-700 mb-2">Vision EN</label><textarea id="c_vision_en" rows="4" class="w-full border-2 border-gray-200 rounded-xl px-4 py-3 focus:outline-none focus:border-brandGreen transition"></textarea></div>
+                        </div>
+                        <div class="space-y-3">
+                            <div><label class="block text-sm font-bold text-gray-700 mb-2">الرسالة AR</label><textarea id="c_mission_ar" rows="4" class="w-full border-2 border-gray-200 rounded-xl px-4 py-3 focus:outline-none focus:border-brandGreen transition"></textarea></div>
+                            <div><label class="block text-sm font-bold text-gray-700 mb-2">Mission FR</label><textarea id="c_mission_fr" rows="4" class="w-full border-2 border-gray-200 rounded-xl px-4 py-3 focus:outline-none focus:border-brandGreen transition"></textarea></div>
+                            <div><label class="block text-sm font-bold text-gray-700 mb-2">Mission EN</label><textarea id="c_mission_en" rows="4" class="w-full border-2 border-gray-200 rounded-xl px-4 py-3 focus:outline-none focus:border-brandGreen transition"></textarea></div>
+                        </div>
+                        <div class="space-y-3">
+                            <div><label class="block text-sm font-bold text-gray-700 mb-2">القيم AR (سطر لكل قيمة)</label><textarea id="c_values_ar" rows="4" class="w-full border-2 border-gray-200 rounded-xl px-4 py-3 focus:outline-none focus:border-brandGreen transition"></textarea></div>
+                            <div><label class="block text-sm font-bold text-gray-700 mb-2">Valeurs FR</label><textarea id="c_values_fr" rows="4" class="w-full border-2 border-gray-200 rounded-xl px-4 py-3 focus:outline-none focus:border-brandGreen transition"></textarea></div>
+                            <div><label class="block text-sm font-bold text-gray-700 mb-2">Values EN</label><textarea id="c_values_en" rows="4" class="w-full border-2 border-gray-200 rounded-xl px-4 py-3 focus:outline-none focus:border-brandGreen transition"></textarea></div>
+                        </div>
+                    </div>
+                </div>
+                <div>
+                    <button type="submit" class="bg-brandGreen text-white px-8 py-3 rounded-xl font-bold hover:bg-brandDark transition"><i class="fas fa-save ml-2"></i> حفظ جميع التغييرات</button>
+                </div>
+            </form>
+        </div>
+
+        <!-- ===== TAB: MESSAGES ===== -->
+        <div id="tab-messages" class="tab-content fade-in">
+            <h3 class="text-xl font-bold text-brandDark mb-6">الرسائل الواردة</h3>
+            <div id="messagesContainer" class="space-y-4"></div>
+        </div>
+
+        <!-- ===== TAB: SETTINGS ===== -->
+        <div id="tab-settings" class="tab-content fade-in">
+            <h3 class="text-xl font-bold text-brandDark mb-6">إعدادات النظام</h3>
+            <div class="grid md:grid-cols-2 gap-6">
+                <div class="bg-white p-6 rounded-xl shadow-sm">
+                    <h4 class="font-bold text-brandDark mb-4">تغيير كلمة المرور</h4>
+                    <form id="passwordForm" class="space-y-4">
+                        <div><label class="block text-sm font-bold text-gray-700 mb-2">كلمة المرور الحالية</label><input id="pwdCurrent" type="password" class="w-full border-2 border-gray-200 rounded-xl px-4 py-3 focus:outline-none focus:border-brandGreen transition bg-gray-50"></div>
+                        <div><label class="block text-sm font-bold text-gray-700 mb-2">كلمة المرور الجديدة</label><input id="pwdNew" type="password" class="w-full border-2 border-gray-200 rounded-xl px-4 py-3 focus:outline-none focus:border-brandGreen transition bg-gray-50"></div>
+                        <button type="submit" class="bg-brandDark text-white px-6 py-3 rounded-xl font-bold hover:bg-brandGreen transition">تحديث</button>
+                    </form>
+                </div>
+                <div class="bg-white p-6 rounded-xl shadow-sm">
+                    <h4 class="font-bold text-brandDark mb-4">معلومات النظام</h4>
+                    <div class="space-y-3 text-sm">
+                        <div><span class="font-bold">الإصدار:</span> 2.0.0</div>
+                        <div><span class="font-bold">المنصة:</span> Node.js + Express</div>
+                        <div><span class="font-bold">نظام التخزين:</span> JSON + رفع الملفات</div>
+                        <div><span class="font-bold">الخادم:</span> http://localhost:3000</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div><!-- /p-6 -->
+</div><!-- /main -->
+
+<!-- ========================================= -->
+<!-- MODALS -->
+<!-- ========================================= -->
+
+<!-- News Modal -->
+<div id="newsModal" class="modal-overlay fixed inset-0 bg-black/50 z-50 items-center justify-center p-4">
+    <div class="bg-white rounded-2xl p-6 w-full max-w-lg max-h-[90vh] overflow-y-auto">
+        <div class="flex justify-between items-center mb-4">
+            <h3 id="newsModalTitle" class="text-lg font-bold text-brandDark">إضافة خبر جديد</h3>
+            <button onclick="closeModal('newsModal')" class="text-gray-400 hover:text-gray-600"><i class="fas fa-times text-xl"></i></button>
+        </div>
+        <form id="newsForm" class="space-y-4" enctype="multipart/form-data">
+            <input type="hidden" id="newsId">
+            <div class="bg-gray-50 rounded-xl p-4 space-y-3">
+                <div class="flex gap-2 items-center mb-1"><span class="text-sm font-bold text-gray-700">العنوان</span><span class="text-xs px-2 py-0.5 rounded bg-emerald-100 text-emerald-700 font-bold">AR</span></div>
+                <input id="newsTitleAr" type="text" class="w-full border-2 border-gray-200 rounded-xl px-4 py-2 focus:outline-none focus:border-brandGreen transition" required>
+                <div class="flex gap-2 items-center mb-1"><span class="text-sm font-bold text-gray-700">Titre</span><span class="text-xs px-2 py-0.5 rounded bg-blue-100 text-blue-700 font-bold">FR</span></div>
+                <input id="newsTitleFr" type="text" class="w-full border-2 border-gray-200 rounded-xl px-4 py-2 focus:outline-none focus:border-brandGreen transition">
+                <div class="flex gap-2 items-center mb-1"><span class="text-sm font-bold text-gray-700">Title</span><span class="text-xs px-2 py-0.5 rounded bg-purple-100 text-purple-700 font-bold">EN</span></div>
+                <input id="newsTitleEn" type="text" class="w-full border-2 border-gray-200 rounded-xl px-4 py-2 focus:outline-none focus:border-brandGreen transition">
+            </div>
+            <div class="bg-gray-50 rounded-xl p-4 space-y-3">
+                <div class="flex gap-2 items-center mb-1"><span class="text-sm font-bold text-gray-700">الوصف</span><span class="text-xs px-2 py-0.5 rounded bg-emerald-100 text-emerald-700 font-bold">AR</span></div>
+                <textarea id="newsDescAr" rows="3" class="w-full border-2 border-gray-200 rounded-xl px-4 py-2 focus:outline-none focus:border-brandGreen transition" required></textarea>
+                <div class="flex gap-2 items-center mb-1"><span class="text-sm font-bold text-gray-700">Description</span><span class="text-xs px-2 py-0.5 rounded bg-blue-100 text-blue-700 font-bold">FR</span></div>
+                <textarea id="newsDescFr" rows="3" class="w-full border-2 border-gray-200 rounded-xl px-4 py-2 focus:outline-none focus:border-brandGreen transition"></textarea>
+                <div class="flex gap-2 items-center mb-1"><span class="text-sm font-bold text-gray-700">Description</span><span class="text-xs px-2 py-0.5 rounded bg-purple-100 text-purple-700 font-bold">EN</span></div>
+                <textarea id="newsDescEn" rows="3" class="w-full border-2 border-gray-200 rounded-xl px-4 py-2 focus:outline-none focus:border-brandGreen transition"></textarea>
+            </div>
+            <div>
+                <label class="block text-sm font-bold text-gray-700 mb-2">الصورة</label>
+                <input id="newsImage" type="file" accept="image/*" class="w-full border-2 border-gray-200 rounded-xl px-4 py-3 focus:outline-none focus:border-brandGreen transition bg-gray-50">
+                <div id="newsImagePreview" class="mt-2"></div>
+            </div>
+            <div class="grid grid-cols-2 gap-4">
+                <div>
+                    <label class="block text-sm font-bold text-gray-700 mb-2">التصنيف</label>
+                    <select id="newsCategory" class="w-full border-2 border-gray-200 rounded-xl px-4 py-3 focus:outline-none focus:border-brandGreen transition bg-gray-50">
+                        <option value="blog">المدونة</option>
+                        <option value="youth">الشباب</option>
+                        <option value="advocacy">المناصرة</option>
+                    </select>
+                </div>
+                <div>
+                    <label class="block text-sm font-bold text-gray-700 mb-2">التاريخ</label>
+                    <input id="newsDate" type="date" class="w-full border-2 border-gray-200 rounded-xl px-4 py-3 focus:outline-none focus:border-brandGreen transition bg-gray-50">
+                </div>
+            </div>
+            <div class="flex gap-3 pt-2">
+                <button type="submit" class="flex-1 bg-brandGreen text-white py-3 rounded-xl font-bold hover:bg-brandDark transition">حفظ الخبر</button>
+                <button type="button" onclick="closeModal('newsModal')" class="px-6 py-3 border-2 border-gray-200 rounded-xl font-bold text-gray-600 hover:bg-gray-50 transition">إلغاء</button>
+            </div>
+        </form>
+    </div>
+</div>
+
+<!-- Gallery Modal -->
+<div id="galleryModal" class="modal-overlay fixed inset-0 bg-black/50 z-50 items-center justify-center p-4">
+    <div class="bg-white rounded-2xl p-6 w-full max-w-md">
+        <div class="flex justify-between items-center mb-4">
+            <h3 class="text-lg font-bold text-brandDark">رفع صورة جديدة</h3>
+            <button onclick="closeModal('galleryModal')" class="text-gray-400 hover:text-gray-600"><i class="fas fa-times text-xl"></i></button>
+        </div>
+        <form id="galleryForm" class="space-y-4">
+            <div>
+                <label class="block text-sm font-bold text-gray-700 mb-2">عنوان الصورة</label>
+                <input id="galleryTitle" type="text" class="w-full border-2 border-gray-200 rounded-xl px-4 py-3 focus:outline-none focus:border-brandGreen transition">
+            </div>
+            <div>
+                <label class="block text-sm font-bold text-gray-700 mb-2">اختر صورة *</label>
+                <input id="galleryFile" type="file" accept="image/*" required class="w-full border-2 border-gray-200 rounded-xl px-4 py-3 focus:outline-none focus:border-brandGreen transition bg-gray-50">
+                <div id="galleryPreview" class="mt-2"></div>
+            </div>
+            <div class="flex gap-3 pt-2">
+                <button type="submit" class="flex-1 bg-brandGreen text-white py-3 rounded-xl font-bold hover:bg-brandDark transition"><i class="fas fa-upload ml-1"></i> رفع</button>
+                <button type="button" onclick="closeModal('galleryModal')" class="px-6 py-3 border-2 border-gray-200 rounded-xl font-bold text-gray-600 hover:bg-gray-50 transition">إلغاء</button>
+            </div>
+        </form>
+    </div>
+</div>
+
+<!-- Program Modal -->
+<div id="programModal" class="modal-overlay fixed inset-0 bg-black/50 z-50 items-center justify-center p-4">
+    <div class="bg-white rounded-2xl p-6 w-full max-w-lg">
+        <div class="flex justify-between items-center mb-4">
+            <h3 id="programModalTitle" class="text-lg font-bold text-brandDark">إضافة برنامج</h3>
+            <button onclick="closeModal('programModal')" class="text-gray-400 hover:text-gray-600"><i class="fas fa-times text-xl"></i></button>
+        </div>
+        <form id="programForm" class="space-y-4">
+            <input type="hidden" id="programId">
+            <div class="bg-gray-50 rounded-xl p-4 space-y-3">
+                <div class="flex gap-2 items-center mb-1"><span class="text-sm font-bold text-gray-700">الاسم</span><span class="text-xs px-2 py-0.5 rounded bg-emerald-100 text-emerald-700 font-bold">AR</span></div>
+                <input id="programTitleAr" type="text" class="w-full border-2 border-gray-200 rounded-xl px-4 py-2 focus:outline-none focus:border-brandGreen transition" required>
+                <div class="flex gap-2 items-center mb-1"><span class="text-sm font-bold text-gray-700">Nom</span><span class="text-xs px-2 py-0.5 rounded bg-blue-100 text-blue-700 font-bold">FR</span></div>
+                <input id="programTitleFr" type="text" class="w-full border-2 border-gray-200 rounded-xl px-4 py-2 focus:outline-none focus:border-brandGreen transition">
+                <div class="flex gap-2 items-center mb-1"><span class="text-sm font-bold text-gray-700">Name</span><span class="text-xs px-2 py-0.5 rounded bg-purple-100 text-purple-700 font-bold">EN</span></div>
+                <input id="programTitleEn" type="text" class="w-full border-2 border-gray-200 rounded-xl px-4 py-2 focus:outline-none focus:border-brandGreen transition">
+            </div>
+            <div class="bg-gray-50 rounded-xl p-4 space-y-3">
+                <div class="flex gap-2 items-center mb-1"><span class="text-sm font-bold text-gray-700">الوصف</span><span class="text-xs px-2 py-0.5 rounded bg-emerald-100 text-emerald-700 font-bold">AR</span></div>
+                <textarea id="programDescAr" rows="2" class="w-full border-2 border-gray-200 rounded-xl px-4 py-2 focus:outline-none focus:border-brandGreen transition" required></textarea>
+                <div class="flex gap-2 items-center mb-1"><span class="text-sm font-bold text-gray-700">Description</span><span class="text-xs px-2 py-0.5 rounded bg-blue-100 text-blue-700 font-bold">FR</span></div>
+                <textarea id="programDescFr" rows="2" class="w-full border-2 border-gray-200 rounded-xl px-4 py-2 focus:outline-none focus:border-brandGreen transition"></textarea>
+                <div class="flex gap-2 items-center mb-1"><span class="text-sm font-bold text-gray-700">Description</span><span class="text-xs px-2 py-0.5 rounded bg-purple-100 text-purple-700 font-bold">EN</span></div>
+                <textarea id="programDescEn" rows="2" class="w-full border-2 border-gray-200 rounded-xl px-4 py-2 focus:outline-none focus:border-brandGreen transition"></textarea>
+            </div>
+            <div class="flex gap-3 pt-2">
+                <button type="submit" class="flex-1 bg-brandGreen text-white py-3 rounded-xl font-bold hover:bg-brandDark transition">حفظ</button>
+                <button type="button" onclick="closeModal('programModal')" class="px-6 py-3 border-2 border-gray-200 rounded-xl font-bold text-gray-600 hover:bg-gray-50 transition">إلغاء</button>
+            </div>
+        </form>
+    </div>
+</div>
+
+<!-- Document Modal -->
+<div id="docModal" class="modal-overlay fixed inset-0 bg-black/50 z-50 items-center justify-center p-4">
+    <div class="bg-white rounded-2xl p-6 w-full max-w-md">
+        <div class="flex justify-between items-center mb-4">
+            <h3 class="text-lg font-bold text-brandDark">رفع وثيقة</h3>
+            <button onclick="closeModal('docModal')" class="text-gray-400 hover:text-gray-600"><i class="fas fa-times text-xl"></i></button>
+        </div>
+        <form id="docForm" class="space-y-4">
+            <div><label class="block text-sm font-bold text-gray-700 mb-2">اسم الوثيقة *</label><input id="docName" type="text" class="w-full border-2 border-gray-200 rounded-xl px-4 py-3 focus:outline-none focus:border-brandGreen transition" required></div>
+            <div><label class="block text-sm font-bold text-gray-700 mb-2">الملف</label><input id="docFile" type="file" class="w-full border-2 border-gray-200 rounded-xl px-4 py-3 focus:outline-none focus:border-brandGreen transition bg-gray-50"></div>
+            <div class="flex gap-3 pt-2">
+                <button type="submit" class="flex-1 bg-brandGreen text-white py-3 rounded-xl font-bold hover:bg-brandDark transition"><i class="fas fa-upload ml-1"></i> رفع</button>
+                <button type="button" onclick="closeModal('docModal')" class="px-6 py-3 border-2 border-gray-200 rounded-xl font-bold text-gray-600 hover:bg-gray-50 transition">إلغاء</button>
+            </div>
+        </form>
+    </div>
+</div>
+
+<!-- Toast -->
+<div id="toast" class="toast"><i class="fas fa-check-circle text-brandLight"></i><span id="toastMsg"></span></div>
+
+<!-- ========================================= -->
+<!-- JAVASCRIPT -->
+<!-- ========================================= -->
+<script>
+const API = '/api';
+
+// ─── Helpers ──────────────────────────────
+function showToast(msg) { const t = document.getElementById('toast'); document.getElementById('toastMsg').textContent = msg; t.classList.add('show'); setTimeout(() => t.classList.remove('show'), 3000); }
+function toggleSidebar() { document.getElementById('mobileSidebar').classList.toggle('hidden'); }
+function closeModal(id) { document.getElementById(id).classList.remove('active'); }
+function openModal(id) { document.getElementById(id).classList.add('active'); }
+document.querySelectorAll('.modal-overlay').forEach(m => m.addEventListener('click', e => { if (e.target === m) m.classList.remove('active'); }));
+
+// ─── Tabs ─────────────────────────────────
+function showTab(tab) {
+    document.querySelectorAll('.tab-content').forEach(el => el.classList.remove('active'));
+    document.getElementById('tab-' + tab)?.classList.add('active');
+    document.querySelectorAll('.tab-link').forEach(el => el.classList.remove('bg-gray-50', 'text-brandDark'));
+    document.querySelectorAll(`.tab-link[data-tab="${tab}"]`).forEach(el => el.classList.add('bg-gray-50', 'text-brandDark'));
+    const titles = { dashboard: 'الرئيسية', news: 'الأخبار والأنشطة', gallery: 'معرض الصور', programs: 'البرامج', documents: 'الوثائق', content: 'تعديل النصوص', messages: 'الرسائل', settings: 'الإعدادات' };
+    document.getElementById('pageTitle').textContent = titles[tab] || tab;
+    if (tab === 'content') loadContentEditor();
+}
+
+// ─── Login ────────────────────────────────
+document.getElementById('loginForm').addEventListener('submit', async (e) => {
+    e.preventDefault();
+    const err = document.getElementById('loginError');
+    err.classList.add('hidden');
+    try {
+        const res = await fetch(API + '/login', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ username: document.getElementById('loginUser').value, password: document.getElementById('loginPass').value }) });
+        const data = await res.json();
+        if (data.success) {
+            document.getElementById('loginScreen').classList.add('hidden');
+            document.getElementById('dashboard').classList.remove('hidden');
+            loadAllData();
+        } else { err.textContent = 'بيانات الدخول غير صحيحة'; err.classList.remove('hidden'); }
+    } catch(e) { err.textContent = 'خطأ في الاتصال بالخادم'; err.classList.remove('hidden'); }
+});
+
+async function logout() { await fetch(API + '/logout', { method: 'POST' }); document.getElementById('dashboard').classList.add('hidden'); document.getElementById('loginScreen').classList.remove('hidden'); }
+
+// ─── Load All Data ────────────────────────
+async function loadAllData() {
+    try {
+        const res = await fetch(API + '/content');
+        const data = await res.json();
+        renderDashboard(data);
+        renderNews(data.news || []);
+        renderGallery(data.gallery || []);
+        renderPrograms(data.programs || []);
+        renderDocs(data.documents || []);
+        renderMessages(data.messages || []);
+    } catch(e) { console.error(e); }
+}
+
+// ─── Dashboard ────────────────────────────
+function renderDashboard(data) {
+    document.getElementById('statNews').textContent = (data.news || []).length;
+    document.getElementById('statGallery').textContent = (data.gallery || []).length;
+    document.getElementById('statPrograms').textContent = (data.programs || []).length;
+    document.getElementById('statMessages').textContent = (data.messages || []).length;
+
+    const recent = (data.news || []).slice(-3).reverse();
+    document.getElementById('recentNews').innerHTML = recent.length ? recent.map(n =>
+        `<div class="p-3 bg-gray-50 rounded-lg flex items-center gap-3"><div class="w-2 h-2 bg-brandGreen rounded-full"></div><div class="flex-1"><div class="text-sm font-bold">${n.title}</div><div class="text-xs text-gray-500">${n.date || ''}</div></div></div>`
+    ).join('') : '<div class="text-center text-gray-400 py-4">لا توجد أخبار</div>';
+
+    const recentGallery = (data.gallery || []).slice(-3).reverse();
+    document.getElementById('recentGallery').innerHTML = recentGallery.length ? recentGallery.map(g =>
+        `<div class="p-3 bg-gray-50 rounded-lg flex items-center gap-3"><img src="${g.image}" class="w-12 h-12 rounded-lg object-cover"><div class="flex-1"><div class="text-sm font-bold">${g.title}</div></div></div>`
+    ).join('') : '<div class="text-center text-gray-400 py-4">لا توجد صور</div>';
+}
+
+// ─── NEWS ─────────────────────────────────
+function renderNews(items) {
+    const tb = document.getElementById('newsTableBody');
+    if (!items.length) { tb.innerHTML = '<tr><td colspan="5" class="text-center text-gray-400 py-12">لا توجد أخبار. أضف أول خبر الآن!</td></tr>'; return; }
+    tb.innerHTML = items.map(n => `
+        <tr class="border-b hover:bg-gray-50">
+            <td class="px-4 md:px-6 py-4">
+                ${n.image ? `<img src="${n.image}" class="w-14 h-14 rounded-lg object-cover">` : '<div class="w-14 h-14 bg-gray-100 rounded-lg flex items-center justify-center text-gray-400"><i class="fas fa-image"></i></div>'}
+            </td>
+            <td class="px-4 md:px-6 py-4 font-bold text-sm md:text-base">${n.title}</td>
+            <td class="px-4 md:px-6 py-4 text-gray-500 text-sm hidden md:table-cell">${n.date || ''}</td>
+            <td class="px-4 md:px-6 py-4 hidden md:table-cell"><span class="text-xs px-2 py-1 rounded-full bg-gray-100">${n.category || 'عام'}</span></td>
+            <td class="px-4 md:px-6 py-4 whitespace-nowrap">
+                <button onclick="editNews('${n.id}')" class="text-brandGreen hover:text-brandDark ml-2" title="تعديل"><i class="fas fa-edit"></i></button>
+                <button onclick="deleteNews('${n.id}')" class="text-red-500 hover:text-red-700" title="حذف"><i class="fas fa-trash"></i></button>
+            </td>
+        </tr>
+    `).join('');
+}
+
+function openNewsModal(item) {
+    document.getElementById('newsModalTitle').textContent = item ? 'تعديل الخبر' : 'إضافة خبر جديد';
+    document.getElementById('newsId').value = item ? item.id : '';
+    document.getElementById('newsTitleAr').value = item ? (typeof item.title === 'string' ? item.title : (item.title?.ar || '')) : '';
+    document.getElementById('newsTitleFr').value = item ? (item.title?.fr || '') : '';
+    document.getElementById('newsTitleEn').value = item ? (item.title?.en || '') : '';
+    document.getElementById('newsDescAr').value = item ? (typeof item.desc === 'string' ? item.desc : (item.desc?.ar || '')) : '';
+    document.getElementById('newsDescFr').value = item ? (item.desc?.fr || '') : '';
+    document.getElementById('newsDescEn').value = item ? (item.desc?.en || '') : '';
+    document.getElementById('newsCategory').value = item ? item.category : 'blog';
+    document.getElementById('newsDate').value = item ? item.date : new Date().toISOString().split('T')[0];
+    document.getElementById('newsImage').value = '';
+    document.getElementById('newsImagePreview').innerHTML = item && item.image ? `<img src="${item.image}" class="preview-img">` : '';
+    openModal('newsModal');
+}
+
+document.getElementById('newsForm').addEventListener('submit', async (e) => {
+    e.preventDefault();
+    const id = document.getElementById('newsId').value;
+    const formData = new FormData();
+    formData.append('title_ar', document.getElementById('newsTitleAr').value);
+    formData.append('title_fr', document.getElementById('newsTitleFr').value);
+    formData.append('title_en', document.getElementById('newsTitleEn').value);
+    formData.append('desc_ar', document.getElementById('newsDescAr').value);
+    formData.append('desc_fr', document.getElementById('newsDescFr').value);
+    formData.append('desc_en', document.getElementById('newsDescEn').value);
+    formData.append('category', document.getElementById('newsCategory').value);
+    formData.append('date', document.getElementById('newsDate').value);
+    const fileInput = document.getElementById('newsImage');
+    if (fileInput.files[0]) formData.append('image', fileInput.files[0]);
+
+    const url = id ? API + '/news-with-image/' + id : API + '/news-with-image';
+    const method = id ? 'PUT' : 'POST';
+    try {
+        const res = await fetch(url, { method, body: formData });
+        const result = await res.json();
+        if (result.success) { showToast(id ? 'تم تحديث الخبر' : 'تم إضافة الخبر'); closeModal('newsModal'); loadAllData(); }
+        else showToast('خطأ: ' + (result.error || ''));
+    } catch(e) { showToast('خطأ في الاتصال'); }
+});
+
+async function editNews(id) {
+    const res = await fetch(API + '/content?type=news');
+    const data = await res.json();
+    const item = data.news.find(n => n.id === id);
+    if (item) openNewsModal(item);
+}
+
+async function deleteNews(id) {
+    if (!confirm('هل أنت متأكد من حذف هذا الخبر؟')) return;
+    const res = await fetch(API + '/content/news/' + id, { method: 'DELETE' });
+    const result = await res.json();
+    if (result.success) { showToast('تم حذف الخبر'); loadAllData(); }
+}
+
+// Preview image on file select
+document.getElementById('newsImage').addEventListener('change', function() {
+    const preview = document.getElementById('newsImagePreview');
+    if (this.files[0]) { const reader = new FileReader(); reader.onload = e => { preview.innerHTML = `<img src="${e.target.result}" class="preview-img">`; }; reader.readAsDataURL(this.files[0]); }
+    else preview.innerHTML = '';
+});
+
+// ─── GALLERY ──────────────────────────────
+function renderGallery(items) {
+    const grid = document.getElementById('galleryGrid');
+    if (!items.length) { grid.innerHTML = '<div class="col-span-full empty-state"><i class="fas fa-images text-4xl mb-3"></i><p>لا توجد صور في المعرض</p></div>'; return; }
+    grid.innerHTML = items.map(g => `
+        <div class="bg-white rounded-xl overflow-hidden shadow-sm group relative">
+            <img src="${g.image}" alt="${g.title}" class="gallery-img" onerror="this.src='data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 width=%22200%22 height=%22200%22><rect fill=%22%23ddd%22 width=%22200%22 height=%22200%22/></svg>'">
+            <div class="p-3">
+                <div class="text-sm font-bold text-brandDark truncate">${g.title}</div>
+            </div>
+            <button onclick="deleteGallery('${g.id}')" class="absolute top-2 left-2 w-8 h-8 bg-red-500 text-white rounded-full flex items-center justify-center opacity-0 group-hover:opacity-100 transition hover:bg-red-600"><i class="fas fa-trash text-xs"></i></button>
+        </div>
+    `).join('');
+}
+
+function openGalleryModal() { document.getElementById('galleryTitle').value = ''; document.getElementById('galleryFile').value = ''; document.getElementById('galleryPreview').innerHTML = ''; openModal('galleryModal'); }
+
+document.getElementById('galleryFile').addEventListener('change', function() {
+    const preview = document.getElementById('galleryPreview');
+    if (this.files[0]) { const reader = new FileReader(); reader.onload = e => { preview.innerHTML = `<img src="${e.target.result}" class="preview-img">`; }; reader.readAsDataURL(this.files[0]); }
+    else preview.innerHTML = '';
+});
+
+document.getElementById('galleryForm').addEventListener('submit', async (e) => {
+    e.preventDefault();
+    const formData = new FormData();
+    formData.append('title', document.getElementById('galleryTitle').value || 'صورة');
+    formData.append('image', document.getElementById('galleryFile').files[0]);
+    try {
+        const res = await fetch(API + '/gallery', { method: 'POST', body: formData });
+        const result = await res.json();
+        if (result.success) { showToast('تم رفع الصورة'); closeModal('galleryModal'); loadAllData(); }
+        else showToast('خطأ: ' + (result.error || ''));
+    } catch(e) { showToast('خطأ في الرفع'); }
+});
+
+async function deleteGallery(id) {
+    if (!confirm('حذف هذه الصورة؟')) return;
+    const res = await fetch(API + '/gallery/' + id, { method: 'DELETE' });
+    if ((await res.json()).success) { showToast('تم حذف الصورة'); loadAllData(); }
+}
+
+// ─── PROGRAMS ─────────────────────────────
+function renderPrograms(items) {
+    const tb = document.getElementById('programsTableBody');
+    if (!items.length) { tb.innerHTML = '<tr><td colspan="3" class="text-center text-gray-400 py-12">لا توجد برامج</td></tr>'; return; }
+    tb.innerHTML = items.map(p => `
+        <tr class="border-b hover:bg-gray-50">
+            <td class="px-6 py-4 font-bold">${p.title}</td>
+            <td class="px-6 py-4 text-gray-500 text-sm hidden md:table-cell">${(p.desc || '').substring(0, 80)}${(p.desc||'').length > 80 ? '...' : ''}</td>
+            <td class="px-6 py-4 whitespace-nowrap">
+                <button onclick="editProgram('${p.id}')" class="text-brandGreen hover:text-brandDark ml-2"><i class="fas fa-edit"></i></button>
+                <button onclick="deleteProgram('${p.id}')" class="text-red-500 hover:text-red-700"><i class="fas fa-trash"></i></button>
+            </td>
+        </tr>
+    `).join('');
+}
+
+function openProgramModal(item) {
+    document.getElementById('programModalTitle').textContent = item ? 'تعديل البرنامج' : 'إضافة برنامج';
+    document.getElementById('programId').value = item ? item.id : '';
+    document.getElementById('programTitleAr').value = item ? (typeof item.title === 'string' ? item.title : (item.title?.ar || '')) : '';
+    document.getElementById('programTitleFr').value = item ? (item.title?.fr || '') : '';
+    document.getElementById('programTitleEn').value = item ? (item.title?.en || '') : '';
+    document.getElementById('programDescAr').value = item ? (typeof item.desc === 'string' ? item.desc : (item.desc?.ar || '')) : '';
+    document.getElementById('programDescFr').value = item ? (item.desc?.fr || '') : '';
+    document.getElementById('programDescEn').value = item ? (item.desc?.en || '') : '';
+    openModal('programModal');
+}
+
+document.getElementById('programForm').addEventListener('submit', async (e) => {
+    e.preventDefault();
+    const id = document.getElementById('programId').value;
+    const data = {
+        title: { ar: document.getElementById('programTitleAr').value, fr: document.getElementById('programTitleFr').value, en: document.getElementById('programTitleEn').value },
+        desc: { ar: document.getElementById('programDescAr').value, fr: document.getElementById('programDescFr').value, en: document.getElementById('programDescEn').value }
+    };
+    const url = API + '/content/programs' + (id ? '/' + id : '');
+    const method = id ? 'PUT' : 'POST';
+    const res = await fetch(url, { method, headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(data) });
+    if ((await res.json()).success) { showToast(id ? 'تم تحديث البرنامج' : 'تم إضافة البرنامج'); closeModal('programModal'); loadAllData(); }
+});
+
+async function editProgram(id) {
+    const res = await fetch(API + '/content?type=programs'); const data = await res.json();
+    const item = data.programs.find(p => p.id === id); if (item) openProgramModal(item);
+}
+async function deleteProgram(id) {
+    if (!confirm('حذف هذا البرنامج؟')) return;
+    const res = await fetch(API + '/content/programs/' + id, { method: 'DELETE' });
+    if ((await res.json()).success) { showToast('تم الحذف'); loadAllData(); }
+}
+
+// ─── DOCUMENTS ────────────────────────────
+function renderDocs(items) {
+    const tb = document.getElementById('docsTableBody');
+    if (!items.length) { tb.innerHTML = '<tr><td colspan="3" class="text-center text-gray-400 py-12">لا توجد وثائق</td></tr>'; return; }
+    tb.innerHTML = items.map(d => `
+        <tr class="border-b hover:bg-gray-50">
+            <td class="px-6 py-4 font-bold">${d.name}</td>
+            <td class="px-6 py-4 text-gray-500 text-sm hidden md:table-cell">${d.type || 'PDF'}</td>
+            <td class="px-6 py-4">
+                <button onclick="deleteDoc('${d.id}')" class="text-red-500 hover:text-red-700"><i class="fas fa-trash"></i></button>
+            </td>
+        </tr>
+    `).join('');
+}
+function openDocModal() { document.getElementById('docName').value = ''; document.getElementById('docFile').value = ''; openModal('docModal'); }
+document.getElementById('docForm').addEventListener('submit', async (e) => {
+    e.preventDefault();
+    const data = { name: document.getElementById('docName').value, type: 'PDF', file: '' };
+    const res = await fetch(API + '/content/documents', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(data) });
+    if ((await res.json()).success) { showToast('تم رفع الوثيقة'); closeModal('docModal'); loadAllData(); }
+});
+async function deleteDoc(id) {
+    if (!confirm('حذف هذه الوثيقة؟')) return;
+    const res = await fetch(API + '/content/documents/' + id, { method: 'DELETE' });
+    if ((await res.json()).success) { showToast('تم الحذف'); loadAllData(); }
+}
+
+// ─── MESSAGES ─────────────────────────────
+function renderMessages(items) {
+    const c = document.getElementById('messagesContainer');
+    if (!items.length) { c.innerHTML = '<div class="text-center text-gray-400 py-12">لا توجد رسائل</div>'; return; }
+    c.innerHTML = items.reverse().map(m => `
+        <div class="bg-white p-6 rounded-xl shadow-sm border-r-4 border-brandGreen">
+            <div class="flex justify-between items-start">
+                <div><div class="font-bold text-brandDark">${m.name || ''}</div><div class="text-sm text-gray-500">${m.email || ''}</div></div>
+                <div class="text-xs text-gray-500">${m.createdAt ? new Date(m.createdAt).toLocaleDateString('ar') : ''}</div>
+            </div>
+            <div class="mt-2 text-sm text-gray-600 bg-gray-50 p-3 rounded-lg">${m.message || ''}</div>
+        </div>
+    `).join('');
+}
+
+// ─── CONTENT EDITOR ───────────────────────
+function getLangVal(obj, lang) {
+    if (!obj) return '';
+    if (typeof obj === 'string') return lang === 'ar' ? obj : '';
+    return obj[lang] || '';
+}
+
+async function loadContentEditor() {
+    try {
+        const res = await fetch(API + '/site-content');
+        const sc = await res.json();
+        if (sc.hero) {
+            document.getElementById('c_hero_title_ar').value = getLangVal(sc.hero.title, 'ar');
+            document.getElementById('c_hero_title_fr').value = getLangVal(sc.hero.title, 'fr');
+            document.getElementById('c_hero_title_en').value = getLangVal(sc.hero.title, 'en');
+            document.getElementById('c_hero_desc_ar').value = getLangVal(sc.hero.desc, 'ar');
+            document.getElementById('c_hero_desc_fr').value = getLangVal(sc.hero.desc, 'fr');
+            document.getElementById('c_hero_desc_en').value = getLangVal(sc.hero.desc, 'en');
+            document.getElementById('c_hero_badge_ar').value = getLangVal(sc.hero.badge, 'ar');
+            document.getElementById('c_hero_badge_fr').value = getLangVal(sc.hero.badge, 'fr');
+            document.getElementById('c_hero_badge_en').value = getLangVal(sc.hero.badge, 'en');
+        }
+        if (sc.contact) {
+            document.getElementById('c_address_ar').value = getLangVal(sc.contact.address, 'ar');
+            document.getElementById('c_address_fr').value = getLangVal(sc.contact.address, 'fr');
+            document.getElementById('c_address_en').value = getLangVal(sc.contact.address, 'en');
+            document.getElementById('c_phone').value = sc.contact.phone || '';
+            document.getElementById('c_email').value = sc.contact.email || '';
+        }
+        if (sc.about) {
+            document.getElementById('c_vision_ar').value = getLangVal(sc.about.vision, 'ar');
+            document.getElementById('c_vision_fr').value = getLangVal(sc.about.vision, 'fr');
+            document.getElementById('c_vision_en').value = getLangVal(sc.about.vision, 'en');
+            document.getElementById('c_mission_ar').value = getLangVal(sc.about.mission, 'ar');
+            document.getElementById('c_mission_fr').value = getLangVal(sc.about.mission, 'fr');
+            document.getElementById('c_mission_en').value = getLangVal(sc.about.mission, 'en');
+            document.getElementById('c_values_ar').value = getLangVal(sc.about.values, 'ar');
+            document.getElementById('c_values_fr').value = getLangVal(sc.about.values, 'fr');
+            document.getElementById('c_values_en').value = getLangVal(sc.about.values, 'en');
+        }
+    } catch(e) { console.error(e); }
+}
+
+document.getElementById('contentForm').addEventListener('submit', async (e) => {
+    e.preventDefault();
+    const data = {
+        hero: {
+            title: { ar: document.getElementById('c_hero_title_ar').value, fr: document.getElementById('c_hero_title_fr').value, en: document.getElementById('c_hero_title_en').value },
+            desc: { ar: document.getElementById('c_hero_desc_ar').value, fr: document.getElementById('c_hero_desc_fr').value, en: document.getElementById('c_hero_desc_en').value },
+            badge: { ar: document.getElementById('c_hero_badge_ar').value, fr: document.getElementById('c_hero_badge_fr').value, en: document.getElementById('c_hero_badge_en').value }
+        },
+        contact: {
+            address: { ar: document.getElementById('c_address_ar').value, fr: document.getElementById('c_address_fr').value, en: document.getElementById('c_address_en').value },
+            phone: document.getElementById('c_phone').value,
+            email: document.getElementById('c_email').value
+        },
+        about: {
+            vision: { ar: document.getElementById('c_vision_ar').value, fr: document.getElementById('c_vision_fr').value, en: document.getElementById('c_vision_en').value },
+            mission: { ar: document.getElementById('c_mission_ar').value, fr: document.getElementById('c_mission_fr').value, en: document.getElementById('c_mission_en').value },
+            values: { ar: document.getElementById('c_values_ar').value, fr: document.getElementById('c_values_fr').value, en: document.getElementById('c_values_en').value }
+        }
+    };
+    try {
+        const res = await fetch(API + '/site-content', { method: 'PUT', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(data) });
+        if ((await res.json()).success) showToast('تم حفظ جميع التغييرات');
+    } catch(e) { showToast('خطأ في الحفظ'); }
+});
+
+// ─── PASSWORD ─────────────────────────────
+document.getElementById('passwordForm').addEventListener('submit', async (e) => {
+    e.preventDefault();
+    const res = await fetch(API + '/change-password', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ currentPassword: document.getElementById('pwdCurrent').value, newPassword: document.getElementById('pwdNew').value }) });
+    const result = await res.json();
+    if (result.success) { showToast('تم تغيير كلمة المرور'); document.getElementById('passwordForm').reset(); }
+    else showToast('خطأ: ' + (result.error || ''));
+});
+
+// ─── Auto-login check ─────────────────────
+(async function() {
+    try {
+        const res = await fetch(API + '/check-auth');
+        const data = await res.json();
+        if (data.authenticated) {
+            document.getElementById('loginScreen').classList.add('hidden');
+            document.getElementById('dashboard').classList.remove('hidden');
+            loadAllData();
+        }
+    } catch(e) {}
+})();
+</script>
+</body>
+</html>
