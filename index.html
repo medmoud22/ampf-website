@@ -20,7 +20,7 @@
         .fade-up.visible { opacity: 1; transform: translateY(0); }
         .modal { opacity: 0; pointer-events: none; transition: all 0.3s ease; }
         .modal.active { opacity: 1; pointer-events: all; }
-        .mobile-menu { transform: translateX(100%); transition: transform 0.4s cubic-bezier(0.4, 0, 0.2, 1); }
+        .mobile-menu { transform: translateX(100%); transition: transform 0.4s cubic-bezier(0.4, 0, 0.2, 1); z-index: 9999; }
         .mobile-menu.active { transform: translateX(0); }
         .lang-btn { padding: 6px 12px; border-radius: 6px; font-size: 13px; font-weight: 700; cursor: pointer; transition: all 0.3s; border: 2px solid transparent; }
         .lang-btn.active { background: #10B981; color: white; border-color: #10B981; }
@@ -34,6 +34,25 @@
         @keyframes spin { from { transform: rotate(0deg); } to { transform: rotate(360deg); } }
         html[lang="en"] { direction: ltr; text-align: left; }
         html[lang="fr"] { direction: ltr; text-align: left; }
+        .nav-link { white-space: nowrap; }
+        #loginModal { z-index: 99999; }
+        /* Hero Slider */
+        .slider-container { position: relative; width: 100%; overflow: hidden; min-height: 500px; }
+        .slider-slide { position: absolute; inset: 0; opacity: 0; transition: opacity 0.8s ease-in-out; }
+        .slider-slide.active { opacity: 1; position: relative; }
+        .slider-dot { width: 12px; height: 12px; border-radius: 50%; background: rgba(255,255,255,0.4); cursor: pointer; border: none; transition: all 0.3s; }
+        .slider-dot.active { background: #fff; transform: scale(1.2); }
+        .slider-arrow { position: absolute; top: 50%; transform: translateY(-50%); width: 50px; height: 50px; border-radius: 50%; background: rgba(255,255,255,0.2); backdrop-filter: blur(4px); border: none; color: #fff; font-size: 20px; cursor: pointer; transition: all 0.3s; display: flex; align-items: center; justify-content: center; z-index: 10; }
+        .slider-arrow:hover { background: rgba(255,255,255,0.4); }
+        .slider-arrow.prev { right: 20px; }
+        .slider-arrow.next { left: 20px; }
+        html[dir="ltr"] .slider-arrow.prev { right: auto; left: 20px; }
+        html[dir="ltr"] .slider-arrow.next { left: auto; right: 20px; }
+        @media (max-width: 768px) { .slider-arrow { width: 36px; height: 36px; font-size: 14px; } .slider-container { min-height: 350px; } }
+        /* Branch Modal */
+        .branch-card { cursor: pointer; transition: all 0.3s; }
+        .branch-card:hover { transform: translateY(-5px); box-shadow: 0 10px 30px -10px rgba(0,0,0,0.2); }
+        .branch-modal-content { max-height: 80vh; overflow-y: auto; }
     </style>
 </head>
 <body class="bg-white text-gray-800">
@@ -54,66 +73,41 @@
     </div>
 
     <!-- Header -->
-    <header class="bg-white shadow-lg sticky top-0 z-50">
-        <div class="container mx-auto px-6 py-3 flex justify-between items-center">
-            <div class="flex items-center gap-4">
-                <img src="LOGO AMPF.png" alt="AMPF Logo" class="h-16 w-auto" onerror="this.style.display='none'">
-                <div>
-                    <h1 class="text-lg font-bold text-brandDark" id="siteTitle">الجمعية الموريتانية لترقية الأسرة</h1>
-                    <p class="text-xs text-gray-500">Association Mauritanienne pour la Promotion de la Famille</p>
+    <header class="bg-white shadow-lg sticky top-0" style="z-index: 9998; display: flex; align-items: center; min-height: 72px;">
+        <div class="container mx-auto px-6 py-3 flex justify-between items-center w-full">
+            <div class="flex items-center gap-4 flex-shrink-0 min-w-0" style="min-width: 0; flex-shrink: 0;">
+                <img src="LOGO AMPF.png" alt="AMPF Logo" class="h-16 w-auto flex-shrink-0" style="flex-shrink: 0;" onerror="this.style.display='none'">
+                <div style="min-width: 0; overflow: hidden;">
+                    <h1 class="text-lg font-bold text-brandDark text-ellipsis overflow-hidden whitespace-nowrap" id="siteTitle">الجمعية الموريتانية لترقية الأسرة</h1>
+                    <p class="text-xs text-gray-500 text-ellipsis overflow-hidden whitespace-nowrap">Association Mauritanienne pour la Promotion de la Famille</p>
                 </div>
             </div>
-            <div class="flex items-center gap-4">
-                <nav class="hidden lg:flex items-center gap-6 font-semibold text-gray-700">
-                    <a href="#hero" class="hover:text-brandGreen transition" data-i18n="nav_home">الرئيسية</a>
-                    <a href="#strategy" class="hover:text-brandGreen transition" data-i18n="nav_strategy">استراتيجيتنا</a>
-                    <a href="#programs" class="hover:text-brandGreen transition" data-i18n="nav_programs">البرامج</a>
-                    <a href="#news" class="hover:text-brandGreen transition" data-i18n="nav_news">الأخبار</a>
-                    <a href="#gallery" class="hover:text-brandGreen transition" data-i18n="nav_gallery">المعرض</a>
-                    <a href="#contact" class="hover:text-brandGreen transition" data-i18n="nav_contact">اتصل بنا</a>
-                </nav>
-                <a href="/admin" class="hidden lg:flex bg-brandGreen text-white px-5 py-2 rounded-full font-bold hover:bg-brandDark transition items-center gap-2">
+            <div class="flex items-center gap-4 flex-shrink-0" style="flex-shrink: 0;">
+                <nav id="mainNav" class="hidden lg:flex items-center gap-6 font-semibold text-gray-700" style="flex-shrink: 0;"></nav>
+                <a href="/admin" class="hidden lg:flex bg-brandGreen text-white px-5 py-2 rounded-full font-bold hover:bg-brandDark transition items-center gap-2" style="flex-shrink: 0;">
                     <i class="fas fa-user-shield text-sm"></i> <span data-i18n="nav_admin">الإدارة</span>
                 </a>
-                <button id="menuBtn" class="lg:hidden text-brandDark text-2xl"><i class="fas fa-bars"></i></button>
+                <button id="menuBtn" class="lg:hidden text-brandDark text-2xl" style="flex-shrink: 0;"><i class="fas fa-bars"></i></button>
             </div>
         </div>
     </header>
 
     <!-- Mobile Menu -->
-    <div id="mobileMenu" class="mobile-menu fixed inset-0 bg-white z-50 p-6 lg:hidden overflow-y-auto">
+    <div id="mobileMenu" class="mobile-menu fixed inset-0 bg-white p-6 lg:hidden overflow-y-auto">
         <div class="flex justify-between items-center mb-8">
             <img src="LOGO AMPF.png" alt="AMPF" class="h-14 w-auto" onerror="this.style.display='none'">
             <button id="closeMenu" class="text-3xl text-gray-600"><i class="fas fa-times"></i></button>
         </div>
-        <nav class="flex flex-col space-y-5 text-lg font-bold text-brandDark">
-            <a href="#hero" class="mobile-link" data-i18n="nav_home">الرئيسية</a>
-            <a href="#strategy" class="mobile-link" data-i18n="nav_strategy">استراتيجيتنا</a>
-            <a href="#programs" class="mobile-link" data-i18n="nav_programs">البرامج</a>
-            <a href="#news" class="mobile-link" data-i18n="nav_news">الأخبار</a>
-            <a href="#gallery" class="mobile-link" data-i18n="nav_gallery">المعرض</a>
-            <a href="#contact" class="mobile-link" data-i18n="nav_contact">اتصل بنا</a>
-            <a href="/admin" class="text-brandGreen" data-i18n="nav_admin">الإدارة</a>
-        </nav>
+        <nav id="mobileNav" class="flex flex-col space-y-5 text-lg font-bold text-brandDark"></nav>
     </div>
 
-    <!-- Hero -->
-    <section id="hero" class="hero-gradient text-white py-24 relative overflow-hidden">
-        <div class="absolute inset-0 opacity-10">
-            <div class="absolute top-10 right-10 w-72 h-72 bg-white rounded-full blur-3xl"></div>
-            <div class="absolute bottom-10 left-10 w-96 h-96 bg-white rounded-full blur-3xl"></div>
-        </div>
-        <div class="container mx-auto px-6 relative z-10">
-            <div class="max-w-4xl">
-                <span id="heroBadge" class="bg-white/20 backdrop-blur-sm text-white text-sm px-4 py-2 rounded-full inline-block mb-6 font-bold">تأسست سنة 1988</span>
-                <h2 id="heroTitle" class="text-4xl md:text-6xl font-black leading-tight mb-6">رائدة في مجال الصحة الإنجابية والأسرية</h2>
-                <p id="heroDesc" class="text-xl text-white/90 mb-10 max-w-2xl leading-relaxed">نعمل على تحسين صحة الأسرة الموريتانية ونشر التوعية الصحية وخدمات الصحة الإنجابية في كافة الولايات منذ أكثر من 35 عاماً.</p>
-                <div class="flex flex-wrap gap-4">
-                    <a href="#strategy" class="bg-white text-brandDark px-8 py-4 rounded-full font-bold hover:bg-brandLight transition inline-flex items-center gap-2" data-i18n="hero_btn_strategy">استراتيجيتنا <i class="fas fa-arrow-left"></i></a>
-                    <a href="#programs" class="border-2 border-white text-white px-8 py-4 rounded-full font-bold hover:bg-white hover:text-brandDark transition" data-i18n="hero_btn_programs">برامجنا</a>
-                </div>
-            </div>
-        </div>
+    <!-- Hero Slider -->
+    <section id="hero" class="slider-container hero-gradient">
+        <div id="sliderSlides" class="relative w-full" style="min-height: 500px;"></div>
+        <!-- Slider Controls -->
+        <div id="sliderControls" class="absolute bottom-8 left-1/2 -translate-x-1/2 flex gap-3 z-10"></div>
+        <button id="sliderPrev" class="slider-arrow prev"><i class="fas fa-chevron-right"></i></button>
+        <button id="sliderNext" class="slider-arrow next"><i class="fas fa-chevron-left"></i></button>
     </section>
 
     <!-- Stats -->
@@ -207,28 +201,19 @@
                 <h2 class="text-3xl font-black text-brandDark mt-3 mb-4" data-i18n="branches_title">شبكة فروع الجمعية</h2>
                 <div class="strategy-line mx-auto"></div>
             </div>
-            <div class="grid md:grid-cols-2 gap-8">
-                <div class="bg-white rounded-2xl p-8 shadow-sm border border-gray-100">
-                    <h3 class="text-xl font-bold text-brandGreen mb-6 border-b pb-3"><i class="fas fa-map-marker-alt ml-2"></i> <span data-i18n="branches_nouakchott">فروع نواكشوط</span></h3>
-                    <ul class="grid grid-cols-2 gap-3">
-                        <li class="bg-gray-50 p-4 rounded-xl flex items-center gap-2"><i class="fas fa-check-circle text-brandGreen"></i> دار النعيم</li>
-                        <li class="bg-gray-50 p-4 rounded-xl flex items-center gap-2"><i class="fas fa-check-circle text-brandGreen"></i> تيارت</li>
-                        <li class="bg-gray-50 p-4 rounded-xl flex items-center gap-2"><i class="fas fa-check-circle text-brandGreen"></i> عرفات</li>
-                        <li class="bg-gray-50 p-4 rounded-xl flex items-center gap-2"><i class="fas fa-check-circle text-brandGreen"></i> كرفور</li>
-                    </ul>
-                </div>
-                <div class="bg-white rounded-2xl p-8 shadow-sm border border-gray-100">
-                    <h3 class="text-xl font-bold text-brandGreen mb-6 border-b pb-3"><i class="fas fa-map-marked-alt ml-2"></i> <span data-i18n="branches_states">فروع الولايات</span></h3>
-                    <ul class="grid grid-cols-2 gap-3">
-                        <li class="bg-gray-50 p-4 rounded-xl flex items-center gap-2"><i class="fas fa-check-circle text-brandGreen"></i> نواذيبو</li>
-                        <li class="bg-gray-50 p-4 rounded-xl flex items-center gap-2"><i class="fas fa-check-circle text-brandGreen"></i> روصو</li>
-                        <li class="bg-gray-50 p-4 rounded-xl flex items-center gap-2"><i class="fas fa-check-circle text-brandGreen"></i> كيهيدي</li>
-                        <li class="bg-gray-50 p-4 rounded-xl flex items-center gap-2"><i class="fas fa-check-circle text-brandGreen"></i> باسكنو</li>
-                    </ul>
-                </div>
+            <div id="branchesGrid" class="grid md:grid-cols-2 lg:grid-cols-4 gap-6">
+                <div class="loading-spinner col-span-full"><i class="fas fa-spinner"></i></div>
             </div>
         </div>
     </section>
+
+    <!-- Branch Detail Modal -->
+    <div id="branchModal" class="modal fixed inset-0 bg-black/60 z-50 flex items-center justify-center p-4 backdrop-blur-sm">
+        <div class="bg-white rounded-3xl p-8 w-full max-w-lg relative shadow-2xl branch-modal-content">
+            <button id="closeBranchModal" class="absolute top-4 left-4 text-gray-400 hover:text-gray-600 transition"><i class="fas fa-times text-xl"></i></button>
+            <div id="branchModalContent"></div>
+        </div>
+    </div>
 
     <!-- Contact -->
     <section id="contact" class="py-20 bg-white">
@@ -323,7 +308,10 @@
                 news_badge: 'آخر الأخبار', news_title: 'أخبارنا وأنشطتنا',
                 gallery_badge: 'معرض الصور', gallery_title: 'صور من أنشطتنا',
                 branches_badge: 'فروعنا', branches_title: 'شبكة فروع الجمعية',
-                branches_nouakchott: 'فروع نواكشوط', branches_states: 'فروع الولايات',
+                branches_empty: 'لا توجد فروع بعد',
+                branches_detail_founded: 'سنة التأسيس', branches_detail_midwife: 'القابلة/المسؤولة',
+                branches_detail_phones: 'الهواتف', branches_detail_location: 'الموقع',
+                branches_detail_gps: 'الإحداثيات',
                 contact_badge: 'تواصل معنا', contact_title: 'يسعدنا تواصلكم',
                 contact_address_label: 'العنوان', contact_phone_label: 'الهاتف', contact_email_label: 'البريد الإلكتروني',
                 form_name_label: 'الاسم الكامل', form_email_label: 'البريد الإلكتروني', form_subject_label: 'الموضوع',
@@ -365,7 +353,10 @@
                 news_badge: 'Dernières nouvelles', news_title: 'Nos actualités et activités',
                 gallery_badge: 'Galerie photos', gallery_title: 'Photos de nos activités',
                 branches_badge: 'Nos branches', branches_title: 'Réseau des branches',
-                branches_nouakchott: 'Branches de Nouakchott', branches_states: 'Branches régionales',
+                branches_empty: 'Aucune branche pour le moment',
+                branches_detail_founded: 'Année de création', branches_detail_midwife: 'Sage-femme/Responsable',
+                branches_detail_phones: 'Téléphones', branches_detail_location: 'Emplacement',
+                branches_detail_gps: 'Coordonnées GPS',
                 contact_badge: 'Contactez-nous', contact_title: 'Nous sommes à votre écoute',
                 contact_address_label: 'Adresse', contact_phone_label: 'Téléphone', contact_email_label: 'Email',
                 form_name_label: 'Nom complet', form_email_label: 'Email', form_subject_label: 'Sujet',
@@ -407,7 +398,10 @@
                 news_badge: 'Latest News', news_title: 'Our news and activities',
                 gallery_badge: 'Photo Gallery', gallery_title: 'Photos of our activities',
                 branches_badge: 'Our Branches', branches_title: 'Association branch network',
-                branches_nouakchott: 'Nouakchott Branches', branches_states: 'Regional Branches',
+                branches_empty: 'No branches yet',
+                branches_detail_founded: 'Founded', branches_detail_midwife: 'Midwife/Responsible',
+                branches_detail_phones: 'Phones', branches_detail_location: 'Location',
+                branches_detail_gps: 'GPS Coordinates',
                 contact_badge: 'Contact Us', contact_title: 'We are happy to hear from you',
                 contact_address_label: 'Address', contact_phone_label: 'Phone', contact_email_label: 'Email',
                 form_name_label: 'Full Name', form_email_label: 'Email', form_subject_label: 'Subject',
@@ -525,15 +519,9 @@
             const data = _contentData;
             if (!data) return;
             const sc = data.site_content || {};
-            const lang = currentLang;
 
-            // Hero
-            if (sc.hero) {
-                document.getElementById('heroTitle').textContent = getLocalizedText(sc.hero.title);
-                document.getElementById('heroDesc').textContent = getLocalizedText(sc.hero.desc);
-                document.getElementById('heroBadge').textContent = getLocalizedText(sc.hero.badge) || t('hero_badge');
-                document.getElementById('siteTitle').textContent = getLocalizedText(sc.hero.title) || t('siteTitle');
-            }
+            // Site title fallback from hero
+            document.getElementById('siteTitle').textContent = getLocalizedText(sc.hero?.title) || t('siteTitle');
 
             // About
             if (sc.about) {
@@ -622,8 +610,142 @@
                 document.getElementById('galleryGrid').innerHTML = `<div class="col-span-full text-center text-gray-400 py-8">${t('gallery_empty')}</div>`;
             }
 
+            // Slider
+            renderSlider(data.slider);
+            // Branches
+            renderBranches(data.branches);
+            // Navbar
+            renderNavbar(data.navbar);
+
             // Re-run observer
             document.querySelectorAll('.fade-up').forEach(el => observer.observe(el));
+        }
+
+        // ─── Slider ─────────────────────────────────────
+        let sliderTimer = null;
+        let sliderIndex = 0;
+
+        function renderSlider(slides) {
+            const container = document.getElementById('sliderSlides');
+            const controls = document.getElementById('sliderControls');
+            if (sliderTimer) { clearInterval(sliderTimer); sliderTimer = null; }
+            if (!slides || !slides.length) {
+                container.innerHTML = `
+                    <div class="hero-gradient text-white py-24 px-6" style="min-height:500px;">
+                        <div class="container mx-auto text-center">
+                            <span class="bg-white/20 backdrop-blur-sm text-white text-sm px-4 py-2 rounded-full inline-block mb-6 font-bold">${t('hero_badge')}</span>
+                            <h2 class="text-4xl md:text-6xl font-black leading-tight mb-6">${getLocalizedText((_contentData?.site_content?.hero)?.title) || ''}</h2>
+                            <p class="text-xl text-white/90 mb-10 max-w-2xl mx-auto leading-relaxed">${getLocalizedText((_contentData?.site_content?.hero)?.desc) || ''}</p>
+                        </div>
+                    </div>`;
+                controls.innerHTML = '';
+                return;
+            }
+            sliderIndex = 0;
+            container.innerHTML = slides.map((s, i) => `
+                <div class="slider-slide ${i === 0 ? 'active' : ''}">
+                    <div class="hero-gradient text-white relative" style="min-height:500px; background-image: url('${s.image}'); background-size: cover; background-position: center;">
+                        <div class="absolute inset-0 bg-gradient-to-t from-black/70 via-black/30 to-transparent"></div>
+                        <div class="container mx-auto px-6 relative z-10 flex items-center" style="min-height:500px;">
+                            <div class="max-w-3xl">
+                                ${getLocalizedText(s.title) ? `<h2 class="text-4xl md:text-6xl font-black leading-tight mb-6">${getLocalizedText(s.title)}</h2>` : ''}
+                                ${getLocalizedText(s.desc) ? `<p class="text-xl text-white/90 mb-10 max-w-2xl leading-relaxed">${getLocalizedText(s.desc)}</p>` : ''}
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            `).join('');
+            controls.innerHTML = slides.map((_, i) =>
+                `<button class="slider-dot ${i === 0 ? 'active' : ''}" data-index="${i}"></button>`
+            ).join('');
+            // Dot clicks
+            controls.querySelectorAll('.slider-dot').forEach(btn => {
+                btn.addEventListener('click', () => { goToSlide(parseInt(btn.dataset.index)); });
+            });
+            // Auto rotate
+            sliderTimer = setInterval(nextSlide, 6000);
+        }
+
+        function goToSlide(idx) {
+            const slides = document.querySelectorAll('.slider-slide');
+            const dots = document.querySelectorAll('.slider-dot');
+            if (!slides.length) return;
+            sliderIndex = ((idx % slides.length) + slides.length) % slides.length;
+            slides.forEach((s, i) => s.classList.toggle('active', i === sliderIndex));
+            dots.forEach((d, i) => d.classList.toggle('active', i === sliderIndex));
+            if (sliderTimer) { clearInterval(sliderTimer); sliderTimer = setInterval(nextSlide, 6000); }
+        }
+
+        function nextSlide() { goToSlide(sliderIndex + 1); }
+        function prevSlide() { goToSlide(sliderIndex - 1); }
+
+        document.getElementById('sliderPrev')?.addEventListener('click', prevSlide);
+        document.getElementById('sliderNext')?.addEventListener('click', nextSlide);
+
+        // ─── Branches ────────────────────────────────────
+        function renderBranches(branches) {
+            const container = document.getElementById('branchesGrid');
+            if (!branches || !branches.length) {
+                container.innerHTML = `<div class="col-span-full text-center text-gray-400 py-8">${t('branches_empty')}</div>`;
+                return;
+            }
+            const branchIcons = ['fa-map-marker-alt', 'fa-anchor', 'fa-tree', 'fa-water', 'fa-home', 'fa-city', 'fa-mosque', 'fa-school'];
+            container.innerHTML = branches.map((b, i) => `
+                <div class="bg-white rounded-2xl p-6 shadow-sm border border-gray-100 branch-card fade-up" data-id="${b.id}">
+                    <div class="w-14 h-14 bg-brandLight rounded-xl flex items-center justify-center mb-4">
+                        <i class="fas ${branchIcons[i % branchIcons.length]} text-brandGreen text-xl"></i>
+                    </div>
+                    <h3 class="text-xl font-bold text-brandDark mb-2">${getLocalizedText(b.name)}</h3>
+                    <p class="text-sm text-gray-500 mb-3">${getLocalizedText(b.location) || ''}</p>
+                    <div class="flex items-center gap-2 text-sm text-gray-400"><i class="fas fa-phone"></i> ${b.phones?.[0] || ''}</div>
+                </div>
+            `).join('');
+            // Click to open modal
+            container.querySelectorAll('.branch-card').forEach(card => {
+                card.addEventListener('click', () => {
+                    const id = card.dataset.id;
+                    const branch = branches.find(b => b.id === id);
+                    if (branch) showBranchModal(branch);
+                });
+            });
+        }
+
+        function showBranchModal(b) {
+            const content = document.getElementById('branchModalContent');
+            content.innerHTML = `
+                <div class="text-center mb-6">
+                    ${b.image ? `<img src="${b.image}" alt="${getLocalizedText(b.name)}" class="w-full h-48 object-cover rounded-xl mb-4">` : `<div class="w-20 h-20 bg-brandLight rounded-2xl flex items-center justify-center mx-auto mb-4"><i class="fas fa-map-marker-alt text-brandGreen text-3xl"></i></div>`}
+                    <h3 class="text-2xl font-black text-brandDark">${getLocalizedText(b.name)}</h3>
+                </div>
+                <div class="space-y-4 text-sm">
+                    ${b.founded ? `<div class="flex items-center gap-3"><div class="w-10 h-10 bg-emerald-100 rounded-xl flex items-center justify-center"><i class="fas fa-calendar text-brandGreen"></i></div><div><div class="font-bold text-brandDark">${t('branches_detail_founded')}</div><div class="text-gray-600">${b.founded}</div></div></div>` : ''}
+                    ${getLocalizedText(b.location) ? `<div class="flex items-center gap-3"><div class="w-10 h-10 bg-blue-100 rounded-xl flex items-center justify-center"><i class="fas fa-map-pin text-blue-600"></i></div><div><div class="font-bold text-brandDark">${t('branches_detail_location')}</div><div class="text-gray-600">${getLocalizedText(b.location)}</div></div></div>` : ''}
+                    ${b.gps ? `<div class="flex items-center gap-3"><div class="w-10 h-10 bg-purple-100 rounded-xl flex items-center justify-center"><i class="fas fa-globe text-purple-600"></i></div><div><div class="font-bold text-brandDark">${t('branches_detail_gps')}</div><div class="text-gray-600">${b.gps}</div></div></div>` : ''}
+                    ${getLocalizedText(b.midwife) ? `<div class="flex items-center gap-3"><div class="w-10 h-10 bg-pink-100 rounded-xl flex items-center justify-center"><i class="fas fa-female text-pink-500"></i></div><div><div class="font-bold text-brandDark">${t('branches_detail_midwife')}</div><div class="text-gray-600">${getLocalizedText(b.midwife)}</div></div></div>` : ''}
+                    ${b.phones && b.phones.length ? `<div class="flex items-center gap-3"><div class="w-10 h-10 bg-yellow-100 rounded-xl flex items-center justify-center"><i class="fas fa-phone text-yellow-600"></i></div><div><div class="font-bold text-brandDark">${t('branches_detail_phones')}</div><div class="text-gray-600">${b.phones.join(' - ')}</div></div></div>` : ''}
+                </div>
+            `;
+            document.getElementById('branchModal').classList.add('active');
+        }
+
+        document.getElementById('closeBranchModal')?.addEventListener('click', () => document.getElementById('branchModal').classList.remove('active'));
+        document.getElementById('branchModal')?.addEventListener('click', (e) => { if (e.target === e.currentTarget) e.target.classList.remove('active'); });
+
+        // ─── Navbar ──────────────────────────────────────
+        function renderNavbar(items) {
+            const desktopNav = document.getElementById('mainNav');
+            const mobileNav = document.getElementById('mobileNav');
+            const sorted = [...(items || [])].sort((a, b) => (a.order || 0) - (b.order || 0));
+            const links = sorted.map(item =>
+                `<a href="${item.href || '#'}" class="nav-link hover:text-brandGreen transition" data-nav-id="${item.id}">${getLocalizedText(item.label)}</a>`
+            ).join('');
+            const mobileLinks = sorted.map(item =>
+                `<a href="${item.href || '#'}" class="mobile-link hover:text-brandGreen transition" data-nav-id="${item.id}">${getLocalizedText(item.label)}</a>`
+            ).join('');
+            desktopNav.innerHTML = links;
+            mobileNav.innerHTML = mobileLinks + `<a href="/admin" class="text-brandGreen">${t('nav_admin')}</a>`;
+            // Mobile link click to close menu
+            mobileNav.querySelectorAll('.mobile-link').forEach(l => l.addEventListener('click', () => document.getElementById('mobileMenu').classList.remove('active')));
         }
 
         // ══════════════════════════════════════════════════
@@ -678,7 +800,6 @@
         // Mobile Menu
         document.getElementById('menuBtn').addEventListener('click', () => document.getElementById('mobileMenu').classList.add('active'));
         document.getElementById('closeMenu').addEventListener('click', () => document.getElementById('mobileMenu').classList.remove('active'));
-        document.querySelectorAll('.mobile-link').forEach(l => l.addEventListener('click', () => document.getElementById('mobileMenu').classList.remove('active')));
 
         // Login Modal
         document.getElementById('loginForm').addEventListener('submit', async (e) => {

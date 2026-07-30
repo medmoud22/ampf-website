@@ -41,5 +41,105 @@
       "image": "/uploads/1785251249930-MZ_APP.jpg",
       "createdAt": "2026-07-28T15:07:29.938Z"
     }
+  ],
+  "slider": [],
+  "branches": [
+    {
+      "id": "1",
+      "name": { "ar": "نواذيبو", "fr": "Nouadhibou", "en": "Nouadhibou" },
+      "founded": "2000",
+      "location": { "ar": "ولاية نواذيبو، مدينة نواذيبو", "fr": "Wilaya de Nouadhibou, Ville de Nouadhibou", "en": "Nouadhibou Wilaya, Nouadhibou City" },
+      "gps": "20.9333, -17.0333",
+      "midwife": { "ar": "فاطمة منت أحمد", "fr": "Fatima Mint Ahmed", "en": "Fatima Mint Ahmed" },
+      "phones": ["+222 45 25 XX XX"],
+      "image": "",
+      "createdAt": "2026-07-28T00:00:00.000Z"
+    },
+    {
+      "id": "2",
+      "name": { "ar": "روصو", "fr": "Rosso", "en": "Rosso" },
+      "founded": "2005",
+      "location": { "ar": "ولاية اترارزة، مدينة روصو", "fr": "Wilaya du Trarza, Ville de Rosso", "en": "Trarza Wilaya, Rosso City" },
+      "gps": "16.5128, -15.8075",
+      "midwife": { "ar": "مريم بنت عبد الله", "fr": "Mariam Mint Abdallah", "en": "Mariam Mint Abdallah" },
+      "phones": ["+222 46 25 XX XX"],
+      "image": "",
+      "createdAt": "2026-07-28T00:00:00.000Z"
+    },
+    {
+      "id": "3",
+      "name": { "ar": "كيهيدي", "fr": "Kaédi", "en": "Kaedi" },
+      "founded": "2010",
+      "location": { "ar": "ولاية كوركول، مدينة كيهيدي", "fr": "Wilaya du Gorgol, Ville de Kaédi", "en": "Gorgol Wilaya, Kaedi City" },
+      "gps": "16.1500, -13.5000",
+      "midwife": { "ar": "خديجة بنت سيدي", "fr": "Khadija Mint Sidi", "en": "Khadija Mint Sidi" },
+      "phones": ["+222 47 25 XX XX"],
+      "image": "",
+      "createdAt": "2026-07-28T00:00:00.000Z"
+    },
+    {
+      "id": "4",
+      "name": { "ar": "باسكنو", "fr": "Bassiknou", "en": "Bassiknou" },
+      "founded": "2015",
+      "location": { "ar": "ولاية الحوض الشرقي، مدينة باسكنو", "fr": "Wilaya du Hodh El Chargui, Ville de Bassiknou", "en": "Hodh El Chargui Wilaya, Bassiknou City" },
+      "gps": "15.8500, -5.9500",
+      "midwife": { "ar": "عائشة بنت محمد", "fr": "Aicha Mint Mohamed", "en": "Aisha Mint Mohamed" },
+      "phones": ["+222 48 25 XX XX"],
+      "image": "",
+      "createdAt": "2026-07-28T00:00:00.000Z"
+    },
+    {
+      "id": "5",
+      "name": { "ar": "دار النعيم", "fr": "Dar Naïm", "en": "Dar Naim" },
+      "founded": "2012",
+      "location": { "ar": "ولاية نواكشوط الشمالية، مقاطعة دار النعيم", "fr": "Wilaya de Nouakchott Nord, Moughataa Dar Naïm", "en": "Nouakchott Nord Wilaya, Dar Naim District" },
+      "gps": "18.1167, -15.9500",
+      "midwife": { "ar": "مكة بنت الشيخ", "fr": "Mekka Mint Cheikh", "en": "Mekka Mint Cheikh" },
+      "phones": ["+222 49 25 XX XX"],
+      "image": "",
+      "createdAt": "2026-07-28T00:00:00.000Z"
+    },
+    {
+      "id": "6",
+      "name": { "ar": "تيارت", "fr": "Teyarett", "en": "Teyarett" },
+      "founded": "2013",
+      "location": { "ar": "ولاية نواكشوط الشمالية، مقاطعة تيارت", "fr": "Wilaya de Nouakchott Nord, Moughataa Teyarett", "en": "Nouakchott Nord Wilaya, Teyarett District" },
+      "gps": "18.1000, -15.9333",
+      "midwife": { "ar": "آمنة بنت محمد", "fr": "Aminetou Mint Mohamed", "en": "Aminetou Mint Mohamed" },
+      "phones": ["+222 50 25 XX XX"],
+      "image": "",
+      "createdAt": "2026-07-28T00:00:00.000Z"
+    },
+    {
+      "id": "7",
+      "name": { "ar": "عرفات", "fr": "Arafat", "en": "Arafat" },
+      "founded": "2014",
+      "location": { "ar": "ولاية نواكشوط الجنوبية، مقاطعة عرفات", "fr": "Wilaya de Nouakchott Sud, Moughataa Arafat", "en": "Nouakchott Sud Wilaya, Arafat District" },
+      "gps": "18.0500, -15.9167",
+      "midwife": { "ar": "مريم بنت يحيى", "fr": "Mariam Mint Yahya", "en": "Mariam Mint Yahya" },
+      "phones": ["+222 51 25 XX XX"],
+      "image": "",
+      "createdAt": "2026-07-28T00:00:00.000Z"
+    },
+    {
+      "id": "8",
+      "name": { "ar": "كرفور", "fr": "Carrefour", "en": "Carrefour" },
+      "founded": "2016",
+      "location": { "ar": "ولاية نواكشوط الغربية، مدينة نواكشوط", "fr": "Wilaya de Nouakchott Ouest, Ville de Nouakchott", "en": "Nouakchott Ouest Wilaya, Nouakchott City" },
+      "gps": "18.0833, -15.9833",
+      "midwife": { "ar": "فاطمة بنت محمد", "fr": "Fatima Mint Mohamed", "en": "Fatima Mint Mohamed" },
+      "phones": ["+222 52 25 XX XX"],
+      "image": "",
+      "createdAt": "2026-07-28T00:00:00.000Z"
+    }
+  ],
+  "navbar": [
+    { "id": "1", "label": { "ar": "الرئيسية", "fr": "Accueil", "en": "Home" }, "href": "#hero", "order": 1 },
+    { "id": "2", "label": { "ar": "استراتيجيتنا", "fr": "Notre Stratégie", "en": "Our Strategy" }, "href": "#strategy", "order": 2 },
+    { "id": "3", "label": { "ar": "البرامج", "fr": "Programmes", "en": "Programs" }, "href": "#programs", "order": 3 },
+    { "id": "4", "label": { "ar": "الأخبار", "fr": "Actualités", "en": "News" }, "href": "#news", "order": 4 },
+    { "id": "5", "label": { "ar": "المعرض", "fr": "Galerie", "en": "Gallery" }, "href": "#gallery", "order": 5 },
+    { "id": "6", "label": { "ar": "الفروع", "fr": "Branches", "en": "Branches" }, "href": "#branches", "order": 6 },
+    { "id": "7", "label": { "ar": "اتصل بنا", "fr": "Contact", "en": "Contact" }, "href": "#contact", "order": 7 }
   ]
 }

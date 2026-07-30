@@ -29,6 +29,9 @@
         .toast.show { opacity: 1; }
         .empty-state { text-align: center; padding: 40px; color: #9CA3AF; }
         .loading { opacity: 0.5; pointer-events: none; }
+        .sidebar { z-index: 40; }
+        #loginScreen { z-index: 9999; }
+        .modal-overlay { z-index: 9999; }
     </style>
 </head>
 <body class="bg-gray-50">
@@ -79,6 +82,9 @@
         <a onclick="showTab('news')" class="tab-link flex items-center gap-3 px-4 py-3 rounded-xl text-gray-600 hover:bg-gray-50 hover:text-brandDark transition cursor-pointer" data-tab="news"><i class="fas fa-newspaper w-5"></i> الأخبار والأنشطة</a>
         <a onclick="showTab('gallery')" class="tab-link flex items-center gap-3 px-4 py-3 rounded-xl text-gray-600 hover:bg-gray-50 hover:text-brandDark transition cursor-pointer" data-tab="gallery"><i class="fas fa-images w-5"></i> معرض الصور</a>
         <a onclick="showTab('programs')" class="tab-link flex items-center gap-3 px-4 py-3 rounded-xl text-gray-600 hover:bg-gray-50 hover:text-brandDark transition cursor-pointer" data-tab="programs"><i class="fas fa-heartbeat w-5"></i> البرامج</a>
+        <a onclick="showTab('slider')" class="tab-link flex items-center gap-3 px-4 py-3 rounded-xl text-gray-600 hover:bg-gray-50 hover:text-brandDark transition cursor-pointer" data-tab="slider"><i class="fas fa-images w-5"></i> السلايدر</a>
+        <a onclick="showTab('branches')" class="tab-link flex items-center gap-3 px-4 py-3 rounded-xl text-gray-600 hover:bg-gray-50 hover:text-brandDark transition cursor-pointer" data-tab="branches"><i class="fas fa-map-marker-alt w-5"></i> الفروع</a>
+        <a onclick="showTab('navbar')" class="tab-link flex items-center gap-3 px-4 py-3 rounded-xl text-gray-600 hover:bg-gray-50 hover:text-brandDark transition cursor-pointer" data-tab="navbar"><i class="fas fa-bars w-5"></i> القوائم</a>
         <a onclick="showTab('documents')" class="tab-link flex items-center gap-3 px-4 py-3 rounded-xl text-gray-600 hover:bg-gray-50 hover:text-brandDark transition cursor-pointer" data-tab="documents"><i class="fas fa-file-alt w-5"></i> الوثائق</a>
         <a onclick="showTab('content')" class="tab-link flex items-center gap-3 px-4 py-3 rounded-xl text-gray-600 hover:bg-gray-50 hover:text-brandDark transition cursor-pointer" data-tab="content"><i class="fas fa-edit w-5"></i> تعديل النصوص</a>
         <a onclick="showTab('messages')" class="tab-link flex items-center gap-3 px-4 py-3 rounded-xl text-gray-600 hover:bg-gray-50 hover:text-brandDark transition cursor-pointer" data-tab="messages"><i class="fas fa-envelope w-5"></i> الرسائل</a>
@@ -101,6 +107,9 @@
             <a onclick="showTab('news');toggleSidebar()" class="flex items-center gap-3 px-4 py-3 rounded-xl text-gray-600 hover:bg-gray-50 cursor-pointer"><i class="fas fa-newspaper w-5"></i> الأخبار</a>
             <a onclick="showTab('gallery');toggleSidebar()" class="flex items-center gap-3 px-4 py-3 rounded-xl text-gray-600 hover:bg-gray-50 cursor-pointer"><i class="fas fa-images w-5"></i> المعرض</a>
             <a onclick="showTab('programs');toggleSidebar()" class="flex items-center gap-3 px-4 py-3 rounded-xl text-gray-600 hover:bg-gray-50 cursor-pointer"><i class="fas fa-heartbeat w-5"></i> البرامج</a>
+            <a onclick="showTab('slider');toggleSidebar()" class="flex items-center gap-3 px-4 py-3 rounded-xl text-gray-600 hover:bg-gray-50 cursor-pointer"><i class="fas fa-images w-5"></i> السلايدر</a>
+            <a onclick="showTab('branches');toggleSidebar()" class="flex items-center gap-3 px-4 py-3 rounded-xl text-gray-600 hover:bg-gray-50 cursor-pointer"><i class="fas fa-map-marker-alt w-5"></i> الفروع</a>
+            <a onclick="showTab('navbar');toggleSidebar()" class="flex items-center gap-3 px-4 py-3 rounded-xl text-gray-600 hover:bg-gray-50 cursor-pointer"><i class="fas fa-bars w-5"></i> القوائم</a>
             <a onclick="showTab('documents');toggleSidebar()" class="flex items-center gap-3 px-4 py-3 rounded-xl text-gray-600 hover:bg-gray-50 cursor-pointer"><i class="fas fa-file-alt w-5"></i> الوثائق</a>
             <a onclick="showTab('content');toggleSidebar()" class="flex items-center gap-3 px-4 py-3 rounded-xl text-gray-600 hover:bg-gray-50 cursor-pointer"><i class="fas fa-edit w-5"></i> تعديل النصوص</a>
             <a onclick="showTab('messages');toggleSidebar()" class="flex items-center gap-3 px-4 py-3 rounded-xl text-gray-600 hover:bg-gray-50 cursor-pointer"><i class="fas fa-envelope w-5"></i> الرسائل</a>
@@ -115,7 +124,7 @@
 <!-- Main Area -->
 <div class="lg:mr-64 min-h-screen">
     <!-- Top Bar -->
-    <header class="bg-white shadow-sm px-6 py-4 flex items-center justify-between sticky top-0 z-30">
+    <header class="bg-white shadow-sm px-6 py-4 flex items-center justify-between sticky top-0" style="z-index: 9998; display: flex; align-items: center; min-height: 60px;">
         <div class="flex items-center gap-3">
             <button onclick="toggleSidebar()" class="lg:hidden text-brandDark text-xl"><i class="fas fa-bars"></i></button>
             <h2 id="pageTitle" class="text-lg font-bold text-brandDark">الرئيسية</h2>
@@ -261,6 +270,47 @@
                     <button type="submit" class="bg-brandGreen text-white px-8 py-3 rounded-xl font-bold hover:bg-brandDark transition"><i class="fas fa-save ml-2"></i> حفظ جميع التغييرات</button>
                 </div>
             </form>
+        </div>
+
+        <!-- ===== TAB: SLIDER ===== -->
+        <div id="tab-slider" class="tab-content fade-in">
+            <div class="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-3 mb-6">
+                <h3 class="text-xl font-bold text-brandDark">إدارة السلايدر</h3>
+                <button onclick="openSliderModal()" class="bg-brandGreen text-white px-5 py-2.5 rounded-xl font-bold hover:bg-brandDark transition text-sm w-full sm:w-auto"><i class="fas fa-plus ml-1"></i> إضافة شريحة</button>
+            </div>
+            <div id="sliderGrid" class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4"></div>
+        </div>
+
+        <!-- ===== TAB: BRANCHES ===== -->
+        <div id="tab-branches" class="tab-content fade-in">
+            <div class="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-3 mb-6">
+                <h3 class="text-xl font-bold text-brandDark">إدارة الفروع</h3>
+                <button onclick="openBranchModal()" class="bg-brandGreen text-white px-5 py-2.5 rounded-xl font-bold hover:bg-brandDark transition text-sm w-full sm:w-auto"><i class="fas fa-plus ml-1"></i> إضافة فرع</button>
+            </div>
+            <div class="overflow-x-auto bg-white rounded-xl shadow-sm">
+                <table class="w-full text-right min-w-[500px]">
+                    <thead class="bg-gray-50 border-b">
+                        <tr><th class="px-6 py-4 text-sm font-bold text-gray-600">الاسم</th><th class="px-6 py-4 text-sm font-bold text-gray-600 hidden md:table-cell">الموقع</th><th class="px-6 py-4 text-sm font-bold text-gray-600">إجراءات</th></tr>
+                    </thead>
+                    <tbody id="branchesTableBody"></tbody>
+                </table>
+            </div>
+        </div>
+
+        <!-- ===== TAB: NAVBAR ===== -->
+        <div id="tab-navbar" class="tab-content fade-in">
+            <div class="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-3 mb-6">
+                <h3 class="text-xl font-bold text-brandDark">إدارة القوائم</h3>
+                <button onclick="openNavbarModal()" class="bg-brandGreen text-white px-5 py-2.5 rounded-xl font-bold hover:bg-brandDark transition text-sm w-full sm:w-auto"><i class="fas fa-plus ml-1"></i> إضافة رابط</button>
+            </div>
+            <div class="overflow-x-auto bg-white rounded-xl shadow-sm">
+                <table class="w-full text-right min-w-[500px]">
+                    <thead class="bg-gray-50 border-b">
+                        <tr><th class="px-6 py-4 text-sm font-bold text-gray-600">الرابط</th><th class="px-6 py-4 text-sm font-bold text-gray-600 hidden md:table-cell">الوجهة</th><th class="px-6 py-4 text-sm font-bold text-gray-600 hidden md:table-cell">الترتيب</th><th class="px-6 py-4 text-sm font-bold text-gray-600">إجراءات</th></tr>
+                    </thead>
+                    <tbody id="navbarTableBody"></tbody>
+                </table>
+            </div>
         </div>
 
         <!-- ===== TAB: MESSAGES ===== -->
@@ -428,6 +478,120 @@
     </div>
 </div>
 
+<!-- Slider Modal -->
+<div id="sliderModal" class="modal-overlay fixed inset-0 bg-black/50 z-50 items-center justify-center p-4">
+    <div class="bg-white rounded-2xl p-6 w-full max-w-lg">
+        <div class="flex justify-between items-center mb-4">
+            <h3 id="sliderModalTitle" class="text-lg font-bold text-brandDark">إضافة شريحة</h3>
+            <button onclick="closeModal('sliderModal')" class="text-gray-400 hover:text-gray-600"><i class="fas fa-times text-xl"></i></button>
+        </div>
+        <form id="sliderForm" class="space-y-4" enctype="multipart/form-data">
+            <input type="hidden" id="sliderId">
+            <div class="bg-gray-50 rounded-xl p-4 space-y-3">
+                <div class="flex gap-2 items-center mb-1"><span class="text-sm font-bold text-gray-700">العنوان</span><span class="text-xs px-2 py-0.5 rounded bg-emerald-100 text-emerald-700 font-bold">AR</span></div>
+                <input id="sliderTitleAr" type="text" class="w-full border-2 border-gray-200 rounded-xl px-4 py-2 focus:outline-none focus:border-brandGreen transition">
+                <div class="flex gap-2 items-center mb-1"><span class="text-sm font-bold text-gray-700">Titre</span><span class="text-xs px-2 py-0.5 rounded bg-blue-100 text-blue-700 font-bold">FR</span></div>
+                <input id="sliderTitleFr" type="text" class="w-full border-2 border-gray-200 rounded-xl px-4 py-2 focus:outline-none focus:border-brandGreen transition">
+                <div class="flex gap-2 items-center mb-1"><span class="text-sm font-bold text-gray-700">Title</span><span class="text-xs px-2 py-0.5 rounded bg-purple-100 text-purple-700 font-bold">EN</span></div>
+                <input id="sliderTitleEn" type="text" class="w-full border-2 border-gray-200 rounded-xl px-4 py-2 focus:outline-none focus:border-brandGreen transition">
+            </div>
+            <div class="bg-gray-50 rounded-xl p-4 space-y-3">
+                <div class="flex gap-2 items-center mb-1"><span class="text-sm font-bold text-gray-700">الوصف</span><span class="text-xs px-2 py-0.5 rounded bg-emerald-100 text-emerald-700 font-bold">AR</span></div>
+                <textarea id="sliderDescAr" rows="2" class="w-full border-2 border-gray-200 rounded-xl px-4 py-2 focus:outline-none focus:border-brandGreen transition"></textarea>
+                <div class="flex gap-2 items-center mb-1"><span class="text-sm font-bold text-gray-700">Description</span><span class="text-xs px-2 py-0.5 rounded bg-blue-100 text-blue-700 font-bold">FR</span></div>
+                <textarea id="sliderDescFr" rows="2" class="w-full border-2 border-gray-200 rounded-xl px-4 py-2 focus:outline-none focus:border-brandGreen transition"></textarea>
+                <div class="flex gap-2 items-center mb-1"><span class="text-sm font-bold text-gray-700">Description</span><span class="text-xs px-2 py-0.5 rounded bg-purple-100 text-purple-700 font-bold">EN</span></div>
+                <textarea id="sliderDescEn" rows="2" class="w-full border-2 border-gray-200 rounded-xl px-4 py-2 focus:outline-none focus:border-brandGreen transition"></textarea>
+            </div>
+            <div>
+                <label class="block text-sm font-bold text-gray-700 mb-2">الصورة *</label>
+                <input id="sliderImage" type="file" accept="image/*" class="w-full border-2 border-gray-200 rounded-xl px-4 py-3 focus:outline-none focus:border-brandGreen transition bg-gray-50">
+                <div id="sliderImagePreview" class="mt-2"></div>
+            </div>
+            <div class="flex gap-3 pt-2">
+                <button type="submit" class="flex-1 bg-brandGreen text-white py-3 rounded-xl font-bold hover:bg-brandDark transition">حفظ</button>
+                <button type="button" onclick="closeModal('sliderModal')" class="px-6 py-3 border-2 border-gray-200 rounded-xl font-bold text-gray-600 hover:bg-gray-50 transition">إلغاء</button>
+            </div>
+        </form>
+    </div>
+</div>
+
+<!-- Branch Modal -->
+<div id="branchModal" class="modal-overlay fixed inset-0 bg-black/50 z-50 items-center justify-center p-4">
+    <div class="bg-white rounded-2xl p-6 w-full max-w-lg max-h-[90vh] overflow-y-auto">
+        <div class="flex justify-between items-center mb-4">
+            <h3 id="branchModalTitle" class="text-lg font-bold text-brandDark">إضافة فرع</h3>
+            <button onclick="closeModal('branchModal')" class="text-gray-400 hover:text-gray-600"><i class="fas fa-times text-xl"></i></button>
+        </div>
+        <form id="branchForm" class="space-y-4" enctype="multipart/form-data">
+            <input type="hidden" id="branchId">
+            <div class="bg-gray-50 rounded-xl p-4 space-y-3">
+                <div class="flex gap-2 items-center mb-1"><span class="text-sm font-bold text-gray-700">الاسم</span><span class="text-xs px-2 py-0.5 rounded bg-emerald-100 text-emerald-700 font-bold">AR</span></div>
+                <input id="branchNameAr" type="text" class="w-full border-2 border-gray-200 rounded-xl px-4 py-2 focus:outline-none focus:border-brandGreen transition" required>
+                <div class="flex gap-2 items-center mb-1"><span class="text-sm font-bold text-gray-700">Nom</span><span class="text-xs px-2 py-0.5 rounded bg-blue-100 text-blue-700 font-bold">FR</span></div>
+                <input id="branchNameFr" type="text" class="w-full border-2 border-gray-200 rounded-xl px-4 py-2 focus:outline-none focus:border-brandGreen transition">
+                <div class="flex gap-2 items-center mb-1"><span class="text-sm font-bold text-gray-700">Name</span><span class="text-xs px-2 py-0.5 rounded bg-purple-100 text-purple-700 font-bold">EN</span></div>
+                <input id="branchNameEn" type="text" class="w-full border-2 border-gray-200 rounded-xl px-4 py-2 focus:outline-none focus:border-brandGreen transition">
+            </div>
+            <div class="grid grid-cols-2 gap-4">
+                <div><label class="block text-sm font-bold text-gray-700 mb-2">تاريخ التأسيس</label><input id="branchFounded" type="text" class="w-full border-2 border-gray-200 rounded-xl px-4 py-3 focus:outline-none focus:border-brandGreen transition bg-gray-50"></div>
+                <div><label class="block text-sm font-bold text-gray-700 mb-2">الإحداثيات (GPS)</label><input id="branchGps" type="text" placeholder="مثال: 16.5128, -15.8075" class="w-full border-2 border-gray-200 rounded-xl px-4 py-3 focus:outline-none focus:border-brandGreen transition bg-gray-50"></div>
+            </div>
+            <div class="bg-gray-50 rounded-xl p-4 space-y-3">
+                <div class="flex gap-2 items-center mb-1"><span class="text-sm font-bold text-gray-700">الموقع</span><span class="text-xs px-2 py-0.5 rounded bg-emerald-100 text-emerald-700 font-bold">AR</span></div>
+                <textarea id="branchLocationAr" rows="2" class="w-full border-2 border-gray-200 rounded-xl px-4 py-2 focus:outline-none focus:border-brandGreen transition"></textarea>
+                <div class="flex gap-2 items-center mb-1"><span class="text-sm font-bold text-gray-700">Emplacement</span><span class="text-xs px-2 py-0.5 rounded bg-blue-100 text-blue-700 font-bold">FR</span></div>
+                <textarea id="branchLocationFr" rows="2" class="w-full border-2 border-gray-200 rounded-xl px-4 py-2 focus:outline-none focus:border-brandGreen transition"></textarea>
+                <div class="flex gap-2 items-center mb-1"><span class="text-sm font-bold text-gray-700">Location</span><span class="text-xs px-2 py-0.5 rounded bg-purple-100 text-purple-700 font-bold">EN</span></div>
+                <textarea id="branchLocationEn" rows="2" class="w-full border-2 border-gray-200 rounded-xl px-4 py-2 focus:outline-none focus:border-brandGreen transition"></textarea>
+            </div>
+            <div class="bg-gray-50 rounded-xl p-4 space-y-3">
+                <div class="flex gap-2 items-center mb-1"><span class="text-sm font-bold text-gray-700">اسم القابلة/المسؤولة</span><span class="text-xs px-2 py-0.5 rounded bg-emerald-100 text-emerald-700 font-bold">AR</span></div>
+                <input id="branchMidwifeAr" type="text" class="w-full border-2 border-gray-200 rounded-xl px-4 py-2 focus:outline-none focus:border-brandGreen transition">
+                <div class="flex gap-2 items-center mb-1"><span class="text-sm font-bold text-gray-700">Sage-femme</span><span class="text-xs px-2 py-0.5 rounded bg-blue-100 text-blue-700 font-bold">FR</span></div>
+                <input id="branchMidwifeFr" type="text" class="w-full border-2 border-gray-200 rounded-xl px-4 py-2 focus:outline-none focus:border-brandGreen transition">
+                <div class="flex gap-2 items-center mb-1"><span class="text-sm font-bold text-gray-700">Midwife</span><span class="text-xs px-2 py-0.5 rounded bg-purple-100 text-purple-700 font-bold">EN</span></div>
+                <input id="branchMidwifeEn" type="text" class="w-full border-2 border-gray-200 rounded-xl px-4 py-2 focus:outline-none focus:border-brandGreen transition">
+            </div>
+            <div><label class="block text-sm font-bold text-gray-700 mb-2">أرقام الهواتف (مفصولة بفواصل)</label><input id="branchPhones" type="text" placeholder="+222 XX XX XX XX, +222 YY YY YY YY" class="w-full border-2 border-gray-200 rounded-xl px-4 py-3 focus:outline-none focus:border-brandGreen transition bg-gray-50"></div>
+            <div><label class="block text-sm font-bold text-gray-700 mb-2">صورة (اختياري)</label><input id="branchImage" type="file" accept="image/*" class="w-full border-2 border-gray-200 rounded-xl px-4 py-3 focus:outline-none focus:border-brandGreen transition bg-gray-50"><div id="branchImagePreview" class="mt-2"></div></div>
+            <div class="flex gap-3 pt-2">
+                <button type="submit" class="flex-1 bg-brandGreen text-white py-3 rounded-xl font-bold hover:bg-brandDark transition">حفظ</button>
+                <button type="button" onclick="closeModal('branchModal')" class="px-6 py-3 border-2 border-gray-200 rounded-xl font-bold text-gray-600 hover:bg-gray-50 transition">إلغاء</button>
+            </div>
+        </form>
+    </div>
+</div>
+
+<!-- Navbar Modal -->
+<div id="navbarModal" class="modal-overlay fixed inset-0 bg-black/50 z-50 items-center justify-center p-4">
+    <div class="bg-white rounded-2xl p-6 w-full max-w-lg">
+        <div class="flex justify-between items-center mb-4">
+            <h3 id="navbarModalTitle" class="text-lg font-bold text-brandDark">إضافة رابط</h3>
+            <button onclick="closeModal('navbarModal')" class="text-gray-400 hover:text-gray-600"><i class="fas fa-times text-xl"></i></button>
+        </div>
+        <form id="navbarForm" class="space-y-4">
+            <input type="hidden" id="navbarId">
+            <div class="bg-gray-50 rounded-xl p-4 space-y-3">
+                <div class="flex gap-2 items-center mb-1"><span class="text-sm font-bold text-gray-700">النص</span><span class="text-xs px-2 py-0.5 rounded bg-emerald-100 text-emerald-700 font-bold">AR</span></div>
+                <input id="navbarLabelAr" type="text" class="w-full border-2 border-gray-200 rounded-xl px-4 py-2 focus:outline-none focus:border-brandGreen transition" required>
+                <div class="flex gap-2 items-center mb-1"><span class="text-sm font-bold text-gray-700">Texte</span><span class="text-xs px-2 py-0.5 rounded bg-blue-100 text-blue-700 font-bold">FR</span></div>
+                <input id="navbarLabelFr" type="text" class="w-full border-2 border-gray-200 rounded-xl px-4 py-2 focus:outline-none focus:border-brandGreen transition">
+                <div class="flex gap-2 items-center mb-1"><span class="text-sm font-bold text-gray-700">Text</span><span class="text-xs px-2 py-0.5 rounded bg-purple-100 text-purple-700 font-bold">EN</span></div>
+                <input id="navbarLabelEn" type="text" class="w-full border-2 border-gray-200 rounded-xl px-4 py-2 focus:outline-none focus:border-brandGreen transition">
+            </div>
+            <div class="grid grid-cols-2 gap-4">
+                <div><label class="block text-sm font-bold text-gray-700 mb-2">الرابط (href) *</label><input id="navbarHref" type="text" placeholder="#hero" class="w-full border-2 border-gray-200 rounded-xl px-4 py-3 focus:outline-none focus:border-brandGreen transition bg-gray-50" required></div>
+                <div><label class="block text-sm font-bold text-gray-700 mb-2">الترتيب</label><input id="navbarOrder" type="number" value="1" class="w-full border-2 border-gray-200 rounded-xl px-4 py-3 focus:outline-none focus:border-brandGreen transition bg-gray-50"></div>
+            </div>
+            <div class="flex gap-3 pt-2">
+                <button type="submit" class="flex-1 bg-brandGreen text-white py-3 rounded-xl font-bold hover:bg-brandDark transition">حفظ</button>
+                <button type="button" onclick="closeModal('navbarModal')" class="px-6 py-3 border-2 border-gray-200 rounded-xl font-bold text-gray-600 hover:bg-gray-50 transition">إلغاء</button>
+            </div>
+        </form>
+    </div>
+</div>
+
 <!-- Toast -->
 <div id="toast" class="toast"><i class="fas fa-check-circle text-brandLight"></i><span id="toastMsg"></span></div>
 
@@ -450,7 +614,7 @@ function showTab(tab) {
     document.getElementById('tab-' + tab)?.classList.add('active');
     document.querySelectorAll('.tab-link').forEach(el => el.classList.remove('bg-gray-50', 'text-brandDark'));
     document.querySelectorAll(`.tab-link[data-tab="${tab}"]`).forEach(el => el.classList.add('bg-gray-50', 'text-brandDark'));
-    const titles = { dashboard: 'الرئيسية', news: 'الأخبار والأنشطة', gallery: 'معرض الصور', programs: 'البرامج', documents: 'الوثائق', content: 'تعديل النصوص', messages: 'الرسائل', settings: 'الإعدادات' };
+    const titles = { dashboard: 'الرئيسية', news: 'الأخبار والأنشطة', gallery: 'معرض الصور', programs: 'البرامج', slider: 'السلايدر', branches: 'الفروع', navbar: 'القوائم', documents: 'الوثائق', content: 'تعديل النصوص', messages: 'الرسائل', settings: 'الإعدادات' };
     document.getElementById('pageTitle').textContent = titles[tab] || tab;
     if (tab === 'content') loadContentEditor();
 }
@@ -482,6 +646,9 @@ async function loadAllData() {
         renderNews(data.news || []);
         renderGallery(data.gallery || []);
         renderPrograms(data.programs || []);
+        renderSlider(data.slider || []);
+        renderBranches(data.branches || []);
+        renderNavbar(data.navbar || []);
         renderDocs(data.documents || []);
         renderMessages(data.messages || []);
     } catch(e) { console.error(e); }
@@ -677,6 +844,219 @@ async function editProgram(id) {
 async function deleteProgram(id) {
     if (!confirm('حذف هذا البرنامج؟')) return;
     const res = await fetch(API + '/content/programs/' + id, { method: 'DELETE' });
+    if ((await res.json()).success) { showToast('تم الحذف'); loadAllData(); }
+}
+
+// ─── SLIDER ──────────────────────────────
+function renderSlider(items) {
+    const grid = document.getElementById('sliderGrid');
+    if (!items.length) { grid.innerHTML = '<div class="col-span-full empty-state"><i class="fas fa-images text-4xl mb-3"></i><p>لا توجد شرائح. أضف أول شريحة الآن!</p></div>'; return; }
+    grid.innerHTML = items.map(s => `
+        <div class="bg-white rounded-xl overflow-hidden shadow-sm group relative">
+            <img src="${s.image}" class="w-full h-40 object-cover" onerror="this.src='data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 width=%22200%22 height=%22200%22><rect fill=%22%23ddd%22 width=%22200%22 height=%22200%22/></svg>'">
+            <div class="p-4">
+                <div class="text-sm font-bold text-brandDark truncate">${s.title?.ar || s.title?.fr || s.title?.en || ''}</div>
+                <div class="text-xs text-gray-500 truncate mt-1">${s.desc?.ar || s.desc?.fr || s.desc?.en || ''}</div>
+            </div>
+            <div class="absolute top-2 left-2 flex gap-1">
+                <button onclick="editSlider('${s.id}')" class="w-8 h-8 bg-brandGreen text-white rounded-full flex items-center justify-center opacity-0 group-hover:opacity-100 transition hover:bg-brandDark"><i class="fas fa-edit text-xs"></i></button>
+                <button onclick="deleteSlider('${s.id}')" class="w-8 h-8 bg-red-500 text-white rounded-full flex items-center justify-center opacity-0 group-hover:opacity-100 transition hover:bg-red-600"><i class="fas fa-trash text-xs"></i></button>
+            </div>
+        </div>
+    `).join('');
+}
+
+function openSliderModal(item) {
+    document.getElementById('sliderModalTitle').textContent = item ? 'تعديل الشريحة' : 'إضافة شريحة';
+    document.getElementById('sliderId').value = item ? item.id : '';
+    document.getElementById('sliderTitleAr').value = item ? (item.title?.ar || '') : '';
+    document.getElementById('sliderTitleFr').value = item ? (item.title?.fr || '') : '';
+    document.getElementById('sliderTitleEn').value = item ? (item.title?.en || '') : '';
+    document.getElementById('sliderDescAr').value = item ? (item.desc?.ar || '') : '';
+    document.getElementById('sliderDescFr').value = item ? (item.desc?.fr || '') : '';
+    document.getElementById('sliderDescEn').value = item ? (item.desc?.en || '') : '';
+    document.getElementById('sliderImage').value = '';
+    document.getElementById('sliderImagePreview').innerHTML = item && item.image ? `<img src="${item.image}" class="preview-img">` : '';
+    openModal('sliderModal');
+}
+
+document.getElementById('sliderForm').addEventListener('submit', async (e) => {
+    e.preventDefault();
+    const id = document.getElementById('sliderId').value;
+    const formData = new FormData();
+    formData.append('title_ar', document.getElementById('sliderTitleAr').value);
+    formData.append('title_fr', document.getElementById('sliderTitleFr').value);
+    formData.append('title_en', document.getElementById('sliderTitleEn').value);
+    formData.append('desc_ar', document.getElementById('sliderDescAr').value);
+    formData.append('desc_fr', document.getElementById('sliderDescFr').value);
+    formData.append('desc_en', document.getElementById('sliderDescEn').value);
+    const fileInput = document.getElementById('sliderImage');
+    if (fileInput.files[0]) formData.append('image', fileInput.files[0]);
+    const url = id ? API + '/slider-with-image/' + id : API + '/slider-with-image';
+    const method = id ? 'PUT' : 'POST';
+    try {
+        const res = await fetch(url, { method, body: formData });
+        const result = await res.json();
+        if (result.success) { showToast(id ? 'تم تحديث الشريحة' : 'تم إضافة الشريحة'); closeModal('sliderModal'); loadAllData(); }
+        else showToast('خطأ: ' + (result.error || ''));
+    } catch(e) { showToast('خطأ في الاتصال'); }
+});
+
+async function editSlider(id) {
+    const res = await fetch(API + '/content?type=slider');
+    const data = await res.json();
+    const item = (data.slider || []).find(s => s.id === id);
+    if (item) openSliderModal(item);
+}
+
+async function deleteSlider(id) {
+    if (!confirm('حذف هذه الشريحة؟')) return;
+    const res = await fetch(API + '/content/slider/' + id, { method: 'DELETE' });
+    if ((await res.json()).success) { showToast('تم الحذف'); loadAllData(); }
+}
+
+document.getElementById('sliderImage').addEventListener('change', function() {
+    const preview = document.getElementById('sliderImagePreview');
+    if (this.files[0]) { const reader = new FileReader(); reader.onload = e => { preview.innerHTML = `<img src="${e.target.result}" class="preview-img">`; }; reader.readAsDataURL(this.files[0]); }
+    else preview.innerHTML = '';
+});
+
+// ─── BRANCHES ─────────────────────────────
+function renderBranches(items) {
+    const tb = document.getElementById('branchesTableBody');
+    if (!items.length) { tb.innerHTML = '<tr><td colspan="3" class="text-center text-gray-400 py-12">لا توجد فروع. أضف أول فرع الآن!</td></tr>'; return; }
+    tb.innerHTML = items.map(b => `
+        <tr class="border-b hover:bg-gray-50">
+            <td class="px-6 py-4 font-bold">${b.name?.ar || b.name?.fr || b.name?.en || ''}</td>
+            <td class="px-6 py-4 text-gray-500 text-sm hidden md:table-cell">${b.location?.ar || b.location?.fr || b.location?.en || ''}</td>
+            <td class="px-6 py-4 whitespace-nowrap">
+                <button onclick="editBranch('${b.id}')" class="text-brandGreen hover:text-brandDark ml-2"><i class="fas fa-edit"></i></button>
+                <button onclick="deleteBranch('${b.id}')" class="text-red-500 hover:text-red-700"><i class="fas fa-trash"></i></button>
+            </td>
+        </tr>
+    `).join('');
+}
+
+function openBranchModal(item) {
+    document.getElementById('branchModalTitle').textContent = item ? 'تعديل الفرع' : 'إضافة فرع';
+    document.getElementById('branchId').value = item ? item.id : '';
+    document.getElementById('branchNameAr').value = item ? (item.name?.ar || '') : '';
+    document.getElementById('branchNameFr').value = item ? (item.name?.fr || '') : '';
+    document.getElementById('branchNameEn').value = item ? (item.name?.en || '') : '';
+    document.getElementById('branchFounded').value = item ? (item.founded || '') : '';
+    document.getElementById('branchGps').value = item ? (item.gps || '') : '';
+    document.getElementById('branchLocationAr').value = item ? (item.location?.ar || '') : '';
+    document.getElementById('branchLocationFr').value = item ? (item.location?.fr || '') : '';
+    document.getElementById('branchLocationEn').value = item ? (item.location?.en || '') : '';
+    document.getElementById('branchMidwifeAr').value = item ? (item.midwife?.ar || '') : '';
+    document.getElementById('branchMidwifeFr').value = item ? (item.midwife?.fr || '') : '';
+    document.getElementById('branchMidwifeEn').value = item ? (item.midwife?.en || '') : '';
+    document.getElementById('branchPhones').value = item ? (item.phones || []).join(', ') : '';
+    document.getElementById('branchImage').value = '';
+    document.getElementById('branchImagePreview').innerHTML = item && item.image ? `<img src="${item.image}" class="preview-img">` : '';
+    openModal('branchModal');
+}
+
+document.getElementById('branchForm').addEventListener('submit', async (e) => {
+    e.preventDefault();
+    const id = document.getElementById('branchId').value;
+    const formData = new FormData();
+    formData.append('name_ar', document.getElementById('branchNameAr').value);
+    formData.append('name_fr', document.getElementById('branchNameFr').value);
+    formData.append('name_en', document.getElementById('branchNameEn').value);
+    formData.append('founded', document.getElementById('branchFounded').value);
+    formData.append('gps', document.getElementById('branchGps').value);
+    formData.append('location_ar', document.getElementById('branchLocationAr').value);
+    formData.append('location_fr', document.getElementById('branchLocationFr').value);
+    formData.append('location_en', document.getElementById('branchLocationEn').value);
+    formData.append('midwife_ar', document.getElementById('branchMidwifeAr').value);
+    formData.append('midwife_fr', document.getElementById('branchMidwifeFr').value);
+    formData.append('midwife_en', document.getElementById('branchMidwifeEn').value);
+    formData.append('phones', document.getElementById('branchPhones').value);
+    const fileInput = document.getElementById('branchImage');
+    if (fileInput.files[0]) formData.append('image', fileInput.files[0]);
+    const url = id ? API + '/branches-with-image/' + id : API + '/branches-with-image';
+    const method = id ? 'PUT' : 'POST';
+    try {
+        const res = await fetch(url, { method, body: formData });
+        const result = await res.json();
+        if (result.success) { showToast(id ? 'تم تحديث الفرع' : 'تم إضافة الفرع'); closeModal('branchModal'); loadAllData(); }
+        else showToast('خطأ: ' + (result.error || ''));
+    } catch(e) { showToast('خطأ في الاتصال'); }
+});
+
+async function editBranch(id) {
+    const res = await fetch(API + '/content?type=branches');
+    const data = await res.json();
+    const item = (data.branches || []).find(b => b.id === id);
+    if (item) openBranchModal(item);
+}
+
+async function deleteBranch(id) {
+    if (!confirm('حذف هذا الفرع؟')) return;
+    const res = await fetch(API + '/content/branches/' + id, { method: 'DELETE' });
+    if ((await res.json()).success) { showToast('تم الحذف'); loadAllData(); }
+}
+
+document.getElementById('branchImage').addEventListener('change', function() {
+    const preview = document.getElementById('branchImagePreview');
+    if (this.files[0]) { const reader = new FileReader(); reader.onload = e => { preview.innerHTML = `<img src="${e.target.result}" class="preview-img">`; }; reader.readAsDataURL(this.files[0]); }
+    else preview.innerHTML = '';
+});
+
+// ─── NAVBAR ───────────────────────────────
+function renderNavbar(items) {
+    const tb = document.getElementById('navbarTableBody');
+    if (!items.length) { tb.innerHTML = '<tr><td colspan="4" class="text-center text-gray-400 py-12">لا توجد روابط. أضف أول رابط الآن!</td></tr>'; return; }
+    const sorted = [...items].sort((a, b) => (a.order || 0) - (b.order || 0));
+    tb.innerHTML = sorted.map(n => `
+        <tr class="border-b hover:bg-gray-50">
+            <td class="px-6 py-4 font-bold">${n.label?.ar || n.label?.fr || n.label?.en || ''}</td>
+            <td class="px-6 py-4 text-gray-500 text-sm hidden md:table-cell">${n.href || ''}</td>
+            <td class="px-6 py-4 text-gray-500 text-sm hidden md:table-cell">${n.order || 0}</td>
+            <td class="px-6 py-4 whitespace-nowrap">
+                <button onclick="editNavbar('${n.id}')" class="text-brandGreen hover:text-brandDark ml-2"><i class="fas fa-edit"></i></button>
+                <button onclick="deleteNavbar('${n.id}')" class="text-red-500 hover:text-red-700"><i class="fas fa-trash"></i></button>
+            </td>
+        </tr>
+    `).join('');
+}
+
+function openNavbarModal(item) {
+    document.getElementById('navbarModalTitle').textContent = item ? 'تعديل الرابط' : 'إضافة رابط';
+    document.getElementById('navbarId').value = item ? item.id : '';
+    document.getElementById('navbarLabelAr').value = item ? (item.label?.ar || '') : '';
+    document.getElementById('navbarLabelFr').value = item ? (item.label?.fr || '') : '';
+    document.getElementById('navbarLabelEn').value = item ? (item.label?.en || '') : '';
+    document.getElementById('navbarHref').value = item ? (item.href || '#') : '';
+    document.getElementById('navbarOrder').value = item ? (item.order || 0) : 1;
+    openModal('navbarModal');
+}
+
+document.getElementById('navbarForm').addEventListener('submit', async (e) => {
+    e.preventDefault();
+    const id = document.getElementById('navbarId').value;
+    const data = {
+        label: { ar: document.getElementById('navbarLabelAr').value, fr: document.getElementById('navbarLabelFr').value, en: document.getElementById('navbarLabelEn').value },
+        href: document.getElementById('navbarHref').value,
+        order: parseInt(document.getElementById('navbarOrder').value) || 0
+    };
+    const url = API + '/content/navbar' + (id ? '/' + id : '');
+    const method = id ? 'PUT' : 'POST';
+    const res = await fetch(url, { method, headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(data) });
+    if ((await res.json()).success) { showToast(id ? 'تم تحديث الرابط' : 'تم إضافة الرابط'); closeModal('navbarModal'); loadAllData(); }
+});
+
+async function editNavbar(id) {
+    const res = await fetch(API + '/content?type=navbar');
+    const data = await res.json();
+    const item = (data.navbar || []).find(n => n.id === id);
+    if (item) openNavbarModal(item);
+}
+
+async function deleteNavbar(id) {
+    if (!confirm('حذف هذا الرابط؟')) return;
+    const res = await fetch(API + '/content/navbar/' + id, { method: 'DELETE' });
     if ((await res.json()).success) { showToast('تم الحذف'); loadAllData(); }
 }
 

@@ -102,14 +102,18 @@ function writeConfig(cfg) {
 // ─── Helpers ─────────────────────────────────────────────
 function getFileUrl(file) {
     if (!file) return '';
-    if (useCloudinary) return file.path;
-    return '/uploads/' + file.filename;
+    if (useCloudinary) {
+        const url = file.path || file.secure_url || file.url || '';
+        return typeof url === 'string' ? url : String(url);
+    }
+    const filename = typeof file.filename === 'string' ? file.filename : String(file.filename || '');
+    return '/uploads/' + filename;
 }
 function getFilePublicId(imageUrl) {
-    if (!imageUrl) return null;
+    if (!imageUrl || typeof imageUrl !== 'string') return null;
     if (useCloudinary) {
         const parts = imageUrl.split('/');
-        const last = parts[parts.length - 1];
+        const last = parts[parts.length - 1] || '';
         return 'ampf/' + last.split('.')[0];
     }
     return null;
@@ -131,7 +135,10 @@ app.get('/api/public-content', (req, res) => {
         news: (data.news || []).slice(-6).reverse(),
         programs: data.programs || [],
         documents: data.documents || [],
-        gallery: data.gallery || []
+        gallery: data.gallery || [],
+        slider: data.slider || [],
+        branches: data.branches || [],
+        navbar: data.navbar || []
     });
 });
 
@@ -298,6 +305,130 @@ app.put('/api/news-with-image/:id', requireAuth, upload.single('image'), (req, r
 
     writeData(data);
     res.json({ success: true, item: data.news[idx] });
+});
+
+// =========================================================
+//  SLIDER WITH IMAGE UPLOAD
+// =========================================================
+app.post('/api/slider-with-image', requireAuth, upload.single('image'), (req, res) => {
+    if (!req.file) return res.status(400).json({ error: 'يرجى اختيار صورة' });
+    const data = readData();
+    const item = {
+        id: Date.now().toString(),
+        image: getFileUrl(req.file),
+        title: { ar: req.body.title_ar || '', fr: req.body.title_fr || '', en: req.body.title_en || '' },
+        desc: { ar: req.body.desc_ar || '', fr: req.body.desc_fr || '', en: req.body.desc_en || '' },
+        createdAt: new Date().toISOString()
+    };
+    if (!Array.isArray(data.slider)) data.slider = [];
+    data.slider.push(item);
+    writeData(data);
+    res.json({ success: true, item });
+});
+
+app.put('/api/slider-with-image/:id', requireAuth, upload.single('image'), (req, res) => {
+    const data = readData();
+    const idx = (data.slider || []).findIndex(i => i.id === req.params.id);
+    if (idx === -1) return res.status(404).json({ error: 'العنصر غير موجود' });
+
+    if (req.file) {
+        // Delete old image
+        if (data.slider[idx].image) {
+            if (useCloudinary) {
+                const pid = getFilePublicId(data.slider[idx].image);
+                if (pid) cloudinary.uploader.destroy(pid).catch(() => {});
+            } else {
+                const oldPath = path.join(__dirname, 'uploads', path.basename(data.slider[idx].image));
+                if (fs.existsSync(oldPath)) fs.unlinkSync(oldPath);
+            }
+        }
+        data.slider[idx].image = getFileUrl(req.file);
+    }
+    if (req.body.title_ar !== undefined) {
+        data.slider[idx].title = {
+            ar: req.body.title_ar || (data.slider[idx].title?.ar || ''),
+            fr: req.body.title_fr || (data.slider[idx].title?.fr || ''),
+            en: req.body.title_en || (data.slider[idx].title?.en || '')
+        };
+    }
+    if (req.body.desc_ar !== undefined) {
+        data.slider[idx].desc = {
+            ar: req.body.desc_ar || (data.slider[idx].desc?.ar || ''),
+            fr: req.body.desc_fr || (data.slider[idx].desc?.fr || ''),
+            en: req.body.desc_en || (data.slider[idx].desc?.en || '')
+        };
+    }
+    writeData(data);
+    res.json({ success: true, item: data.slider[idx] });
+});
+
+// =========================================================
+//  BRANCHES WITH IMAGE UPLOAD
+// =========================================================
+app.post('/api/branches-with-image', requireAuth, upload.single('image'), (req, res) => {
+    const data = readData();
+    const item = {
+        id: Date.now().toString(),
+        name: { ar: req.body.name_ar || '', fr: req.body.name_fr || '', en: req.body.name_en || '' },
+        founded: req.body.founded || '',
+        location: { ar: req.body.location_ar || '', fr: req.body.location_fr || '', en: req.body.location_en || '' },
+        gps: req.body.gps || '',
+        midwife: { ar: req.body.midwife_ar || '', fr: req.body.midwife_fr || '', en: req.body.midwife_en || '' },
+        phones: req.body.phones ? req.body.phones.split(',').map(p => p.trim()).filter(Boolean) : [],
+        image: getFileUrl(req.file),
+        createdAt: new Date().toISOString()
+    };
+    if (!Array.isArray(data.branches)) data.branches = [];
+    data.branches.push(item);
+    writeData(data);
+    res.json({ success: true, item });
+});
+
+app.put('/api/branches-with-image/:id', requireAuth, upload.single('image'), (req, res) => {
+    const data = readData();
+    const idx = (data.branches || []).findIndex(i => i.id === req.params.id);
+    if (idx === -1) return res.status(404).json({ error: 'الفرع غير موجود' });
+
+    if (req.file) {
+        if (data.branches[idx].image) {
+            if (useCloudinary) {
+                const pid = getFilePublicId(data.branches[idx].image);
+                if (pid) cloudinary.uploader.destroy(pid).catch(() => {});
+            } else {
+                const oldPath = path.join(__dirname, 'uploads', path.basename(data.branches[idx].image));
+                if (fs.existsSync(oldPath)) fs.unlinkSync(oldPath);
+            }
+        }
+        data.branches[idx].image = getFileUrl(req.file);
+    }
+    if (req.body.name_ar !== undefined) {
+        data.branches[idx].name = {
+            ar: req.body.name_ar || (data.branches[idx].name?.ar || ''),
+            fr: req.body.name_fr || (data.branches[idx].name?.fr || ''),
+            en: req.body.name_en || (data.branches[idx].name?.en || '')
+        };
+    }
+    if (req.body.location_ar !== undefined) {
+        data.branches[idx].location = {
+            ar: req.body.location_ar || (data.branches[idx].location?.ar || ''),
+            fr: req.body.location_fr || (data.branches[idx].location?.fr || ''),
+            en: req.body.location_en || (data.branches[idx].location?.en || '')
+        };
+    }
+    if (req.body.midwife_ar !== undefined) {
+        data.branches[idx].midwife = {
+            ar: req.body.midwife_ar || (data.branches[idx].midwife?.ar || ''),
+            fr: req.body.midwife_fr || (data.branches[idx].midwife?.fr || ''),
+            en: req.body.midwife_en || (data.branches[idx].midwife?.en || '')
+        };
+    }
+    if (req.body.founded !== undefined) data.branches[idx].founded = req.body.founded;
+    if (req.body.gps !== undefined) data.branches[idx].gps = req.body.gps;
+    if (req.body.phones !== undefined) {
+        data.branches[idx].phones = req.body.phones.split(',').map(p => p.trim()).filter(Boolean);
+    }
+    writeData(data);
+    res.json({ success: true, item: data.branches[idx] });
 });
 
 // =========================================================
