@@ -4,6 +4,8 @@ const path = require('path');
 const fs = require('fs');
 const multer = require('multer');
 const morgan = require('morgan');
+const cloudinary = require('cloudinary').v2;
+const { CloudinaryStorage } = require('multer-storage-cloudinary');
 
 const app = express();
 const PORT = 3000;
@@ -29,11 +31,36 @@ app.use((req, res, next) => {
 app.use(express.static(__dirname));
 app.use('/uploads', express.static(path.join(__dirname, 'uploads')));
 
-// ─── File Upload ─────────────────────────────────────────
-const storage = multer.diskStorage({
-    destination: (req, file, cb) => cb(null, './uploads/'),
-    filename: (req, file, cb) => cb(null, Date.now() + '-' + file.originalname.replace(/\s/g, '_'))
+// ─── Cloudinary ──────────────────────────────────────────
+cloudinary.config({
+    cloud_name: process.env.CLOUDINARY_CLOUD_NAME || '',
+    api_key: process.env.CLOUDINARY_API_KEY || '',
+    api_secret: process.env.CLOUDINARY_API_SECRET || ''
 });
+const useCloudinary = !!(process.env.CLOUDINARY_CLOUD_NAME && process.env.CLOUDINARY_API_KEY && process.env.CLOUDINARY_API_SECRET);
+if (useCloudinary) {
+    console.log('[AMPF] Using Cloudinary for image uploads');
+} else {
+    console.log('[AMPF] Cloudinary not configured, using local storage');
+}
+
+// ─── File Upload ─────────────────────────────────────────
+let storage;
+if (useCloudinary) {
+    storage = new CloudinaryStorage({
+        cloudinary,
+        params: {
+            folder: 'ampf',
+            allowed_formats: ['jpeg', 'jpg', 'png', 'gif', 'webp', 'svg', 'pdf', 'doc', 'docx', 'xlsx'],
+            public_id: (req, file) => Date.now() + '-' + file.originalname.replace(/[^a-zA-Z0-9_-]/g, '_').replace(/\s/g, '_')
+        }
+    });
+} else {
+    storage = multer.diskStorage({
+        destination: (req, file, cb) => cb(null, './uploads/'),
+        filename: (req, file, cb) => cb(null, Date.now() + '-' + file.originalname.replace(/\s/g, '_'))
+    });
+}
 const upload = multer({
     storage,
     limits: { fileSize: 10 * 1024 * 1024 },
@@ -45,7 +72,7 @@ const upload = multer({
     }
 });
 
-// Ensure uploads dir
+// Ensure uploads dir (for local fallback)
 if (!fs.existsSync('./uploads')) fs.mkdirSync('./uploads');
 
 // ─── Data Helpers ────────────────────────────────────────
@@ -70,6 +97,22 @@ function readConfig() {
 }
 function writeConfig(cfg) {
     fs.writeFileSync(configPath, JSON.stringify(cfg, null, 2), 'utf8');
+}
+
+// ─── Helpers ─────────────────────────────────────────────
+function getFileUrl(file) {
+    if (!file) return '';
+    if (useCloudinary) return file.path;
+    return '/uploads/' + file.filename;
+}
+function getFilePublicId(imageUrl) {
+    if (!imageUrl) return null;
+    if (useCloudinary) {
+        const parts = imageUrl.split('/');
+        const last = parts[parts.length - 1];
+        return 'ampf/' + last.split('.')[0];
+    }
+    return null;
 }
 
 // ─── Auth Middleware ─────────────────────────────────────
@@ -182,11 +225,16 @@ app.delete('/api/content/:type/:id', requireAuth, (req, res) => {
     const data = readData();
     const { type, id } = req.params;
     if (!Array.isArray(data[type])) return res.status(400).json({ error: 'نوع غير صالح' });
-    // Also delete associated image file if any
+    // Delete associated image
     const item = data[type].find(i => i.id === id);
     if (item && item.image) {
-        const imgPath = path.join(__dirname, 'uploads', path.basename(item.image));
-        if (fs.existsSync(imgPath)) fs.unlinkSync(imgPath);
+        if (useCloudinary) {
+            const pid = getFilePublicId(item.image);
+            if (pid) cloudinary.uploader.destroy(pid).catch(() => {});
+        } else {
+            const imgPath = path.join(__dirname, 'uploads', path.basename(item.image));
+            if (fs.existsSync(imgPath)) fs.unlinkSync(imgPath);
+        }
     }
     data[type] = data[type].filter(i => i.id !== id);
     writeData(data);
@@ -204,7 +252,7 @@ app.post('/api/news-with-image', requireAuth, upload.single('image'), (req, res)
         desc: { ar: req.body.desc_ar || '', fr: req.body.desc_fr || '', en: req.body.desc_en || '' },
         category: req.body.category || 'blog',
         date: req.body.date || new Date().toISOString().split('T')[0],
-        image: req.file ? '/uploads/' + req.file.filename : '',
+        image: getFileUrl(req.file),
         createdAt: new Date().toISOString()
     };
     if (!Array.isArray(data.news)) data.news = [];
@@ -221,10 +269,15 @@ app.put('/api/news-with-image/:id', requireAuth, upload.single('image'), (req, r
     if (req.file) {
         // Delete old image
         if (data.news[idx].image) {
-            const oldPath = path.join(__dirname, 'uploads', path.basename(data.news[idx].image));
-            if (fs.existsSync(oldPath)) fs.unlinkSync(oldPath);
+            if (useCloudinary) {
+                const pid = getFilePublicId(data.news[idx].image);
+                if (pid) cloudinary.uploader.destroy(pid).catch(() => {});
+            } else {
+                const oldPath = path.join(__dirname, 'uploads', path.basename(data.news[idx].image));
+                if (fs.existsSync(oldPath)) fs.unlinkSync(oldPath);
+            }
         }
-        data.news[idx].image = '/uploads/' + req.file.filename;
+        data.news[idx].image = getFileUrl(req.file);
     }
     if (req.body.title_ar || req.body.title_fr || req.body.title_en) {
         data.news[idx].title = {
@@ -256,7 +309,7 @@ app.post('/api/gallery', requireAuth, upload.single('image'), (req, res) => {
     const item = {
         id: Date.now().toString(),
         title: req.body.title || 'صورة',
-        image: '/uploads/' + req.file.filename,
+        image: getFileUrl(req.file),
         createdAt: new Date().toISOString()
     };
     if (!Array.isArray(data.gallery)) data.gallery = [];
@@ -269,8 +322,15 @@ app.delete('/api/gallery/:id', requireAuth, (req, res) => {
     const data = readData();
     const idx = data.gallery.findIndex(i => i.id === req.params.id);
     if (idx === -1) return res.status(404).json({ error: 'الصورة غير موجودة' });
-    const imgPath = path.join(__dirname, 'uploads', path.basename(data.gallery[idx].image));
-    if (fs.existsSync(imgPath)) fs.unlinkSync(imgPath);
+    if (data.gallery[idx].image) {
+        if (useCloudinary) {
+            const pid = getFilePublicId(data.gallery[idx].image);
+            if (pid) cloudinary.uploader.destroy(pid).catch(() => {});
+        } else {
+            const imgPath = path.join(__dirname, 'uploads', path.basename(data.gallery[idx].image));
+            if (fs.existsSync(imgPath)) fs.unlinkSync(imgPath);
+        }
+    }
     data.gallery.splice(idx, 1);
     writeData(data);
     res.json({ success: true });
@@ -294,7 +354,7 @@ app.put('/api/site-content', requireAuth, (req, res) => {
 // File upload (generic)
 app.post('/api/upload', requireAuth, upload.single('file'), (req, res) => {
     if (!req.file) return res.status(400).json({ error: 'لم يتم رفع الملف' });
-    res.json({ success: true, filename: req.file.filename, path: '/uploads/' + req.file.filename });
+    res.json({ success: true, filename: req.file.filename, path: getFileUrl(req.file) });
 });
 
 // =========================================================
