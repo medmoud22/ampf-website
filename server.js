@@ -9,6 +9,7 @@ const app = express();
 const PORT = 3000;
 
 // ─── Middleware ───────────────────────────────────────────
+app.set('trust proxy', 1);
 app.use(morgan('dev'));
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
@@ -18,6 +19,13 @@ app.use(session({
     saveUninitialized: true,
     cookie: { maxAge: 24 * 60 * 60 * 1000 }
 }));
+// Block access to sensitive directories
+app.use((req, res, next) => {
+    if (req.path.startsWith('/data/') || req.path.startsWith('/node_modules/')) {
+        return res.status(403).send('Forbidden');
+    }
+    next();
+});
 app.use(express.static(__dirname));
 app.use('/uploads', express.static(path.join(__dirname, 'uploads')));
 
