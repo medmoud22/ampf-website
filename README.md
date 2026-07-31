@@ -10,7 +10,8 @@
 - **لوحة تحكم CMS:** إدارة الأخبار، البرامج، معرض الصور، الوثائق، الرسائل، وتعديل النصوص
 - **محتوى ديناميكي:** كل المحتوى يُجلب من API، قابل للتعديل من لوحة التحكم
 - **رفع الملفات:** رفع مباشر إلى Cloudinary (روابط `res.cloudinary.com`) — لا تخزين محلي
-- **تصدير واستيراد:** تخزين البيانات في ملف JSON
+- **قاعدة بيانات سحابية:** كل المحتوى محفوظ في Upstash Redis — يبقى بعد إعادة تشغيل Render
+- **تصدير واستيراد:** الملف المحلي `content.json` نسخة احتياطية فقط
 
 ---
 
@@ -19,6 +20,19 @@
 - Node.js (v18+)
 - npm
 - حسابات Cloudinary (متغيرات البيئة: `CLOUDINARY_CLOUD_NAME`, `CLOUDINARY_API_KEY`, `CLOUDINARY_API_SECRET`)
+- قاعدة Upstash Redis مجانية (متغيرات البيئة: `UPSTASH_REDIS_REST_URL`, `UPSTASH_REDIS_REST_TOKEN`)
+
+## إعداد قاعدة البيانات السحابية (Upstash Redis)
+
+1. سجّل مجاناً على [upstash.com](https://upstash.com)
+2. أنشئ قاعدة جديدة (Provider: **AWS**، Region: الأقرب إليك مثل `eu-central-1`)
+3. من تبويب **REST API** انسخ قيمتين:
+   - `UPSTASH_REDIS_REST_URL` — مثال: `https://xxxx.upstash.io`
+   - `UPSTASH_REDIS_REST_TOKEN`
+4. في Render → Service → **Environment** أضف المتغيرين (مع متغيرات Cloudinary)
+5. عند أول تشغيل تُزرع البيانات تلقائياً من `content.json` إلى Redis
+
+> بدون Upstash Redis سيعمل الموقع محلياً لكن البيانات **ستُمحى** عند إعادة تشغيل Render.
 
 ## طريقة التشغيل
 
@@ -51,13 +65,13 @@ ampf-website/
 ├── index.html         # الواجهة الأمامية (SPA)
 ├── admin.html         # لوحة الإدارة (SPA)
 ├── data/
-│   ├── content.json   # قاعدة البيانات (JSON)
+│   ├── content.json   # النسخة الاحتياطية المحلية (المصدر الحقيقي في Upstash Redis)
 │   └── config.json    # بيانات تسجيل الدخول (مستبعد من git)
 ├── package.json
 └── .gitignore
 ```
 
-> **ملاحظة:** جميع الصور والملفات تُرفع مباشرة إلى Cloudinary (روابط `res.cloudinary.com`). لا يُخزَّن أي شيء في مجلد محلي، لذلك تبقى الصور بعد إعادة تشغيل Render.
+> **ملاحظة:** الصور تُرفع إلى Cloudinary وكل البيانات (الأخبار، المعرض، الأقسام، الفروع، النصوص) محفوظة في Upstash Redis، لذلك كل شيء يبقى بعد إعادة تشغيل Render.
 
 ## API
 
@@ -83,13 +97,27 @@ A complete multilingual CMS (Arabic / French / English) for the official website
 - **CMS Dashboard:** Manage news, programs, gallery, documents, messages, and site content
 - **Dynamic Content:** All content fetched from API, editable via admin panel
 - **File Upload:** Uploads go directly to Cloudinary (`res.cloudinary.com` URLs) — no local storage
-- **JSON Storage:** Lightweight file-based data storage
+- **Cloud Database:** All content persisted in Upstash Redis — survives Render restarts
+- **JSON Storage:** Local `content.json` is only a backup/seed file
 
 ## Requirements
 
 - Node.js (v18+)
 - npm
 - Cloudinary account (env vars: `CLOUDINARY_CLOUD_NAME`, `CLOUDINARY_API_KEY`, `CLOUDINARY_API_SECRET`)
+- Free Upstash Redis database (env vars: `UPSTASH_REDIS_REST_URL`, `UPSTASH_REDIS_REST_TOKEN`)
+
+## Setting up the cloud database (Upstash Redis)
+
+1. Sign up free at [upstash.com](https://upstash.com)
+2. Create a database (Provider: **AWS**, region nearest to you, e.g. `eu-central-1`)
+3. From the **REST API** tab copy two values:
+   - `UPSTASH_REDIS_REST_URL` — e.g. `https://xxxx.upstash.io`
+   - `UPSTASH_REDIS_REST_TOKEN`
+4. On Render → Service → **Environment**, add both variables (plus the Cloudinary ones)
+5. On first boot the data is seeded automatically from `content.json` into Redis
+
+> Without Upstash Redis the site works locally but data **will be wiped** on Render restarts.
 
 ## Quick Start
 
@@ -122,13 +150,13 @@ ampf-website/
 ├── index.html         # Public frontend (SPA)
 ├── admin.html         # Admin dashboard (SPA)
 ├── data/
-│   ├── content.json   # Database (JSON file)
+│   ├── content.json   # Local backup file (source of truth is Upstash Redis)
 │   └── config.json    # Login credentials (gitignored)
 ├── package.json
 └── .gitignore
 ```
 
-> **Note:** All images/files are uploaded directly to Cloudinary (`res.cloudinary.com` URLs). Nothing is stored in a local folder, so images survive Render restarts.
+> **Note:** Images go to Cloudinary and all data (news, gallery, programs, branches, texts) is stored in Upstash Redis, so everything survives Render restarts.
 
 ## API Endpoints
 

@@ -5,6 +5,7 @@ const fs = require('fs');
 const multer = require('multer');
 const morgan = require('morgan');
 const cloudinary = require('cloudinary').v2;
+const { Redis } = require('@upstash/redis');
 
 const app = express();
 const PORT = 3000;
@@ -82,13 +83,83 @@ function uploadToCloudinary(file) {
 const dataPath = path.join(__dirname, 'data', 'content.json');
 const configPath = path.join(__dirname, 'data', 'config.json');
 
-function readData() {
+// ─── Cloud Persistent Store (Upstash Redis) ──────────────
+// The whole content.json is stored in Upstash Redis so data survives
+// Render restarts (ephemeral filesystem). The local file remains as a
+// backup/seed source only. Env vars: UPSTASH_REDIS_REST_URL, UPSTASH_REDIS_REST_TOKEN
+const redisUrl = process.env.UPSTASH_REDIS_REST_URL || '';
+const redisToken = process.env.UPSTASH_REDIS_REST_TOKEN || '';
+const useCloudDB = !!(redisUrl && redisToken);
+const redis = useCloudDB ? new Redis({ url: redisUrl, token: redisToken }) : null;
+const CONTENT_KEY = 'ampf:content';
+
+if (useCloudDB) {
+    console.log('[AMPF] Cloud DB (Upstash Redis) enabled. Data survives restarts.');
+} else {
+    console.warn('[AMPF] WARNING: Upstash Redis NOT configured. Data may be wiped on Render restarts.');
+    console.warn('[AMPF] Set UPSTASH_REDIS_REST_URL and UPSTASH_REDIS_REST_TOKEN in Render env vars.');
+}
+
+// Serialize cloud writes so the last write always wins in order
+let persistQueue = Promise.resolve();
+function persistToCloud(data) {
+    const snapshot = JSON.stringify(data);
+    persistQueue = persistQueue
+        .then(() => redis.set(CONTENT_KEY, snapshot))
+        .catch((e) => console.error('[AMPF] Cloud DB write failed:', e.message));
+    return persistQueue;
+}
+
+const DATA_DEFAULTS = {
+    news: [],
+    programs: [],
+    documents: [],
+    messages: [],
+    gallery: [],
+    site_content: {},
+    slider: [],
+    branches: [],
+    navbar: []
+};
+
+function readLocalFile() {
     try { return JSON.parse(fs.readFileSync(dataPath, 'utf8')); }
-    catch { return { news: [], programs: [], documents: [], messages: [], gallery: [], site_content: {} }; }
+    catch { return JSON.parse(JSON.stringify(DATA_DEFAULTS)); }
 }
-function writeData(data) {
-    fs.writeFileSync(dataPath, JSON.stringify(data, null, 2), 'utf8');
+
+async function readData() {
+    if (redis) {
+        try {
+            const raw = await redis.get(CONTENT_KEY);
+            if (raw) {
+                const parsed = typeof raw === 'string' ? JSON.parse(raw) : raw;
+                if (parsed && typeof parsed === 'object') return parsed;
+            }
+            // Key not set yet: seed cloud from the local seed file
+            const local = readLocalFile();
+            await persistToCloud(local);
+            return local;
+        } catch (e) {
+            console.error('[AMPF] Cloud DB read failed, using local file:', e.message);
+        }
+    }
+    return readLocalFile();
 }
+
+async function writeData(data) {
+    // Local backup file (helps local dev + serves as seed)
+    try {
+        fs.writeFileSync(dataPath, JSON.stringify(data, null, 2), 'utf8');
+    } catch (e) {
+        console.error('[AMPF] Local backup write failed:', e.message);
+    }
+    // Persist to cloud
+    if (redis) {
+        try { await persistToCloud(data); }
+        catch (e) { console.error('[AMPF] Cloud DB write failed:', e.message); }
+    }
+}
+
 function readConfig() {
     try { return JSON.parse(fs.readFileSync(configPath, 'utf8')); }
     catch {
@@ -121,8 +192,8 @@ function requireAuth(req, res, next) {
 // =========================================================
 //  PUBLIC API (no auth required - for frontend)
 // =========================================================
-app.get('/api/public-content', (req, res) => {
-    const data = readData();
+app.get('/api/public-content', async (req, res) => {
+    const data = await readData();
     res.json({
         site_content: data.site_content || {},
         news: (data.news || []).slice(-6).reverse(),
@@ -192,37 +263,37 @@ app.post('/api/change-password', requireAuth, (req, res) => {
 // =========================================================
 //  CONTENT CRUD API (auth required)
 // =========================================================
-app.get('/api/content', requireAuth, (req, res) => {
-    const data = readData();
+app.get('/api/content', requireAuth, async (req, res) => {
+    const data = await readData();
     const type = req.query.type;
     if (type && Array.isArray(data[type])) return res.json({ [type]: data[type] });
     res.json(data);
 });
 
 // Generic CRUD for arrays
-app.post('/api/content/:type', requireAuth, (req, res) => {
-    const data = readData();
+app.post('/api/content/:type', requireAuth, async (req, res) => {
+    const data = await readData();
     const { type } = req.params;
     if (!Array.isArray(data[type])) return res.status(400).json({ error: 'نوع غير صالح' });
     const item = { id: Date.now().toString(), ...req.body, createdAt: new Date().toISOString() };
     data[type].push(item);
-    writeData(data);
+    await writeData(data);
     res.json({ success: true, item });
 });
 
-app.put('/api/content/:type/:id', requireAuth, (req, res) => {
-    const data = readData();
+app.put('/api/content/:type/:id', requireAuth, async (req, res) => {
+    const data = await readData();
     const { type, id } = req.params;
     if (!Array.isArray(data[type])) return res.status(400).json({ error: 'نوع غير صالح' });
     const idx = data[type].findIndex(i => i.id === id);
     if (idx === -1) return res.status(404).json({ error: 'العنصر غير موجود' });
     data[type][idx] = { ...data[type][idx], ...req.body };
-    writeData(data);
+    await writeData(data);
     res.json({ success: true, item: data[type][idx] });
 });
 
-app.delete('/api/content/:type/:id', requireAuth, (req, res) => {
-    const data = readData();
+app.delete('/api/content/:type/:id', requireAuth, async (req, res) => {
+    const data = await readData();
     const { type, id } = req.params;
     if (!Array.isArray(data[type])) return res.status(400).json({ error: 'نوع غير صالح' });
     // Delete associated image from Cloudinary
@@ -232,7 +303,7 @@ app.delete('/api/content/:type/:id', requireAuth, (req, res) => {
         if (pid) cloudinary.uploader.destroy(pid).catch(() => {});
     }
     data[type] = data[type].filter(i => i.id !== id);
-    writeData(data);
+    await writeData(data);
     res.json({ success: true });
 });
 
@@ -243,7 +314,7 @@ app.post('/api/news-with-image', requireAuth, upload.single('image'), async (req
     if (!req.file) return res.status(400).json({ error: 'يرجى اختيار صورة' });
     try {
         const imageUrl = await uploadToCloudinary(req.file);
-        const data = readData();
+        const data = await readData();
         const item = {
             id: Date.now().toString(),
             title: { ar: req.body.title_ar || '', fr: req.body.title_fr || '', en: req.body.title_en || '' },
@@ -255,7 +326,7 @@ app.post('/api/news-with-image', requireAuth, upload.single('image'), async (req
         };
         if (!Array.isArray(data.news)) data.news = [];
         data.news.push(item);
-        writeData(data);
+        await writeData(data);
         res.json({ success: true, item });
     } catch (e) {
         console.error('[AMPF] Upload to Cloudinary failed:', e.message);
@@ -264,7 +335,7 @@ app.post('/api/news-with-image', requireAuth, upload.single('image'), async (req
 });
 
 app.put('/api/news-with-image/:id', requireAuth, upload.single('image'), async (req, res) => {
-    const data = readData();
+    const data = await readData();
     const idx = data.news.findIndex(i => i.id === req.params.id);
     if (idx === -1) return res.status(404).json({ error: 'الخبر غير موجود' });
 
@@ -299,7 +370,7 @@ app.put('/api/news-with-image/:id', requireAuth, upload.single('image'), async (
     if (req.body.category) data.news[idx].category = req.body.category;
     if (req.body.date) data.news[idx].date = req.body.date;
 
-    writeData(data);
+    await writeData(data);
     res.json({ success: true, item: data.news[idx] });
 });
 
@@ -310,7 +381,7 @@ app.post('/api/slider-with-image', requireAuth, upload.single('image'), async (r
     if (!req.file) return res.status(400).json({ error: 'يرجى اختيار صورة' });
     try {
         const imageUrl = await uploadToCloudinary(req.file);
-        const data = readData();
+        const data = await readData();
         const item = {
             id: Date.now().toString(),
             image: imageUrl,
@@ -320,7 +391,7 @@ app.post('/api/slider-with-image', requireAuth, upload.single('image'), async (r
         };
         if (!Array.isArray(data.slider)) data.slider = [];
         data.slider.push(item);
-        writeData(data);
+        await writeData(data);
         res.json({ success: true, item });
     } catch (e) {
         console.error('[AMPF] Upload to Cloudinary failed:', e.message);
@@ -329,7 +400,7 @@ app.post('/api/slider-with-image', requireAuth, upload.single('image'), async (r
 });
 
 app.put('/api/slider-with-image/:id', requireAuth, upload.single('image'), async (req, res) => {
-    const data = readData();
+    const data = await readData();
     const idx = (data.slider || []).findIndex(i => i.id === req.params.id);
     if (idx === -1) return res.status(404).json({ error: 'العنصر غير موجود' });
 
@@ -361,7 +432,7 @@ app.put('/api/slider-with-image/:id', requireAuth, upload.single('image'), async
             en: req.body.desc_en || (data.slider[idx].desc?.en || '')
         };
     }
-    writeData(data);
+    await writeData(data);
     res.json({ success: true, item: data.slider[idx] });
 });
 
@@ -371,7 +442,7 @@ app.put('/api/slider-with-image/:id', requireAuth, upload.single('image'), async
 app.post('/api/branches-with-image', requireAuth, upload.single('image'), async (req, res) => {
     try {
         const imageUrl = req.file ? await uploadToCloudinary(req.file) : '';
-        const data = readData();
+        const data = await readData();
         const item = {
             id: Date.now().toString(),
             name: { ar: req.body.name_ar || '', fr: req.body.name_fr || '', en: req.body.name_en || '' },
@@ -385,7 +456,7 @@ app.post('/api/branches-with-image', requireAuth, upload.single('image'), async 
         };
         if (!Array.isArray(data.branches)) data.branches = [];
         data.branches.push(item);
-        writeData(data);
+        await writeData(data);
         res.json({ success: true, item });
     } catch (e) {
         console.error('[AMPF] Upload to Cloudinary failed:', e.message);
@@ -394,7 +465,7 @@ app.post('/api/branches-with-image', requireAuth, upload.single('image'), async 
 });
 
 app.put('/api/branches-with-image/:id', requireAuth, upload.single('image'), async (req, res) => {
-    const data = readData();
+    const data = await readData();
     const idx = (data.branches || []).findIndex(i => i.id === req.params.id);
     if (idx === -1) return res.status(404).json({ error: 'الفرع غير موجود' });
 
@@ -437,7 +508,7 @@ app.put('/api/branches-with-image/:id', requireAuth, upload.single('image'), asy
     if (req.body.phones !== undefined) {
         data.branches[idx].phones = req.body.phones.split(',').map(p => p.trim()).filter(Boolean);
     }
-    writeData(data);
+    await writeData(data);
     res.json({ success: true, item: data.branches[idx] });
 });
 
@@ -448,7 +519,7 @@ app.post('/api/gallery', requireAuth, upload.single('image'), async (req, res) =
     if (!req.file) return res.status(400).json({ error: 'يرجى اختيار صورة' });
     try {
         const imageUrl = await uploadToCloudinary(req.file);
-        const data = readData();
+        const data = await readData();
         const item = {
             id: Date.now().toString(),
             title: req.body.title || 'صورة',
@@ -457,7 +528,7 @@ app.post('/api/gallery', requireAuth, upload.single('image'), async (req, res) =
         };
         if (!Array.isArray(data.gallery)) data.gallery = [];
         data.gallery.push(item);
-        writeData(data);
+        await writeData(data);
         res.json({ success: true, item });
     } catch (e) {
         console.error('[AMPF] Upload to Cloudinary failed:', e.message);
@@ -465,8 +536,8 @@ app.post('/api/gallery', requireAuth, upload.single('image'), async (req, res) =
     }
 });
 
-app.delete('/api/gallery/:id', requireAuth, (req, res) => {
-    const data = readData();
+app.delete('/api/gallery/:id', requireAuth, async (req, res) => {
+    const data = await readData();
     const idx = data.gallery.findIndex(i => i.id === req.params.id);
     if (idx === -1) return res.status(404).json({ error: 'الصورة غير موجودة' });
     if (data.gallery[idx].image) {
@@ -474,22 +545,22 @@ app.delete('/api/gallery/:id', requireAuth, (req, res) => {
         if (pid) cloudinary.uploader.destroy(pid).catch(() => {});
     }
     data.gallery.splice(idx, 1);
-    writeData(data);
+    await writeData(data);
     res.json({ success: true });
 });
 
 // =========================================================
 //  SITE CONTENT
 // =========================================================
-app.get('/api/site-content', requireAuth, (req, res) => {
-    const data = readData();
+app.get('/api/site-content', requireAuth, async (req, res) => {
+    const data = await readData();
     res.json(data.site_content || {});
 });
 
-app.put('/api/site-content', requireAuth, (req, res) => {
-    const data = readData();
+app.put('/api/site-content', requireAuth, async (req, res) => {
+    const data = await readData();
     data.site_content = req.body;
-    writeData(data);
+    await writeData(data);
     res.json({ success: true, message: 'تم حفظ التغييرات' });
 });
 
@@ -508,8 +579,8 @@ app.post('/api/upload', requireAuth, upload.single('file'), async (req, res) => 
 // =========================================================
 //  MESSAGES (from contact form)
 // =========================================================
-app.post('/api/messages', (req, res) => {
-    const data = readData();
+app.post('/api/messages', async (req, res) => {
+    const data = await readData();
     const msg = {
         id: Date.now().toString(),
         name: req.body.name || '',
@@ -520,7 +591,7 @@ app.post('/api/messages', (req, res) => {
     };
     if (!Array.isArray(data.messages)) data.messages = [];
     data.messages.push(msg);
-    writeData(data);
+    await writeData(data);
     res.json({ success: true, message: 'تم إرسال رسالتك بنجاح' });
 });
 
