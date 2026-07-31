@@ -36,6 +36,11 @@
 </head>
 <body class="bg-gray-50">
 
+<!-- Storage warning banner (hidden when Redis is connected) -->
+<div id="storageBanner" class="hidden bg-red-600 text-white text-center text-sm font-bold px-4 py-2">
+    ⚠ تنبيه: التخزين السحابي غير متصل — البيانات ستُمسح عند إعادة تشغيل السيرفر. أضف متغيرات UPSTASH_REDIS_REST_URL و UPSTASH_REDIS_REST_TOKEN في إعدادات Render.
+</div>
+
 <!-- ========================================= -->
 <!-- LOGIN SCREEN -->
 <!-- ========================================= -->
@@ -632,6 +637,21 @@ function compressImage(file, maxDim = 1280, quality = 0.82) {
     });
 }
 
+// ─── Storage status check ──────────────────
+// Shows a red warning banner when data is NOT persisted to Upstash Redis.
+async function checkStorage() {
+    try {
+        const res = await fetch(API + '/public-content', { cache: 'no-store' });
+        const data = await res.json();
+        const banner = document.getElementById('storageBanner');
+        if (data.storage && data.storage.ok && data.storage.mode === 'redis') {
+            banner.classList.add('hidden');
+        } else {
+            banner.classList.remove('hidden');
+        }
+    } catch (e) { /* ignore */ }
+}
+
 // ─── Helpers ──────────────────────────────
 function showToast(msg) { const t = document.getElementById('toast'); document.getElementById('toastMsg').textContent = msg; t.classList.add('show'); setTimeout(() => t.classList.remove('show'), 3000); }
 function toggleSidebar() { document.getElementById('mobileSidebar').classList.toggle('hidden'); }
@@ -661,6 +681,7 @@ document.getElementById('loginForm').addEventListener('submit', async (e) => {
         if (data.success) {
             document.getElementById('loginScreen').classList.add('hidden');
             document.getElementById('dashboard').classList.remove('hidden');
+            checkStorage();
             loadAllData();
         } else { err.textContent = 'بيانات الدخول غير صحيحة'; err.classList.remove('hidden'); }
     } catch(e) { err.textContent = 'خطأ في الاتصال بالخادم'; err.classList.remove('hidden'); }
@@ -1213,6 +1234,7 @@ document.getElementById('passwordForm').addEventListener('submit', async (e) => 
 
 // ─── Auto-login check ─────────────────────
 (async function() {
+    checkStorage();
     try {
         const res = await fetch(API + '/check-auth');
         const data = await res.json();

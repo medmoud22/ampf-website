@@ -84,30 +84,62 @@ const dataPath = path.join(__dirname, 'data', 'content.json');
 const configPath = path.join(__dirname, 'data', 'config.json');
 
 // ─── Cloud Persistent Store (Upstash Redis) ──────────────
-// The whole content.json is stored in Upstash Redis so data survives
-// Render restarts (ephemeral filesystem). The local file remains as a
-// backup/seed source only. Env vars: UPSTASH_REDIS_REST_URL, UPSTASH_REDIS_REST_TOKEN
+// The whole content.json AND config.json are stored in Upstash Redis so
+// data survives Render restarts (ephemeral filesystem). The local files
+// remain as backup/seed sources ONLY and are NEVER written over Redis data.
+// Env vars: UPSTASH_REDIS_REST_URL, UPSTASH_REDIS_REST_TOKEN
 const redisUrl = process.env.UPSTASH_REDIS_REST_URL || '';
 const redisToken = process.env.UPSTASH_REDIS_REST_TOKEN || '';
 const useCloudDB = !!(redisUrl && redisToken);
 const redis = useCloudDB ? new Redis({ url: redisUrl, token: redisToken }) : null;
 const CONTENT_KEY = 'ampf:content';
+const CONFIG_KEY = 'ampf:config';
 
-if (useCloudDB) {
-    console.log('[AMPF] Cloud DB (Upstash Redis) enabled. Data survives restarts.');
+// Storage state surfaced to the API/admin so failures are never silent
+const storageState = {
+    mode: useCloudDB ? 'redis' : 'local', // 'redis' | 'local'
+    ok: useCloudDB ? false : false,
+    detail: useCloudDB ? 'connecting...' : 'Upstash Redis env vars not set'
+};
+
+if (!useCloudDB) {
+    storageState.mode = 'local';
+    storageState.ok = false;
+    storageState.detail = 'UPSTASH_REDIS_REST_URL / UPSTASH_REDIS_REST_TOKEN missing';
+    console.error('[AMPF] ⚠⚠⚠ STORAGE MODE: LOCAL ONLY. Data will be LOST on Render restarts.');
+    console.error('[AMPF] Set UPSTASH_REDIS_REST_URL and UPSTASH_REDIS_REST_TOKEN in Render env vars.');
 } else {
-    console.warn('[AMPF] WARNING: Upstash Redis NOT configured. Data may be wiped on Render restarts.');
-    console.warn('[AMPF] Set UPSTASH_REDIS_REST_URL and UPSTASH_REDIS_REST_TOKEN in Render env vars.');
+    console.log('[AMPF] Cloud DB (Upstash Redis) configured. Testing connection...');
 }
 
-// Serialize cloud writes so the last write always wins in order
-let persistQueue = Promise.resolve();
-function persistToCloud(data) {
-    const snapshot = JSON.stringify(data);
-    persistQueue = persistQueue
-        .then(() => redis.set(CONTENT_KEY, snapshot))
-        .catch((e) => console.error('[AMPF] Cloud DB write failed:', e.message));
-    return persistQueue;
+// Serialize cloud writes per key so the last write always wins in order,
+// and never let a failed write reject the queue (fail loudly instead).
+const contentQueue = { current: Promise.resolve() };
+const configQueue = { current: Promise.resolve() };
+
+function enqueueSet(queue, key, value) {
+    const snapshot = typeof value === 'string' ? value : JSON.stringify(value);
+    const result = queue.current.then(() => redis.set(key, snapshot));
+    // Keep the chain alive even if a write fails
+    queue.current = result.catch((e) => {
+        storageState.ok = false;
+        storageState.detail = 'Redis write failed: ' + e.message;
+        console.error('[AMPF] ⚠ Cloud DB write FAILED for ' + key + ':', e.message);
+    });
+    result.then(() => {
+        storageState.ok = true;
+        storageState.detail = 'redis';
+    }).catch(() => {});
+    return result;
+}
+
+// Parse whatever @upstash/redis returns (auto-parsed object OR raw JSON string)
+function parseStored(raw) {
+    if (raw === null || raw === undefined) return null;
+    if (typeof raw === 'string') {
+        try { return JSON.parse(raw); } catch { return null; }
+    }
+    return raw;
 }
 
 const DATA_DEFAULTS = {
@@ -127,51 +159,6 @@ function readLocalFile() {
     catch { return JSON.parse(JSON.stringify(DATA_DEFAULTS)); }
 }
 
-async function readData() {
-    if (redis) {
-        try {
-            const raw = await redis.get(CONTENT_KEY);
-            if (raw) {
-                const parsed = typeof raw === 'string' ? JSON.parse(raw) : raw;
-                if (parsed && typeof parsed === 'object') return parsed;
-            }
-            // Key not set yet: seed cloud from the local seed file
-            const local = readLocalFile();
-            await persistToCloud(local);
-            return local;
-        } catch (e) {
-            console.error('[AMPF] Cloud DB read failed, using local file:', e.message);
-        }
-    }
-    return readLocalFile();
-}
-
-async function writeData(data) {
-    // Local backup file (helps local dev + serves as seed)
-    try {
-        fs.writeFileSync(dataPath, JSON.stringify(data, null, 2), 'utf8');
-    } catch (e) {
-        console.error('[AMPF] Local backup write failed:', e.message);
-    }
-    // Persist to cloud
-    if (redis) {
-        try { await persistToCloud(data); }
-        catch (e) { console.error('[AMPF] Cloud DB write failed:', e.message); }
-    }
-}
-
-// ─── Config helpers (credentials persisted to cloud too) ─
-const CONFIG_KEY = 'ampf:config';
-
-let configPersistQueue = Promise.resolve();
-function persistConfigToCloud(cfg) {
-    const snapshot = JSON.stringify(cfg);
-    configPersistQueue = configPersistQueue
-        .then(() => redis.set(CONFIG_KEY, snapshot))
-        .catch((e) => console.error('[AMPF] Cloud config write failed:', e.message));
-    return configPersistQueue;
-}
-
 function readLocalConfig() {
     try { return JSON.parse(fs.readFileSync(configPath, 'utf8')); }
     catch {
@@ -182,34 +169,133 @@ function readLocalConfig() {
     }
 }
 
+// ─── Startup self-check ──────────────────────────────────
+// Runs once at boot: verifies Redis connectivity, loads stored data from
+// Redis first, and seeds from local files ONLY if the Redis key is empty.
+async function initStorage() {
+    if (!redis) return; // already logged above
+
+    try {
+        const pong = await redis.ping();
+        storageState.ok = true;
+        storageState.detail = 'redis (ping: ' + pong + ')';
+        console.log('[AMPF] ✅ Redis connection OK. Storage mode: REDIS (persistent).');
+
+        const [cRaw, cfRaw] = await Promise.all([redis.get(CONTENT_KEY), redis.get(CONFIG_KEY)]);
+        const cData = parseStored(cRaw);
+        const cfData = parseStored(cfRaw);
+
+        if (cData && typeof cData === 'object') {
+            console.log('[AMPF] Loaded content FROM REDIS:',
+                (cData.news || []).length + ' news,',
+                (cData.gallery || []).length + ' gallery,',
+                (cData.branches || []).length + ' branches,',
+                (cData.slider || []).length + ' slider,',
+                (cData.messages || []).length + ' messages');
+        } else {
+            const seed = readLocalFile();
+            await enqueueSet(contentQueue, CONTENT_KEY, seed);
+            console.log('[AMPF] Redis content key EMPTY -> seeded from local file:',
+                seed.news.length + ' news,', seed.branches.length + ' branches. (Will not overwrite again.)');
+        }
+
+        if (cfData && typeof cfData === 'object' && cfData.credentials) {
+            console.log('[AMPF] Loaded login config FROM REDIS (username:', cfData.credentials.username + ')');
+        } else {
+            const seedCfg = readLocalConfig();
+            await enqueueSet(configQueue, CONFIG_KEY, seedCfg);
+            console.log('[AMPF] Redis config key EMPTY -> seeded default credentials.');
+        }
+    } catch (e) {
+        storageState.ok = false;
+        storageState.mode = 'local';
+        storageState.detail = 'Redis connection failed: ' + e.message;
+        console.error('[AMPF] ⚠⚠⚠ Redis connection FAILED:', e.message);
+        console.error('[AMPF] Falling back to LOCAL storage. Data will be LOST on Render restarts!');
+    }
+}
+
+// ─── Read helpers (Redis first, local fallback only) ─────
+async function readData() {
+    if (redis) {
+        try {
+            const raw = await redis.get(CONTENT_KEY);
+            const parsed = parseStored(raw);
+            if (parsed && typeof parsed === 'object' && !Array.isArray(parsed)) {
+                storageState.ok = true;
+                return parsed;
+            }
+            // Redis key empty: return local seed (seeding handled by initStorage).
+            // We NEVER write local over Redis here.
+            return readLocalFile();
+        } catch (e) {
+            storageState.ok = false;
+            storageState.detail = 'Redis read failed: ' + e.message;
+            console.error('[AMPF] Cloud DB read failed, using local file:', e.message);
+        }
+    }
+    return readLocalFile();
+}
+
 async function readConfig() {
     if (redis) {
         try {
             const raw = await redis.get(CONFIG_KEY);
-            if (raw) {
-                const parsed = typeof raw === 'string' ? JSON.parse(raw) : raw;
-                if (parsed && typeof parsed === 'object' && parsed.credentials) return parsed;
+            const parsed = parseStored(raw);
+            if (parsed && typeof parsed === 'object' && parsed.credentials) {
+                storageState.ok = true;
+                return parsed;
             }
-            // Key not set yet: seed cloud from local config
-            const local = readLocalConfig();
-            await persistConfigToCloud(local);
-            return local;
+            return readLocalConfig();
         } catch (e) {
+            storageState.ok = false;
+            storageState.detail = 'Redis config read failed: ' + e.message;
             console.error('[AMPF] Cloud config read failed, using local file:', e.message);
         }
     }
     return readLocalConfig();
 }
 
+// ─── Write helpers (Redis primary + local backup) ────────
+async function writeData(data) {
+    let savedOk = false;
+    if (redis) {
+        try {
+            await enqueueSet(contentQueue, CONTENT_KEY, data);
+            savedOk = storageState.ok;
+        } catch (e) {
+            storageState.ok = false;
+            storageState.detail = 'Redis write failed: ' + e.message;
+            console.error('[AMPF] ⚠ Cloud DB write failed:', e.message);
+        }
+    }
+    // Local backup file (best effort; never the primary store)
+    try { fs.writeFileSync(dataPath, JSON.stringify(data, null, 2), 'utf8'); }
+    catch (e) { console.error('[AMPF] Local backup write failed:', e.message); }
+    if (!savedOk && redis) {
+        console.error('[AMPF] ⚠⚠ DATA NOT PERSISTED TO REDIS! Only saved to local backup.');
+    }
+    return savedOk;
+}
+
 async function writeConfig(cfg) {
-    // Local backup file
+    let savedOk = false;
+    if (redis) {
+        try {
+            await enqueueSet(configQueue, CONFIG_KEY, cfg);
+            savedOk = storageState.ok;
+        } catch (e) {
+            storageState.ok = false;
+            storageState.detail = 'Redis config write failed: ' + e.message;
+            console.error('[AMPF] ⚠ Cloud config write failed:', e.message);
+        }
+    }
     try { fs.writeFileSync(configPath, JSON.stringify(cfg, null, 2), 'utf8'); }
     catch (e) { console.error('[AMPF] Local config write failed:', e.message); }
-    // Persist to cloud
-    if (redis) {
-        try { await persistConfigToCloud(cfg); }
-        catch (e) { console.error('[AMPF] Cloud config write failed:', e.message); }
+    if (!savedOk && redis) {
+        console.error('[AMPF] ⚠⚠ PASSWORD/LOGIN CONFIG NOT PERSISTED TO REDIS!');
     }
+    return savedOk;
 }
 
 // ─── Helpers ─────────────────────────────────────────────
@@ -241,7 +327,8 @@ app.get('/api/public-content', async (req, res) => {
         gallery: data.gallery || [],
         slider: data.slider || [],
         branches: data.branches || [],
-        navbar: data.navbar || []
+        navbar: data.navbar || [],
+        storage: { mode: storageState.mode, ok: storageState.ok, detail: storageState.detail }
     });
 });
 
@@ -647,8 +734,9 @@ app.get('/admin/*', (req, res) => {
 // =========================================================
 //  START
 // =========================================================
-app.listen(PORT, () => {
-    console.log(`
+initStorage().then(() => {
+    app.listen(PORT, () => {
+        console.log(`
     ╔══════════════════════════════════════════════════════╗
     ║  ●  الجمعية الموريتانية لترقية الأسرة               ║
     ║  ●  نظام إدارة المحتوى CMS                          ║
@@ -658,6 +746,8 @@ app.listen(PORT, () => {
     ║                                                      ║
     ║  ◆  اسم المستخدم: admin                              ║
     ║  ◆  كلمة المرور:  ampf2026                           ║
+    ║  ◆  التخزين:      ${storageState.mode} (${storageState.ok ? 'متصل' : 'محلي — سيُمسح عند إعادة التشغيل'})         ║
     ╚══════════════════════════════════════════════════════╝
     `);
+    });
 });
