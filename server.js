@@ -160,17 +160,56 @@ async function writeData(data) {
     }
 }
 
-function readConfig() {
+// ─── Config helpers (credentials persisted to cloud too) ─
+const CONFIG_KEY = 'ampf:config';
+
+let configPersistQueue = Promise.resolve();
+function persistConfigToCloud(cfg) {
+    const snapshot = JSON.stringify(cfg);
+    configPersistQueue = configPersistQueue
+        .then(() => redis.set(CONFIG_KEY, snapshot))
+        .catch((e) => console.error('[AMPF] Cloud config write failed:', e.message));
+    return configPersistQueue;
+}
+
+function readLocalConfig() {
     try { return JSON.parse(fs.readFileSync(configPath, 'utf8')); }
     catch {
         console.warn('[AMPF] config.json not found, using default credentials');
         const defaults = { credentials: { username: 'admin', password: 'ampf2026' } };
-        writeConfig(defaults);
+        try { fs.writeFileSync(configPath, JSON.stringify(defaults, null, 2), 'utf8'); } catch {}
         return defaults;
     }
 }
-function writeConfig(cfg) {
-    fs.writeFileSync(configPath, JSON.stringify(cfg, null, 2), 'utf8');
+
+async function readConfig() {
+    if (redis) {
+        try {
+            const raw = await redis.get(CONFIG_KEY);
+            if (raw) {
+                const parsed = typeof raw === 'string' ? JSON.parse(raw) : raw;
+                if (parsed && typeof parsed === 'object' && parsed.credentials) return parsed;
+            }
+            // Key not set yet: seed cloud from local config
+            const local = readLocalConfig();
+            await persistConfigToCloud(local);
+            return local;
+        } catch (e) {
+            console.error('[AMPF] Cloud config read failed, using local file:', e.message);
+        }
+    }
+    return readLocalConfig();
+}
+
+async function writeConfig(cfg) {
+    // Local backup file
+    try { fs.writeFileSync(configPath, JSON.stringify(cfg, null, 2), 'utf8'); }
+    catch (e) { console.error('[AMPF] Local config write failed:', e.message); }
+    // Persist to cloud
+    if (redis) {
+        try { await persistConfigToCloud(cfg); }
+        catch (e) { console.error('[AMPF] Cloud config write failed:', e.message); }
+    }
 }
 
 // ─── Helpers ─────────────────────────────────────────────
@@ -209,11 +248,11 @@ app.get('/api/public-content', async (req, res) => {
 // =========================================================
 //  AUTH API
 // =========================================================
-app.post('/api/login', (req, res) => {
+app.post('/api/login', async (req, res) => {
     try {
         const { username, password } = req.body || {};
         console.log('[AMPF] Login attempt:', username, 'from IP:', req.ip);
-        const config = readConfig();
+        const config = await readConfig();
         const validUser = config.credentials?.username || 'admin';
         const validPass = config.credentials?.password || 'ampf2026';
         if (username === validUser && password === validPass) {
@@ -246,9 +285,9 @@ app.get('/api/check-auth', (req, res) => {
 });
 
 // Change password
-app.post('/api/change-password', requireAuth, (req, res) => {
+app.post('/api/change-password', requireAuth, async (req, res) => {
     const { currentPassword, newPassword } = req.body;
-    const config = readConfig();
+    const config = await readConfig();
     if (currentPassword !== config.credentials.password) {
         return res.status(400).json({ error: 'كلمة المرور الحالية غير صحيحة' });
     }
@@ -256,7 +295,7 @@ app.post('/api/change-password', requireAuth, (req, res) => {
         return res.status(400).json({ error: 'كلمة المرور الجديدة يجب أن تكون 6 أحرف على الأقل' });
     }
     config.credentials.password = newPassword;
-    writeConfig(config);
+    await writeConfig(config);
     res.json({ success: true, message: 'تم تغيير كلمة المرور' });
 });
 

@@ -66,12 +66,12 @@ ampf-website/
 ├── admin.html         # لوحة الإدارة (SPA)
 ├── data/
 │   ├── content.json   # النسخة الاحتياطية المحلية (المصدر الحقيقي في Upstash Redis)
-│   └── config.json    # بيانات تسجيل الدخول (مستبعد من git)
+│   └── config.json    # بيانات تسجيل الدخول (محفوظة في Redis أيضاً، والمحلي مستبعد من git)
 ├── package.json
 └── .gitignore
 ```
 
-> **ملاحظة:** الصور تُرفع إلى Cloudinary وكل البيانات (الأخبار، المعرض، الأقسام، الفروع، النصوص) محفوظة في Upstash Redis، لذلك كل شيء يبقى بعد إعادة تشغيل Render.
+> **ملاحظة:** الصور تُرفع إلى Cloudinary وكل البيانات (الأخبار، المعرض، الأقسام، الفروع، النصوص) وكذلك بيانات تسجيل الدخول محفوظة في Upstash Redis، لذلك كل شيء يبقى بعد إعادة تشغيل Render.
 
 ## API
 
@@ -151,12 +151,12 @@ ampf-website/
 ├── admin.html         # Admin dashboard (SPA)
 ├── data/
 │   ├── content.json   # Local backup file (source of truth is Upstash Redis)
-│   └── config.json    # Login credentials (gitignored)
+│   └── config.json    # Login credentials (also persisted to Redis; local file gitignored)
 ├── package.json
 └── .gitignore
 ```
 
-> **Note:** Images go to Cloudinary and all data (news, gallery, programs, branches, texts) is stored in Upstash Redis, so everything survives Render restarts.
+> **Note:** Images go to Cloudinary and all data (news, gallery, programs, branches, texts) plus login credentials are stored in Upstash Redis, so everything survives Render restarts.
 
 ## API Endpoints
 
