@@ -5,7 +5,6 @@ const fs = require('fs');
 const multer = require('multer');
 const morgan = require('morgan');
 const cloudinary = require('cloudinary').v2;
-const { CloudinaryStorage } = require('multer-storage-cloudinary');
 
 const app = express();
 const PORT = 3000;
@@ -29,9 +28,8 @@ app.use((req, res, next) => {
     next();
 });
 app.use(express.static(__dirname));
-app.use('/uploads', express.static(path.join(__dirname, 'uploads')));
 
-// ─── Cloudinary ──────────────────────────────────────────
+// ─── Cloudinary (mandatory) ──────────────────────────────
 cloudinary.config({
     cloud_name: process.env.CLOUDINARY_CLOUD_NAME || '',
     api_key: process.env.CLOUDINARY_API_KEY || '',
@@ -39,30 +37,18 @@ cloudinary.config({
 });
 const useCloudinary = !!(process.env.CLOUDINARY_CLOUD_NAME && process.env.CLOUDINARY_API_KEY && process.env.CLOUDINARY_API_SECRET);
 if (useCloudinary) {
-    console.log('[AMPF] Using Cloudinary for image uploads');
+    console.log('[AMPF] Cloudinary configured. All uploads go to Cloudinary.');
 } else {
-    console.log('[AMPF] Cloudinary not configured, using local storage');
+    console.warn('[AMPF] WARNING: Cloudinary NOT configured. Image/document uploads will FAIL.');
+    console.warn('[AMPF] Set CLOUDINARY_CLOUD_NAME, CLOUDINARY_API_KEY, CLOUDINARY_API_SECRET in Render env vars.');
 }
 
 // ─── File Upload ─────────────────────────────────────────
-let storage;
-if (useCloudinary) {
-    storage = new CloudinaryStorage({
-        cloudinary,
-        params: {
-            folder: 'ampf',
-            allowed_formats: ['jpeg', 'jpg', 'png', 'gif', 'webp', 'svg', 'pdf', 'doc', 'docx', 'xlsx'],
-            public_id: (req, file) => Date.now() + '-' + file.originalname.replace(/[^a-zA-Z0-9_-]/g, '_').replace(/\s/g, '_')
-        }
-    });
-} else {
-    storage = multer.diskStorage({
-        destination: (req, file, cb) => cb(null, './uploads/'),
-        filename: (req, file, cb) => cb(null, Date.now() + '-' + file.originalname.replace(/\s/g, '_'))
-    });
-}
+// Files are held in memory and pushed straight to Cloudinary.
+// Nothing is ever written to the local uploads/ folder, so images
+// survive Render restarts (ephemeral filesystem).
 const upload = multer({
-    storage,
+    storage: multer.memoryStorage(),
     limits: { fileSize: 10 * 1024 * 1024 },
     fileFilter: (req, file, cb) => {
         const allowed = /jpeg|jpg|png|gif|webp|svg|pdf|doc|docx|xlsx/;
@@ -72,8 +58,25 @@ const upload = multer({
     }
 });
 
-// Ensure uploads dir (for local fallback)
-if (!fs.existsSync('./uploads')) fs.mkdirSync('./uploads');
+function uploadToCloudinary(file) {
+    return new Promise((resolve, reject) => {
+        if (!useCloudinary) {
+            return reject(new Error('Cloudinary not configured on server'));
+        }
+        const stream = cloudinary.uploader.upload_stream(
+            {
+                folder: 'ampf',
+                resource_type: 'auto',
+                public_id: Date.now() + '-' + (file.originalname || 'file').replace(/[^a-zA-Z0-9_-]/g, '_').replace(/\s/g, '_')
+            },
+            (err, result) => {
+                if (err) return reject(err);
+                resolve(result.secure_url || result.url || '');
+            }
+        );
+        stream.end(file.buffer);
+    });
+}
 
 // ─── Data Helpers ────────────────────────────────────────
 const dataPath = path.join(__dirname, 'data', 'content.json');
@@ -100,23 +103,13 @@ function writeConfig(cfg) {
 }
 
 // ─── Helpers ─────────────────────────────────────────────
-function getFileUrl(file) {
-    if (!file) return '';
-    if (useCloudinary) {
-        const url = file.path || file.secure_url || file.url || '';
-        return typeof url === 'string' ? url : String(url);
-    }
-    const filename = typeof file.filename === 'string' ? file.filename : String(file.filename || '');
-    return '/uploads/' + filename;
-}
 function getFilePublicId(imageUrl) {
     if (!imageUrl || typeof imageUrl !== 'string') return null;
-    if (useCloudinary) {
-        const parts = imageUrl.split('/');
-        const last = parts[parts.length - 1] || '';
-        return 'ampf/' + last.split('.')[0];
-    }
-    return null;
+    // Skip local paths (old /uploads/ entries are gone on Render anyway)
+    if (imageUrl.startsWith('/uploads/')) return null;
+    const parts = imageUrl.split('/');
+    const last = parts[parts.length - 1] || '';
+    return 'ampf/' + last.split('.')[0];
 }
 
 // ─── Auth Middleware ─────────────────────────────────────
@@ -232,16 +225,11 @@ app.delete('/api/content/:type/:id', requireAuth, (req, res) => {
     const data = readData();
     const { type, id } = req.params;
     if (!Array.isArray(data[type])) return res.status(400).json({ error: 'نوع غير صالح' });
-    // Delete associated image
+    // Delete associated image from Cloudinary
     const item = data[type].find(i => i.id === id);
     if (item && item.image) {
-        if (useCloudinary) {
-            const pid = getFilePublicId(item.image);
-            if (pid) cloudinary.uploader.destroy(pid).catch(() => {});
-        } else {
-            const imgPath = path.join(__dirname, 'uploads', path.basename(item.image));
-            if (fs.existsSync(imgPath)) fs.unlinkSync(imgPath);
-        }
+        const pid = getFilePublicId(item.image);
+        if (pid) cloudinary.uploader.destroy(pid).catch(() => {});
     }
     data[type] = data[type].filter(i => i.id !== id);
     writeData(data);
@@ -251,40 +239,48 @@ app.delete('/api/content/:type/:id', requireAuth, (req, res) => {
 // =========================================================
 //  NEWS WITH IMAGE UPLOAD
 // =========================================================
-app.post('/api/news-with-image', requireAuth, upload.single('image'), (req, res) => {
-    const data = readData();
-    const item = {
-        id: Date.now().toString(),
-        title: { ar: req.body.title_ar || '', fr: req.body.title_fr || '', en: req.body.title_en || '' },
-        desc: { ar: req.body.desc_ar || '', fr: req.body.desc_fr || '', en: req.body.desc_en || '' },
-        category: req.body.category || 'blog',
-        date: req.body.date || new Date().toISOString().split('T')[0],
-        image: getFileUrl(req.file),
-        createdAt: new Date().toISOString()
-    };
-    if (!Array.isArray(data.news)) data.news = [];
-    data.news.push(item);
-    writeData(data);
-    res.json({ success: true, item });
+app.post('/api/news-with-image', requireAuth, upload.single('image'), async (req, res) => {
+    if (!req.file) return res.status(400).json({ error: 'يرجى اختيار صورة' });
+    try {
+        const imageUrl = await uploadToCloudinary(req.file);
+        const data = readData();
+        const item = {
+            id: Date.now().toString(),
+            title: { ar: req.body.title_ar || '', fr: req.body.title_fr || '', en: req.body.title_en || '' },
+            desc: { ar: req.body.desc_ar || '', fr: req.body.desc_fr || '', en: req.body.desc_en || '' },
+            category: req.body.category || 'blog',
+            date: req.body.date || new Date().toISOString().split('T')[0],
+            image: imageUrl,
+            createdAt: new Date().toISOString()
+        };
+        if (!Array.isArray(data.news)) data.news = [];
+        data.news.push(item);
+        writeData(data);
+        res.json({ success: true, item });
+    } catch (e) {
+        console.error('[AMPF] Upload to Cloudinary failed:', e.message);
+        res.status(500).json({ error: 'فشل رفع الصورة إلى Cloudinary: ' + e.message });
+    }
 });
 
-app.put('/api/news-with-image/:id', requireAuth, upload.single('image'), (req, res) => {
+app.put('/api/news-with-image/:id', requireAuth, upload.single('image'), async (req, res) => {
     const data = readData();
     const idx = data.news.findIndex(i => i.id === req.params.id);
     if (idx === -1) return res.status(404).json({ error: 'الخبر غير موجود' });
 
     if (req.file) {
-        // Delete old image
-        if (data.news[idx].image) {
-            if (useCloudinary) {
+        try {
+            const imageUrl = await uploadToCloudinary(req.file);
+            // Delete old image
+            if (data.news[idx].image) {
                 const pid = getFilePublicId(data.news[idx].image);
                 if (pid) cloudinary.uploader.destroy(pid).catch(() => {});
-            } else {
-                const oldPath = path.join(__dirname, 'uploads', path.basename(data.news[idx].image));
-                if (fs.existsSync(oldPath)) fs.unlinkSync(oldPath);
             }
+            data.news[idx].image = imageUrl;
+        } catch (e) {
+            console.error('[AMPF] Upload to Cloudinary failed:', e.message);
+            return res.status(500).json({ error: 'فشل رفع الصورة إلى Cloudinary: ' + e.message });
         }
-        data.news[idx].image = getFileUrl(req.file);
     }
     if (req.body.title_ar || req.body.title_fr || req.body.title_en) {
         data.news[idx].title = {
@@ -310,39 +306,46 @@ app.put('/api/news-with-image/:id', requireAuth, upload.single('image'), (req, r
 // =========================================================
 //  SLIDER WITH IMAGE UPLOAD
 // =========================================================
-app.post('/api/slider-with-image', requireAuth, upload.single('image'), (req, res) => {
+app.post('/api/slider-with-image', requireAuth, upload.single('image'), async (req, res) => {
     if (!req.file) return res.status(400).json({ error: 'يرجى اختيار صورة' });
-    const data = readData();
-    const item = {
-        id: Date.now().toString(),
-        image: getFileUrl(req.file),
-        title: { ar: req.body.title_ar || '', fr: req.body.title_fr || '', en: req.body.title_en || '' },
-        desc: { ar: req.body.desc_ar || '', fr: req.body.desc_fr || '', en: req.body.desc_en || '' },
-        createdAt: new Date().toISOString()
-    };
-    if (!Array.isArray(data.slider)) data.slider = [];
-    data.slider.push(item);
-    writeData(data);
-    res.json({ success: true, item });
+    try {
+        const imageUrl = await uploadToCloudinary(req.file);
+        const data = readData();
+        const item = {
+            id: Date.now().toString(),
+            image: imageUrl,
+            title: { ar: req.body.title_ar || '', fr: req.body.title_fr || '', en: req.body.title_en || '' },
+            desc: { ar: req.body.desc_ar || '', fr: req.body.desc_fr || '', en: req.body.desc_en || '' },
+            createdAt: new Date().toISOString()
+        };
+        if (!Array.isArray(data.slider)) data.slider = [];
+        data.slider.push(item);
+        writeData(data);
+        res.json({ success: true, item });
+    } catch (e) {
+        console.error('[AMPF] Upload to Cloudinary failed:', e.message);
+        res.status(500).json({ error: 'فشل رفع الصورة إلى Cloudinary: ' + e.message });
+    }
 });
 
-app.put('/api/slider-with-image/:id', requireAuth, upload.single('image'), (req, res) => {
+app.put('/api/slider-with-image/:id', requireAuth, upload.single('image'), async (req, res) => {
     const data = readData();
     const idx = (data.slider || []).findIndex(i => i.id === req.params.id);
     if (idx === -1) return res.status(404).json({ error: 'العنصر غير موجود' });
 
     if (req.file) {
-        // Delete old image
-        if (data.slider[idx].image) {
-            if (useCloudinary) {
+        try {
+            const imageUrl = await uploadToCloudinary(req.file);
+            // Delete old image
+            if (data.slider[idx].image) {
                 const pid = getFilePublicId(data.slider[idx].image);
                 if (pid) cloudinary.uploader.destroy(pid).catch(() => {});
-            } else {
-                const oldPath = path.join(__dirname, 'uploads', path.basename(data.slider[idx].image));
-                if (fs.existsSync(oldPath)) fs.unlinkSync(oldPath);
             }
+            data.slider[idx].image = imageUrl;
+        } catch (e) {
+            console.error('[AMPF] Upload to Cloudinary failed:', e.message);
+            return res.status(500).json({ error: 'فشل رفع الصورة إلى Cloudinary: ' + e.message });
         }
-        data.slider[idx].image = getFileUrl(req.file);
     }
     if (req.body.title_ar !== undefined) {
         data.slider[idx].title = {
@@ -365,41 +368,48 @@ app.put('/api/slider-with-image/:id', requireAuth, upload.single('image'), (req,
 // =========================================================
 //  BRANCHES WITH IMAGE UPLOAD
 // =========================================================
-app.post('/api/branches-with-image', requireAuth, upload.single('image'), (req, res) => {
-    const data = readData();
-    const item = {
-        id: Date.now().toString(),
-        name: { ar: req.body.name_ar || '', fr: req.body.name_fr || '', en: req.body.name_en || '' },
-        founded: req.body.founded || '',
-        location: { ar: req.body.location_ar || '', fr: req.body.location_fr || '', en: req.body.location_en || '' },
-        gps: req.body.gps || '',
-        midwife: { ar: req.body.midwife_ar || '', fr: req.body.midwife_fr || '', en: req.body.midwife_en || '' },
-        phones: req.body.phones ? req.body.phones.split(',').map(p => p.trim()).filter(Boolean) : [],
-        image: getFileUrl(req.file),
-        createdAt: new Date().toISOString()
-    };
-    if (!Array.isArray(data.branches)) data.branches = [];
-    data.branches.push(item);
-    writeData(data);
-    res.json({ success: true, item });
+app.post('/api/branches-with-image', requireAuth, upload.single('image'), async (req, res) => {
+    try {
+        const imageUrl = req.file ? await uploadToCloudinary(req.file) : '';
+        const data = readData();
+        const item = {
+            id: Date.now().toString(),
+            name: { ar: req.body.name_ar || '', fr: req.body.name_fr || '', en: req.body.name_en || '' },
+            founded: req.body.founded || '',
+            location: { ar: req.body.location_ar || '', fr: req.body.location_fr || '', en: req.body.location_en || '' },
+            gps: req.body.gps || '',
+            midwife: { ar: req.body.midwife_ar || '', fr: req.body.midwife_fr || '', en: req.body.midwife_en || '' },
+            phones: req.body.phones ? req.body.phones.split(',').map(p => p.trim()).filter(Boolean) : [],
+            image: imageUrl,
+            createdAt: new Date().toISOString()
+        };
+        if (!Array.isArray(data.branches)) data.branches = [];
+        data.branches.push(item);
+        writeData(data);
+        res.json({ success: true, item });
+    } catch (e) {
+        console.error('[AMPF] Upload to Cloudinary failed:', e.message);
+        res.status(500).json({ error: 'فشل رفع الصورة إلى Cloudinary: ' + e.message });
+    }
 });
 
-app.put('/api/branches-with-image/:id', requireAuth, upload.single('image'), (req, res) => {
+app.put('/api/branches-with-image/:id', requireAuth, upload.single('image'), async (req, res) => {
     const data = readData();
     const idx = (data.branches || []).findIndex(i => i.id === req.params.id);
     if (idx === -1) return res.status(404).json({ error: 'الفرع غير موجود' });
 
     if (req.file) {
-        if (data.branches[idx].image) {
-            if (useCloudinary) {
+        try {
+            const imageUrl = await uploadToCloudinary(req.file);
+            if (data.branches[idx].image) {
                 const pid = getFilePublicId(data.branches[idx].image);
                 if (pid) cloudinary.uploader.destroy(pid).catch(() => {});
-            } else {
-                const oldPath = path.join(__dirname, 'uploads', path.basename(data.branches[idx].image));
-                if (fs.existsSync(oldPath)) fs.unlinkSync(oldPath);
             }
+            data.branches[idx].image = imageUrl;
+        } catch (e) {
+            console.error('[AMPF] Upload to Cloudinary failed:', e.message);
+            return res.status(500).json({ error: 'فشل رفع الصورة إلى Cloudinary: ' + e.message });
         }
-        data.branches[idx].image = getFileUrl(req.file);
     }
     if (req.body.name_ar !== undefined) {
         data.branches[idx].name = {
@@ -434,19 +444,25 @@ app.put('/api/branches-with-image/:id', requireAuth, upload.single('image'), (re
 // =========================================================
 //  GALLERY
 // =========================================================
-app.post('/api/gallery', requireAuth, upload.single('image'), (req, res) => {
+app.post('/api/gallery', requireAuth, upload.single('image'), async (req, res) => {
     if (!req.file) return res.status(400).json({ error: 'يرجى اختيار صورة' });
-    const data = readData();
-    const item = {
-        id: Date.now().toString(),
-        title: req.body.title || 'صورة',
-        image: getFileUrl(req.file),
-        createdAt: new Date().toISOString()
-    };
-    if (!Array.isArray(data.gallery)) data.gallery = [];
-    data.gallery.push(item);
-    writeData(data);
-    res.json({ success: true, item });
+    try {
+        const imageUrl = await uploadToCloudinary(req.file);
+        const data = readData();
+        const item = {
+            id: Date.now().toString(),
+            title: req.body.title || 'صورة',
+            image: imageUrl,
+            createdAt: new Date().toISOString()
+        };
+        if (!Array.isArray(data.gallery)) data.gallery = [];
+        data.gallery.push(item);
+        writeData(data);
+        res.json({ success: true, item });
+    } catch (e) {
+        console.error('[AMPF] Upload to Cloudinary failed:', e.message);
+        res.status(500).json({ error: 'فشل رفع الصورة إلى Cloudinary: ' + e.message });
+    }
 });
 
 app.delete('/api/gallery/:id', requireAuth, (req, res) => {
@@ -454,13 +470,8 @@ app.delete('/api/gallery/:id', requireAuth, (req, res) => {
     const idx = data.gallery.findIndex(i => i.id === req.params.id);
     if (idx === -1) return res.status(404).json({ error: 'الصورة غير موجودة' });
     if (data.gallery[idx].image) {
-        if (useCloudinary) {
-            const pid = getFilePublicId(data.gallery[idx].image);
-            if (pid) cloudinary.uploader.destroy(pid).catch(() => {});
-        } else {
-            const imgPath = path.join(__dirname, 'uploads', path.basename(data.gallery[idx].image));
-            if (fs.existsSync(imgPath)) fs.unlinkSync(imgPath);
-        }
+        const pid = getFilePublicId(data.gallery[idx].image);
+        if (pid) cloudinary.uploader.destroy(pid).catch(() => {});
     }
     data.gallery.splice(idx, 1);
     writeData(data);
@@ -482,10 +493,16 @@ app.put('/api/site-content', requireAuth, (req, res) => {
     res.json({ success: true, message: 'تم حفظ التغييرات' });
 });
 
-// File upload (generic)
-app.post('/api/upload', requireAuth, upload.single('file'), (req, res) => {
+// File upload (generic) — uploaded straight to Cloudinary
+app.post('/api/upload', requireAuth, upload.single('file'), async (req, res) => {
     if (!req.file) return res.status(400).json({ error: 'لم يتم رفع الملف' });
-    res.json({ success: true, filename: req.file.filename, path: getFileUrl(req.file) });
+    try {
+        const imageUrl = await uploadToCloudinary(req.file);
+        res.json({ success: true, filename: req.file.originalname, path: imageUrl });
+    } catch (e) {
+        console.error('[AMPF] Upload to Cloudinary failed:', e.message);
+        res.status(500).json({ error: 'فشل رفع الملف إلى Cloudinary: ' + e.message });
+    }
 });
 
 // =========================================================

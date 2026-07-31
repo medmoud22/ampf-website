@@ -9,7 +9,7 @@
 - **متعدد اللغات:** دعم كامل للعربية (RTL) والفرنسية والإنجليزية
 - **لوحة تحكم CMS:** إدارة الأخبار، البرامج، معرض الصور، الوثائق، الرسائل، وتعديل النصوص
 - **محتوى ديناميكي:** كل المحتوى يُجلب من API، قابل للتعديل من لوحة التحكم
-- **رفع الملفات:** دعم رفع الصور والأخبار والمعرض
+- **رفع الملفات:** رفع مباشر إلى Cloudinary (روابط `res.cloudinary.com`) — لا تخزين محلي
 - **تصدير واستيراد:** تخزين البيانات في ملف JSON
 
 ---
@@ -18,12 +18,14 @@
 
 - Node.js (v18+)
 - npm
+- حسابات Cloudinary (متغيرات البيئة: `CLOUDINARY_CLOUD_NAME`, `CLOUDINARY_API_KEY`, `CLOUDINARY_API_SECRET`)
 
 ## طريقة التشغيل
 
 ```bash
 cd ampf-website
 npm install
+# ضع مفاتيح Cloudinary (إلزامية للرفع)
 node server.js
 ```
 
@@ -51,10 +53,11 @@ ampf-website/
 ├── data/
 │   ├── content.json   # قاعدة البيانات (JSON)
 │   └── config.json    # بيانات تسجيل الدخول (مستبعد من git)
-├── uploads/           # الملفات المرفوعة (مستبعد من git)
 ├── package.json
 └── .gitignore
 ```
+
+> **ملاحظة:** جميع الصور والملفات تُرفع مباشرة إلى Cloudinary (روابط `res.cloudinary.com`). لا يُخزَّن أي شيء في مجلد محلي، لذلك تبقى الصور بعد إعادة تشغيل Render.
 
 ## API
 
@@ -79,19 +82,21 @@ A complete multilingual CMS (Arabic / French / English) for the official website
 - **Multilingual:** Full support for Arabic (RTL), French, and English
 - **CMS Dashboard:** Manage news, programs, gallery, documents, messages, and site content
 - **Dynamic Content:** All content fetched from API, editable via admin panel
-- **File Upload:** Image upload support for news and gallery
+- **File Upload:** Uploads go directly to Cloudinary (`res.cloudinary.com` URLs) — no local storage
 - **JSON Storage:** Lightweight file-based data storage
 
 ## Requirements
 
 - Node.js (v18+)
 - npm
+- Cloudinary account (env vars: `CLOUDINARY_CLOUD_NAME`, `CLOUDINARY_API_KEY`, `CLOUDINARY_API_SECRET`)
 
 ## Quick Start
 
 ```bash
 cd ampf-website
 npm install
+# Set Cloudinary keys (required for uploads)
 node server.js
 ```
 
@@ -119,10 +124,11 @@ ampf-website/
 ├── data/
 │   ├── content.json   # Database (JSON file)
 │   └── config.json    # Login credentials (gitignored)
-├── uploads/           # Uploaded files (gitignored)
 ├── package.json
 └── .gitignore
 ```
+
+> **Note:** All images/files are uploaded directly to Cloudinary (`res.cloudinary.com` URLs). Nothing is stored in a local folder, so images survive Render restarts.
 
 ## API Endpoints
 

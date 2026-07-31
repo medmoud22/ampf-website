@@ -28,20 +28,7 @@
       "values": { "ar": "الشفافية والمساءلة\nالشمولية والعدالة\nالعدالة النوعية\nالالتزام والتفاني\nالتسامح واحترام الفروق", "fr": "Transparence et redevabilité\nInclusivité et équité\nJustice de genre\nEngagement et dévouement\nTolérance et respect des différences", "en": "Transparency and accountability\nInclusiveness and equity\nGender justice\nCommitment and dedication\nTolerance and respect for differences" }
     }
   },
-  "gallery": [
-    {
-      "id": "1785251230400",
-      "title": { "ar": "صور من نشاط اليوم ", "fr": "Photos de l'activité du jour", "en": "Photos from today's activity" },
-      "image": "/uploads/1785251230393-Weixin_Image_20251130164617.jpg",
-      "createdAt": "2026-07-28T15:07:10.400Z"
-    },
-    {
-      "id": "1785251249938",
-      "title": { "ar": "صور من نشاط اليوم ", "fr": "Photos de l'activité du jour", "en": "Photos from today's activity" },
-      "image": "/uploads/1785251249930-MZ_APP.jpg",
-      "createdAt": "2026-07-28T15:07:29.938Z"
-    }
-  ],
+  "gallery": [],
   "slider": [],
   "branches": [
     {
