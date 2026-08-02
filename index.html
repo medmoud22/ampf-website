@@ -254,11 +254,11 @@
                             <div><div class="font-bold text-brandDark" data-i18n="contact_email_label">البريد الإلكتروني</div><div id="contactEmail" class="text-gray-600 text-sm"></div></div>
                         </div>
                     </div>
-                    <div class="flex gap-3 mt-8">
-                        <a href="#" class="w-12 h-12 bg-brandDark rounded-xl flex items-center justify-center text-white hover:bg-brandGreen transition"><i class="fab fa-facebook-f"></i></a>
-                        <a href="#" class="w-12 h-12 bg-brandDark rounded-xl flex items-center justify-center text-white hover:bg-brandGreen transition"><i class="fab fa-twitter"></i></a>
-                        <a href="#" class="w-12 h-12 bg-brandDark rounded-xl flex items-center justify-center text-white hover:bg-brandGreen transition"><i class="fab fa-instagram"></i></a>
-                        <a href="#" class="w-12 h-12 bg-brandDark rounded-xl flex items-center justify-center text-white hover:bg-brandGreen transition"><i class="fab fa-whatsapp"></i></a>
+                    <div class="flex gap-3 mt-8" id="socialButtons">
+                        <a id="socialFacebook" href="#" target="_blank" rel="noopener" class="social-btn w-12 h-12 bg-brandDark rounded-xl flex items-center justify-center text-white hover:bg-brandGreen transition" style="display: none;"><i class="fab fa-facebook-f"></i></a>
+                        <a id="socialTwitter" href="#" target="_blank" rel="noopener" class="social-btn w-12 h-12 bg-brandDark rounded-xl flex items-center justify-center text-white hover:bg-brandGreen transition" style="display: none;"><i class="fab fa-twitter"></i></a>
+                        <a id="socialInstagram" href="#" target="_blank" rel="noopener" class="social-btn w-12 h-12 bg-brandDark rounded-xl flex items-center justify-center text-white hover:bg-brandGreen transition" style="display: none;"><i class="fab fa-instagram"></i></a>
+                        <a id="socialWhatsapp" href="#" target="_blank" rel="noopener" class="social-btn w-12 h-12 bg-brandDark rounded-xl flex items-center justify-center text-white hover:bg-brandGreen transition" style="display: none;"><i class="fab fa-whatsapp"></i></a>
                     </div>
                 </div>
                 <div class="fade-up">
@@ -569,6 +569,26 @@
                     const email = typeof sc.contact.email === 'string' ? sc.contact.email : getLocalizedText(sc.contact.email);
                     document.getElementById('topEmail').textContent = email;
                     document.getElementById('contactEmail').textContent = email;
+                }
+            }
+
+            // Social links (shown/hidden dynamically from admin panel)
+            if (sc.socialLinks) {
+                const socialMap = { facebook: 'socialFacebook', twitter: 'socialTwitter', instagram: 'socialInstagram', whatsapp: 'socialWhatsapp' };
+                for (const key of Object.keys(socialMap)) {
+                    const el = document.getElementById(socialMap[key]);
+                    if (!el) continue;
+                    let href = sc.socialLinks[key];
+                    if (href && String(href).trim()) {
+                        href = String(href).trim();
+                        if (key === 'whatsapp' && !/^https?:\/\//i.test(href)) {
+                            href = 'https://wa.me/' + href.replace(/[^0-9]/g, '');
+                        }
+                        el.href = href;
+                        el.style.display = 'flex';
+                    } else {
+                        el.style.display = 'none';
+                    }
                 }
             }
 

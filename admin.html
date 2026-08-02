@@ -100,6 +100,7 @@
         <a onclick="showTab('navbar')" class="tab-link flex items-center gap-3 px-4 py-3 rounded-xl text-gray-600 hover:bg-gray-50 hover:text-brandDark transition cursor-pointer" data-tab="navbar"><i class="fas fa-bars w-5"></i> القوائم</a>
         <a onclick="showTab('documents')" class="tab-link flex items-center gap-3 px-4 py-3 rounded-xl text-gray-600 hover:bg-gray-50 hover:text-brandDark transition cursor-pointer" data-tab="documents"><i class="fas fa-file-alt w-5"></i> الوثائق</a>
         <a onclick="showTab('content')" class="tab-link flex items-center gap-3 px-4 py-3 rounded-xl text-gray-600 hover:bg-gray-50 hover:text-brandDark transition cursor-pointer" data-tab="content"><i class="fas fa-edit w-5"></i> تعديل النصوص</a>
+        <a onclick="showTab('social')" class="tab-link flex items-center gap-3 px-4 py-3 rounded-xl text-gray-600 hover:bg-gray-50 hover:text-brandDark transition cursor-pointer" data-tab="social"><i class="fas fa-share-alt w-5"></i> التواصل الاجتماعي</a>
         <a onclick="showTab('messages')" class="tab-link flex items-center gap-3 px-4 py-3 rounded-xl text-gray-600 hover:bg-gray-50 hover:text-brandDark transition cursor-pointer" data-tab="messages"><i class="fas fa-envelope w-5"></i> الرسائل</a>
         <a onclick="showTab('settings')" class="tab-link flex items-center gap-3 px-4 py-3 rounded-xl text-gray-600 hover:bg-gray-50 hover:text-brandDark transition cursor-pointer" data-tab="settings"><i class="fas fa-cog w-5"></i> الإعدادات</a>
         <hr class="my-4">
@@ -125,6 +126,7 @@
             <a onclick="showTab('navbar');toggleSidebar()" class="flex items-center gap-3 px-4 py-3 rounded-xl text-gray-600 hover:bg-gray-50 cursor-pointer"><i class="fas fa-bars w-5"></i> القوائم</a>
             <a onclick="showTab('documents');toggleSidebar()" class="flex items-center gap-3 px-4 py-3 rounded-xl text-gray-600 hover:bg-gray-50 cursor-pointer"><i class="fas fa-file-alt w-5"></i> الوثائق</a>
             <a onclick="showTab('content');toggleSidebar()" class="flex items-center gap-3 px-4 py-3 rounded-xl text-gray-600 hover:bg-gray-50 cursor-pointer"><i class="fas fa-edit w-5"></i> تعديل النصوص</a>
+            <a onclick="showTab('social');toggleSidebar()" class="flex items-center gap-3 px-4 py-3 rounded-xl text-gray-600 hover:bg-gray-50 cursor-pointer"><i class="fas fa-share-alt w-5"></i> التواصل الاجتماعي</a>
             <a onclick="showTab('messages');toggleSidebar()" class="flex items-center gap-3 px-4 py-3 rounded-xl text-gray-600 hover:bg-gray-50 cursor-pointer"><i class="fas fa-envelope w-5"></i> الرسائل</a>
             <a onclick="showTab('settings');toggleSidebar()" class="flex items-center gap-3 px-4 py-3 rounded-xl text-gray-600 hover:bg-gray-50 cursor-pointer"><i class="fas fa-cog w-5"></i> الإعدادات</a>
             <hr class="my-4">
@@ -282,6 +284,34 @@
                 <div>
                     <button type="submit" class="bg-brandGreen text-white px-8 py-3 rounded-xl font-bold hover:bg-brandDark transition"><i class="fas fa-save ml-2"></i> حفظ جميع التغييرات</button>
                 </div>
+            </form>
+        </div>
+
+        <!-- ===== TAB: SOCIAL LINKS ===== -->
+        <div id="tab-social" class="tab-content fade-in">
+            <h3 class="text-xl font-bold text-brandDark mb-6">روابط التواصل الاجتماعي</h3>
+            <form id="socialForm" class="space-y-6 max-w-2xl">
+                <div class="bg-white p-6 rounded-xl shadow-sm space-y-4">
+                    <h4 class="font-bold text-brandDark pb-2 border-b">حسابات الجمعية</h4>
+                    <div>
+                        <label class="block text-sm font-bold text-gray-700 mb-2"><i class="fab fa-facebook-f text-blue-600 ml-1"></i> رابط فيسبوك</label>
+                        <input id="s_facebook" type="url" class="w-full border-2 border-gray-200 rounded-xl px-4 py-3 focus:outline-none focus:border-brandGreen transition bg-gray-50" placeholder="https://www.facebook.com/...">
+                    </div>
+                    <div>
+                        <label class="block text-sm font-bold text-gray-700 mb-2"><i class="fab fa-twitter text-sky-500 ml-1"></i> رابط تويتر / X</label>
+                        <input id="s_twitter" type="url" class="w-full border-2 border-gray-200 rounded-xl px-4 py-3 focus:outline-none focus:border-brandGreen transition bg-gray-50" placeholder="https://x.com/...">
+                    </div>
+                    <div>
+                        <label class="block text-sm font-bold text-gray-700 mb-2"><i class="fab fa-instagram text-pink-500 ml-1"></i> رابط إنستغرام</label>
+                        <input id="s_instagram" type="url" class="w-full border-2 border-gray-200 rounded-xl px-4 py-3 focus:outline-none focus:border-brandGreen transition bg-gray-50" placeholder="https://www.instagram.com/...">
+                    </div>
+                    <div>
+                        <label class="block text-sm font-bold text-gray-700 mb-2"><i class="fab fa-whatsapp text-green-600 ml-1"></i> واتساب (رقم مع رمز الدولة بدون + أو رابط wa.me كاملاً)</label>
+                        <input id="s_whatsapp" type="text" class="w-full border-2 border-gray-200 rounded-xl px-4 py-3 focus:outline-none focus:border-brandGreen transition bg-gray-50" placeholder="22245123456  أو  https://wa.me/22245123456">
+                    </div>
+                    <p class="text-xs text-gray-400">اترك أي حقل فارغاً لإخفاء الزر المقابل من واجهة الموقع.</p>
+                </div>
+                <button type="submit" class="bg-brandGreen text-white px-8 py-3 rounded-xl font-bold hover:bg-brandDark transition"><i class="fas fa-save ml-2"></i> حفظ الروابط</button>
             </form>
         </div>
 
@@ -673,9 +703,10 @@ function showTab(tab) {
     document.getElementById('tab-' + tab)?.classList.add('active');
     document.querySelectorAll('.tab-link').forEach(el => el.classList.remove('bg-gray-50', 'text-brandDark'));
     document.querySelectorAll(`.tab-link[data-tab="${tab}"]`).forEach(el => el.classList.add('bg-gray-50', 'text-brandDark'));
-    const titles = { dashboard: 'الرئيسية', news: 'الأخبار والأنشطة', gallery: 'معرض الصور', programs: 'البرامج', slider: 'السلايدر', branches: 'الفروع', navbar: 'القوائم', documents: 'الوثائق', content: 'تعديل النصوص', messages: 'الرسائل', settings: 'الإعدادات' };
+    const titles = { dashboard: 'الرئيسية', news: 'الأخبار والأنشطة', gallery: 'معرض الصور', programs: 'البرامج', slider: 'السلايدر', branches: 'الفروع', navbar: 'القوائم', documents: 'الوثائق', content: 'تعديل النصوص', social: 'التواصل الاجتماعي', messages: 'الرسائل', settings: 'الإعدادات' };
     document.getElementById('pageTitle').textContent = titles[tab] || tab;
     if (tab === 'content') loadContentEditor();
+    if (tab === 'social') loadSocialLinks();
 }
 
 // ─── Login ────────────────────────────────
@@ -1238,6 +1269,32 @@ document.getElementById('passwordForm').addEventListener('submit', async (e) => 
     const result = await res.json();
     if (result.success) { showToast('تم تغيير كلمة المرور'); document.getElementById('passwordForm').reset(); }
     else showToast('خطأ: ' + (result.error || ''));
+});
+
+// ─── SOCIAL LINKS ─────────────────────────
+async function loadSocialLinks() {
+    try {
+        const res = await fetch(API + '/social-links');
+        const links = await res.json();
+        document.getElementById('s_facebook').value = links.facebook || '';
+        document.getElementById('s_twitter').value = links.twitter || '';
+        document.getElementById('s_instagram').value = links.instagram || '';
+        document.getElementById('s_whatsapp').value = links.whatsapp || '';
+    } catch(e) { console.error(e); }
+}
+
+document.getElementById('socialForm').addEventListener('submit', async (e) => {
+    e.preventDefault();
+    const data = {
+        facebook: document.getElementById('s_facebook').value.trim(),
+        twitter: document.getElementById('s_twitter').value.trim(),
+        instagram: document.getElementById('s_instagram').value.trim(),
+        whatsapp: document.getElementById('s_whatsapp').value.trim()
+    };
+    try {
+        const res = await fetch(API + '/social-links', { method: 'PUT', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(data) });
+        if ((await res.json()).success) showToast('تم حفظ روابط التواصل الاجتماعي');
+    } catch(e) { showToast('خطأ في الحفظ'); }
 });
 
 // ─── Auto-login check ─────────────────────

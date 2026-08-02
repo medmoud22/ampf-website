@@ -148,7 +148,7 @@ const DATA_DEFAULTS = {
     documents: [],
     messages: [],
     gallery: [],
-    site_content: {},
+    site_content: { socialLinks: { facebook: '', twitter: '', instagram: '', whatsapp: '' } },
     slider: [],
     branches: [],
     navbar: []
@@ -685,9 +685,24 @@ app.get('/api/site-content', requireAuth, async (req, res) => {
 
 app.put('/api/site-content', requireAuth, async (req, res) => {
     const data = await readData();
-    data.site_content = req.body;
+    // Merge so unrelated fields (e.g. socialLinks) are preserved
+    data.site_content = { ...(data.site_content || {}), ...(req.body || {}) };
     await writeData(data);
     res.json({ success: true, message: 'تم حفظ التغييرات' });
+});
+
+// ─── Social media links (stored under site_content.socialLinks) ──
+app.get('/api/social-links', requireAuth, async (req, res) => {
+    const data = await readData();
+    res.json((data.site_content && data.site_content.socialLinks) || {});
+});
+
+app.put('/api/social-links', requireAuth, async (req, res) => {
+    const data = await readData();
+    if (!data.site_content) data.site_content = {};
+    data.site_content.socialLinks = (req.body && typeof req.body === 'object') ? req.body : {};
+    await writeData(data);
+    res.json({ success: true, message: 'تم حفظ روابط التواصل الاجتماعي' });
 });
 
 // File upload (generic) — uploaded straight to Cloudinary
