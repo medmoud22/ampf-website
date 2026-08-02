@@ -12,6 +12,14 @@
     <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@300;400;600;700;800&display=swap" rel="stylesheet">
     <style>
         * { font-family: 'Cairo', sans-serif; }
+        /* ── Mobile responsiveness / horizontal overflow guard ── */
+        html, body { overflow-x: hidden; width: 100%; max-width: 100%; }
+        *, *::before, *::after { box-sizing: border-box; }
+        img, video, svg, iframe { max-width: 100%; height: auto; }
+        section, header, footer, main { max-width: 100%; }
+        .grid > * { min-width: 0; }
+        p, h1, h2, h3, h4, h5, li, td, th, div, span, a { overflow-wrap: break-word; word-wrap: break-word; }
+        input, select, textarea { max-width: 100%; }
         .sidebar { transition: transform 0.3s; }
         .sidebar.active { transform: translateX(0); }
         .tab-content { display: none; }
