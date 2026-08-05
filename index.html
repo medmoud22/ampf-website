@@ -133,7 +133,7 @@
         <div class="container mx-auto px-6">
             <div class="grid grid-cols-2 md:grid-cols-4 gap-8 text-center text-white">
                 <div class="fade-up"><div class="text-4xl font-black mb-2">35+</div><div class="text-sm font-semibold opacity-90" data-i18n="stat_years">سنة من العمل</div></div>
-                <div class="fade-up"><div class="text-4xl font-black mb-2">8</div><div class="text-sm font-semibold opacity-90" data-i18n="stat_branches">فروع في الولايات</div></div>
+                <div class="fade-up"><div id="statBranchesCount" class="text-4xl font-black mb-2">0</div><div class="text-sm font-semibold opacity-90" data-i18n="stat_branches">فروع في الولايات</div></div>
                 <div class="fade-up"><div class="text-4xl font-black mb-2">50K+</div><div class="text-sm font-semibold opacity-90" data-i18n="stat_beneficiaries">مستفيد</div></div>
                 <div class="fade-up"><div class="text-4xl font-black mb-2">120+</div><div class="text-sm font-semibold opacity-90" data-i18n="stat_workers">عامل صحي</div></div>
             </div>
@@ -532,6 +532,7 @@
         ];
 
         let _contentData = null;
+        let _branchesData = [];
 
         function renderContent() {
             const data = _contentData;
@@ -650,8 +651,8 @@
 
             // Slider
             renderSlider(data.slider);
-            // Branches
-            renderBranches(data.branches);
+            // Branches (rendered from the dedicated /api/branches endpoint)
+            renderBranches(_branchesData);
             // Navbar
             renderNavbar(data.navbar);
 
@@ -831,6 +832,22 @@
             }
         }
 
+        // Branches are loaded from the dedicated /api/branches endpoint so the
+        // section is always in sync with the admin panel (no hardcoded data).
+        async function loadBranches() {
+            try {
+                const res = await fetch('/api/branches');
+                if (!res.ok) throw new Error('HTTP ' + res.status);
+                const data = await res.json();
+                _branchesData = data.branches || [];
+                renderBranches(_branchesData);
+                const statEl = document.getElementById('statBranchesCount');
+                if (statEl) statEl.textContent = _branchesData.length;
+            } catch (e) {
+                console.error('Failed to load branches:', e);
+            }
+        }
+
         // ══════════════════════════════════════════════════
         //  EVENT LISTENERS
         // ══════════════════════════════════════════════════
@@ -882,9 +899,10 @@
 
         // Load dynamic content
         if (document.readyState === 'loading') {
-            document.addEventListener('DOMContentLoaded', loadAllContent);
+            document.addEventListener('DOMContentLoaded', () => { loadAllContent(); loadBranches(); });
         } else {
             loadAllContent();
+            loadBranches();
         }
 
         // Apply initial language

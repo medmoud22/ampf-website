@@ -142,6 +142,66 @@ function parseStored(raw) {
     return raw;
 }
 
+// Default branches shown immediately in the admin panel (and the public site)
+// until the site owner customises them. Seeded into Redis on first boot.
+const DEFAULT_BRANCHES = [
+    {
+        id: '1',
+        name: { ar: 'نواذيبو', fr: 'Nouadhibou', en: 'Nouadhibou' },
+        founded: '2000',
+        location: { ar: 'ولاية نواذيبو، مدينة نواذيبو', fr: 'Wilaya de Nouadhibou, Ville de Nouadhibou', en: 'Nouadhibou Wilaya, Nouadhibou City' },
+        gps: '20.9333, -17.0333',
+        midwife: { ar: 'فاطمة منت أحمد', fr: 'Fatima Mint Ahmed', en: 'Fatima Mint Ahmed' },
+        phones: ['+222 45 25 XX XX'],
+        image: '',
+        createdAt: '2026-01-01T00:00:00.000Z'
+    },
+    {
+        id: '2',
+        name: { ar: 'روصو', fr: 'Rosso', en: 'Rosso' },
+        founded: '2005',
+        location: { ar: 'ولاية اترارزة، مدينة روصو', fr: 'Wilaya du Trarza, Ville de Rosso', en: 'Trarza Wilaya, Rosso City' },
+        gps: '16.5128, -15.8075',
+        midwife: { ar: 'مريم بنت عبد الله', fr: 'Mariam Mint Abdallah', en: 'Mariam Mint Abdallah' },
+        phones: ['+222 46 25 XX XX'],
+        image: '',
+        createdAt: '2026-01-01T00:00:00.000Z'
+    },
+    {
+        id: '3',
+        name: { ar: 'كيهيدي', fr: 'Kaédi', en: 'Kaedi' },
+        founded: '2010',
+        location: { ar: 'ولاية كوركول، مدينة كيهيدي', fr: 'Wilaya du Gorgol, Ville de Kaédi', en: 'Gorgol Wilaya, Kaedi City' },
+        gps: '16.1500, -13.5000',
+        midwife: { ar: 'خديجة بنت سيدي', fr: 'Khadija Mint Sidi', en: 'Khadija Mint Sidi' },
+        phones: ['+222 47 25 XX XX'],
+        image: '',
+        createdAt: '2026-01-01T00:00:00.000Z'
+    },
+    {
+        id: '4',
+        name: { ar: 'دار النعيم', fr: 'Dar Naïm', en: 'Dar Naim' },
+        founded: '2012',
+        location: { ar: 'ولاية نواكشوط الشمالية، مقاطعة دار النعيم', fr: 'Wilaya de Nouakchott Nord, Moughataa Dar Naïm', en: 'Nouakchott Nord Wilaya, Dar Naim District' },
+        gps: '18.1167, -15.9500',
+        midwife: { ar: 'مكة بنت الشيخ', fr: 'Mekka Mint Cheikh', en: 'Mekka Mint Cheikh' },
+        phones: ['+222 49 25 XX XX'],
+        image: '',
+        createdAt: '2026-01-01T00:00:00.000Z'
+    },
+    {
+        id: '5',
+        name: { ar: 'عرفات', fr: 'Arafat', en: 'Arafat' },
+        founded: '2014',
+        location: { ar: 'ولاية نواكشوط الجنوبية، مقاطعة عرفات', fr: 'Wilaya de Nouakchott Sud, Moughataa Arafat', en: 'Nouakchott Sud Wilaya, Arafat District' },
+        gps: '18.0500, -15.9167',
+        midwife: { ar: 'مريم بنت يحيى', fr: 'Mariam Mint Yahya', en: 'Mariam Mint Yahya' },
+        phones: ['+222 51 25 XX XX'],
+        image: '',
+        createdAt: '2026-01-01T00:00:00.000Z'
+    }
+];
+
 const DATA_DEFAULTS = {
     news: [],
     programs: [],
@@ -150,7 +210,7 @@ const DATA_DEFAULTS = {
     gallery: [],
     site_content: { socialLinks: { facebook: '', twitter: '', instagram: '', whatsapp: '' } },
     slider: [],
-    branches: [],
+    branches: DEFAULT_BRANCHES,
     navbar: []
 };
 
@@ -330,6 +390,12 @@ app.get('/api/public-content', async (req, res) => {
         navbar: data.navbar || [],
         storage: { mode: storageState.mode, ok: storageState.ok, detail: storageState.detail }
     });
+});
+
+// Public: same branches data the admin panel manages (Redis-backed read/write)
+app.get('/api/branches', async (req, res) => {
+    const data = await readData();
+    res.json({ branches: data.branches || [] });
 });
 
 // =========================================================

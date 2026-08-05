@@ -1078,7 +1078,7 @@ document.getElementById('branchForm').addEventListener('submit', async (e) => {
 });
 
 async function editBranch(id) {
-    const res = await fetch(API + '/content?type=branches');
+    const res = await fetch(API + '/branches');
     const data = await res.json();
     const item = (data.branches || []).find(b => b.id === id);
     if (item) openBranchModal(item);
