@@ -28,6 +28,19 @@
         @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
         .modal-overlay { display: none; }
         .modal-overlay.active { display: flex; }
+        /* ── Modal boxes: always vertically scrollable on any screen size ── */
+        .modal-scroll {
+            max-height: 90vh;
+            overflow-y: auto;
+            -webkit-overflow-scrolling: touch;
+            overscroll-behavior: contain;
+            scrollbar-width: thin;
+            scrollbar-color: #10B981 #E5E7EB;
+        }
+        .modal-scroll::-webkit-scrollbar { width: 8px; }
+        .modal-scroll::-webkit-scrollbar-track { background: #F3F4F6; border-radius: 8px; }
+        .modal-scroll::-webkit-scrollbar-thumb { background: #10B981; border-radius: 8px; }
+        .modal-scroll::-webkit-scrollbar-thumb:hover { background: #065F46; }
         .gallery-img { width: 100%; height: 200px; object-fit: cover; border-radius: 12px; }
         .preview-img { max-width: 200px; max-height: 150px; border-radius: 8px; margin-top: 8px; }
         .stat-icon { width: 48px; height: 48px; border-radius: 12px; display: flex; align-items: center; justify-content: center; }
@@ -395,7 +408,7 @@
 
 <!-- News Modal -->
 <div id="newsModal" class="modal-overlay fixed inset-0 bg-black/50 z-50 items-center justify-center p-4">
-    <div class="bg-white rounded-2xl p-6 w-full max-w-lg max-h-[90vh] overflow-y-auto">
+    <div class="bg-white rounded-2xl p-6 w-full max-w-lg modal-scroll">
         <div class="flex justify-between items-center mb-4">
             <h3 id="newsModalTitle" class="text-lg font-bold text-brandDark">إضافة خبر جديد</h3>
             <button onclick="closeModal('newsModal')" class="text-gray-400 hover:text-gray-600"><i class="fas fa-times text-xl"></i></button>
@@ -447,7 +460,7 @@
 
 <!-- Gallery Modal -->
 <div id="galleryModal" class="modal-overlay fixed inset-0 bg-black/50 z-50 items-center justify-center p-4">
-    <div class="bg-white rounded-2xl p-6 w-full max-w-md">
+    <div class="bg-white rounded-2xl p-6 w-full max-w-md modal-scroll">
         <div class="flex justify-between items-center mb-4">
             <h3 class="text-lg font-bold text-brandDark">رفع صورة جديدة</h3>
             <button onclick="closeModal('galleryModal')" class="text-gray-400 hover:text-gray-600"><i class="fas fa-times text-xl"></i></button>
@@ -472,7 +485,7 @@
 
 <!-- Program Modal -->
 <div id="programModal" class="modal-overlay fixed inset-0 bg-black/50 z-50 items-center justify-center p-4">
-    <div class="bg-white rounded-2xl p-6 w-full max-w-lg">
+    <div class="bg-white rounded-2xl p-6 w-full max-w-lg modal-scroll">
         <div class="flex justify-between items-center mb-4">
             <h3 id="programModalTitle" class="text-lg font-bold text-brandDark">إضافة برنامج</h3>
             <button onclick="closeModal('programModal')" class="text-gray-400 hover:text-gray-600"><i class="fas fa-times text-xl"></i></button>
@@ -505,7 +518,7 @@
 
 <!-- Document Modal -->
 <div id="docModal" class="modal-overlay fixed inset-0 bg-black/50 z-50 items-center justify-center p-4">
-    <div class="bg-white rounded-2xl p-6 w-full max-w-md">
+    <div class="bg-white rounded-2xl p-6 w-full max-w-md modal-scroll">
         <div class="flex justify-between items-center mb-4">
             <h3 class="text-lg font-bold text-brandDark">رفع وثيقة</h3>
             <button onclick="closeModal('docModal')" class="text-gray-400 hover:text-gray-600"><i class="fas fa-times text-xl"></i></button>
@@ -523,7 +536,7 @@
 
 <!-- Slider Modal -->
 <div id="sliderModal" class="modal-overlay fixed inset-0 bg-black/50 z-50 items-center justify-center p-4">
-    <div class="bg-white rounded-2xl p-6 w-full max-w-lg">
+    <div class="bg-white rounded-2xl p-6 w-full max-w-lg modal-scroll">
         <div class="flex justify-between items-center mb-4">
             <h3 id="sliderModalTitle" class="text-lg font-bold text-brandDark">إضافة شريحة</h3>
             <button onclick="closeModal('sliderModal')" class="text-gray-400 hover:text-gray-600"><i class="fas fa-times text-xl"></i></button>
@@ -561,7 +574,7 @@
 
 <!-- Branch Modal -->
 <div id="branchModal" class="modal-overlay fixed inset-0 bg-black/50 z-50 items-center justify-center p-4">
-    <div class="bg-white rounded-2xl p-6 w-full max-w-lg max-h-[90vh] overflow-y-auto">
+    <div class="bg-white rounded-2xl p-6 w-full max-w-lg modal-scroll">
         <div class="flex justify-between items-center mb-4">
             <h3 id="branchModalTitle" class="text-lg font-bold text-brandDark">إضافة فرع</h3>
             <button onclick="closeModal('branchModal')" class="text-gray-400 hover:text-gray-600"><i class="fas fa-times text-xl"></i></button>
@@ -608,7 +621,7 @@
 
 <!-- Navbar Modal -->
 <div id="navbarModal" class="modal-overlay fixed inset-0 bg-black/50 z-50 items-center justify-center p-4">
-    <div class="bg-white rounded-2xl p-6 w-full max-w-lg">
+    <div class="bg-white rounded-2xl p-6 w-full max-w-lg modal-scroll">
         <div class="flex justify-between items-center mb-4">
             <h3 id="navbarModalTitle" class="text-lg font-bold text-brandDark">إضافة رابط</h3>
             <button onclick="closeModal('navbarModal')" class="text-gray-400 hover:text-gray-600"><i class="fas fa-times text-xl"></i></button>
