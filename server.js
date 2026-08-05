@@ -398,6 +398,12 @@ app.get('/api/branches', async (req, res) => {
     res.json({ branches: data.branches || [] });
 });
 
+// Public: same slider/slides data the admin panel manages (Redis-backed read/write)
+app.get('/api/slides', async (req, res) => {
+    const data = await readData();
+    res.json({ slider: data.slider || [] });
+});
+
 // =========================================================
 //  AUTH API
 // =========================================================

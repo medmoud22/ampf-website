@@ -533,6 +533,7 @@
 
         let _contentData = null;
         let _branchesData = [];
+        let _sliderData = [];
 
         function renderContent() {
             const data = _contentData;
@@ -649,8 +650,8 @@
                 document.getElementById('galleryGrid').innerHTML = `<div class="col-span-full text-center text-gray-400 py-8">${t('gallery_empty')}</div>`;
             }
 
-            // Slider
-            renderSlider(data.slider);
+            // Slider (rendered from the dedicated /api/slides endpoint)
+            renderSlider(_sliderData);
             // Branches (rendered from the dedicated /api/branches endpoint)
             renderBranches(_branchesData);
             // Navbar
@@ -848,6 +849,20 @@
             }
         }
 
+        // Slides are loaded from the dedicated /api/slides endpoint so the
+        // section is always in sync with the admin panel (no hardcoded data).
+        async function loadSlides() {
+            try {
+                const res = await fetch('/api/slides');
+                if (!res.ok) throw new Error('HTTP ' + res.status);
+                const data = await res.json();
+                _sliderData = data.slider || [];
+                renderSlider(_sliderData);
+            } catch (e) {
+                console.error('Failed to load slides:', e);
+            }
+        }
+
         // ══════════════════════════════════════════════════
         //  EVENT LISTENERS
         // ══════════════════════════════════════════════════
@@ -899,10 +914,11 @@
 
         // Load dynamic content
         if (document.readyState === 'loading') {
-            document.addEventListener('DOMContentLoaded', () => { loadAllContent(); loadBranches(); });
+            document.addEventListener('DOMContentLoaded', () => { loadAllContent(); loadBranches(); loadSlides(); });
         } else {
             loadAllContent();
             loadBranches();
+            loadSlides();
         }
 
         // Apply initial language

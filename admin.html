@@ -721,6 +721,7 @@ function showTab(tab) {
     if (tab === 'content') loadContentEditor();
     if (tab === 'social') loadSocialLinks();
     if (tab === 'branches') loadBranches();
+    if (tab === 'slider') loadSlides();
 }
 
 // ─── Login ────────────────────────────────
@@ -751,7 +752,7 @@ async function loadAllData() {
         renderNews(data.news || []);
         renderGallery(data.gallery || []);
         renderPrograms(data.programs || []);
-        renderSlider(data.slider || []);
+        loadSlides();
         loadBranches();
         renderNavbar(data.navbar || []);
         renderDocs(data.documents || []);
@@ -769,6 +770,18 @@ async function loadBranches() {
         const data = await res.json();
         renderBranches(data.branches || []);
     } catch(e) { console.error('Failed to load branches:', e); }
+}
+
+// ─── Slider (same endpoint & structure as the public site) ─
+// Reads GET /api/slides -> { slider: [...] } so the admin grid and the
+// homepage always show the exact same data (Redis-backed / defaults).
+async function loadSlides() {
+    try {
+        const res = await fetch(API + '/slides', { cache: 'no-store' });
+        if (!res.ok) throw new Error('HTTP ' + res.status);
+        const data = await res.json();
+        renderSlider(data.slider || []);
+    } catch(e) { console.error('Failed to load slides:', e); }
 }
 
 // ─── Dashboard ────────────────────────────
@@ -1021,7 +1034,7 @@ document.getElementById('sliderForm').addEventListener('submit', async (e) => {
 });
 
 async function editSlider(id) {
-    const res = await fetch(API + '/content?type=slider');
+    const res = await fetch(API + '/slides', { cache: 'no-store' });
     const data = await res.json();
     const item = (data.slider || []).find(s => s.id === id);
     if (item) openSliderModal(item);
