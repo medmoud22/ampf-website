@@ -3,6 +3,9 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
+    <meta http-equiv="Pragma" content="no-cache">
+    <meta http-equiv="Expires" content="0">
     <title>الجمعية الموريتانية لترقية الأسرة | AMPF</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <script>
@@ -775,7 +778,18 @@
         function renderNavbar(items) {
             const desktopNav = document.getElementById('mainNav');
             const mobileNav = document.getElementById('mobileNav');
-            const sorted = [...(items || [])].sort((a, b) => (a.order || 0) - (b.order || 0));
+            let nav = [...(items || [])];
+            // ── Hardcoded Centre d'Excellence (always present, always after البرامج) ──
+            const centerItem = { id: 'mgf', label: { ar: 'الإمتياز', fr: "Centre d'Excellence", en: 'Center of Excellence' }, href: 'center.html', order: 4 };
+            if (!nav.some(i => i.href === 'center.html')) nav.push(centerItem);
+            const sorted = nav.sort((a, b) => (a.order || 0) - (b.order || 0));
+            // Place الإمتياز right after البرامج
+            const progIdx = sorted.findIndex(i => i.href === '#programs');
+            const cIdx = sorted.findIndex(i => i.href === 'center.html');
+            if (progIdx >= 0 && cIdx >= 0 && cIdx !== progIdx + 1) {
+                const [c] = sorted.splice(cIdx, 1);
+                sorted.splice(progIdx + 1, 0, c);
+            }
             const links = sorted.map(item =>
                 `<a href="${item.href || '#'}" class="nav-link hover:text-brandGreen transition" data-nav-id="${item.id}">${getLocalizedText(item.label)}</a>`
             ).join('');
@@ -784,7 +798,6 @@
             ).join('');
             desktopNav.innerHTML = links;
             mobileNav.innerHTML = mobileLinks + `<a href="/admin" class="text-brandGreen">${t('nav_admin')}</a>`;
-            // Mobile link click to close menu
             mobileNav.querySelectorAll('.mobile-link').forEach(l => l.addEventListener('click', () => document.getElementById('mobileMenu').classList.remove('active')));
         }
 

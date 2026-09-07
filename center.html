@@ -306,7 +306,18 @@
         function renderNavbar(items) {
             const desktopNav = document.getElementById('mainNav');
             const mobileNav = document.getElementById('mobileNav');
-            const sorted = [...(items || [])].sort((a, b) => (a.order || 0) - (b.order || 0));
+            let nav = [...(items || [])];
+            // ── Hardcoded Centre d'Excellence (always present, always after البرامج) ──
+            const centerItem = { id: 'mgf', label: { ar: 'الإمتياز', fr: "Centre d'Excellence", en: 'Center of Excellence' }, href: 'center.html', order: 4 };
+            if (!nav.some(i => i.href === 'center.html')) nav.push(centerItem);
+            const sorted = nav.sort((a, b) => (a.order || 0) - (b.order || 0));
+            // Place الإمتياز right after البرامج
+            const progIdx = sorted.findIndex(i => i.href === '#programs');
+            const cIdx = sorted.findIndex(i => i.href === 'center.html');
+            if (progIdx >= 0 && cIdx >= 0 && cIdx !== progIdx + 1) {
+                const [c] = sorted.splice(cIdx, 1);
+                sorted.splice(progIdx + 1, 0, c);
+            }
             // On this standalone page, homepage anchors must point back to index.html
             const resolve = (href) => {
                 if (!href) return '#';
@@ -322,7 +333,7 @@
             mobileNav.innerHTML = mobileLinks + `<a href="/admin" class="text-brandGreen">${t('nav_admin')}</a>`;
             // Mark the current page (Centre d'Excellence) as active in the navbar
             desktopNav.querySelectorAll('.nav-link').forEach(a => {
-                if (a.getAttribute('href') === 'center.html' || a.getAttribute('href') === 'index.html#centre-excellence') {
+                if (a.getAttribute('href') === 'center.html') {
                     a.classList.add('text-brandGreen', 'font-bold');
                 }
             });
