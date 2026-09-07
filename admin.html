@@ -254,6 +254,21 @@
         <div id="tab-excellence" class="tab-content fade-in">
             <h3 class="text-xl font-bold text-brandDark mb-6">مركز الإمتياز للقضاء على تشويه الأعضاء التناسلية للإناث</h3>
 
+            <!-- Centre Logo Upload -->
+            <div class="bg-white p-6 rounded-xl shadow-sm mb-8">
+                <h4 class="font-bold text-brandDark pb-3 mb-4 border-b flex items-center gap-2"><i class="fas fa-image text-brandGreen"></i> شعار المركز</h4>
+                <div class="flex flex-col sm:flex-row items-center gap-6">
+                    <div id="mgfLogoPreview" class="w-24 h-24 rounded-full bg-gray-100 border-2 border-gray-200 flex items-center justify-center overflow-hidden flex-shrink-0">
+                        <i class="fas fa-university text-gray-300 text-3xl"></i>
+                    </div>
+                    <div class="flex-1">
+                        <p class="text-sm text-gray-500 mb-3">ارفع شعار المركز (PNG/JPG، يُفضل خلفية شفافة أو بيضاء). يظهر بشكل دائري في الموقع.</p>
+                        <input type="file" id="mgfLogoInput" accept="image/*" class="mb-3">
+                        <button onclick="uploadMgfLogo()" class="bg-brandGreen text-white px-6 py-2 rounded-xl font-bold hover:bg-brandDark transition text-sm"><i class="fas fa-upload ml-1"></i> رفع الشعار</button>
+                    </div>
+                </div>
+            </div>
+
             <!-- Static texts form -->
             <div class="bg-white p-6 rounded-xl shadow-sm mb-8">
                 <h4 class="font-bold text-brandDark pb-3 mb-4 border-b flex items-center gap-2"><i class="fas fa-edit text-brandGreen"></i> النصوص الرئيسية للمركز</h4>
@@ -1586,6 +1601,13 @@ async function loadMgf() {
 
 function fillMgfTexts() {
     const c = _mgfData.content || {};
+    // Show current logo in preview
+    const preview = document.getElementById('mgfLogoPreview');
+    if (c.logo) {
+        preview.innerHTML = '<img src="' + c.logo + '" class="w-full h-full object-cover">';
+    } else {
+        preview.innerHTML = '<i class="fas fa-university text-gray-300 text-3xl"></i>';
+    }
     document.getElementById('mgfMissionAr').value = c.mission?.ar || '';
     document.getElementById('mgfMissionFr').value = c.mission?.fr || '';
     document.getElementById('mgfMissionEn').value = c.mission?.en || '';
@@ -1627,6 +1649,23 @@ async function saveMgfTexts() {
         const res = await fetch(API + '/mgf-content', { method: 'PUT', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(data) });
         if ((await res.json()).success) showToast('تم حفظ نصوص المركز');
         else showToast('خطأ في الحفظ');
+    } catch (e) { showToast('خطأ في الاتصال'); }
+}
+
+async function uploadMgfLogo() {
+    const fileInput = document.getElementById('mgfLogoInput');
+    if (!fileInput.files[0]) { showToast('يرجى اختيار ملف الشعار'); return; }
+    const formData = new FormData();
+    formData.append('logo', await compressImage(fileInput.files[0], 800, 0.9));
+    try {
+        const res = await fetch(API + '/mgf-logo', { method: 'POST', body: formData });
+        const data = await res.json();
+        if (data.success) {
+            showToast('تم رفع الشعار بنجاح');
+            _mgfData.content.logo = data.logo;
+            fillMgfTexts();
+            fileInput.value = '';
+        } else showToast(data.error || 'خطأ في رفع الشعار');
     } catch (e) { showToast('خطأ في الاتصال'); }
 }
 

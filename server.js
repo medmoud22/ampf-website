@@ -214,6 +214,7 @@ const DATA_DEFAULTS = {
     navbar: [],
     // ── Centre d'Excellence MGF (قسم مركز الإمتياز للقضاء على تشويه الأعضاء التناسلية للإناث) ──
     mgfContent: {
+        logo: '',
         mission: { ar: '', fr: '', en: '' },
         vision: { ar: '', fr: '', en: '' },
         getInvolved: { ar: '', fr: '', en: '' },
@@ -401,7 +402,7 @@ app.get('/api/public-content', async (req, res) => {
         branches: data.branches || [],
         navbar: data.navbar || [],
         mgf: {
-            content: data.mgfContent || { mission: {}, vision: {}, getInvolved: {}, advocacy: {} },
+            content: data.mgfContent || { logo: '', mission: {}, vision: {}, getInvolved: {}, advocacy: {} },
             team: data.mgfTeam || [],
             partners: data.mgfPartners || [],
             research: data.mgfResearch || [],
@@ -418,7 +419,7 @@ app.get('/api/public-content', async (req, res) => {
 app.get('/api/mgf-content', async (req, res) => {
     const data = await readData();
     res.json({
-        content: data.mgfContent || { mission: {}, vision: {}, getInvolved: {}, advocacy: {} },
+        content: data.mgfContent || { logo: '', mission: {}, vision: {}, getInvolved: {}, advocacy: {} },
         team: data.mgfTeam || [],
         partners: data.mgfPartners || [],
         research: data.mgfResearch || [],
@@ -432,6 +433,7 @@ app.put('/api/mgf-content', requireAuth, async (req, res) => {
     const data = await readData();
     const body = req.body || {};
     data.mgfContent = {
+        logo: body.logo !== undefined ? body.logo : (data.mgfContent && data.mgfContent.logo) || '',
         mission: body.mission || (data.mgfContent && data.mgfContent.mission) || { ar: '', fr: '', en: '' },
         vision: body.vision || (data.mgfContent && data.mgfContent.vision) || { ar: '', fr: '', en: '' },
         getInvolved: body.getInvolved || (data.mgfContent && data.mgfContent.getInvolved) || { ar: '', fr: '', en: '' },
@@ -439,6 +441,27 @@ app.put('/api/mgf-content', requireAuth, async (req, res) => {
     };
     await writeData(data);
     res.json({ success: true, message: 'تم حفظ محتوى مركز الإمتياز' });
+});
+
+// Upload / replace the Centre d'Excellence logo (Cloudinary image)
+app.post('/api/mgf-logo', requireAuth, upload.single('logo'), async (req, res) => {
+    try {
+        if (!req.file) return res.status(400).json({ error: 'لم يتم اختيار ملف' });
+        const logoUrl = await uploadToCloudinary(req.file);
+        const data = await readData();
+        if (!data.mgfContent) data.mgfContent = { logo: '', mission: {}, vision: {}, getInvolved: {}, advocacy: {} };
+        // Delete old Cloudinary logo if exists
+        if (data.mgfContent.logo) {
+            const pid = getFilePublicId(data.mgfContent.logo);
+            if (pid) cloudinary.uploader.destroy(pid).catch(() => {});
+        }
+        data.mgfContent.logo = logoUrl;
+        await writeData(data);
+        res.json({ success: true, logo: logoUrl });
+    } catch (e) {
+        console.error('[AMPF] Logo upload failed:', e.message);
+        res.status(500).json({ error: 'فشل رفع الشعار: ' + e.message });
+    }
 });
 
 // Public: same branches data the admin panel manages (Redis-backed read/write)
