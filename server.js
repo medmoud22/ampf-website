@@ -211,7 +211,19 @@ const DATA_DEFAULTS = {
     site_content: { socialLinks: { facebook: '', twitter: '', instagram: '', whatsapp: '' } },
     slider: [],
     branches: DEFAULT_BRANCHES,
-    navbar: []
+    navbar: [],
+    // ── Centre d'Excellence MGF (قسم مركز التميز للقضاء على ختان الإناث) ──
+    mgfContent: {
+        mission: { ar: '', fr: '', en: '' },
+        vision: { ar: '', fr: '', en: '' },
+        getInvolved: { ar: '', fr: '', en: '' },
+        advocacy: { ar: '', fr: '', en: '' }
+    },
+    mgfTeam: [],
+    mgfPartners: [],
+    mgfResearch: [],
+    mgfToolkits: [],
+    mgfNews: []
 };
 
 function readLocalFile() {
@@ -388,8 +400,45 @@ app.get('/api/public-content', async (req, res) => {
         slider: data.slider || [],
         branches: data.branches || [],
         navbar: data.navbar || [],
+        mgf: {
+            content: data.mgfContent || { mission: {}, vision: {}, getInvolved: {}, advocacy: {} },
+            team: data.mgfTeam || [],
+            partners: data.mgfPartners || [],
+            research: data.mgfResearch || [],
+            toolkits: data.mgfToolkits || [],
+            news: data.mgfNews || []
+        },
         storage: { mode: storageState.mode, ok: storageState.ok, detail: storageState.detail }
     });
+});
+
+// Unified public endpoint for the Centre d'Excellence MGF
+// Used by BOTH the homepage section (/index.html) and the admin panel
+// (admin.html /api/content?type=mgf...) so data always stays in sync.
+app.get('/api/mgf-content', async (req, res) => {
+    const data = await readData();
+    res.json({
+        content: data.mgfContent || { mission: {}, vision: {}, getInvolved: {}, advocacy: {} },
+        team: data.mgfTeam || [],
+        partners: data.mgfPartners || [],
+        research: data.mgfResearch || [],
+        toolkits: data.mgfToolkits || [],
+        news: data.mgfNews || []
+    });
+});
+
+// Save the static MGF texts (mission, vision, getInvolved, advocacy) — 3 languages
+app.put('/api/mgf-content', requireAuth, async (req, res) => {
+    const data = await readData();
+    const body = req.body || {};
+    data.mgfContent = {
+        mission: body.mission || (data.mgfContent && data.mgfContent.mission) || { ar: '', fr: '', en: '' },
+        vision: body.vision || (data.mgfContent && data.mgfContent.vision) || { ar: '', fr: '', en: '' },
+        getInvolved: body.getInvolved || (data.mgfContent && data.mgfContent.getInvolved) || { ar: '', fr: '', en: '' },
+        advocacy: body.advocacy || (data.mgfContent && data.mgfContent.advocacy) || { ar: '', fr: '', en: '' }
+    };
+    await writeData(data);
+    res.json({ success: true, message: 'تم حفظ محتوى مركز التميز' });
 });
 
 // Public: same branches data the admin panel manages (Redis-backed read/write)
@@ -708,6 +757,225 @@ app.put('/api/branches-with-image/:id', requireAuth, upload.single('image'), asy
     }
     await writeData(data);
     res.json({ success: true, item: data.branches[idx] });
+});
+
+// =========================================================
+//  CENTRE D'EXCELLENCE MGF (with file upload)
+// =========================================================
+
+// MGF news with image upload (stored in data.mgfNews)
+app.post('/api/mgf-news-with-image', requireAuth, upload.single('image'), async (req, res) => {
+    if (!req.file) return res.status(400).json({ error: 'يرجى اختيار صورة' });
+    try {
+        const imageUrl = await uploadToCloudinary(req.file);
+        const data = await readData();
+        const item = {
+            id: Date.now().toString(),
+            title: { ar: req.body.title_ar || '', fr: req.body.title_fr || '', en: req.body.title_en || '' },
+            desc: { ar: req.body.desc_ar || '', fr: req.body.desc_fr || '', en: req.body.desc_en || '' },
+            date: req.body.date || new Date().toISOString().split('T')[0],
+            image: imageUrl,
+            createdAt: new Date().toISOString()
+        };
+        if (!Array.isArray(data.mgfNews)) data.mgfNews = [];
+        data.mgfNews.push(item);
+        await writeData(data);
+        res.json({ success: true, item });
+    } catch (e) {
+        console.error('[AMPF] Upload to Cloudinary failed:', e.message);
+        res.status(500).json({ error: 'فشل رفع الصورة إلى Cloudinary: ' + e.message });
+    }
+});
+
+app.put('/api/mgf-news-with-image/:id', requireAuth, upload.single('image'), async (req, res) => {
+    const data = await readData();
+    if (!Array.isArray(data.mgfNews)) data.mgfNews = [];
+    const idx = data.mgfNews.findIndex(i => i.id === req.params.id);
+    if (idx === -1) return res.status(404).json({ error: 'الخبر غير موجود' });
+
+    if (req.file) {
+        try {
+            const imageUrl = await uploadToCloudinary(req.file);
+            if (data.mgfNews[idx].image) {
+                const pid = getFilePublicId(data.mgfNews[idx].image);
+                if (pid) cloudinary.uploader.destroy(pid).catch(() => {});
+            }
+            data.mgfNews[idx].image = imageUrl;
+        } catch (e) {
+            console.error('[AMPF] Upload to Cloudinary failed:', e.message);
+            return res.status(500).json({ error: 'فشل رفع الصورة إلى Cloudinary: ' + e.message });
+        }
+    }
+    if (req.body.title_ar !== undefined || req.body.title_fr !== undefined || req.body.title_en !== undefined) {
+        data.mgfNews[idx].title = {
+            ar: req.body.title_ar || (data.mgfNews[idx].title?.ar || ''),
+            fr: req.body.title_fr || (data.mgfNews[idx].title?.fr || ''),
+            en: req.body.title_en || (data.mgfNews[idx].title?.en || '')
+        };
+    }
+    if (req.body.desc_ar !== undefined || req.body.desc_fr !== undefined || req.body.desc_en !== undefined) {
+        data.mgfNews[idx].desc = {
+            ar: req.body.desc_ar || (data.mgfNews[idx].desc?.ar || ''),
+            fr: req.body.desc_fr || (data.mgfNews[idx].desc?.fr || ''),
+            en: req.body.desc_en || (data.mgfNews[idx].desc?.en || '')
+        };
+    }
+    if (req.body.date !== undefined) data.mgfNews[idx].date = req.body.date;
+
+    await writeData(data);
+    res.json({ success: true, item: data.mgfNews[idx] });
+});
+
+// MGF team/partners with optional photo upload (stored in data.mgfTeam / data.mgfPartners)
+app.post('/api/mgf-member/:collection', requireAuth, upload.single('photo'), async (req, res) => {
+    const { collection } = req.params;
+    if (['mgfTeam', 'mgfPartners'].indexOf(collection) === -1) {
+        return res.status(400).json({ error: 'مجموعة غير صالحة' });
+    }
+    try {
+        let photoUrl = '';
+        if (req.file) photoUrl = await uploadToCloudinary(req.file);
+        const data = await readData();
+        const item = {
+            id: Date.now().toString(),
+            name: { ar: req.body.name_ar || '', fr: req.body.name_fr || '', en: req.body.name_en || '' },
+            role: { ar: req.body.role_ar || '', fr: req.body.role_fr || '', en: req.body.role_en || '' },
+            description: { ar: req.body.desc_ar || '', fr: req.body.desc_fr || '', en: req.body.desc_en || '' },
+            photo: photoUrl,
+            createdAt: new Date().toISOString()
+        };
+        if (!Array.isArray(data[collection])) data[collection] = [];
+        data[collection].push(item);
+        await writeData(data);
+        res.json({ success: true, item });
+    } catch (e) {
+        console.error('[AMPF] Upload to Cloudinary failed:', e.message);
+        res.status(500).json({ error: 'فشل رفع الصورة إلى Cloudinary: ' + e.message });
+    }
+});
+
+app.put('/api/mgf-member/:collection/:id', requireAuth, upload.single('photo'), async (req, res) => {
+    const { collection, id } = req.params;
+    if (['mgfTeam', 'mgfPartners'].indexOf(collection) === -1) {
+        return res.status(400).json({ error: 'مجموعة غير صالحة' });
+    }
+    const data = await readData();
+    if (!Array.isArray(data[collection])) data[collection] = [];
+    const idx = data[collection].findIndex(i => i.id === id);
+    if (idx === -1) return res.status(404).json({ error: 'العنصر غير موجود' });
+
+    if (req.file) {
+        try {
+            const photoUrl = await uploadToCloudinary(req.file);
+            if (data[collection][idx].photo) {
+                const pid = getFilePublicId(data[collection][idx].photo);
+                if (pid) cloudinary.uploader.destroy(pid).catch(() => {});
+            }
+            data[collection][idx].photo = photoUrl;
+        } catch (e) {
+            console.error('[AMPF] Upload to Cloudinary failed:', e.message);
+            return res.status(500).json({ error: 'فشل رفع الصورة إلى Cloudinary: ' + e.message });
+        }
+    }
+    if (req.body.name_ar !== undefined || req.body.name_fr !== undefined || req.body.name_en !== undefined) {
+        data[collection][idx].name = {
+            ar: req.body.name_ar || (data[collection][idx].name?.ar || ''),
+            fr: req.body.name_fr || (data[collection][idx].name?.fr || ''),
+            en: req.body.name_en || (data[collection][idx].name?.en || '')
+        };
+    }
+    if (req.body.role_ar !== undefined || req.body.role_fr !== undefined || req.body.role_en !== undefined) {
+        data[collection][idx].role = {
+            ar: req.body.role_ar || (data[collection][idx].role?.ar || ''),
+            fr: req.body.role_fr || (data[collection][idx].role?.fr || ''),
+            en: req.body.role_en || (data[collection][idx].role?.en || '')
+        };
+    }
+    if (req.body.desc_ar !== undefined || req.body.desc_fr !== undefined || req.body.desc_en !== undefined) {
+        data[collection][idx].description = {
+            ar: req.body.desc_ar || (data[collection][idx].description?.ar || ''),
+            fr: req.body.desc_fr || (data[collection][idx].description?.fr || ''),
+            en: req.body.desc_en || (data[collection][idx].description?.en || '')
+        };
+    }
+
+    await writeData(data);
+    res.json({ success: true, item: data[collection][idx] });
+});
+
+// Add a toolkit/guide with an optional PDF file (uploaded to Cloudinary)
+// collection: mgfToolkits | mgfResearch
+app.post('/api/mgf-upload/:collection', requireAuth, upload.single('file'), async (req, res) => {
+    const { collection } = req.params;
+    if (['mgfToolkits', 'mgfResearch'].indexOf(collection) === -1) {
+        return res.status(400).json({ error: 'مجموعة غير صالحة' });
+    }
+    try {
+        let fileUrl = '';
+        if (req.file) fileUrl = await uploadToCloudinary(req.file);
+        const data = await readData();
+        const item = {
+            id: Date.now().toString(),
+            title: { ar: req.body.title_ar || '', fr: req.body.title_fr || '', en: req.body.title_en || '' },
+            desc: { ar: req.body.desc_ar || '', fr: req.body.desc_fr || '', en: req.body.desc_en || '' },
+            file: fileUrl,
+            filename: req.file ? req.file.originalname : '',
+            date: req.body.date || new Date().toISOString().split('T')[0],
+            createdAt: new Date().toISOString()
+        };
+        if (!Array.isArray(data[collection])) data[collection] = [];
+        data[collection].push(item);
+        await writeData(data);
+        res.json({ success: true, item });
+    } catch (e) {
+        console.error('[AMPF] Upload to Cloudinary failed:', e.message);
+        res.status(500).json({ error: 'فشل رفع الملف إلى Cloudinary: ' + e.message });
+    }
+});
+
+app.put('/api/mgf-upload/:collection/:id', requireAuth, upload.single('file'), async (req, res) => {
+    const { collection, id } = req.params;
+    if (['mgfToolkits', 'mgfResearch'].indexOf(collection) === -1) {
+        return res.status(400).json({ error: 'مجموعة غير صالحة' });
+    }
+    const data = await readData();
+    if (!Array.isArray(data[collection])) data[collection] = [];
+    const idx = data[collection].findIndex(i => i.id === id);
+    if (idx === -1) return res.status(404).json({ error: 'العنصر غير موجود' });
+
+    if (req.file) {
+        try {
+            const fileUrl = await uploadToCloudinary(req.file);
+            if (data[collection][idx].file) {
+                const pid = getFilePublicId(data[collection][idx].file);
+                if (pid) cloudinary.uploader.destroy(pid).catch(() => {});
+            }
+            data[collection][idx].file = fileUrl;
+            data[collection][idx].filename = req.file.originalname;
+        } catch (e) {
+            console.error('[AMPF] Upload to Cloudinary failed:', e.message);
+            return res.status(500).json({ error: 'فشل رفع الملف إلى Cloudinary: ' + e.message });
+        }
+    }
+
+    if (req.body.title_ar !== undefined || req.body.title_fr !== undefined || req.body.title_en !== undefined) {
+        data[collection][idx].title = {
+            ar: req.body.title_ar || (data[collection][idx].title?.ar || ''),
+            fr: req.body.title_fr || (data[collection][idx].title?.fr || ''),
+            en: req.body.title_en || (data[collection][idx].title?.en || '')
+        };
+    }
+    if (req.body.desc_ar !== undefined || req.body.desc_fr !== undefined || req.body.desc_en !== undefined) {
+        data[collection][idx].desc = {
+            ar: req.body.desc_ar || (data[collection][idx].desc?.ar || ''),
+            fr: req.body.desc_fr || (data[collection][idx].desc?.fr || ''),
+            en: req.body.desc_en || (data[collection][idx].desc?.en || '')
+        };
+    }
+    if (req.body.date !== undefined) data[collection][idx].date = req.body.date;
+
+    await writeData(data);
+    res.json({ success: true, item: data[collection][idx] });
 });
 
 // =========================================================

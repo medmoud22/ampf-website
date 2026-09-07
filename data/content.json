@@ -340,6 +340,43 @@
       },
       "href": "#contact",
       "order": 7
+    },
+    {
+      "id": "8",
+      "label": {
+        "ar": "مركز التميز",
+        "fr": "Centre d'Excellence",
+        "en": "Centre of Excellence"
+      },
+      "href": "#excellence",
+      "order": 8
     }
-  ]
+  ],
+  "mgfContent": {
+    "mission": {
+      "ar": "تطوير المعرفة العلمية والأدلة حول ممارسات ختان الإناث في موريتانيا، والمساهمة في القضاء عليها من خلال البحث والتدريب والمناصرة وبناء الشراكات.",
+      "fr": "Développer les connaissances scientifiques et les preuves sur les pratiques des MGF en Mauritanie et contribuer à leur élimination par la recherche, la formation, le plaidoyer et la construction de partenariats.",
+      "en": "Develop scientific knowledge and evidence on FGM practices in Mauritania and contribute to their elimination through research, training, advocacy and building partnerships."
+    },
+    "vision": {
+      "ar": "مجتمع خالٍ تماماً من ختان الإناث، تتحقق فيه حماية حقوق الفتيات والنساء ورفاههن.",
+      "fr": "Une société totalement exempte de MGF, garantissant la protection des droits et du bien-être des filles et des femmes.",
+      "en": "A society completely free of FGM, where the rights and well-being of girls and women are fully protected."
+    },
+    "getInvolved": {
+      "ar": "انضم إلى جهود المركز عبر التطوع، أو المشاركة في الدراسات الميدانية، أو المساهمة في حملات التوعية والمناصرة في الولايات.",
+      "fr": "Rejoignez les efforts du centre en faisant du bénévolat, en participant aux études de terrain ou en contribuant aux campagnes de sensibilisation et de plaidoyer.",
+      "en": "Join the centre's efforts by volunteering, participating in field studies, or contributing to awareness and advocacy campaigns."
+    },
+    "advocacy": {
+      "ar": "يعمل المركز بالتعاون مع الشركاء الوطنيين والدوليين على تعزيز التشريعات والسياسات المانعة لختان الإناث، والضغط من أجل تنفيذها على أرض الواقع.",
+      "fr": "Le centre travaille avec les partenaires nationaux et internationaux pour renforcer les lois et politiques interdisant les MGF et plaider pour leur mise en œuvre sur le terrain.",
+      "en": "The centre works with national and international partners to strengthen laws and policies prohibiting FGM and advocate for their implementation on the ground."
+    }
+  },
+  "mgfTeam": [],
+  "mgfPartners": [],
+  "mgfResearch": [],
+  "mgfToolkits": [],
+  "mgfNews": []
 }

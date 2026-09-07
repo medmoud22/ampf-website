@@ -112,6 +112,7 @@
         <a onclick="showTab('branches')" class="tab-link flex items-center gap-3 px-4 py-3 rounded-xl text-gray-600 hover:bg-gray-50 hover:text-brandDark transition cursor-pointer" data-tab="branches"><i class="fas fa-map-marker-alt w-5"></i> الفروع</a>
         <a onclick="showTab('navbar')" class="tab-link flex items-center gap-3 px-4 py-3 rounded-xl text-gray-600 hover:bg-gray-50 hover:text-brandDark transition cursor-pointer" data-tab="navbar"><i class="fas fa-bars w-5"></i> القوائم</a>
         <a onclick="showTab('documents')" class="tab-link flex items-center gap-3 px-4 py-3 rounded-xl text-gray-600 hover:bg-gray-50 hover:text-brandDark transition cursor-pointer" data-tab="documents"><i class="fas fa-file-alt w-5"></i> الوثائق</a>
+        <a onclick="showTab('excellence')" class="tab-link flex items-center gap-3 px-4 py-3 rounded-xl text-gray-600 hover:bg-gray-50 hover:text-brandDark transition cursor-pointer" data-tab="excellence"><i class="fas fa-university w-5"></i> مركز التميز</a>
         <a onclick="showTab('content')" class="tab-link flex items-center gap-3 px-4 py-3 rounded-xl text-gray-600 hover:bg-gray-50 hover:text-brandDark transition cursor-pointer" data-tab="content"><i class="fas fa-edit w-5"></i> تعديل النصوص</a>
         <a onclick="showTab('social')" class="tab-link flex items-center gap-3 px-4 py-3 rounded-xl text-gray-600 hover:bg-gray-50 hover:text-brandDark transition cursor-pointer" data-tab="social"><i class="fas fa-share-alt w-5"></i> التواصل الاجتماعي</a>
         <a onclick="showTab('messages')" class="tab-link flex items-center gap-3 px-4 py-3 rounded-xl text-gray-600 hover:bg-gray-50 hover:text-brandDark transition cursor-pointer" data-tab="messages"><i class="fas fa-envelope w-5"></i> الرسائل</a>
@@ -138,6 +139,7 @@
             <a onclick="showTab('branches');toggleSidebar()" class="flex items-center gap-3 px-4 py-3 rounded-xl text-gray-600 hover:bg-gray-50 cursor-pointer"><i class="fas fa-map-marker-alt w-5"></i> الفروع</a>
             <a onclick="showTab('navbar');toggleSidebar()" class="flex items-center gap-3 px-4 py-3 rounded-xl text-gray-600 hover:bg-gray-50 cursor-pointer"><i class="fas fa-bars w-5"></i> القوائم</a>
             <a onclick="showTab('documents');toggleSidebar()" class="flex items-center gap-3 px-4 py-3 rounded-xl text-gray-600 hover:bg-gray-50 cursor-pointer"><i class="fas fa-file-alt w-5"></i> الوثائق</a>
+            <a onclick="showTab('excellence');toggleSidebar()" class="flex items-center gap-3 px-4 py-3 rounded-xl text-gray-600 hover:bg-gray-50 cursor-pointer"><i class="fas fa-university w-5"></i> مركز التميز</a>
             <a onclick="showTab('content');toggleSidebar()" class="flex items-center gap-3 px-4 py-3 rounded-xl text-gray-600 hover:bg-gray-50 cursor-pointer"><i class="fas fa-edit w-5"></i> تعديل النصوص</a>
             <a onclick="showTab('social');toggleSidebar()" class="flex items-center gap-3 px-4 py-3 rounded-xl text-gray-600 hover:bg-gray-50 cursor-pointer"><i class="fas fa-share-alt w-5"></i> التواصل الاجتماعي</a>
             <a onclick="showTab('messages');toggleSidebar()" class="flex items-center gap-3 px-4 py-3 rounded-xl text-gray-600 hover:bg-gray-50 cursor-pointer"><i class="fas fa-envelope w-5"></i> الرسائل</a>
@@ -245,6 +247,88 @@
                     </thead>
                     <tbody id="docsTableBody"></tbody>
                 </table>
+            </div>
+        </div>
+
+        <!-- ===== TAB: CENTRE D'EXCELLENCE MGF ===== -->
+        <div id="tab-excellence" class="tab-content fade-in">
+            <h3 class="text-xl font-bold text-brandDark mb-6">مركز التميز للقضاء على ختان الإناث</h3>
+
+            <!-- Static texts form -->
+            <div class="bg-white p-6 rounded-xl shadow-sm mb-8">
+                <h4 class="font-bold text-brandDark pb-3 mb-4 border-b flex items-center gap-2"><i class="fas fa-edit text-brandGreen"></i> النصوص الرئيسية للمركز</h4>
+                <div class="grid lg:grid-cols-2 gap-6">
+                    <div class="bg-gray-50 p-4 rounded-xl space-y-3">
+                        <h5 class="font-bold text-sm text-brandDark"><i class="fas fa-bullseye text-brandGreen ml-1"></i> الرسالة (Mission)</h5>
+                        <textarea id="mgfMissionAr" rows="3" class="w-full border-2 border-gray-200 rounded-xl px-4 py-2 focus:outline-none focus:border-brandGreen transition" placeholder="الرسالة AR"></textarea>
+                        <textarea id="mgfMissionFr" rows="3" class="w-full border-2 border-gray-200 rounded-xl px-4 py-2 focus:outline-none focus:border-brandGreen transition" placeholder="Mission FR"></textarea>
+                        <textarea id="mgfMissionEn" rows="3" class="w-full border-2 border-gray-200 rounded-xl px-4 py-2 focus:outline-none focus:border-brandGreen transition" placeholder="Mission EN"></textarea>
+                    </div>
+                    <div class="bg-gray-50 p-4 rounded-xl space-y-3">
+                        <h5 class="font-bold text-sm text-brandDark"><i class="fas fa-eye text-brandGreen ml-1"></i> الرؤية (Vision)</h5>
+                        <textarea id="mgfVisionAr" rows="3" class="w-full border-2 border-gray-200 rounded-xl px-4 py-2 focus:outline-none focus:border-brandGreen transition" placeholder="الرؤية AR"></textarea>
+                        <textarea id="mgfVisionFr" rows="3" class="w-full border-2 border-gray-200 rounded-xl px-4 py-2 focus:outline-none focus:border-brandGreen transition" placeholder="Vision FR"></textarea>
+                        <textarea id="mgfVisionEn" rows="3" class="w-full border-2 border-gray-200 rounded-xl px-4 py-2 focus:outline-none focus:border-brandGreen transition" placeholder="Vision EN"></textarea>
+                    </div>
+                    <div class="bg-gray-50 p-4 rounded-xl space-y-3">
+                        <h5 class="font-bold text-sm text-brandDark"><i class="fas fa-users text-brandGreen ml-1"></i> المشاركة (Get Involved)</h5>
+                        <textarea id="mgfInvolvedAr" rows="3" class="w-full border-2 border-gray-200 rounded-xl px-4 py-2 focus:outline-none focus:border-brandGreen transition" placeholder="المشاركة AR"></textarea>
+                        <textarea id="mgfInvolvedFr" rows="3" class="w-full border-2 border-gray-200 rounded-xl px-4 py-2 focus:outline-none focus:border-brandGreen transition" placeholder="Impliquez-vous FR"></textarea>
+                        <textarea id="mgfInvolvedEn" rows="3" class="w-full border-2 border-gray-200 rounded-xl px-4 py-2 focus:outline-none focus:border-brandGreen transition" placeholder="Get Involved EN"></textarea>
+                    </div>
+                    <div class="bg-gray-50 p-4 rounded-xl space-y-3">
+                        <h5 class="font-bold text-sm text-brandDark"><i class="fas fa-bullhorn text-brandGreen ml-1"></i> المناصرة (Advocacy)</h5>
+                        <textarea id="mgfAdvocacyAr" rows="3" class="w-full border-2 border-gray-200 rounded-xl px-4 py-2 focus:outline-none focus:border-brandGreen transition" placeholder="المناصرة AR"></textarea>
+                        <textarea id="mgfAdvocacyFr" rows="3" class="w-full border-2 border-gray-200 rounded-xl px-4 py-2 focus:outline-none focus:border-brandGreen transition" placeholder="Plaidoyer FR"></textarea>
+                        <textarea id="mgfAdvocacyEn" rows="3" class="w-full border-2 border-gray-200 rounded-xl px-4 py-2 focus:outline-none focus:border-brandGreen transition" placeholder="Advocacy EN"></textarea>
+                    </div>
+                </div>
+                <div class="mt-4"><button onclick="saveMgfTexts()" class="bg-brandGreen text-white px-8 py-3 rounded-xl font-bold hover:bg-brandDark transition"><i class="fas fa-save ml-2"></i> حفظ نصوص المركز</button></div>
+            </div>
+
+            <!-- Team -->
+            <div class="bg-white p-6 rounded-xl shadow-sm mb-8">
+                <div class="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-3 mb-4">
+                    <h4 class="font-bold text-brandDark"><i class="fas fa-user-tie text-brandGreen ml-1"></i> فريق المركز</h4>
+                    <button onclick="openMgfTeamModal()" class="bg-brandGreen text-white px-4 py-2 rounded-xl font-bold hover:bg-brandDark transition text-sm"><i class="fas fa-plus ml-1"></i> إضافة عضو</button>
+                </div>
+                <div class="overflow-x-auto"><table class="w-full text-right min-w-[500px]"><thead class="bg-gray-50 border-b"><tr><th class="px-4 py-3 text-sm font-bold text-gray-600">الاسم</th><th class="px-4 py-3 text-sm font-bold text-gray-600 hidden md:table-cell">الدور</th><th class="px-4 py-3 text-sm font-bold text-gray-600">إجراءات</th></tr></thead><tbody id="mgfTeamBody"></tbody></table></div>
+            </div>
+
+            <!-- Partners -->
+            <div class="bg-white p-6 rounded-xl shadow-sm mb-8">
+                <div class="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-3 mb-4">
+                    <h4 class="font-bold text-brandDark"><i class="fas fa-handshake text-brandGreen ml-1"></i> الشركاء</h4>
+                    <button onclick="openMgfPartnerModal()" class="bg-brandGreen text-white px-4 py-2 rounded-xl font-bold hover:bg-brandDark transition text-sm"><i class="fas fa-plus ml-1"></i> إضافة شريك</button>
+                </div>
+                <div class="overflow-x-auto"><table class="w-full text-right min-w-[500px]"><thead class="bg-gray-50 border-b"><tr><th class="px-4 py-3 text-sm font-bold text-gray-600">الاسم</th><th class="px-4 py-3 text-sm font-bold text-gray-600 hidden md:table-cell">الوصف</th><th class="px-4 py-3 text-sm font-bold text-gray-600">إجراءات</th></tr></thead><tbody id="mgfPartnersBody"></tbody></table></div>
+            </div>
+
+            <!-- Research -->
+            <div class="bg-white p-6 rounded-xl shadow-sm mb-8">
+                <div class="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-3 mb-4">
+                    <h4 class="font-bold text-brandDark"><i class="fas fa-flask text-brandGreen ml-1"></i> البحوث والدراسات</h4>
+                    <button onclick="openMgfResearchModal()" class="bg-brandGreen text-white px-4 py-2 rounded-xl font-bold hover:bg-brandDark transition text-sm"><i class="fas fa-plus ml-1"></i> إضافة دراسة</button>
+                </div>
+                <div class="overflow-x-auto"><table class="w-full text-right min-w-[500px]"><thead class="bg-gray-50 border-b"><tr><th class="px-4 py-3 text-sm font-bold text-gray-600">العنوان</th><th class="px-4 py-3 text-sm font-bold text-gray-600 hidden md:table-cell">الملف</th><th class="px-4 py-3 text-sm font-bold text-gray-600">إجراءات</th></tr></thead><tbody id="mgfResearchBody"></tbody></table></div>
+            </div>
+
+            <!-- Toolkits -->
+            <div class="bg-white p-6 rounded-xl shadow-sm mb-8">
+                <div class="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-3 mb-4">
+                    <h4 class="font-bold text-brandDark"><i class="fas fa-book-open text-brandGreen ml-1"></i> الأدلة والحقائب التدريبية</h4>
+                    <button onclick="openMgfToolkitModal()" class="bg-brandGreen text-white px-4 py-2 rounded-xl font-bold hover:bg-brandDark transition text-sm"><i class="fas fa-plus ml-1"></i> إضافة حقيبة تدريبية</button>
+                </div>
+                <div class="overflow-x-auto"><table class="w-full text-right min-w-[500px]"><thead class="bg-gray-50 border-b"><tr><th class="px-4 py-3 text-sm font-bold text-gray-600">العنوان</th><th class="px-4 py-3 text-sm font-bold text-gray-600 hidden md:table-cell">الملف</th><th class="px-4 py-3 text-sm font-bold text-gray-600">إجراءات</th></tr></thead><tbody id="mgfToolkitsBody"></tbody></table></div>
+            </div>
+
+            <!-- MGF News -->
+            <div class="bg-white p-6 rounded-xl shadow-sm mb-8">
+                <div class="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-3 mb-4">
+                    <h4 class="font-bold text-brandDark"><i class="fas fa-newspaper text-brandGreen ml-1"></i> أخبار و أنشطة المركز</h4>
+                    <button onclick="openMgfNewsModal()" class="bg-brandGreen text-white px-4 py-2 rounded-xl font-bold hover:bg-brandDark transition text-sm"><i class="fas fa-plus ml-1"></i> إضافة خبر</button>
+                </div>
+                <div class="overflow-x-auto"><table class="w-full text-right min-w-[500px]"><thead class="bg-gray-50 border-b"><tr><th class="px-4 py-3 text-sm font-bold text-gray-600">العنوان</th><th class="px-4 py-3 text-sm font-bold text-gray-600 hidden md:table-cell">التاريخ</th><th class="px-4 py-3 text-sm font-bold text-gray-600">إجراءات</th></tr></thead><tbody id="mgfNewsBody"></tbody></table></div>
             </div>
         </div>
 
@@ -652,6 +736,186 @@
 <div id="toast" class="toast"><i class="fas fa-check-circle text-brandLight"></i><span id="toastMsg"></span></div>
 
 <!-- ========================================= -->
+<!-- CENTRE D'EXCELLENCE MGF MODALS -->
+<!-- ========================================= -->
+
+<!-- MGF Team Member Modal -->
+<div id="mgfTeamModal" class="modal-overlay fixed inset-0 bg-black/50 z-50 items-center justify-center p-4">
+    <div class="bg-white rounded-2xl p-6 w-full max-w-lg modal-scroll">
+        <div class="flex justify-between items-center mb-4">
+            <h3 id="mgfTeamModalTitle" class="text-lg font-bold text-brandDark">إضافة عضو</h3>
+            <button onclick="closeModal('mgfTeamModal')" class="text-gray-400 hover:text-gray-600"><i class="fas fa-times text-xl"></i></button>
+        </div>
+        <form id="mgfTeamForm" class="space-y-4">
+            <input type="hidden" id="mgfTeamId">
+            <div class="bg-gray-50 rounded-xl p-4 space-y-3">
+                <div class="flex gap-2 items-center mb-1"><span class="text-sm font-bold text-gray-700">الاسم</span><span class="text-xs px-2 py-0.5 rounded bg-emerald-100 text-emerald-700 font-bold">AR</span></div>
+                <input id="mgfTeamNameAr" type="text" class="w-full border-2 border-gray-200 rounded-xl px-4 py-2 focus:outline-none focus:border-brandGreen transition" required>
+                <div class="flex gap-2 items-center mb-1"><span class="text-sm font-bold text-gray-700">Nom</span><span class="text-xs px-2 py-0.5 rounded bg-blue-100 text-blue-700 font-bold">FR</span></div>
+                <input id="mgfTeamNameFr" type="text" class="w-full border-2 border-gray-200 rounded-xl px-4 py-2 focus:outline-none focus:border-brandGreen transition">
+                <div class="flex gap-2 items-center mb-1"><span class="text-sm font-bold text-gray-700">Name</span><span class="text-xs px-2 py-0.5 rounded bg-purple-100 text-purple-700 font-bold">EN</span></div>
+                <input id="mgfTeamNameEn" type="text" class="w-full border-2 border-gray-200 rounded-xl px-4 py-2 focus:outline-none focus:border-brandGreen transition">
+            </div>
+            <div class="bg-gray-50 rounded-xl p-4 space-y-3">
+                <div class="flex gap-2 items-center mb-1"><span class="text-sm font-bold text-gray-700">الدور</span><span class="text-xs px-2 py-0.5 rounded bg-emerald-100 text-emerald-700 font-bold">AR</span></div>
+                <input id="mgfTeamRoleAr" type="text" class="w-full border-2 border-gray-200 rounded-xl px-4 py-2 focus:outline-none focus:border-brandGreen transition">
+                <div class="flex gap-2 items-center mb-1"><span class="text-sm font-bold text-gray-700">Rôle</span><span class="text-xs px-2 py-0.5 rounded bg-blue-100 text-blue-700 font-bold">FR</span></div>
+                <input id="mgfTeamRoleFr" type="text" class="w-full border-2 border-gray-200 rounded-xl px-4 py-2 focus:outline-none focus:border-brandGreen transition">
+                <div class="flex gap-2 items-center mb-1"><span class="text-sm font-bold text-gray-700">Role</span><span class="text-xs px-2 py-0.5 rounded bg-purple-100 text-purple-700 font-bold">EN</span></div>
+                <input id="mgfTeamRoleEn" type="text" class="w-full border-2 border-gray-200 rounded-xl px-4 py-2 focus:outline-none focus:border-brandGreen transition">
+            </div>
+            <div><label class="block text-sm font-bold text-gray-700 mb-2">صورة (اختياري)</label><input id="mgfTeamPhoto" type="file" accept="image/*" class="w-full border-2 border-gray-200 rounded-xl px-4 py-3 focus:outline-none focus:border-brandGreen transition bg-gray-50"><div id="mgfTeamPhotoPreview" class="mt-2"></div></div>
+            <div class="flex gap-3 pt-2">
+                <button type="submit" class="flex-1 bg-brandGreen text-white py-3 rounded-xl font-bold hover:bg-brandDark transition">حفظ</button>
+                <button type="button" onclick="closeModal('mgfTeamModal')" class="px-6 py-3 border-2 border-gray-200 rounded-xl font-bold text-gray-600 hover:bg-gray-50 transition">إلغاء</button>
+            </div>
+        </form>
+    </div>
+</div>
+
+<!-- MGF Partner Modal -->
+<div id="mgfPartnerModal" class="modal-overlay fixed inset-0 bg-black/50 z-50 items-center justify-center p-4">
+    <div class="bg-white rounded-2xl p-6 w-full max-w-lg modal-scroll">
+        <div class="flex justify-between items-center mb-4">
+            <h3 id="mgfPartnerModalTitle" class="text-lg font-bold text-brandDark">إضافة شريك</h3>
+            <button onclick="closeModal('mgfPartnerModal')" class="text-gray-400 hover:text-gray-600"><i class="fas fa-times text-xl"></i></button>
+        </div>
+        <form id="mgfPartnerForm" class="space-y-4">
+            <input type="hidden" id="mgfPartnerId">
+            <div class="bg-gray-50 rounded-xl p-4 space-y-3">
+                <div class="flex gap-2 items-center mb-1"><span class="text-sm font-bold text-gray-700">الاسم</span><span class="text-xs px-2 py-0.5 rounded bg-emerald-100 text-emerald-700 font-bold">AR</span></div>
+                <input id="mgfPartnerNameAr" type="text" class="w-full border-2 border-gray-200 rounded-xl px-4 py-2 focus:outline-none focus:border-brandGreen transition" required>
+                <div class="flex gap-2 items-center mb-1"><span class="text-sm font-bold text-gray-700">Nom</span><span class="text-xs px-2 py-0.5 rounded bg-blue-100 text-blue-700 font-bold">FR</span></div>
+                <input id="mgfPartnerNameFr" type="text" class="w-full border-2 border-gray-200 rounded-xl px-4 py-2 focus:outline-none focus:border-brandGreen transition">
+                <div class="flex gap-2 items-center mb-1"><span class="text-sm font-bold text-gray-700">Name</span><span class="text-xs px-2 py-0.5 rounded bg-purple-100 text-purple-700 font-bold">EN</span></div>
+                <input id="mgfPartnerNameEn" type="text" class="w-full border-2 border-gray-200 rounded-xl px-4 py-2 focus:outline-none focus:border-brandGreen transition">
+            </div>
+            <div class="bg-gray-50 rounded-xl p-4 space-y-3">
+                <div class="flex gap-2 items-center mb-1"><span class="text-sm font-bold text-gray-700">الوصف</span><span class="text-xs px-2 py-0.5 rounded bg-emerald-100 text-emerald-700 font-bold">AR</span></div>
+                <textarea id="mgfPartnerDescAr" rows="2" class="w-full border-2 border-gray-200 rounded-xl px-4 py-2 focus:outline-none focus:border-brandGreen transition"></textarea>
+                <div class="flex gap-2 items-center mb-1"><span class="text-sm font-bold text-gray-700">Description</span><span class="text-xs px-2 py-0.5 rounded bg-blue-100 text-blue-700 font-bold">FR</span></div>
+                <textarea id="mgfPartnerDescFr" rows="2" class="w-full border-2 border-gray-200 rounded-xl px-4 py-2 focus:outline-none focus:border-brandGreen transition"></textarea>
+                <div class="flex gap-2 items-center mb-1"><span class="text-sm font-bold text-gray-700">Description</span><span class="text-xs px-2 py-0.5 rounded bg-purple-100 text-purple-700 font-bold">EN</span></div>
+                <textarea id="mgfPartnerDescEn" rows="2" class="w-full border-2 border-gray-200 rounded-xl px-4 py-2 focus:outline-none focus:border-brandGreen transition"></textarea>
+            </div>
+            <div><label class="block text-sm font-bold text-gray-700 mb-2">الشعار (اختياري)</label><input id="mgfPartnerLogo" type="file" accept="image/*" class="w-full border-2 border-gray-200 rounded-xl px-4 py-3 focus:outline-none focus:border-brandGreen transition bg-gray-50"><div id="mgfPartnerLogoPreview" class="mt-2"></div></div>
+            <div class="flex gap-3 pt-2">
+                <button type="submit" class="flex-1 bg-brandGreen text-white py-3 rounded-xl font-bold hover:bg-brandDark transition">حفظ</button>
+                <button type="button" onclick="closeModal('mgfPartnerModal')" class="px-6 py-3 border-2 border-gray-200 rounded-xl font-bold text-gray-600 hover:bg-gray-50 transition">إلغاء</button>
+            </div>
+        </form>
+    </div>
+</div>
+
+<!-- MGF Research Modal -->
+<div id="mgfResearchModal" class="modal-overlay fixed inset-0 bg-black/50 z-50 items-center justify-center p-4">
+    <div class="bg-white rounded-2xl p-6 w-full max-w-lg modal-scroll">
+        <div class="flex justify-between items-center mb-4">
+            <h3 id="mgfResearchModalTitle" class="text-lg font-bold text-brandDark">إضافة دراسة</h3>
+            <button onclick="closeModal('mgfResearchModal')" class="text-gray-400 hover:text-gray-600"><i class="fas fa-times text-xl"></i></button>
+        </div>
+        <form id="mgfResearchForm" class="space-y-4" enctype="multipart/form-data">
+            <input type="hidden" id="mgfResearchId">
+            <div class="bg-gray-50 rounded-xl p-4 space-y-3">
+                <div class="flex gap-2 items-center mb-1"><span class="text-sm font-bold text-gray-700">العنوان</span><span class="text-xs px-2 py-0.5 rounded bg-emerald-100 text-emerald-700 font-bold">AR</span></div>
+                <input id="mgfResearchTitleAr" type="text" class="w-full border-2 border-gray-200 rounded-xl px-4 py-2 focus:outline-none focus:border-brandGreen transition" required>
+                <div class="flex gap-2 items-center mb-1"><span class="text-sm font-bold text-gray-700">Titre</span><span class="text-xs px-2 py-0.5 rounded bg-blue-100 text-blue-700 font-bold">FR</span></div>
+                <input id="mgfResearchTitleFr" type="text" class="w-full border-2 border-gray-200 rounded-xl px-4 py-2 focus:outline-none focus:border-brandGreen transition">
+                <div class="flex gap-2 items-center mb-1"><span class="text-sm font-bold text-gray-700">Title</span><span class="text-xs px-2 py-0.5 rounded bg-purple-100 text-purple-700 font-bold">EN</span></div>
+                <input id="mgfResearchTitleEn" type="text" class="w-full border-2 border-gray-200 rounded-xl px-4 py-2 focus:outline-none focus:border-brandGreen transition">
+            </div>
+            <div class="bg-gray-50 rounded-xl p-4 space-y-3">
+                <div class="flex gap-2 items-center mb-1"><span class="text-sm font-bold text-gray-700">الوصف</span><span class="text-xs px-2 py-0.5 rounded bg-emerald-100 text-emerald-700 font-bold">AR</span></div>
+                <textarea id="mgfResearchDescAr" rows="3" class="w-full border-2 border-gray-200 rounded-xl px-4 py-2 focus:outline-none focus:border-brandGreen transition"></textarea>
+                <div class="flex gap-2 items-center mb-1"><span class="text-sm font-bold text-gray-700">Description</span><span class="text-xs px-2 py-0.5 rounded bg-blue-100 text-blue-700 font-bold">FR</span></div>
+                <textarea id="mgfResearchDescFr" rows="3" class="w-full border-2 border-gray-200 rounded-xl px-4 py-2 focus:outline-none focus:border-brandGreen transition"></textarea>
+                <div class="flex gap-2 items-center mb-1"><span class="text-sm font-bold text-gray-700">Description</span><span class="text-xs px-2 py-0.5 rounded bg-purple-100 text-purple-700 font-bold">EN</span></div>
+                <textarea id="mgfResearchDescEn" rows="3" class="w-full border-2 border-gray-200 rounded-xl px-4 py-2 focus:outline-none focus:border-brandGreen transition"></textarea>
+            </div>
+            <div class="grid grid-cols-2 gap-4">
+                <div><label class="block text-sm font-bold text-gray-700 mb-2">التاريخ</label><input id="mgfResearchDate" type="date" class="w-full border-2 border-gray-200 rounded-xl px-4 py-3 focus:outline-none focus:border-brandGreen transition bg-gray-50"></div>
+                <div><label class="block text-sm font-bold text-gray-700 mb-2">ملف PDF (اختياري)</label><input id="mgfResearchFile" type="file" accept="application/pdf" class="w-full border-2 border-gray-200 rounded-xl px-4 py-3 focus:outline-none focus:border-brandGreen transition bg-gray-50"><div id="mgfResearchFilePreview" class="mt-2"></div></div>
+            </div>
+            <div class="flex gap-3 pt-2">
+                <button type="submit" class="flex-1 bg-brandGreen text-white py-3 rounded-xl font-bold hover:bg-brandDark transition">حفظ</button>
+                <button type="button" onclick="closeModal('mgfResearchModal')" class="px-6 py-3 border-2 border-gray-200 rounded-xl font-bold text-gray-600 hover:bg-gray-50 transition">إلغاء</button>
+            </div>
+        </form>
+    </div>
+</div>
+
+<!-- MGF Toolkit Modal -->
+<div id="mgfToolkitModal" class="modal-overlay fixed inset-0 bg-black/50 z-50 items-center justify-center p-4">
+    <div class="bg-white rounded-2xl p-6 w-full max-w-lg modal-scroll">
+        <div class="flex justify-between items-center mb-4">
+            <h3 id="mgfToolkitModalTitle" class="text-lg font-bold text-brandDark">إضافة حقيبة تدريبية</h3>
+            <button onclick="closeModal('mgfToolkitModal')" class="text-gray-400 hover:text-gray-600"><i class="fas fa-times text-xl"></i></button>
+        </div>
+        <form id="mgfToolkitForm" class="space-y-4" enctype="multipart/form-data">
+            <input type="hidden" id="mgfToolkitId">
+            <div class="bg-gray-50 rounded-xl p-4 space-y-3">
+                <div class="flex gap-2 items-center mb-1"><span class="text-sm font-bold text-gray-700">العنوان</span><span class="text-xs px-2 py-0.5 rounded bg-emerald-100 text-emerald-700 font-bold">AR</span></div>
+                <input id="mgfToolkitTitleAr" type="text" class="w-full border-2 border-gray-200 rounded-xl px-4 py-2 focus:outline-none focus:border-brandGreen transition" required>
+                <div class="flex gap-2 items-center mb-1"><span class="text-sm font-bold text-gray-700">Titre</span><span class="text-xs px-2 py-0.5 rounded bg-blue-100 text-blue-700 font-bold">FR</span></div>
+                <input id="mgfToolkitTitleFr" type="text" class="w-full border-2 border-gray-200 rounded-xl px-4 py-2 focus:outline-none focus:border-brandGreen transition">
+                <div class="flex gap-2 items-center mb-1"><span class="text-sm font-bold text-gray-700">Title</span><span class="text-xs px-2 py-0.5 rounded bg-purple-100 text-purple-700 font-bold">EN</span></div>
+                <input id="mgfToolkitTitleEn" type="text" class="w-full border-2 border-gray-200 rounded-xl px-4 py-2 focus:outline-none focus:border-brandGreen transition">
+            </div>
+            <div class="bg-gray-50 rounded-xl p-4 space-y-3">
+                <div class="flex gap-2 items-center mb-1"><span class="text-sm font-bold text-gray-700">الوصف</span><span class="text-xs px-2 py-0.5 rounded bg-emerald-100 text-emerald-700 font-bold">AR</span></div>
+                <textarea id="mgfToolkitDescAr" rows="3" class="w-full border-2 border-gray-200 rounded-xl px-4 py-2 focus:outline-none focus:border-brandGreen transition"></textarea>
+                <div class="flex gap-2 items-center mb-1"><span class="text-sm font-bold text-gray-700">Description</span><span class="text-xs px-2 py-0.5 rounded bg-blue-100 text-blue-700 font-bold">FR</span></div>
+                <textarea id="mgfToolkitDescFr" rows="3" class="w-full border-2 border-gray-200 rounded-xl px-4 py-2 focus:outline-none focus:border-brandGreen transition"></textarea>
+                <div class="flex gap-2 items-center mb-1"><span class="text-sm font-bold text-gray-700">Description</span><span class="text-xs px-2 py-0.5 rounded bg-purple-100 text-purple-700 font-bold">EN</span></div>
+                <textarea id="mgfToolkitDescEn" rows="3" class="w-full border-2 border-gray-200 rounded-xl px-4 py-2 focus:outline-none focus:border-brandGreen transition"></textarea>
+            </div>
+            <div><label class="block text-sm font-bold text-gray-700 mb-2">ملف PDF (حقائب / أدلة)</label><input id="mgfToolkitFile" type="file" accept="application/pdf" class="w-full border-2 border-gray-200 rounded-xl px-4 py-3 focus:outline-none focus:border-brandGreen transition bg-gray-50"><div id="mgfToolkitFilePreview" class="mt-2"></div></div>
+            <div class="flex gap-3 pt-2">
+                <button type="submit" class="flex-1 bg-brandGreen text-white py-3 rounded-xl font-bold hover:bg-brandDark transition">حفظ</button>
+                <button type="button" onclick="closeModal('mgfToolkitModal')" class="px-6 py-3 border-2 border-gray-200 rounded-xl font-bold text-gray-600 hover:bg-gray-50 transition">إلغاء</button>
+            </div>
+        </form>
+    </div>
+</div>
+
+<!-- MGF News Modal -->
+<div id="mgfNewsModal" class="modal-overlay fixed inset-0 bg-black/50 z-50 items-center justify-center p-4">
+    <div class="bg-white rounded-2xl p-6 w-full max-w-lg modal-scroll">
+        <div class="flex justify-between items-center mb-4">
+            <h3 id="mgfNewsModalTitle" class="text-lg font-bold text-brandDark">إضافة خبر</h3>
+            <button onclick="closeModal('mgfNewsModal')" class="text-gray-400 hover:text-gray-600"><i class="fas fa-times text-xl"></i></button>
+        </div>
+        <form id="mgfNewsForm" class="space-y-4" enctype="multipart/form-data">
+            <input type="hidden" id="mgfNewsId">
+            <div class="bg-gray-50 rounded-xl p-4 space-y-3">
+                <div class="flex gap-2 items-center mb-1"><span class="text-sm font-bold text-gray-700">العنوان</span><span class="text-xs px-2 py-0.5 rounded bg-emerald-100 text-emerald-700 font-bold">AR</span></div>
+                <input id="mgfNewsTitleAr" type="text" class="w-full border-2 border-gray-200 rounded-xl px-4 py-2 focus:outline-none focus:border-brandGreen transition" required>
+                <div class="flex gap-2 items-center mb-1"><span class="text-sm font-bold text-gray-700">Titre</span><span class="text-xs px-2 py-0.5 rounded bg-blue-100 text-blue-700 font-bold">FR</span></div>
+                <input id="mgfNewsTitleFr" type="text" class="w-full border-2 border-gray-200 rounded-xl px-4 py-2 focus:outline-none focus:border-brandGreen transition">
+                <div class="flex gap-2 items-center mb-1"><span class="text-sm font-bold text-gray-700">Title</span><span class="text-xs px-2 py-0.5 rounded bg-purple-100 text-purple-700 font-bold">EN</span></div>
+                <input id="mgfNewsTitleEn" type="text" class="w-full border-2 border-gray-200 rounded-xl px-4 py-2 focus:outline-none focus:border-brandGreen transition">
+            </div>
+            <div class="bg-gray-50 rounded-xl p-4 space-y-3">
+                <div class="flex gap-2 items-center mb-1"><span class="text-sm font-bold text-gray-700">الوصف</span><span class="text-xs px-2 py-0.5 rounded bg-emerald-100 text-emerald-700 font-bold">AR</span></div>
+                <textarea id="mgfNewsDescAr" rows="3" class="w-full border-2 border-gray-200 rounded-xl px-4 py-2 focus:outline-none focus:border-brandGreen transition"></textarea>
+                <div class="flex gap-2 items-center mb-1"><span class="text-sm font-bold text-gray-700">Description</span><span class="text-xs px-2 py-0.5 rounded bg-blue-100 text-blue-700 font-bold">FR</span></div>
+                <textarea id="mgfNewsDescFr" rows="3" class="w-full border-2 border-gray-200 rounded-xl px-4 py-2 focus:outline-none focus:border-brandGreen transition"></textarea>
+                <div class="flex gap-2 items-center mb-1"><span class="text-sm font-bold text-gray-700">Description</span><span class="text-xs px-2 py-0.5 rounded bg-purple-100 text-purple-700 font-bold">EN</span></div>
+                <textarea id="mgfNewsDescEn" rows="3" class="w-full border-2 border-gray-200 rounded-xl px-4 py-2 focus:outline-none focus:border-brandGreen transition"></textarea>
+            </div>
+            <div class="grid grid-cols-2 gap-4">
+                <div><label class="block text-sm font-bold text-gray-700 mb-2">التاريخ</label><input id="mgfNewsDate" type="date" class="w-full border-2 border-gray-200 rounded-xl px-4 py-3 focus:outline-none focus:border-brandGreen transition bg-gray-50"></div>
+                <div><label class="block text-sm font-bold text-gray-700 mb-2">الصورة</label><input id="mgfNewsImage" type="file" accept="image/*" class="w-full border-2 border-gray-200 rounded-xl px-4 py-3 focus:outline-none focus:border-brandGreen transition bg-gray-50"><div id="mgfNewsImagePreview" class="mt-2"></div></div>
+            </div>
+            <div class="flex gap-3 pt-2">
+                <button type="submit" class="flex-1 bg-brandGreen text-white py-3 rounded-xl font-bold hover:bg-brandDark transition">حفظ</button>
+                <button type="button" onclick="closeModal('mgfNewsModal')" class="px-6 py-3 border-2 border-gray-200 rounded-xl font-bold text-gray-600 hover:bg-gray-50 transition">إلغاء</button>
+            </div>
+        </form>
+    </div>
+</div>
+
+<!-- ========================================= -->
 <!-- JAVASCRIPT -->
 <!-- ========================================= -->
 <script>
@@ -716,12 +980,13 @@ function showTab(tab) {
     document.getElementById('tab-' + tab)?.classList.add('active');
     document.querySelectorAll('.tab-link').forEach(el => el.classList.remove('bg-gray-50', 'text-brandDark'));
     document.querySelectorAll(`.tab-link[data-tab="${tab}"]`).forEach(el => el.classList.add('bg-gray-50', 'text-brandDark'));
-    const titles = { dashboard: 'الرئيسية', news: 'الأخبار والأنشطة', gallery: 'معرض الصور', programs: 'البرامج', slider: 'السلايدر', branches: 'الفروع', navbar: 'القوائم', documents: 'الوثائق', content: 'تعديل النصوص', social: 'التواصل الاجتماعي', messages: 'الرسائل', settings: 'الإعدادات' };
+    const titles = { dashboard: 'الرئيسية', news: 'الأخبار والأنشطة', gallery: 'معرض الصور', programs: 'البرامج', slider: 'السلايدر', branches: 'الفروع', navbar: 'القوائم', documents: 'الوثائق', excellence: 'مركز التميز', content: 'تعديل النصوص', social: 'التواصل الاجتماعي', messages: 'الرسائل', settings: 'الإعدادات' };
     document.getElementById('pageTitle').textContent = titles[tab] || tab;
     if (tab === 'content') loadContentEditor();
     if (tab === 'social') loadSocialLinks();
     if (tab === 'branches') loadBranches();
     if (tab === 'slider') loadSlides();
+    if (tab === 'excellence') loadMgf();
 }
 
 // ─── Login ────────────────────────────────
@@ -757,6 +1022,7 @@ async function loadAllData() {
         renderNavbar(data.navbar || []);
         renderDocs(data.documents || []);
         renderMessages(data.messages || []);
+        loadMgf();
     } catch(e) { console.error(e); }
 }
 
@@ -1299,6 +1565,357 @@ document.getElementById('contentForm').addEventListener('submit', async (e) => {
         const res = await fetch(API + '/site-content', { method: 'PUT', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(data) });
         if ((await res.json()).success) showToast('تم حفظ جميع التغييرات');
     } catch(e) { showToast('خطأ في الحفظ'); }
+});
+
+// ─── CENTRE D'EXCELLENCE MGF ──────────────
+let _mgfData = { content: {}, team: [], partners: [], research: [], toolkits: [], news: [] };
+
+function mgfLang(obj) { return obj?.ar || obj?.fr || obj?.en || ''; }
+
+// Loads from the SAME endpoint used by the public site (/api/mgf-content)
+// so the admin panel and the homepage always stay in sync.
+async function loadMgf() {
+    try {
+        const res = await fetch(API + '/mgf-content', { cache: 'no-store' });
+        if (!res.ok) throw new Error('HTTP ' + res.status);
+        _mgfData = await res.json();
+        renderMgfTables();
+        fillMgfTexts();
+    } catch (e) { console.error('Failed to load MGF content:', e); }
+}
+
+function fillMgfTexts() {
+    const c = _mgfData.content || {};
+    document.getElementById('mgfMissionAr').value = c.mission?.ar || '';
+    document.getElementById('mgfMissionFr').value = c.mission?.fr || '';
+    document.getElementById('mgfMissionEn').value = c.mission?.en || '';
+    document.getElementById('mgfVisionAr').value = c.vision?.ar || '';
+    document.getElementById('mgfVisionFr').value = c.vision?.fr || '';
+    document.getElementById('mgfVisionEn').value = c.vision?.en || '';
+    document.getElementById('mgfInvolvedAr').value = c.getInvolved?.ar || '';
+    document.getElementById('mgfInvolvedFr').value = c.getInvolved?.fr || '';
+    document.getElementById('mgfInvolvedEn').value = c.getInvolved?.en || '';
+    document.getElementById('mgfAdvocacyAr').value = c.advocacy?.ar || '';
+    document.getElementById('mgfAdvocacyFr').value = c.advocacy?.fr || '';
+    document.getElementById('mgfAdvocacyEn').value = c.advocacy?.en || '';
+}
+
+async function saveMgfTexts() {
+    const data = {
+        mission: {
+            ar: document.getElementById('mgfMissionAr').value,
+            fr: document.getElementById('mgfMissionFr').value,
+            en: document.getElementById('mgfMissionEn').value
+        },
+        vision: {
+            ar: document.getElementById('mgfVisionAr').value,
+            fr: document.getElementById('mgfVisionFr').value,
+            en: document.getElementById('mgfVisionEn').value
+        },
+        getInvolved: {
+            ar: document.getElementById('mgfInvolvedAr').value,
+            fr: document.getElementById('mgfInvolvedFr').value,
+            en: document.getElementById('mgfInvolvedEn').value
+        },
+        advocacy: {
+            ar: document.getElementById('mgfAdvocacyAr').value,
+            fr: document.getElementById('mgfAdvocacyFr').value,
+            en: document.getElementById('mgfAdvocacyEn').value
+        }
+    };
+    try {
+        const res = await fetch(API + '/mgf-content', { method: 'PUT', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(data) });
+        if ((await res.json()).success) showToast('تم حفظ نصوص المركز');
+        else showToast('خطأ في الحفظ');
+    } catch (e) { showToast('خطأ في الاتصال'); }
+}
+
+function renderMgfTables() {
+    // Team
+    const teamTb = document.getElementById('mgfTeamBody');
+    teamTb.innerHTML = _mgfData.team.length ? _mgfData.team.map(m => `
+        <tr class="border-b hover:bg-gray-50">
+            <td class="px-4 py-4 font-bold">${mgfLang(m.name)}</td>
+            <td class="px-4 py-4 text-gray-500 text-sm hidden md:table-cell">${mgfLang(m.role)}</td>
+            <td class="px-4 py-4 whitespace-nowrap"><button onclick="editMgfTeam('${m.id}')" class="text-brandGreen hover:text-brandDark ml-2"><i class="fas fa-edit"></i></button><button onclick="deleteMgf('mgfTeam', '${m.id}')" class="text-red-500 hover:text-red-700"><i class="fas fa-trash"></i></button></td>
+        </tr>`).join('') : '<tr><td colspan="3" class="text-center text-gray-400 py-8">لا يوجد أعضاء</td></tr>';
+
+    // Partners
+    const partnersTb = document.getElementById('mgfPartnersBody');
+    partnersTb.innerHTML = _mgfData.partners.length ? _mgfData.partners.map(p => `
+        <tr class="border-b hover:bg-gray-50">
+            <td class="px-4 py-4 font-bold">${mgfLang(p.name)}</td>
+            <td class="px-4 py-4 text-gray-500 text-sm hidden md:table-cell">${(mgfLang(p.description) || '').substring(0, 60)}</td>
+            <td class="px-4 py-4 whitespace-nowrap"><button onclick="editMgfPartner('${p.id}')" class="text-brandGreen hover:text-brandDark ml-2"><i class="fas fa-edit"></i></button><button onclick="deleteMgf('mgfPartners', '${p.id}')" class="text-red-500 hover:text-red-700"><i class="fas fa-trash"></i></button></td>
+        </tr>`).join('') : '<tr><td colspan="3" class="text-center text-gray-400 py-8">لا يوجد شركاء</td></tr>';
+
+    // Research
+    const researchTb = document.getElementById('mgfResearchBody');
+    researchTb.innerHTML = _mgfData.research.length ? _mgfData.research.map(r => `
+        <tr class="border-b hover:bg-gray-50">
+            <td class="px-4 py-4 font-bold">${mgfLang(r.title)}</td>
+            <td class="px-4 py-4 text-gray-500 text-sm hidden md:table-cell">${r.file ? '<a href="' + r.file + '" target="_blank" class="text-brandGreen"><i class="fas fa-file-pdf ml-1"></i>PDF</a>' : '-'}</td>
+            <td class="px-4 py-4 whitespace-nowrap"><button onclick="editMgfResearch('${r.id}')" class="text-brandGreen hover:text-brandDark ml-2"><i class="fas fa-edit"></i></button><button onclick="deleteMgf('mgfResearch', '${r.id}')" class="text-red-500 hover:text-red-700"><i class="fas fa-trash"></i></button></td>
+        </tr>`).join('') : '<tr><td colspan="3" class="text-center text-gray-400 py-8">لا توجد دراسات</td></tr>';
+
+    // Toolkits
+    const toolkitsTb = document.getElementById('mgfToolkitsBody');
+    toolkitsTb.innerHTML = _mgfData.toolkits.length ? _mgfData.toolkits.map(tk => `
+        <tr class="border-b hover:bg-gray-50">
+            <td class="px-4 py-4 font-bold">${mgfLang(tk.title)}</td>
+            <td class="px-4 py-4 text-gray-500 text-sm hidden md:table-cell">${tk.file ? '<a href="' + tk.file + '" target="_blank" class="text-brandGreen"><i class="fas fa-file-pdf ml-1"></i>PDF</a>' : '-'}</td>
+            <td class="px-4 py-4 whitespace-nowrap"><button onclick="editMgfToolkit('${tk.id}')" class="text-brandGreen hover:text-brandDark ml-2"><i class="fas fa-edit"></i></button><button onclick="deleteMgf('mgfToolkits', '${tk.id}')" class="text-red-500 hover:text-red-700"><i class="fas fa-trash"></i></button></td>
+        </tr>`).join('') : '<tr><td colspan="3" class="text-center text-gray-400 py-8">لا توجد حقائب تدريبية</td></tr>';
+
+    // News
+    const newsTb = document.getElementById('mgfNewsBody');
+    newsTb.innerHTML = _mgfData.news.length ? _mgfData.news.map(n => `
+        <tr class="border-b hover:bg-gray-50">
+            <td class="px-4 py-4 font-bold">${mgfLang(n.title)}</td>
+            <td class="px-4 py-4 text-gray-500 text-sm hidden md:table-cell">${n.date || ''}</td>
+            <td class="px-4 py-4 whitespace-nowrap"><button onclick="editMgfNews('${n.id}')" class="text-brandGreen hover:text-brandDark ml-2"><i class="fas fa-edit"></i></button><button onclick="deleteMgf('mgfNews', '${n.id}')" class="text-red-500 hover:text-red-700"><i class="fas fa-trash"></i></button></td>
+        </tr>`).join('') : '<tr><td colspan="3" class="text-center text-gray-400 py-8">لا توجد أخبار</td></tr>';
+}
+
+// Generic delete (uses the same generic /api/content/:type/:id delete)
+async function deleteMgf(type, id) {
+    if (!confirm('هل أنت متأكد من الحذف؟')) return;
+    try {
+        const res = await fetch(API + '/content/' + type + '/' + id, { method: 'DELETE' });
+        if ((await res.json()).success) { showToast('تم الحذف'); loadMgf(); }
+    } catch (e) { showToast('خطأ في الحذف'); }
+}
+
+// ─── MGF Team ─────────────────────────────
+function openMgfTeamModal(item) {
+    document.getElementById('mgfTeamModalTitle').textContent = item ? 'تعديل عضو' : 'إضافة عضو';
+    document.getElementById('mgfTeamId').value = item ? item.id : '';
+    document.getElementById('mgfTeamNameAr').value = item ? (item.name?.ar || '') : '';
+    document.getElementById('mgfTeamNameFr').value = item ? (item.name?.fr || '') : '';
+    document.getElementById('mgfTeamNameEn').value = item ? (item.name?.en || '') : '';
+    document.getElementById('mgfTeamRoleAr').value = item ? (item.role?.ar || '') : '';
+    document.getElementById('mgfTeamRoleFr').value = item ? (item.role?.fr || '') : '';
+    document.getElementById('mgfTeamRoleEn').value = item ? (item.role?.en || '') : '';
+    document.getElementById('mgfTeamPhoto').value = '';
+    document.getElementById('mgfTeamPhotoPreview').innerHTML = item && item.photo ? `<img src="${item.photo}" class="preview-img">` : '';
+    openModal('mgfTeamModal');
+}
+
+async function editMgfTeam(id) {
+    const item = _mgfData.team.find(m => m.id === id);
+    if (item) openMgfTeamModal(item);
+}
+
+document.getElementById('mgfTeamForm').addEventListener('submit', async (e) => {
+    e.preventDefault();
+    const id = document.getElementById('mgfTeamId').value;
+    const formData = new FormData();
+    formData.append('name_ar', document.getElementById('mgfTeamNameAr').value);
+    formData.append('name_fr', document.getElementById('mgfTeamNameFr').value);
+    formData.append('name_en', document.getElementById('mgfTeamNameEn').value);
+    formData.append('role_ar', document.getElementById('mgfTeamRoleAr').value);
+    formData.append('role_fr', document.getElementById('mgfTeamRoleFr').value);
+    formData.append('role_en', document.getElementById('mgfTeamRoleEn').value);
+    const photo = document.getElementById('mgfTeamPhoto').files[0];
+    if (photo) formData.append('photo', await compressImage(photo));
+    const url = id ? API + '/mgf-member/mgfTeam/' + id : API + '/mgf-member/mgfTeam';
+    const method = id ? 'PUT' : 'POST';
+    try {
+        const res = await fetch(url, { method, body: formData });
+        const result = await res.json();
+        if (result.success) { showToast(id ? 'تم تحديث العضو' : 'تم إضافة العضو'); closeModal('mgfTeamModal'); loadMgf(); }
+        else showToast('خطأ: ' + (result.error || ''));
+    } catch (err) { showToast('خطأ في الاتصال'); }
+});
+
+document.getElementById('mgfTeamPhoto').addEventListener('change', function() {
+    const preview = document.getElementById('mgfTeamPhotoPreview');
+    if (this.files[0]) { const reader = new FileReader(); reader.onload = ev => { preview.innerHTML = `<img src="${ev.target.result}" class="preview-img">`; }; reader.readAsDataURL(this.files[0]); }
+    else preview.innerHTML = '';
+});
+
+// ─── MGF Partners ─────────────────────────
+function openMgfPartnerModal(item) {
+    document.getElementById('mgfPartnerModalTitle').textContent = item ? 'تعديل شريك' : 'إضافة شريك';
+    document.getElementById('mgfPartnerId').value = item ? item.id : '';
+    document.getElementById('mgfPartnerNameAr').value = item ? (item.name?.ar || '') : '';
+    document.getElementById('mgfPartnerNameFr').value = item ? (item.name?.fr || '') : '';
+    document.getElementById('mgfPartnerNameEn').value = item ? (item.name?.en || '') : '';
+    document.getElementById('mgfPartnerDescAr').value = item ? (item.description?.ar || '') : '';
+    document.getElementById('mgfPartnerDescFr').value = item ? (item.description?.fr || '') : '';
+    document.getElementById('mgfPartnerDescEn').value = item ? (item.description?.en || '') : '';
+    document.getElementById('mgfPartnerLogo').value = '';
+    document.getElementById('mgfPartnerLogoPreview').innerHTML = item && item.photo ? `<img src="${item.photo}" class="preview-img">` : '';
+    openModal('mgfPartnerModal');
+}
+
+async function editMgfPartner(id) {
+    const item = _mgfData.partners.find(p => p.id === id);
+    if (item) openMgfPartnerModal(item);
+}
+
+document.getElementById('mgfPartnerForm').addEventListener('submit', async (e) => {
+    e.preventDefault();
+    const id = document.getElementById('mgfPartnerId').value;
+    const formData = new FormData();
+    formData.append('name_ar', document.getElementById('mgfPartnerNameAr').value);
+    formData.append('name_fr', document.getElementById('mgfPartnerNameFr').value);
+    formData.append('name_en', document.getElementById('mgfPartnerNameEn').value);
+    formData.append('desc_ar', document.getElementById('mgfPartnerDescAr').value);
+    formData.append('desc_fr', document.getElementById('mgfPartnerDescFr').value);
+    formData.append('desc_en', document.getElementById('mgfPartnerDescEn').value);
+    const logo = document.getElementById('mgfPartnerLogo').files[0];
+    if (logo) formData.append('photo', await compressImage(logo));
+    const url = id ? API + '/mgf-member/mgfPartners/' + id : API + '/mgf-member/mgfPartners';
+    const method = id ? 'PUT' : 'POST';
+    try {
+        const res = await fetch(url, { method, body: formData });
+        const result = await res.json();
+        if (result.success) { showToast(id ? 'تم تحديث الشريك' : 'تم إضافة الشريك'); closeModal('mgfPartnerModal'); loadMgf(); }
+        else showToast('خطأ: ' + (result.error || ''));
+    } catch (err) { showToast('خطأ في الاتصال'); }
+});
+
+document.getElementById('mgfPartnerLogo').addEventListener('change', function() {
+    const preview = document.getElementById('mgfPartnerLogoPreview');
+    if (this.files[0]) { const reader = new FileReader(); reader.onload = ev => { preview.innerHTML = `<img src="${ev.target.result}" class="preview-img">`; }; reader.readAsDataURL(this.files[0]); }
+    else preview.innerHTML = '';
+});
+
+// ─── MGF Research ─────────────────────────
+function openMgfResearchModal(item) {
+    document.getElementById('mgfResearchModalTitle').textContent = item ? 'تعديل دراسة' : 'إضافة دراسة';
+    document.getElementById('mgfResearchId').value = item ? item.id : '';
+    document.getElementById('mgfResearchTitleAr').value = item ? (item.title?.ar || '') : '';
+    document.getElementById('mgfResearchTitleFr').value = item ? (item.title?.fr || '') : '';
+    document.getElementById('mgfResearchTitleEn').value = item ? (item.title?.en || '') : '';
+    document.getElementById('mgfResearchDescAr').value = item ? (item.desc?.ar || '') : '';
+    document.getElementById('mgfResearchDescFr').value = item ? (item.desc?.fr || '') : '';
+    document.getElementById('mgfResearchDescEn').value = item ? (item.desc?.en || '') : '';
+    document.getElementById('mgfResearchDate').value = item ? (item.date || '') : new Date().toISOString().split('T')[0];
+    document.getElementById('mgfResearchFile').value = '';
+    document.getElementById('mgfResearchFilePreview').innerHTML = item && item.file ? `<a href="${item.file}" target="_blank" class="text-sm text-brandGreen font-bold"><i class="fas fa-file-pdf ml-1"></i> الملف الحالي</a>` : '';
+    openModal('mgfResearchModal');
+}
+
+async function editMgfResearch(id) {
+    const item = _mgfData.research.find(r => r.id === id);
+    if (item) openMgfResearchModal(item);
+}
+
+document.getElementById('mgfResearchForm').addEventListener('submit', async (e) => {
+    e.preventDefault();
+    const id = document.getElementById('mgfResearchId').value;
+    const formData = new FormData();
+    formData.append('title_ar', document.getElementById('mgfResearchTitleAr').value);
+    formData.append('title_fr', document.getElementById('mgfResearchTitleFr').value);
+    formData.append('title_en', document.getElementById('mgfResearchTitleEn').value);
+    formData.append('desc_ar', document.getElementById('mgfResearchDescAr').value);
+    formData.append('desc_fr', document.getElementById('mgfResearchDescFr').value);
+    formData.append('desc_en', document.getElementById('mgfResearchDescEn').value);
+    formData.append('date', document.getElementById('mgfResearchDate').value);
+    const file = document.getElementById('mgfResearchFile').files[0];
+    if (file) formData.append('file', file);
+    const url = id ? API + '/mgf-upload/mgfResearch/' + id : API + '/mgf-upload/mgfResearch';
+    const method = id ? 'PUT' : 'POST';
+    try {
+        const res = await fetch(url, { method, body: formData });
+        const result = await res.json();
+        if (result.success) { showToast(id ? 'تم تحديث الدراسة' : 'تم إضافة الدراسة'); closeModal('mgfResearchModal'); loadMgf(); }
+        else showToast('خطأ: ' + (result.error || ''));
+    } catch (err) { showToast('خطأ في الاتصال'); }
+});
+
+// ─── MGF Toolkits ─────────────────────────
+function openMgfToolkitModal(item) {
+    document.getElementById('mgfToolkitModalTitle').textContent = item ? 'تعديل حقيبة تدريبية' : 'إضافة حقيبة تدريبية';
+    document.getElementById('mgfToolkitId').value = item ? item.id : '';
+    document.getElementById('mgfToolkitTitleAr').value = item ? (item.title?.ar || '') : '';
+    document.getElementById('mgfToolkitTitleFr').value = item ? (item.title?.fr || '') : '';
+    document.getElementById('mgfToolkitTitleEn').value = item ? (item.title?.en || '') : '';
+    document.getElementById('mgfToolkitDescAr').value = item ? (item.desc?.ar || '') : '';
+    document.getElementById('mgfToolkitDescFr').value = item ? (item.desc?.fr || '') : '';
+    document.getElementById('mgfToolkitDescEn').value = item ? (item.desc?.en || '') : '';
+    document.getElementById('mgfToolkitFile').value = '';
+    document.getElementById('mgfToolkitFilePreview').innerHTML = item && item.file ? `<a href="${item.file}" target="_blank" class="text-sm text-brandGreen font-bold"><i class="fas fa-file-pdf ml-1"></i> الملف الحالي</a>` : '';
+    openModal('mgfToolkitModal');
+}
+
+async function editMgfToolkit(id) {
+    const item = _mgfData.toolkits.find(tk => tk.id === id);
+    if (item) openMgfToolkitModal(item);
+}
+
+document.getElementById('mgfToolkitForm').addEventListener('submit', async (e) => {
+    e.preventDefault();
+    const id = document.getElementById('mgfToolkitId').value;
+    const formData = new FormData();
+    formData.append('title_ar', document.getElementById('mgfToolkitTitleAr').value);
+    formData.append('title_fr', document.getElementById('mgfToolkitTitleFr').value);
+    formData.append('title_en', document.getElementById('mgfToolkitTitleEn').value);
+    formData.append('desc_ar', document.getElementById('mgfToolkitDescAr').value);
+    formData.append('desc_fr', document.getElementById('mgfToolkitDescFr').value);
+    formData.append('desc_en', document.getElementById('mgfToolkitDescEn').value);
+    const file = document.getElementById('mgfToolkitFile').files[0];
+    if (file) formData.append('file', file);
+    const url = id ? API + '/mgf-upload/mgfToolkits/' + id : API + '/mgf-upload/mgfToolkits';
+    const method = id ? 'PUT' : 'POST';
+    try {
+        const res = await fetch(url, { method, body: formData });
+        const result = await res.json();
+        if (result.success) { showToast(id ? 'تم تحديث الحقيبة' : 'تم إضافة الحقيبة'); closeModal('mgfToolkitModal'); loadMgf(); }
+        else showToast('خطأ: ' + (result.error || ''));
+    } catch (err) { showToast('خطأ في الاتصال'); }
+});
+
+// ─── MGF News ─────────────────────────────
+function openMgfNewsModal(item) {
+    document.getElementById('mgfNewsModalTitle').textContent = item ? 'تعديل خبر' : 'إضافة خبر';
+    document.getElementById('mgfNewsId').value = item ? item.id : '';
+    document.getElementById('mgfNewsTitleAr').value = item ? (item.title?.ar || '') : '';
+    document.getElementById('mgfNewsTitleFr').value = item ? (item.title?.fr || '') : '';
+    document.getElementById('mgfNewsTitleEn').value = item ? (item.title?.en || '') : '';
+    document.getElementById('mgfNewsDescAr').value = item ? (item.desc?.ar || '') : '';
+    document.getElementById('mgfNewsDescFr').value = item ? (item.desc?.fr || '') : '';
+    document.getElementById('mgfNewsDescEn').value = item ? (item.desc?.en || '') : '';
+    document.getElementById('mgfNewsDate').value = item ? (item.date || '') : new Date().toISOString().split('T')[0];
+    document.getElementById('mgfNewsImage').value = '';
+    document.getElementById('mgfNewsImagePreview').innerHTML = item && item.image ? `<img src="${item.image}" class="preview-img">` : '';
+    openModal('mgfNewsModal');
+}
+
+async function editMgfNews(id) {
+    const item = _mgfData.news.find(n => n.id === id);
+    if (item) openMgfNewsModal(item);
+}
+
+document.getElementById('mgfNewsForm').addEventListener('submit', async (e) => {
+    e.preventDefault();
+    const id = document.getElementById('mgfNewsId').value;
+    const formData = new FormData();
+    formData.append('title_ar', document.getElementById('mgfNewsTitleAr').value);
+    formData.append('title_fr', document.getElementById('mgfNewsTitleFr').value);
+    formData.append('title_en', document.getElementById('mgfNewsTitleEn').value);
+    formData.append('desc_ar', document.getElementById('mgfNewsDescAr').value);
+    formData.append('desc_fr', document.getElementById('mgfNewsDescFr').value);
+    formData.append('desc_en', document.getElementById('mgfNewsDescEn').value);
+    formData.append('date', document.getElementById('mgfNewsDate').value);
+    const image = document.getElementById('mgfNewsImage').files[0];
+    if (image) formData.append('image', await compressImage(image));
+    const url = id ? API + '/mgf-news-with-image/' + id : API + '/mgf-news-with-image';
+    const method = id ? 'PUT' : 'POST';
+    try {
+        const res = await fetch(url, { method, body: formData });
+        const result = await res.json();
+        if (result.success) { showToast(id ? 'تم تحديث الخبر' : 'تم إضافة الخبر'); closeModal('mgfNewsModal'); loadMgf(); }
+        else showToast('خطأ: ' + (result.error || ''));
+    } catch (err) { showToast('خطأ في الاتصال'); }
+});
+
+document.getElementById('mgfNewsImage').addEventListener('change', function() {
+    const preview = document.getElementById('mgfNewsImagePreview');
+    if (this.files[0]) { const reader = new FileReader(); reader.onload = ev => { preview.innerHTML = `<img src="${ev.target.result}" class="preview-img">`; }; reader.readAsDataURL(this.files[0]); }
+    else preview.innerHTML = '';
 });
 
 // ─── PASSWORD ─────────────────────────────
