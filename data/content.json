@@ -314,22 +314,32 @@
     {
       "id": "5",
       "label": {
+        "ar": "مركز التميز",
+        "fr": "Centre d'Excellence",
+        "en": "Center of Excellence"
+      },
+      "href": "#centre-excellence",
+      "order": 5
+    },
+    {
+      "id": "6",
+      "label": {
         "ar": "المعرض",
         "fr": "Galerie",
         "en": "Gallery"
       },
       "href": "#gallery",
-      "order": 5
+      "order": 6
     },
     {
-      "id": "6",
+      "id": "7",
       "label": {
         "ar": "الفروع",
         "fr": "Branches",
         "en": "Branches"
       },
       "href": "#branches",
-      "order": 6
+      "order": 7
     },
     {
       "id": "7",
@@ -339,16 +349,6 @@
         "en": "Contact"
       },
       "href": "#contact",
-      "order": 7
-    },
-    {
-      "id": "8",
-      "label": {
-        "ar": "مركز التميز",
-        "fr": "Centre d'Excellence",
-        "en": "Centre of Excellence"
-      },
-      "href": "#excellence",
       "order": 8
     }
   ],
