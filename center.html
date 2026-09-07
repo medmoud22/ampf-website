@@ -1,0 +1,530 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>مركز الإمتياز للقضاء على تشويه الأعضاء التناسلية للإناث | جمعية ترقية الأسرة</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = { theme: { extend: { colors: { brandGreen: '#10B981', brandDark: '#065F46', brandLight: '#D1FAE5', brandBlue: '#1E3A8A' } } } }
+    </script>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@300;400;600;700;800;900&display=swap" rel="stylesheet">
+    <style>
+        * { font-family: 'Cairo', sans-serif; }
+        html { scroll-behavior: smooth; }
+        /* ── Mobile responsiveness / horizontal overflow guard ── */
+        html, body { overflow-x: hidden; width: 100%; max-width: 100%; }
+        *, *::before, *::after { box-sizing: border-box; }
+        img, video, svg, iframe { max-width: 100%; height: auto; }
+        section, header, footer, main { max-width: 100%; }
+        .container .grid > *, .grid > * { min-width: 0; }
+        p, h1, h2, h3, h4, h5, li, td, th, div, span, a { overflow-wrap: break-word; word-wrap: break-word; }
+        input, select, textarea { max-width: 100%; }
+        .hero-gradient { background: linear-gradient(135deg, #065F46 0%, #10B981 50%, #065F46 100%); }
+        .card-hover { transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275); }
+        .card-hover:hover { transform: translateY(-10px); box-shadow: 0 25px 50px -12px rgba(0,0,0,0.25); }
+        .fade-up { opacity: 0; transform: translateY(40px); transition: all 0.8s ease-out; }
+        .fade-up.visible { opacity: 1; transform: translateY(0); }
+        .mobile-menu { transform: translateX(100%); transition: transform 0.4s cubic-bezier(0.4, 0, 0.2, 1); z-index: 9999; }
+        .mobile-menu.active { transform: translateX(0); }
+        .lang-btn { padding: 6px 12px; border-radius: 6px; font-size: 13px; font-weight: 700; cursor: pointer; transition: all 0.3s; border: 2px solid transparent; }
+        .lang-btn.active { background: #10B981; color: white; border-color: #10B981; }
+        .lang-btn:not(.active) { background: white; color: #374151; border-color: #e5e7eb; }
+        .strategy-line { width: 60px; height: 4px; background: #10B981; border-radius: 2px; }
+        .news-img { height: 208px; object-fit: cover; width: 100%; }
+        .loading-spinner { display: flex; justify-content: center; align-items: center; padding: 40px; color: #9CA3AF; }
+        .loading-spinner i { font-size: 32px; animation: spin 1s linear infinite; }
+        @keyframes spin { from { transform: rotate(0deg); } to { transform: rotate(360deg); } }
+        html[lang="en"] { direction: ltr; text-align: left; }
+        html[lang="fr"] { direction: ltr; text-align: left; }
+        .nav-link { white-space: nowrap; }
+    </style>
+</head>
+<body class="bg-white text-gray-800">
+
+    <!-- Top Bar -->
+    <div class="bg-brandDark text-white py-2 text-sm">
+        <div class="container mx-auto px-4 sm:px-6 flex justify-between items-center gap-2">
+            <div class="flex items-center gap-3 min-w-0">
+                <span class="truncate min-w-0"><i class="fas fa-envelope ml-1"></i> <span id="topEmail">contact@ampf.mr</span></span>
+                <span class="hidden sm:inline flex-shrink-0"><i class="fas fa-phone ml-1"></i> <span id="topPhone">+222 45 25 XX XX</span></span>
+            </div>
+            <div class="flex items-center gap-1 sm:gap-2 flex-shrink-0">
+                <a href="index.html" class="text-white/80 hover:text-white transition font-bold text-xs px-2"><i class="fas fa-home ml-1"></i><span data-i18n="nav_home">الرئيسية</span></a>
+                <button class="lang-btn active text-xs py-1 px-2" onclick="setLang('ar')">AR</button>
+                <button class="lang-btn text-xs py-1 px-2" onclick="setLang('fr')">FR</button>
+                <button class="lang-btn text-xs py-1 px-2" onclick="setLang('en')">EN</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Header -->
+    <header class="bg-white shadow-lg sticky top-0" style="z-index: 9998; display: flex; align-items: center; min-height: 64px;">
+        <div class="container mx-auto px-4 sm:px-6 py-2 sm:py-3 flex justify-between items-center gap-2 w-full">
+            <div class="flex items-center gap-2 sm:gap-4 min-w-0">
+                <a href="index.html"><img src="LOGO AMPF.png" alt="AMPF Logo" class="h-10 sm:h-14 lg:h-16 w-auto flex-shrink-0" onerror="this.style.display='none'"></a>
+                <div class="min-w-0 overflow-hidden">
+                    <h1 class="text-sm sm:text-base lg:text-lg font-bold text-brandDark truncate" id="siteTitle">مركز الإمتياز للقضاء على تشويه الأعضاء التناسلية للإناث</h1>
+                    <p class="hidden sm:block text-xs text-gray-500 truncate">Association Mauritanienne pour la Promotion de la Famille</p>
+                </div>
+            </div>
+            <div class="flex items-center gap-3 sm:gap-4 flex-shrink-0">
+                <nav id="mainNav" class="hidden lg:flex items-center gap-6 font-semibold text-gray-700" style="flex-shrink: 0;"></nav>
+                <a href="/admin" class="hidden lg:flex bg-brandGreen text-white px-5 py-2 rounded-full font-bold hover:bg-brandDark transition items-center gap-2" style="flex-shrink: 0;">
+                    <i class="fas fa-user-shield text-sm"></i> <span data-i18n="nav_admin">الإدارة</span>
+                </a>
+                <button id="menuBtn" class="lg:hidden text-brandDark text-2xl p-1" style="flex-shrink: 0;" aria-label="القائمة"><i class="fas fa-bars"></i></button>
+            </div>
+        </div>
+    </header>
+
+    <!-- Mobile Menu -->
+    <div id="mobileMenu" class="mobile-menu fixed inset-0 bg-white p-6 lg:hidden overflow-y-auto">
+        <div class="flex justify-between items-center mb-8">
+            <img src="LOGO AMPF.png" alt="AMPF" class="h-14 w-auto" onerror="this.style.display='none'">
+            <button id="closeMenu" class="text-3xl text-gray-600"><i class="fas fa-times"></i></button>
+        </div>
+        <nav id="mobileNav" class="flex flex-col space-y-5 text-lg font-bold text-brandDark"></nav>
+    </div>
+
+    <!-- Hero -->
+    <section class="hero-gradient text-white">
+        <div class="container mx-auto px-6 py-16 sm:py-20">
+            <div class="text-center fade-up">
+                <span class="bg-white/20 backdrop-blur-sm text-white text-sm px-4 py-2 rounded-full inline-block mb-6 font-bold" data-i18n="mgf_badge">مركز الإمتياز</span>
+                <div class="flex flex-col sm:flex-row items-center justify-center gap-6 mb-6">
+                    <img src="center-logo.png" alt="Centre d'Excellence" class="h-24 sm:h-32 w-auto object-contain rounded-2xl shadow-2xl bg-white p-2" onerror="this.onerror=null; this.src='LOGO AMPF.png';">
+                    <h1 class="text-3xl sm:text-4xl md:text-5xl font-black leading-tight max-w-4xl" data-i18n="mgf_title">مركز الإمتياز للقضاء على تشويه الأعضاء التناسلية للإناث</h1>
+                </div>
+                <p class="text-lg sm:text-xl text-white/90 mb-8 max-w-3xl mx-auto leading-relaxed" data-i18n="mgf_subtitle">أبحاث وأدلة تدريبية ومناصرة للقضاء على تشويه الأعضاء التناسلية للإناث</p>
+                <div class="w-60 h-1 bg-white/40 mx-auto rounded-full"></div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Centre d'Excellence Tabs -->
+    <section id="centre-excellence" class="py-16 bg-gradient-to-b from-white to-emerald-50">
+        <div class="container mx-auto px-6">
+
+            <!-- Inner language tabs -->
+            <div class="flex flex-wrap justify-center gap-2 mb-10 fade-up" id="mgfTabs">
+                <button class="mgf-tab active px-4 py-2 rounded-full font-bold text-sm transition border-2 border-brandGreen text-brandDark bg-brandLight" data-mgftab="about"><i class="fas fa-university ml-1"></i> <span class="mgf-tab-label" data-i18n="mgf_tab_about">عن المركز</span></button>
+                <button class="mgf-tab px-4 py-2 rounded-full font-bold text-sm transition border-2 border-gray-200 text-gray-600 hover:border-brandGreen" data-mgftab="research"><i class="fas fa-flask ml-1"></i> <span class="mgf-tab-label" data-i18n="mgf_tab_research">البحوث والدراسات</span></button>
+                <button class="mgf-tab px-4 py-2 rounded-full font-bold text-sm transition border-2 border-gray-200 text-gray-600 hover:border-brandGreen" data-mgftab="toolkits"><i class="fas fa-book-open ml-1"></i> <span class="mgf-tab-label" data-i18n="mgf_tab_toolkits">الأدلة والحقائب التدريبية</span></button>
+                <button class="mgf-tab px-4 py-2 rounded-full font-bold text-sm transition border-2 border-gray-200 text-gray-600 hover:border-brandGreen" data-mgftab="news"><i class="fas fa-newspaper ml-1"></i> <span class="mgf-tab-label" data-i18n="mgf_tab_news">أخبار المركز</span></button>
+                <button class="mgf-tab px-4 py-2 rounded-full font-bold text-sm transition border-2 border-gray-200 text-gray-600 hover:border-brandGreen" data-mgftab="advocacy"><i class="fas fa-handshake ml-1"></i> <span class="mgf-tab-label" data-i18n="mgf_tab_advocacy">المشاركة والتعاون</span></button>
+            </div>
+
+            <!-- MGF panels -->
+            <div id="mgfPanelAbout" class="mgf-panel">
+                <!-- Presentation card -->
+                <div class="bg-gradient-to-r from-brandDark to-brandGreen text-white rounded-3xl p-8 mb-10 flex flex-col sm:flex-row items-center gap-6 shadow-xl fade-up">
+                    <img src="center-logo.png" alt="Centre d'Excellence" class="h-20 sm:h-24 w-auto object-contain rounded-2xl bg-white p-2 flex-shrink-0" onerror="this.onerror=null; this.src='LOGO AMPF.png';">
+                    <div class="text-center sm:text-start">
+                        <h3 class="text-2xl font-black mb-3" data-i18n="mgf_intro_heading">عن مركز الإمتياز</h3>
+                        <p class="text-emerald-50/90 leading-relaxed" data-i18n="mgf_intro_text">مركز متخصص تابع للجمعية الموريتانية لترقية الأسرة يعمل على تطوير المعرفة العلمية والأدلة حول تشويه الأعضاء التناسلية للإناث، والمساهمة في القضاء عليها عبر البحث والتدريب والمناصرة وبناء الشراكات.</p>
+                    </div>
+                </div>
+
+                <div class="grid md:grid-cols-2 gap-8">
+                    <div class="bg-white p-8 rounded-2xl shadow-lg card-hover fade-up">
+                        <div class="w-14 h-14 bg-brandLight rounded-xl flex items-center justify-center mb-4"><i class="fas fa-bullseye text-brandGreen text-xl"></i></div>
+                        <h3 class="text-xl font-bold text-brandDark mb-3" data-i18n="mgf_mission_heading">الرسالة</h3>
+                        <p id="mgfMission" class="text-gray-600 leading-relaxed"></p>
+                    </div>
+                    <div class="bg-white p-8 rounded-2xl shadow-lg card-hover fade-up">
+                        <div class="w-14 h-14 bg-brandLight rounded-xl flex items-center justify-center mb-4"><i class="fas fa-eye text-brandGreen text-xl"></i></div>
+                        <h3 class="text-xl font-bold text-brandDark mb-3" data-i18n="mgf_vision_heading">الرؤية</h3>
+                        <p id="mgfVision" class="text-gray-600 leading-relaxed"></p>
+                    </div>
+                </div>
+
+                <div class="mt-12">
+                    <h3 class="text-2xl font-black text-brandDark mb-6 text-center" data-i18n="mgf_team_heading">فريق المركز</h3>
+                    <div id="mgfTeamGrid" class="grid md:grid-cols-2 lg:grid-cols-4 gap-6"></div>
+                </div>
+
+                <div class="mt-12">
+                    <h3 class="text-2xl font-black text-brandDark mb-6 text-center" data-i18n="mgf_partners_heading">الشركاء</h3>
+                    <div id="mgfPartnersGrid" class="grid md:grid-cols-2 lg:grid-cols-4 gap-6"></div>
+                </div>
+            </div>
+
+            <div id="mgfPanelResearch" class="mgf-panel hidden">
+                <div id="mgfResearchGrid" class="grid md:grid-cols-2 lg:grid-cols-3 gap-8"></div>
+            </div>
+
+            <div id="mgfPanelToolkits" class="mgf-panel hidden">
+                <div id="mgfToolkitsGrid" class="grid md:grid-cols-2 lg:grid-cols-3 gap-8"></div>
+            </div>
+
+            <div id="mgfPanelNews" class="mgf-panel hidden">
+                <div id="mgfNewsGrid" class="grid md:grid-cols-2 lg:grid-cols-3 gap-8"></div>
+            </div>
+
+            <div id="mgfPanelAdvocacy" class="mgf-panel hidden">
+                <div class="grid lg:grid-cols-2 gap-8">
+                    <div class="bg-white p-8 rounded-2xl shadow-lg card-hover fade-up">
+                        <div class="w-14 h-14 bg-brandLight rounded-xl flex items-center justify-center mb-4"><i class="fas fa-users text-brandGreen text-xl"></i></div>
+                        <h3 class="text-xl font-bold text-brandDark mb-3" data-i18n="mgf_involved_heading">شارك معنا</h3>
+                        <p id="mgfGetInvolved" class="text-gray-600 leading-relaxed"></p>
+                    </div>
+                    <div class="bg-white p-8 rounded-2xl shadow-lg card-hover fade-up">
+                        <div class="w-14 h-14 bg-brandLight rounded-xl flex items-center justify-center mb-4"><i class="fas fa-bullhorn text-brandGreen text-xl"></i></div>
+                        <h3 class="text-xl font-bold text-brandDark mb-3" data-i18n="mgf_advocacy_heading">المناصرة والدعوة</h3>
+                        <p id="mgfAdvocacy" class="text-gray-600 leading-relaxed"></p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="bg-brandDark text-white py-16">
+        <div class="container mx-auto px-6 grid md:grid-cols-4 gap-8 mb-12">
+            <div>
+                <div class="flex items-center gap-3 mb-5"><img src="LOGO AMPF.png" alt="AMPF" class="h-14 w-auto" onerror="this.style.display='none'"></div>
+                <p class="text-white/70 text-sm leading-relaxed" data-i18n="footer_about">منظمة غير حكومية تسعى لترقية الصحة الإنجابية وتنظيم الأسرة ودعم الفئات المحتاجة في موريتانيا منذ 1988.</p>
+            </div>
+            <div><h4 class="font-bold text-lg mb-5" data-i18n="footer_quick_links">روابط سريعة</h4><ul class="space-y-3 text-white/70 text-sm"><li><a href="index.html#strategy" class="hover:text-brandGreen transition" data-i18n="nav_strategy">استراتيجيتنا</a></li><li><a href="index.html#programs" class="hover:text-brandGreen transition" data-i18n="nav_programs">البرامج</a></li><li><a href="index.html#news" class="hover:text-brandGreen transition" data-i18n="nav_news">الأخبار</a></li><li><a href="index.html#gallery" class="hover:text-brandGreen transition" data-i18n="nav_gallery">المعرض</a></li></ul></div>
+            <div><h4 class="font-bold text-lg mb-5" data-i18n="footer_services">خدماتنا</h4><ul class="space-y-3 text-white/70 text-sm" id="footerServices"><li data-i18n="service1">الصحة الإنجابية</li><li data-i18n="service2">تنظيم الأسرة</li><li data-i18n="service3">التوعية الصحية</li><li data-i18n="service4">الدعم الاجتماعي</li></ul></div>
+            <div><h4 class="font-bold text-lg mb-5" data-i18n="footer_contact_us">تواصل معنا</h4><ul class="space-y-3 text-white/70 text-sm"><li><i class="fas fa-map-marker-alt ml-2"></i> <span id="footerAddress"></span></li><li><i class="fas fa-phone ml-2"></i> <span id="footerPhone"></span></li><li><i class="fas fa-envelope ml-2"></i> contact@ampf.mr</li></ul></div>
+        </div>
+        <div class="border-t border-white/10 pt-8 text-center text-white/50 text-sm" data-i18n="footer_copyright">جميع الحقوق محفوظة © الجمعية الموريتانية لترقية الأسرة 2026</div>
+    </footer>
+
+    <button id="backToTop" class="fixed bottom-6 right-6 w-14 h-14 bg-brandGreen text-white rounded-full shadow-lg hover:bg-brandDark transition opacity-0 z-40 flex items-center justify-center"><i class="fas fa-arrow-up"></i></button>
+
+    <script>
+        // ══════════════════════════════════════════════════
+        //  TRANSLATIONS (Centre d'Excellence)
+        // ══════════════════════════════════════════════════
+        const translations = {
+            ar: {
+                siteTitle: 'مركز الإمتياز للقضاء على تشويه الأعضاء التناسلية للإناث | جمعية ترقية الأسرة',
+                nav_home: 'الرئيسية', nav_admin: 'الإدارة',
+                nav_strategy: 'استراتيجيتنا', nav_programs: 'البرامج', nav_news: 'الأخبار', nav_gallery: 'المعرض',
+                footer_about: 'منظمة غير حكومية تسعى لترقية الصحة الإنجابية وتنظيم الأسرة ودعم الفئات المحتاجة في موريتانيا منذ 1988.',
+                footer_quick_links: 'روابط سريعة', footer_services: 'خدماتنا', footer_contact_us: 'تواصل معنا',
+                footer_copyright: 'جميع الحقوق محفوظة © الجمعية الموريتانية لترقية الأسرة 2026',
+                service1: 'الصحة الإنجابية', service2: 'تنظيم الأسرة', service3: 'التوعية الصحية', service4: 'الدعم الاجتماعي',
+                mgf_badge: 'مركز الإمتياز',
+                mgf_title: 'مركز الإمتياز للقضاء على تشويه الأعضاء التناسلية للإناث',
+                mgf_subtitle: 'أبحاث وأدلة تدريبية ومناصرة للقضاء على تشويه الأعضاء التناسلية للإناث',
+                mgf_intro_heading: 'عن مركز الإمتياز',
+                mgf_intro_text: 'مركز متخصص تابع للجمعية الموريتانية لترقية الأسرة يعمل على تطوير المعرفة العلمية والأدلة حول تشويه الأعضاء التناسلية للإناث، والمساهمة في القضاء عليها عبر البحث والتدريب والمناصرة وبناء الشراكات.',
+                mgf_mission_heading: 'الرسالة', mgf_vision_heading: 'الرؤية',
+                mgf_team_heading: 'فريق المركز', mgf_partners_heading: 'الشركاء',
+                mgf_involved_heading: 'شارك معنا', mgf_advocacy_heading: 'المناصرة والدعوة',
+                mgf_tab_about: 'عن المركز', mgf_tab_research: 'البحوث والدراسات',
+                mgf_tab_toolkits: 'الأدلة والحقائب التدريبية', mgf_tab_news: 'أخبار المركز',
+                mgf_tab_advocacy: 'المشاركة والتعاون',
+                mgf_empty_team: 'لا يوجد أعضاء بعد', mgf_empty_partners: 'لا يوجد شركاء بعد',
+                mgf_empty_research: 'لا توجد دراسات بعد', mgf_empty_toolkits: 'لا توجد حقائب تدريبية بعد',
+                mgf_empty_news: 'لا توجد أخبار بعد', mgf_download: 'تحميل الملف', mgf_read_more: 'قراءة المزيد',
+                mgf_open_pdf: 'فتح الملف',
+            },
+            fr: {
+                siteTitle: "Centre d'Excellence pour l'élimination des MGF | AMPF",
+                nav_home: 'Accueil', nav_admin: 'Admin',
+                nav_strategy: 'Notre Stratégie', nav_programs: 'Programmes', nav_news: 'Actualités', nav_gallery: 'Galerie',
+                footer_about: "ONG œuvrant pour la promotion de la santé reproductive, le planning familial et le soutien aux personnes nécessiteuses en Mauritanie depuis 1988.",
+                footer_quick_links: 'Liens rapides', footer_services: 'Nos services', footer_contact_us: 'Contact',
+                footer_copyright: 'Tous droits réservés © AMPF 2026',
+                service1: 'Santé reproductive', service2: 'Planning familial', service3: 'Sensibilisation sanitaire', service4: 'Soutien social',
+                mgf_badge: "Centre d'Excellence",
+                mgf_title: "Centre d'Excellence pour l'élimination des mutilations génitales féminines",
+                mgf_subtitle: "Recherches, outils de formation et plaidoyer pour l'élimination des mutilations génitales féminines",
+                mgf_intro_heading: "À propos du Centre d'Excellence",
+                mgf_intro_text: "Centre spécialisé de l'Association Mauritanienne pour la Promotion de la Famille dédié à l'accumulation de connaissances et de preuves sur les mutilations génitales féminines et à leur élimination par la recherche, la formation, le plaidoyer et les partenariats.",
+                mgf_mission_heading: 'Mission', mgf_vision_heading: 'Vision',
+                mgf_team_heading: 'Équipe du centre', mgf_partners_heading: 'Partenaires',
+                mgf_involved_heading: 'Impliquez-vous', mgf_advocacy_heading: 'Plaidoyer',
+                mgf_tab_about: 'À propos', mgf_tab_research: 'Recherches & Études',
+                mgf_tab_toolkits: 'Outils & Guides', mgf_tab_news: 'Actualités MGF',
+                mgf_tab_advocacy: 'Participation & Coopération',
+                mgf_empty_team: 'Aucun membre pour le moment', mgf_empty_partners: 'Aucun partenaire pour le moment',
+                mgf_empty_research: 'Aucune étude pour le moment', mgf_empty_toolkits: 'Aucun outil pour le moment',
+                mgf_empty_news: 'Aucune actualité pour le moment', mgf_download: 'Télécharger le fichier',
+                mgf_read_more: 'Lire plus', mgf_open_pdf: 'Ouvrir le fichier',
+            },
+            en: {
+                siteTitle: 'Centre of Excellence for the Elimination of FGM | AMPF',
+                nav_home: 'Home', nav_admin: 'Admin',
+                nav_strategy: 'Our Strategy', nav_programs: 'Programs', nav_news: 'News', nav_gallery: 'Gallery',
+                footer_about: 'An NGO working to promote reproductive health, family planning, and support for needy groups in Mauritania since 1988.',
+                footer_quick_links: 'Quick Links', footer_services: 'Our Services', footer_contact_us: 'Contact Us',
+                footer_copyright: 'All rights reserved © AMPF 2026',
+                service1: 'Reproductive Health', service2: 'Family Planning', service3: 'Health Awareness', service4: 'Social Support',
+                mgf_badge: 'Centre of Excellence',
+                mgf_title: 'Centre of Excellence for the Elimination of Female Genital Mutilation',
+                mgf_subtitle: 'Research, training toolkits and advocacy to eliminate female genital mutilation (FGM)',
+                mgf_intro_heading: 'About the Centre of Excellence',
+                mgf_intro_text: 'A specialised centre of the Mauritanian Association for Family Promotion dedicated to building scientific knowledge and evidence on female genital mutilation and contributing to its elimination through research, training, advocacy and partnerships.',
+                mgf_mission_heading: 'Mission', mgf_vision_heading: 'Vision',
+                mgf_team_heading: 'Centre Team', mgf_partners_heading: 'Partners',
+                mgf_involved_heading: 'Get Involved', mgf_advocacy_heading: 'Advocacy',
+                mgf_tab_about: 'About', mgf_tab_research: 'Research & Studies',
+                mgf_tab_toolkits: 'Toolkits & Guides', mgf_tab_news: 'MGF News',
+                mgf_tab_advocacy: 'Get Involved / Advocacy',
+                mgf_empty_team: 'No members yet', mgf_empty_partners: 'No partners yet',
+                mgf_empty_research: 'No studies yet', mgf_empty_toolkits: 'No toolkits yet',
+                mgf_empty_news: 'No news yet', mgf_download: 'Download file',
+                mgf_read_more: 'Read more', mgf_open_pdf: 'Open file',
+            }
+        };
+
+        // ══════════════════════════════════════════════════
+        //  UTILITY HELPERS
+        // ══════════════════════════════════════════════════
+        let currentLang = localStorage.getItem('ampf_lang') || 'ar';
+        let _mgfData = { content: {}, team: [], partners: [], research: [], toolkits: [], news: [] };
+
+        function t(key) {
+            return translations[currentLang]?.[key] ?? translations['ar'][key] ?? key;
+        }
+
+        function getLocalizedText(obj) {
+            if (!obj) return '';
+            if (typeof obj === 'string') return obj;
+            return obj[currentLang] || obj.ar || obj.fr || obj.en || '';
+        }
+
+        function translateStaticText() {
+            document.querySelectorAll('[data-i18n]').forEach(el => {
+                const key = el.getAttribute('data-i18n');
+                el.innerHTML = t(key);
+            });
+            document.getElementById('siteTitle').textContent = t('mgf_title');
+            document.title = t('siteTitle');
+        }
+
+        // ══════════════════════════════════════════════════
+        //  NAVBAR (loaded from the same /api/public-content as index)
+        // ══════════════════════════════════════════════════
+        function renderNavbar(items) {
+            const desktopNav = document.getElementById('mainNav');
+            const mobileNav = document.getElementById('mobileNav');
+            const sorted = [...(items || [])].sort((a, b) => (a.order || 0) - (b.order || 0));
+            // On this standalone page, homepage anchors must point back to index.html
+            const resolve = (href) => {
+                if (!href) return '#';
+                return href.startsWith('#') ? 'index.html' + href : href;
+            };
+            const links = sorted.map(item =>
+                `<a href="${resolve(item.href)}" class="nav-link hover:text-brandGreen transition" data-nav-id="${item.id}">${getLocalizedText(item.label)}</a>`
+            ).join('');
+            const mobileLinks = sorted.map(item =>
+                `<a href="${resolve(item.href)}" class="mobile-link hover:text-brandGreen transition" data-nav-id="${item.id}">${getLocalizedText(item.label)}</a>`
+            ).join('');
+            desktopNav.innerHTML = links;
+            mobileNav.innerHTML = mobileLinks + `<a href="/admin" class="text-brandGreen">${t('nav_admin')}</a>`;
+            // Mark the current page (Centre d'Excellence) as active in the navbar
+            desktopNav.querySelectorAll('.nav-link').forEach(a => {
+                if (a.getAttribute('href') === 'center.html' || a.getAttribute('href') === 'index.html#centre-excellence') {
+                    a.classList.add('text-brandGreen', 'font-bold');
+                }
+            });
+            mobileNav.querySelectorAll('.mobile-link').forEach(l => l.addEventListener('click', () => document.getElementById('mobileMenu').classList.remove('active')));
+        }
+
+        // ══════════════════════════════════════════════════
+        //  CENTRE D'EXCELLENCE MGF RENDERING
+        // ══════════════════════════════════════════════════
+        function switchMgfTab(name) {
+            document.querySelectorAll('.mgf-panel').forEach(p => p.classList.add('hidden'));
+            const panel = document.getElementById('mgfPanel' + name.charAt(0).toUpperCase() + name.slice(1));
+            if (panel) panel.classList.remove('hidden');
+            panel.querySelectorAll('.fade-up').forEach(el => observer.observe(el));
+            document.querySelectorAll('.mgf-tab').forEach(b => {
+                const active = b.dataset.mgftab === name;
+                b.classList.toggle('active', active);
+                b.classList.toggle('bg-brandLight', active);
+                b.classList.toggle('border-brandGreen', active);
+                b.classList.toggle('text-brandDark', active);
+                b.classList.toggle('border-gray-200', !active);
+                b.classList.toggle('text-gray-600', !active);
+            });
+        }
+
+        function renderMGF() {
+            const mgf = _mgfData;
+            const content = mgf.content || {};
+            document.getElementById('mgfMission').textContent = getLocalizedText(content.mission) || '';
+            document.getElementById('mgfVision').textContent = getLocalizedText(content.vision) || '';
+            document.getElementById('mgfGetInvolved').textContent = getLocalizedText(content.getInvolved) || '';
+            document.getElementById('mgfAdvocacy').textContent = getLocalizedText(content.advocacy) || '';
+
+            // Team
+            document.getElementById('mgfTeamGrid').innerHTML = (mgf.team && mgf.team.length)
+                ? mgf.team.map((m, i) => `
+                    <div class="bg-white rounded-2xl p-6 shadow-sm border border-gray-100 card-hover fade-up">
+                        <div class="w-16 h-16 ${['bg-emerald-100','bg-blue-100','bg-purple-100','bg-pink-100'][i%4]} rounded-full flex items-center justify-center mx-auto mb-4">
+                            ${m.photo ? `<img src="${m.photo}" alt="${getLocalizedText(m.name)}" class="w-full h-full object-cover rounded-full">` : `<i class="fas fa-user-tie text-2xl text-brandGreen"></i>`}
+                        </div>
+                        <h4 class="font-bold text-brandDark text-center">${getLocalizedText(m.name)}</h4>
+                        <p class="text-sm text-gray-500 text-center mt-1">${getLocalizedText(m.role)}</p>
+                    </div>
+                `).join('')
+                : `<div class="col-span-full text-center text-gray-400 py-8">${t('mgf_empty_team')}</div>`;
+
+            // Partners
+            document.getElementById('mgfPartnersGrid').innerHTML = (mgf.partners && mgf.partners.length)
+                ? mgf.partners.map((p, i) => `
+                    <div class="bg-white rounded-2xl p-6 shadow-sm border border-gray-100 card-hover fade-up">
+                        <div class="w-14 h-14 ${['bg-emerald-100','bg-blue-100','bg-purple-100','bg-pink-100'][i%4]} rounded-xl flex items-center justify-center mx-auto mb-4">
+                            ${p.logo ? `<img src="${p.logo}" alt="${getLocalizedText(p.name)}" class="w-full h-full object-contain rounded-xl">` : `<i class="fas fa-handshake text-2xl text-brandGreen"></i>`}
+                        </div>
+                        <h4 class="font-bold text-brandDark text-center">${getLocalizedText(p.name)}</h4>
+                        <p class="text-sm text-gray-500 text-center mt-1">${getLocalizedText(p.description)}</p>
+                    </div>
+                `).join('')
+                : `<div class="col-span-full text-center text-gray-400 py-8">${t('mgf_empty_partners')}</div>`;
+
+            // Research
+            document.getElementById('mgfResearchGrid').innerHTML = (mgf.research && mgf.research.length)
+                ? mgf.research.map(r => `
+                    <div class="bg-white rounded-2xl p-6 shadow-sm border border-gray-100 card-hover fade-up">
+                        <div class="w-12 h-12 bg-blue-100 rounded-xl flex items-center justify-center mb-4"><i class="fas fa-flask text-blue-600"></i></div>
+                        <h4 class="font-bold text-brandDark mb-2">${getLocalizedText(r.title)}</h4>
+                        <p class="text-sm text-gray-500 mb-3">${getLocalizedText(r.desc)}</p>
+                        <div class="text-xs text-gray-400 mb-3">${r.date || ''}</div>
+                        ${r.file ? `<a href="${r.file}" target="_blank" rel="noopener" class="inline-flex items-center gap-2 text-sm font-bold text-brandGreen hover:text-brandDark transition"><i class="fas fa-file-pdf"></i> ${t('mgf_open_pdf')}</a>` : ''}
+                    </div>
+                `).join('')
+                : `<div class="col-span-full text-center text-gray-400 py-8">${t('mgf_empty_research')}</div>`;
+
+            // Toolkits
+            document.getElementById('mgfToolkitsGrid').innerHTML = (mgf.toolkits && mgf.toolkits.length)
+                ? mgf.toolkits.map(tk => `
+                    <div class="bg-white rounded-2xl p-6 shadow-sm border border-gray-100 card-hover fade-up">
+                        <div class="w-12 h-12 bg-purple-100 rounded-xl flex items-center justify-center mb-4"><i class="fas fa-book-open text-purple-600"></i></div>
+                        <h4 class="font-bold text-brandDark mb-2">${getLocalizedText(tk.title)}</h4>
+                        <p class="text-sm text-gray-500 mb-3">${getLocalizedText(tk.desc)}</p>
+                        ${tk.file ? `<a href="${tk.file}" target="_blank" rel="noopener" class="inline-flex items-center gap-2 text-sm font-bold text-brandGreen hover:text-brandDark transition"><i class="fas fa-download"></i> ${t('mgf_download')}</a>` : ''}
+                    </div>
+                `).join('')
+                : `<div class="col-span-full text-center text-gray-400 py-8">${t('mgf_empty_toolkits')}</div>`;
+
+            // News
+            document.getElementById('mgfNewsGrid').innerHTML = (mgf.news && mgf.news.length)
+                ? mgf.news.map(n => `
+                    <div class="bg-white rounded-2xl overflow-hidden shadow-lg card-hover fade-up">
+                        <div class="overflow-hidden">
+                            ${n.image
+                                ? `<img src="${n.image}" alt="${getLocalizedText(n.title)}" class="news-img" onerror="this.style.display='none'">`
+                                : `<div class="news-img bg-gradient-to-br from-brandGreen to-emerald-600 flex items-center justify-center"><i class="fas fa-newspaper text-white text-4xl"></i></div>`
+                            }
+                        </div>
+                        <div class="p-6">
+                            <h4 class="text-lg font-bold text-brandDark mb-2">${getLocalizedText(n.title)}</h4>
+                            <p class="text-gray-600 text-sm mb-3">${getLocalizedText(n.desc)}</p>
+                            <div class="flex items-center gap-2 text-sm text-gray-500"><i class="fas fa-clock"></i> ${n.date || ''}</div>
+                        </div>
+                    </div>
+                `).join('')
+                : `<div class="col-span-full text-center text-gray-400 py-8">${t('mgf_empty_news')}</div>`;
+
+            document.querySelectorAll('.fade-up').forEach(el => observer.observe(el));
+        }
+
+        async function loadMGF() {
+            try {
+                const res = await fetch('/api/mgf-content', { cache: 'no-store' });
+                if (!res.ok) throw new Error('HTTP ' + res.status);
+                _mgfData = await res.json();
+                renderMGF();
+            } catch (e) {
+                console.error('Failed to load MGF content:', e);
+            }
+        }
+
+        // Load navbar + site contact info from the shared public API
+        async function loadSharedData() {
+            try {
+                const res = await fetch('/api/public-content', { cache: 'no-store' });
+                if (!res.ok) throw new Error('HTTP ' + res.status);
+                const data = await res.json();
+                navItems = data.navbar || [];
+                renderNavbar(navItems);
+                const sc = data.site_content || {};
+                if (sc.contact) {
+                    const addr = getLocalizedText(sc.contact.address);
+                    if (addr) document.getElementById('footerAddress').textContent = addr;
+                    if (sc.contact.phone) {
+                        const phone = typeof sc.contact.phone === 'string' ? sc.contact.phone : getLocalizedText(sc.contact.phone);
+                        document.getElementById('topPhone').textContent = phone;
+                        document.getElementById('footerPhone').textContent = phone;
+                    }
+                    if (sc.contact.email) {
+                        const email = typeof sc.contact.email === 'string' ? sc.contact.email : getLocalizedText(sc.contact.email);
+                        document.getElementById('topEmail').textContent = email;
+                    }
+                }
+            } catch (e) {
+                console.error('Failed to load shared data:', e);
+            }
+        }
+
+        // Holds the last loaded navbar items so setLang can re-render labels
+        let navItems = [];
+
+        // ══════════════════════════════════════════════════
+        //  LANGUAGE SWITCHER
+        // ══════════════════════════════════════════════════
+        function setLang(lang) {
+            currentLang = lang;
+            document.documentElement.lang = lang;
+            document.documentElement.dir = (lang === 'ar') ? 'rtl' : 'ltr';
+
+            document.querySelectorAll('.lang-btn').forEach(b => b.classList.remove('active'));
+            document.querySelectorAll('.lang-btn').forEach(b => {
+                if ((lang === 'ar' && b.textContent.trim() === 'AR') ||
+                    (lang === 'fr' && b.textContent.trim() === 'FR') ||
+                    (lang === 'en' && b.textContent.trim() === 'EN')) b.classList.add('active');
+            });
+
+            translateStaticText();
+            // Re-render navbar so item labels switch language (same data as index)
+            if (navItems.length) renderNavbar(navItems);
+            renderMGF();
+            localStorage.setItem('ampf_lang', lang);
+        }
+
+        // ══════════════════════════════════════════════════
+        //  EVENT LISTENERS
+        // ══════════════════════════════════════════════════
+        // Mobile Menu
+        document.getElementById('menuBtn').addEventListener('click', () => document.getElementById('mobileMenu').classList.add('active'));
+        document.getElementById('closeMenu').addEventListener('click', () => document.getElementById('mobileMenu').classList.remove('active'));
+
+        // Back to Top
+        const backToTop = document.getElementById('backToTop');
+        window.addEventListener('scroll', () => { backToTop.style.opacity = window.scrollY > 500 ? '1' : '0'; });
+        backToTop.addEventListener('click', () => window.scrollTo({ top: 0, behavior: 'smooth' }));
+
+        // Centre d'Excellence MGF tabs
+        document.querySelectorAll('.mgf-tab').forEach(btn => {
+            btn.addEventListener('click', () => switchMgfTab(btn.dataset.mgftab));
+        });
+
+        // Animations
+        const observer = new IntersectionObserver(entries => { entries.forEach(entry => { if (entry.isIntersecting) entry.target.classList.add('visible'); }); }, { threshold: 0.1 });
+        document.querySelectorAll('.fade-up').forEach(el => observer.observe(el));
+
+        // ══════════════════════════════════════════════════
+        //  INIT
+        // ══════════════════════════════════════════════════
+        loadSharedData().then(() => {
+            document.querySelectorAll('.fade-up').forEach(el => observer.observe(el));
+        });
+
+        loadMGF();
+
+        // Apply initial language
+        setLang(currentLang);
+    </script>
+
+</body>
+</html>

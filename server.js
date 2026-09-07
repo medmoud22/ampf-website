@@ -212,7 +212,7 @@ const DATA_DEFAULTS = {
     slider: [],
     branches: DEFAULT_BRANCHES,
     navbar: [],
-    // ── Centre d'Excellence MGF (قسم مركز التميز للقضاء على ختان الإناث) ──
+    // ── Centre d'Excellence MGF (قسم مركز الإمتياز للقضاء على تشويه الأعضاء التناسلية للإناث) ──
     mgfContent: {
         mission: { ar: '', fr: '', en: '' },
         vision: { ar: '', fr: '', en: '' },
@@ -438,7 +438,7 @@ app.put('/api/mgf-content', requireAuth, async (req, res) => {
         advocacy: body.advocacy || (data.mgfContent && data.mgfContent.advocacy) || { ar: '', fr: '', en: '' }
     };
     await writeData(data);
-    res.json({ success: true, message: 'تم حفظ محتوى مركز التميز' });
+    res.json({ success: true, message: 'تم حفظ محتوى مركز الإمتياز' });
 });
 
 // Public: same branches data the admin panel manages (Redis-backed read/write)

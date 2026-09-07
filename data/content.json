@@ -314,11 +314,11 @@
     {
       "id": "5",
       "label": {
-        "ar": "مركز التميز",
+        "ar": "الإمتياز",
         "fr": "Centre d'Excellence",
         "en": "Center of Excellence"
       },
-      "href": "#centre-excellence",
+      "href": "center.html",
       "order": 5
     },
     {
