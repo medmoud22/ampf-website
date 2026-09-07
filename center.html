@@ -308,7 +308,7 @@
             const mobileNav = document.getElementById('mobileNav');
             let nav = [...(items || [])];
             // ── Hardcoded Centre d'Excellence (always present, always after البرامج) ──
-            const centerItem = { id: 'mgf', label: { ar: 'الإمتياز', fr: "Centre d'Excellence", en: 'Center of Excellence' }, href: 'center.html', order: 4 };
+            const centerItem = { id: 'mgf', label: { ar: 'الإمتياز', fr: 'MGF', en: 'FGM' }, href: 'center.html', order: 4 };
             if (!nav.some(i => i.href === 'center.html')) nav.push(centerItem);
             const sorted = nav.sort((a, b) => (a.order || 0) - (b.order || 0));
             // Place الإمتياز right after البرامج
