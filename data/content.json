@@ -223,7 +223,49 @@
         "en": "Nouakchott, Mauritania"
       },
       "phone": "+222 45 25 XX XX",
-      "email": "contact@ampf.mr"
+      "email": "contact@ampf.mr",
+      "subjects": [
+        {
+          "value": "general",
+          "label": {
+            "ar": "استفسار عام",
+            "fr": "Demande générale",
+            "en": "General Inquiry"
+          }
+        },
+        {
+          "value": "partnership",
+          "label": {
+            "ar": "طلب شراكة",
+            "fr": "Demande de partenariat",
+            "en": "Partnership Request"
+          }
+        },
+        {
+          "value": "volunteer",
+          "label": {
+            "ar": "التطوع",
+            "fr": "Bénévolat",
+            "en": "Volunteering"
+          }
+        },
+        {
+          "value": "complaint",
+          "label": {
+            "ar": "الشكاوى والمقترحات",
+            "fr": "Réclamations et suggestions",
+            "en": "Complaints & Suggestions"
+          }
+        },
+        {
+          "value": "suggestion",
+          "label": {
+            "ar": "اقتراح لتطوير الموقع",
+            "fr": "Votre suggestion pour améliorer ce site",
+            "en": "Suggestion to improve the website"
+          }
+        }
+      ]
     },
     "about": {
       "vision": {
@@ -251,7 +293,7 @@
   },
   "gallery": [],
   "slider": [],
-  "branches": [
+  "cliniques": [
     {
       "id": "1",
       "name": {
@@ -517,11 +559,11 @@
     {
       "id": "7",
       "label": {
-        "ar": "الفروع",
-        "fr": "Branches",
-        "en": "Branches"
+        "ar": "العيادات",
+        "fr": "Cliniques",
+        "en": "Clinics"
       },
-      "href": "#branches",
+      "href": "#cliniques",
       "order": 7
     },
     {

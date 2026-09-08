@@ -109,7 +109,7 @@
         <a onclick="showTab('gallery')" class="tab-link flex items-center gap-3 px-4 py-3 rounded-xl text-gray-600 hover:bg-gray-50 hover:text-brandDark transition cursor-pointer" data-tab="gallery"><i class="fas fa-images w-5"></i> معرض الصور</a>
         <a onclick="showTab('programs')" class="tab-link flex items-center gap-3 px-4 py-3 rounded-xl text-gray-600 hover:bg-gray-50 hover:text-brandDark transition cursor-pointer" data-tab="programs"><i class="fas fa-heartbeat w-5"></i> البرامج</a>
         <a onclick="showTab('slider')" class="tab-link flex items-center gap-3 px-4 py-3 rounded-xl text-gray-600 hover:bg-gray-50 hover:text-brandDark transition cursor-pointer" data-tab="slider"><i class="fas fa-images w-5"></i> السلايدر</a>
-        <a onclick="showTab('branches')" class="tab-link flex items-center gap-3 px-4 py-3 rounded-xl text-gray-600 hover:bg-gray-50 hover:text-brandDark transition cursor-pointer" data-tab="branches"><i class="fas fa-map-marker-alt w-5"></i> العيادات</a>
+        <a onclick="showTab('cliniques')" class="tab-link flex items-center gap-3 px-4 py-3 rounded-xl text-gray-600 hover:bg-gray-50 hover:text-brandDark transition cursor-pointer" data-tab="cliniques"><i class="fas fa-map-marker-alt w-5"></i> العيادات</a>
         <a onclick="showTab('navbar')" class="tab-link flex items-center gap-3 px-4 py-3 rounded-xl text-gray-600 hover:bg-gray-50 hover:text-brandDark transition cursor-pointer" data-tab="navbar"><i class="fas fa-bars w-5"></i> القوائم</a>
         <a onclick="showTab('documents')" class="tab-link flex items-center gap-3 px-4 py-3 rounded-xl text-gray-600 hover:bg-gray-50 hover:text-brandDark transition cursor-pointer" data-tab="documents"><i class="fas fa-file-alt w-5"></i> الوثائق</a>
         <a onclick="showTab('excellence')" class="tab-link flex items-center gap-3 px-4 py-3 rounded-xl text-gray-600 hover:bg-gray-50 hover:text-brandDark transition cursor-pointer" data-tab="excellence"><i class="fas fa-university w-5"></i> مركز الإمتياز</a>
@@ -136,7 +136,7 @@
             <a onclick="showTab('gallery');toggleSidebar()" class="flex items-center gap-3 px-4 py-3 rounded-xl text-gray-600 hover:bg-gray-50 cursor-pointer"><i class="fas fa-images w-5"></i> المعرض</a>
             <a onclick="showTab('programs');toggleSidebar()" class="flex items-center gap-3 px-4 py-3 rounded-xl text-gray-600 hover:bg-gray-50 cursor-pointer"><i class="fas fa-heartbeat w-5"></i> البرامج</a>
             <a onclick="showTab('slider');toggleSidebar()" class="flex items-center gap-3 px-4 py-3 rounded-xl text-gray-600 hover:bg-gray-50 cursor-pointer"><i class="fas fa-images w-5"></i> السلايدر</a>
-            <a onclick="showTab('branches');toggleSidebar()" class="flex items-center gap-3 px-4 py-3 rounded-xl text-gray-600 hover:bg-gray-50 cursor-pointer"><i class="fas fa-map-marker-alt w-5"></i> العيادات</a>
+            <a onclick="showTab('cliniques');toggleSidebar()" class="flex items-center gap-3 px-4 py-3 rounded-xl text-gray-600 hover:bg-gray-50 cursor-pointer"><i class="fas fa-map-marker-alt w-5"></i> العيادات</a>
             <a onclick="showTab('navbar');toggleSidebar()" class="flex items-center gap-3 px-4 py-3 rounded-xl text-gray-600 hover:bg-gray-50 cursor-pointer"><i class="fas fa-bars w-5"></i> القوائم</a>
             <a onclick="showTab('documents');toggleSidebar()" class="flex items-center gap-3 px-4 py-3 rounded-xl text-gray-600 hover:bg-gray-50 cursor-pointer"><i class="fas fa-file-alt w-5"></i> الوثائق</a>
             <a onclick="showTab('excellence');toggleSidebar()" class="flex items-center gap-3 px-4 py-3 rounded-xl text-gray-600 hover:bg-gray-50 cursor-pointer"><i class="fas fa-university w-5"></i> مركز الإمتياز</a>
@@ -436,18 +436,18 @@
             <div id="sliderGrid" class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4"></div>
         </div>
 
-        <!-- ===== TAB: BRANCHES ===== -->
-        <div id="tab-branches" class="tab-content fade-in">
+        <!-- ===== TAB: CLINIQUES ===== -->
+        <div id="tab-cliniques" class="tab-content fade-in">
             <div class="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-3 mb-6">
                 <h3 class="text-xl font-bold text-brandDark">إدارة العيادات</h3>
-                <button onclick="openBranchModal()" class="bg-brandGreen text-white px-5 py-2.5 rounded-xl font-bold hover:bg-brandDark transition text-sm w-full sm:w-auto"><i class="fas fa-plus ml-1"></i> إضافة عيادة</button>
+                <button onclick="openClinicModal()" class="bg-brandGreen text-white px-5 py-2.5 rounded-xl font-bold hover:bg-brandDark transition text-sm w-full sm:w-auto"><i class="fas fa-plus ml-1"></i> إضافة عيادة</button>
             </div>
             <div class="overflow-x-auto bg-white rounded-xl shadow-sm">
                 <table class="w-full text-right min-w-[500px]">
                     <thead class="bg-gray-50 border-b">
                         <tr><th class="px-6 py-4 text-sm font-bold text-gray-600">الاسم</th><th class="px-6 py-4 text-sm font-bold text-gray-600 hidden md:table-cell">الموقع</th><th class="px-6 py-4 text-sm font-bold text-gray-600">إجراءات</th></tr>
                     </thead>
-                    <tbody id="branchesTableBody"></tbody>
+                    <tbody id="clinicsTableBody"></tbody>
                 </table>
             </div>
         </div>
@@ -671,48 +671,48 @@
     </div>
 </div>
 
-<!-- Branch Modal -->
-<div id="branchModal" class="modal-overlay fixed inset-0 bg-black/50 z-50 items-center justify-center p-4">
+<!-- Clinic Modal -->
+<div id="clinicModal" class="modal-overlay fixed inset-0 bg-black/50 z-50 items-center justify-center p-4">
     <div class="bg-white rounded-2xl p-6 w-full max-w-lg modal-scroll">
         <div class="flex justify-between items-center mb-4">
-            <h3 id="branchModalTitle" class="text-lg font-bold text-brandDark">إضافة عيادة</h3>
-            <button onclick="closeModal('branchModal')" class="text-gray-400 hover:text-gray-600"><i class="fas fa-times text-xl"></i></button>
+            <h3 id="clinicModalTitle" class="text-lg font-bold text-brandDark">إضافة عيادة</h3>
+            <button onclick="closeModal('clinicModal')" class="text-gray-400 hover:text-gray-600"><i class="fas fa-times text-xl"></i></button>
         </div>
-        <form id="branchForm" class="space-y-4" enctype="multipart/form-data">
-            <input type="hidden" id="branchId">
+        <form id="clinicForm" class="space-y-4" enctype="multipart/form-data">
+            <input type="hidden" id="clinicId">
             <div class="bg-gray-50 rounded-xl p-4 space-y-3">
                 <div class="flex gap-2 items-center mb-1"><span class="text-sm font-bold text-gray-700">الاسم</span><span class="text-xs px-2 py-0.5 rounded bg-emerald-100 text-emerald-700 font-bold">AR</span></div>
-                <input id="branchNameAr" type="text" class="w-full border-2 border-gray-200 rounded-xl px-4 py-2 focus:outline-none focus:border-brandGreen transition" required>
+                <input id="clinicNameAr" type="text" class="w-full border-2 border-gray-200 rounded-xl px-4 py-2 focus:outline-none focus:border-brandGreen transition" required>
                 <div class="flex gap-2 items-center mb-1"><span class="text-sm font-bold text-gray-700">Nom</span><span class="text-xs px-2 py-0.5 rounded bg-blue-100 text-blue-700 font-bold">FR</span></div>
-                <input id="branchNameFr" type="text" class="w-full border-2 border-gray-200 rounded-xl px-4 py-2 focus:outline-none focus:border-brandGreen transition">
+                <input id="clinicNameFr" type="text" class="w-full border-2 border-gray-200 rounded-xl px-4 py-2 focus:outline-none focus:border-brandGreen transition">
                 <div class="flex gap-2 items-center mb-1"><span class="text-sm font-bold text-gray-700">Name</span><span class="text-xs px-2 py-0.5 rounded bg-purple-100 text-purple-700 font-bold">EN</span></div>
-                <input id="branchNameEn" type="text" class="w-full border-2 border-gray-200 rounded-xl px-4 py-2 focus:outline-none focus:border-brandGreen transition">
+                <input id="clinicNameEn" type="text" class="w-full border-2 border-gray-200 rounded-xl px-4 py-2 focus:outline-none focus:border-brandGreen transition">
             </div>
             <div class="grid grid-cols-2 gap-4">
-                <div><label class="block text-sm font-bold text-gray-700 mb-2">تاريخ التأسيس</label><input id="branchFounded" type="text" class="w-full border-2 border-gray-200 rounded-xl px-4 py-3 focus:outline-none focus:border-brandGreen transition bg-gray-50"></div>
-                <div><label class="block text-sm font-bold text-gray-700 mb-2">الإحداثيات (GPS)</label><input id="branchGps" type="text" placeholder="مثال: 16.5128, -15.8075" class="w-full border-2 border-gray-200 rounded-xl px-4 py-3 focus:outline-none focus:border-brandGreen transition bg-gray-50"></div>
+                <div><label class="block text-sm font-bold text-gray-700 mb-2">تاريخ التأسيس</label><input id="clinicFounded" type="text" class="w-full border-2 border-gray-200 rounded-xl px-4 py-3 focus:outline-none focus:border-brandGreen transition bg-gray-50"></div>
+                <div><label class="block text-sm font-bold text-gray-700 mb-2">الإحداثيات (GPS)</label><input id="clinicGps" type="text" placeholder="مثال: 16.5128, -15.8075" class="w-full border-2 border-gray-200 rounded-xl px-4 py-3 focus:outline-none focus:border-brandGreen transition bg-gray-50"></div>
             </div>
             <div class="bg-gray-50 rounded-xl p-4 space-y-3">
                 <div class="flex gap-2 items-center mb-1"><span class="text-sm font-bold text-gray-700">الموقع</span><span class="text-xs px-2 py-0.5 rounded bg-emerald-100 text-emerald-700 font-bold">AR</span></div>
-                <textarea id="branchLocationAr" rows="2" class="w-full border-2 border-gray-200 rounded-xl px-4 py-2 focus:outline-none focus:border-brandGreen transition"></textarea>
+                <textarea id="clinicLocationAr" rows="2" class="w-full border-2 border-gray-200 rounded-xl px-4 py-2 focus:outline-none focus:border-brandGreen transition"></textarea>
                 <div class="flex gap-2 items-center mb-1"><span class="text-sm font-bold text-gray-700">Emplacement</span><span class="text-xs px-2 py-0.5 rounded bg-blue-100 text-blue-700 font-bold">FR</span></div>
-                <textarea id="branchLocationFr" rows="2" class="w-full border-2 border-gray-200 rounded-xl px-4 py-2 focus:outline-none focus:border-brandGreen transition"></textarea>
+                <textarea id="clinicLocationFr" rows="2" class="w-full border-2 border-gray-200 rounded-xl px-4 py-2 focus:outline-none focus:border-brandGreen transition"></textarea>
                 <div class="flex gap-2 items-center mb-1"><span class="text-sm font-bold text-gray-700">Location</span><span class="text-xs px-2 py-0.5 rounded bg-purple-100 text-purple-700 font-bold">EN</span></div>
-                <textarea id="branchLocationEn" rows="2" class="w-full border-2 border-gray-200 rounded-xl px-4 py-2 focus:outline-none focus:border-brandGreen transition"></textarea>
+                <textarea id="clinicLocationEn" rows="2" class="w-full border-2 border-gray-200 rounded-xl px-4 py-2 focus:outline-none focus:border-brandGreen transition"></textarea>
             </div>
             <div class="bg-gray-50 rounded-xl p-4 space-y-3">
                 <div class="flex gap-2 items-center mb-1"><span class="text-sm font-bold text-gray-700">اسم القابلة/المسؤولة</span><span class="text-xs px-2 py-0.5 rounded bg-emerald-100 text-emerald-700 font-bold">AR</span></div>
-                <input id="branchMidwifeAr" type="text" class="w-full border-2 border-gray-200 rounded-xl px-4 py-2 focus:outline-none focus:border-brandGreen transition">
+                <input id="clinicMidwifeAr" type="text" class="w-full border-2 border-gray-200 rounded-xl px-4 py-2 focus:outline-none focus:border-brandGreen transition">
                 <div class="flex gap-2 items-center mb-1"><span class="text-sm font-bold text-gray-700">Sage-femme</span><span class="text-xs px-2 py-0.5 rounded bg-blue-100 text-blue-700 font-bold">FR</span></div>
-                <input id="branchMidwifeFr" type="text" class="w-full border-2 border-gray-200 rounded-xl px-4 py-2 focus:outline-none focus:border-brandGreen transition">
+                <input id="clinicMidwifeFr" type="text" class="w-full border-2 border-gray-200 rounded-xl px-4 py-2 focus:outline-none focus:border-brandGreen transition">
                 <div class="flex gap-2 items-center mb-1"><span class="text-sm font-bold text-gray-700">Midwife</span><span class="text-xs px-2 py-0.5 rounded bg-purple-100 text-purple-700 font-bold">EN</span></div>
-                <input id="branchMidwifeEn" type="text" class="w-full border-2 border-gray-200 rounded-xl px-4 py-2 focus:outline-none focus:border-brandGreen transition">
+                <input id="clinicMidwifeEn" type="text" class="w-full border-2 border-gray-200 rounded-xl px-4 py-2 focus:outline-none focus:border-brandGreen transition">
             </div>
-            <div><label class="block text-sm font-bold text-gray-700 mb-2">أرقام الهواتف (مفصولة بفواصل)</label><input id="branchPhones" type="text" placeholder="+222 XX XX XX XX, +222 YY YY YY YY" class="w-full border-2 border-gray-200 rounded-xl px-4 py-3 focus:outline-none focus:border-brandGreen transition bg-gray-50"></div>
-            <div><label class="block text-sm font-bold text-gray-700 mb-2">صورة (اختياري)</label><input id="branchImage" type="file" accept="image/*" class="w-full border-2 border-gray-200 rounded-xl px-4 py-3 focus:outline-none focus:border-brandGreen transition bg-gray-50"><div id="branchImagePreview" class="mt-2"></div></div>
+            <div><label class="block text-sm font-bold text-gray-700 mb-2">أرقام الهواتف (مفصولة بفواصل)</label><input id="clinicPhones" type="text" placeholder="+222 XX XX XX XX, +222 YY YY YY YY" class="w-full border-2 border-gray-200 rounded-xl px-4 py-3 focus:outline-none focus:border-brandGreen transition bg-gray-50"></div>
+            <div><label class="block text-sm font-bold text-gray-700 mb-2">صورة (اختياري)</label><input id="clinicImage" type="file" accept="image/*" class="w-full border-2 border-gray-200 rounded-xl px-4 py-3 focus:outline-none focus:border-brandGreen transition bg-gray-50"><div id="clinicImagePreview" class="mt-2"></div></div>
             <div class="flex gap-3 pt-2">
                 <button type="submit" class="flex-1 bg-brandGreen text-white py-3 rounded-xl font-bold hover:bg-brandDark transition">حفظ</button>
-                <button type="button" onclick="closeModal('branchModal')" class="px-6 py-3 border-2 border-gray-200 rounded-xl font-bold text-gray-600 hover:bg-gray-50 transition">إلغاء</button>
+                <button type="button" onclick="closeModal('clinicModal')" class="px-6 py-3 border-2 border-gray-200 rounded-xl font-bold text-gray-600 hover:bg-gray-50 transition">إلغاء</button>
             </div>
         </form>
     </div>
@@ -995,11 +995,11 @@ function showTab(tab) {
     document.getElementById('tab-' + tab)?.classList.add('active');
     document.querySelectorAll('.tab-link').forEach(el => el.classList.remove('bg-gray-50', 'text-brandDark'));
     document.querySelectorAll(`.tab-link[data-tab="${tab}"]`).forEach(el => el.classList.add('bg-gray-50', 'text-brandDark'));
-    const titles = { dashboard: 'الرئيسية', news: 'الأخبار والأنشطة', gallery: 'معرض الصور', programs: 'البرامج', slider: 'السلايدر', branches: 'العيادات', navbar: 'القوائم', documents: 'الوثائق', excellence: 'مركز الإمتياز', content: 'تعديل النصوص', social: 'التواصل الاجتماعي', messages: 'الرسائل', settings: 'الإعدادات' };
+    const titles = { dashboard: 'الرئيسية', news: 'الأخبار والأنشطة', gallery: 'معرض الصور', programs: 'البرامج', slider: 'السلايدر', cliniques: 'العيادات', navbar: 'القوائم', documents: 'الوثائق', excellence: 'مركز الإمتياز', content: 'تعديل النصوص', social: 'التواصل الاجتماعي', messages: 'الرسائل', settings: 'الإعدادات' };
     document.getElementById('pageTitle').textContent = titles[tab] || tab;
     if (tab === 'content') loadContentEditor();
     if (tab === 'social') loadSocialLinks();
-    if (tab === 'branches') loadBranches();
+    if (tab === 'cliniques') loadClinics();
     if (tab === 'slider') loadSlides();
     if (tab === 'excellence') loadMgf();
 }
@@ -1033,7 +1033,7 @@ async function loadAllData() {
         renderGallery(data.gallery || []);
         renderPrograms(data.programs || []);
         loadSlides();
-        loadBranches();
+        loadClinics();
         renderNavbar(data.navbar || []);
         renderDocs(data.documents || []);
         renderMessages(data.messages || []);
@@ -1041,16 +1041,16 @@ async function loadAllData() {
     } catch(e) { console.error(e); }
 }
 
-// ─── Branches (same endpoint & structure as the public site) ─
-// Reads GET /api/branches -> { branches: [...] } so the admin table and the
+// ─── Cliniques (same endpoint & structure as the public site) ─
+// Reads GET /api/cliniques -> { cliniques: [...] } so the admin table and the
 // homepage always show the exact same data (Redis-backed / defaults).
-async function loadBranches() {
+async function loadClinics() {
     try {
-        const res = await fetch(API + '/branches', { cache: 'no-store' });
+        const res = await fetch(API + '/cliniques', { cache: 'no-store' });
         if (!res.ok) throw new Error('HTTP ' + res.status);
         const data = await res.json();
-        renderBranches(data.branches || []);
-    } catch(e) { console.error('Failed to load branches:', e); }
+        renderClinics(data.cliniques || []);
+    } catch(e) { console.error('Failed to load clinics:', e); }
 }
 
 // ─── Slider (same endpoint & structure as the public site) ─
@@ -1333,85 +1333,85 @@ document.getElementById('sliderImage').addEventListener('change', function() {
     else preview.innerHTML = '';
 });
 
-// ─── BRANCHES ─────────────────────────────
-function renderBranches(items) {
-    const tb = document.getElementById('branchesTableBody');
+// ─── CLINIQUES ─────────────────────────────
+function renderClinics(items) {
+    const tb = document.getElementById('clinicsTableBody');
     if (!items.length) { tb.innerHTML = '<tr><td colspan="3" class="text-center text-gray-400 py-12">لا توجد عيادات. أضف أول عيادة الآن!</td></tr>'; return; }
     tb.innerHTML = items.map(b => `
         <tr class="border-b hover:bg-gray-50">
             <td class="px-6 py-4 font-bold">${b.name?.ar || b.name?.fr || b.name?.en || ''}</td>
             <td class="px-6 py-4 text-gray-500 text-sm hidden md:table-cell">${b.location?.ar || b.location?.fr || b.location?.en || ''}</td>
             <td class="px-6 py-4 whitespace-nowrap">
-                <button onclick="editBranch('${b.id}')" class="text-brandGreen hover:text-brandDark ml-2"><i class="fas fa-edit"></i></button>
-                <button onclick="deleteBranch('${b.id}')" class="text-red-500 hover:text-red-700"><i class="fas fa-trash"></i></button>
+                <button onclick="editClinic('${b.id}')" class="text-brandGreen hover:text-brandDark ml-2"><i class="fas fa-edit"></i></button>
+                <button onclick="deleteClinic('${b.id}')" class="text-red-500 hover:text-red-700"><i class="fas fa-trash"></i></button>
             </td>
         </tr>
     `).join('');
 }
 
-function openBranchModal(item) {
-    document.getElementById('branchModalTitle').textContent = item ? 'تعديل العيادة' : 'إضافة عيادة';
-    document.getElementById('branchId').value = item ? item.id : '';
-    document.getElementById('branchNameAr').value = item ? (item.name?.ar || '') : '';
-    document.getElementById('branchNameFr').value = item ? (item.name?.fr || '') : '';
-    document.getElementById('branchNameEn').value = item ? (item.name?.en || '') : '';
-    document.getElementById('branchFounded').value = item ? (item.founded || '') : '';
-    document.getElementById('branchGps').value = item ? (item.gps || '') : '';
-    document.getElementById('branchLocationAr').value = item ? (item.location?.ar || '') : '';
-    document.getElementById('branchLocationFr').value = item ? (item.location?.fr || '') : '';
-    document.getElementById('branchLocationEn').value = item ? (item.location?.en || '') : '';
-    document.getElementById('branchMidwifeAr').value = item ? (item.midwife?.ar || '') : '';
-    document.getElementById('branchMidwifeFr').value = item ? (item.midwife?.fr || '') : '';
-    document.getElementById('branchMidwifeEn').value = item ? (item.midwife?.en || '') : '';
-    document.getElementById('branchPhones').value = item ? (item.phones || []).join(', ') : '';
-    document.getElementById('branchImage').value = '';
-    document.getElementById('branchImagePreview').innerHTML = item && item.image ? `<img src="${item.image}" class="preview-img">` : '';
-    openModal('branchModal');
+function openClinicModal(item) {
+    document.getElementById('clinicModalTitle').textContent = item ? 'تعديل العيادة' : 'إضافة عيادة';
+    document.getElementById('clinicId').value = item ? item.id : '';
+    document.getElementById('clinicNameAr').value = item ? (item.name?.ar || '') : '';
+    document.getElementById('clinicNameFr').value = item ? (item.name?.fr || '') : '';
+    document.getElementById('clinicNameEn').value = item ? (item.name?.en || '') : '';
+    document.getElementById('clinicFounded').value = item ? (item.founded || '') : '';
+    document.getElementById('clinicGps').value = item ? (item.gps || '') : '';
+    document.getElementById('clinicLocationAr').value = item ? (item.location?.ar || '') : '';
+    document.getElementById('clinicLocationFr').value = item ? (item.location?.fr || '') : '';
+    document.getElementById('clinicLocationEn').value = item ? (item.location?.en || '') : '';
+    document.getElementById('clinicMidwifeAr').value = item ? (item.midwife?.ar || '') : '';
+    document.getElementById('clinicMidwifeFr').value = item ? (item.midwife?.fr || '') : '';
+    document.getElementById('clinicMidwifeEn').value = item ? (item.midwife?.en || '') : '';
+    document.getElementById('clinicPhones').value = item ? (item.phones || []).join(', ') : '';
+    document.getElementById('clinicImage').value = '';
+    document.getElementById('clinicImagePreview').innerHTML = item && item.image ? `<img src="${item.image}" class="preview-img">` : '';
+    openModal('clinicModal');
 }
 
-document.getElementById('branchForm').addEventListener('submit', async (e) => {
+document.getElementById('clinicForm').addEventListener('submit', async (e) => {
     e.preventDefault();
-    const id = document.getElementById('branchId').value;
+    const id = document.getElementById('clinicId').value;
     const formData = new FormData();
-    formData.append('name_ar', document.getElementById('branchNameAr').value);
-    formData.append('name_fr', document.getElementById('branchNameFr').value);
-    formData.append('name_en', document.getElementById('branchNameEn').value);
-    formData.append('founded', document.getElementById('branchFounded').value);
-    formData.append('gps', document.getElementById('branchGps').value);
-    formData.append('location_ar', document.getElementById('branchLocationAr').value);
-    formData.append('location_fr', document.getElementById('branchLocationFr').value);
-    formData.append('location_en', document.getElementById('branchLocationEn').value);
-    formData.append('midwife_ar', document.getElementById('branchMidwifeAr').value);
-    formData.append('midwife_fr', document.getElementById('branchMidwifeFr').value);
-    formData.append('midwife_en', document.getElementById('branchMidwifeEn').value);
-    formData.append('phones', document.getElementById('branchPhones').value);
-    const fileInput = document.getElementById('branchImage');
+    formData.append('name_ar', document.getElementById('clinicNameAr').value);
+    formData.append('name_fr', document.getElementById('clinicNameFr').value);
+    formData.append('name_en', document.getElementById('clinicNameEn').value);
+    formData.append('founded', document.getElementById('clinicFounded').value);
+    formData.append('gps', document.getElementById('clinicGps').value);
+    formData.append('location_ar', document.getElementById('clinicLocationAr').value);
+    formData.append('location_fr', document.getElementById('clinicLocationFr').value);
+    formData.append('location_en', document.getElementById('clinicLocationEn').value);
+    formData.append('midwife_ar', document.getElementById('clinicMidwifeAr').value);
+    formData.append('midwife_fr', document.getElementById('clinicMidwifeFr').value);
+    formData.append('midwife_en', document.getElementById('clinicMidwifeEn').value);
+    formData.append('phones', document.getElementById('clinicPhones').value);
+    const fileInput = document.getElementById('clinicImage');
     if (fileInput.files[0]) formData.append('image', await compressImage(fileInput.files[0]));
-    const url = id ? API + '/branches-with-image/' + id : API + '/branches-with-image';
+    const url = id ? API + '/cliniques-with-image/' + id : API + '/cliniques-with-image';
     const method = id ? 'PUT' : 'POST';
     try {
         const res = await fetch(url, { method, body: formData });
         const result = await res.json();
-        if (result.success) { showToast(id ? 'تم تحديث العيادة' : 'تم إضافة العيادة'); closeModal('branchModal'); loadAllData(); }
+        if (result.success) { showToast(id ? 'تم تحديث العيادة' : 'تم إضافة العيادة'); closeModal('clinicModal'); loadAllData(); }
         else showToast('خطأ: ' + (result.error || ''));
     } catch(e) { showToast('خطأ في الاتصال'); }
 });
 
-async function editBranch(id) {
-    const res = await fetch(API + '/branches');
+async function editClinic(id) {
+    const res = await fetch(API + '/cliniques');
     const data = await res.json();
-    const item = (data.branches || []).find(b => b.id === id);
-    if (item) openBranchModal(item);
+    const item = (data.cliniques || []).find(b => b.id === id);
+    if (item) openClinicModal(item);
 }
 
-async function deleteBranch(id) {
+async function deleteClinic(id) {
     if (!confirm('حذف هذه العيادة؟')) return;
-    const res = await fetch(API + '/content/branches/' + id, { method: 'DELETE' });
+    const res = await fetch(API + '/content/cliniques/' + id, { method: 'DELETE' });
     if ((await res.json()).success) { showToast('تم الحذف'); loadAllData(); }
 }
 
-document.getElementById('branchImage').addEventListener('change', function() {
-    const preview = document.getElementById('branchImagePreview');
+document.getElementById('clinicImage').addEventListener('change', function() {
+    const preview = document.getElementById('clinicImagePreview');
     if (this.files[0]) { const reader = new FileReader(); reader.onload = e => { preview.innerHTML = `<img src="${e.target.result}" class="preview-img">`; }; reader.readAsDataURL(this.files[0]); }
     else preview.innerHTML = '';
 });

@@ -70,10 +70,10 @@
             .slider-arrow.prev { right: 10px; }
             .slider-arrow.next { left: 10px; }
         }
-        /* Branch Modal */
+        /* Clinic Modal */
 .clinic-card { cursor: pointer; transition: all 0.3s; }
 .clinic-card:hover { transform: translateY(-5px); box-shadow: 0 10px 30px -10px rgba(0,0,0,0.2); }
-        .branch-modal-content { max-height: 80vh; overflow-y: auto; }
+        .clinic-modal-content { max-height: 80vh; overflow-y: auto; }
     </style>
 </head>
 <body class="bg-white text-gray-800">
@@ -136,7 +136,7 @@
         <div class="container mx-auto px-6">
             <div class="grid grid-cols-2 md:grid-cols-4 gap-8 text-center text-white">
                 <div class="fade-up"><div class="text-4xl font-black mb-2">35+</div><div class="text-sm font-semibold opacity-90" data-i18n="stat_years">سنة من العمل</div></div>
-                <div class="fade-up"><div id="statBranchesCount" class="text-4xl font-black mb-2">0</div><div class="text-sm font-semibold opacity-90" data-i18n="stat_branches">فروع في الولايات</div></div>
+                <div class="fade-up"><div id="statClinicsCount" class="text-4xl font-black mb-2">0</div><div class="text-sm font-semibold opacity-90" data-i18n="stat_clinics">عيادات في الولايات</div></div>
                 <div class="fade-up"><div class="text-4xl font-black mb-2">50K+</div><div class="text-sm font-semibold opacity-90" data-i18n="stat_beneficiaries">مستفيد</div></div>
                 <div class="fade-up"><div class="text-4xl font-black mb-2">120+</div><div class="text-sm font-semibold opacity-90" data-i18n="stat_workers">عامل صحي</div></div>
             </div>
@@ -217,11 +217,11 @@
         </div>
     </section>
 
-    <!-- Branches -->
-    <section id="branches" class="py-20 bg-gray-50">
+    <!-- Cliniques -->
+    <section id="cliniques" class="py-20 bg-gray-50">
         <div class="container mx-auto px-6">
             <div class="text-center mb-16 fade-up">
-                <h2 class="text-3xl md:text-4xl font-black text-brandDark" data-i18n="branches_badge">عياداتنا</h2>
+                <h2 class="text-3xl md:text-4xl font-black text-brandDark" data-i18n="clinics_badge">عياداتنا</h2>
                 <div class="strategy-line mx-auto mt-4"></div>
             </div>
             <div id="clinicsGrid" class="grid md:grid-cols-2 lg:grid-cols-4 gap-6">
@@ -230,11 +230,11 @@
         </div>
     </section>
 
-    <!-- Branch Detail Modal -->
-    <div id="branchModal" class="modal fixed inset-0 bg-black/60 z-50 flex items-center justify-center p-4 backdrop-blur-sm">
-        <div class="bg-white rounded-3xl p-8 w-full max-w-lg relative shadow-2xl branch-modal-content">
-            <button id="closeBranchModal" class="absolute top-4 left-4 text-gray-400 hover:text-gray-600 transition"><i class="fas fa-times text-xl"></i></button>
-            <div id="branchModalContent"></div>
+    <!-- Clinic Detail Modal -->
+    <div id="clinicModal" class="modal fixed inset-0 bg-black/60 z-50 flex items-center justify-center p-4 backdrop-blur-sm">
+        <div class="bg-white rounded-3xl p-8 w-full max-w-lg relative shadow-2xl clinic-modal-content">
+            <button id="closeClinicModal" class="absolute top-4 left-4 text-gray-400 hover:text-gray-600 transition"><i class="fas fa-times text-xl"></i></button>
+            <div id="clinicModalContent"></div>
         </div>
     </div>
 
@@ -270,7 +270,7 @@
                     <form id="contactForm" class="bg-gray-50 p-8 rounded-2xl shadow-sm space-y-5">
                         <div><label class="block text-sm font-bold text-brandDark mb-2" data-i18n="form_name_label">الاسم الكامل</label><input id="cf_name" type="text" class="w-full border-2 border-gray-200 rounded-xl px-4 py-3 focus:outline-none focus:border-brandGreen transition bg-white" required></div>
                         <div><label class="block text-sm font-bold text-brandDark mb-2" data-i18n="form_email_label">البريد الإلكتروني</label><input id="cf_email" type="email" class="w-full border-2 border-gray-200 rounded-xl px-4 py-3 focus:outline-none focus:border-brandGreen transition bg-white" required></div>
-                        <div><label class="block text-sm font-bold text-brandDark mb-2" data-i18n="form_subject_label">الموضوع</label><select id="cf_subject" class="w-full border-2 border-gray-200 rounded-xl px-4 py-3 focus:outline-none focus:border-brandGreen transition bg-white"><option value="general" data-i18n-option="form_subject_general">استفسار عام</option><option value="partnership" data-i18n-option="form_subject_partnership">طلب شراكة</option><option value="volunteer" data-i18n-option="form_subject_volunteer">التطوع</option><option value="complaint" data-i18n-option="form_subject_complaint">الشكاوى والمقترحات</option></select></div>
+                        <div><label class="block text-sm font-bold text-brandDark mb-2" data-i18n="form_subject_label">الموضوع</label><select id="cf_subject" class="w-full border-2 border-gray-200 rounded-xl px-4 py-3 focus:outline-none focus:border-brandGreen transition bg-white"><option value="general" data-i18n-option="form_subject_general">استفسار عام</option><option value="partnership" data-i18n-option="form_subject_partnership">طلب شراكة</option><option value="volunteer" data-i18n-option="form_subject_volunteer">التطوع</option><option value="complaint" data-i18n-option="form_subject_complaint">الشكاوى والمقترحات</option><option value="suggestion" data-i18n-option="form_subject_suggestion">اقتراح لتطوير الموقع</option></select></div>
                         <div><label class="block text-sm font-bold text-brandDark mb-2" data-i18n="form_message_label">الرسالة</label><textarea id="cf_message" rows="4" class="w-full border-2 border-gray-200 rounded-xl px-4 py-3 focus:outline-none focus:border-brandGreen transition bg-white resize-none" required></textarea></div>
                         <button type="submit" class="w-full bg-brandGreen text-white py-4 rounded-xl font-bold hover:bg-brandDark transition text-lg"><i class="fas fa-paper-plane ml-2"></i> <span data-i18n="form_submit">إرسال الرسالة</span></button>
                     </form>
@@ -324,7 +324,7 @@
                 nav_home: 'الرئيسية', nav_strategy: 'استراتيجيتنا', nav_programs: 'البرامج',
                 nav_news: 'الأخبار', nav_gallery: 'المعرض', nav_contact: 'اتصل بنا', nav_admin: 'الإدارة',
                 hero_badge: 'تأسست سنة 1988', hero_btn_strategy: 'استراتيجيتنا  <i class="fas fa-arrow-left"></i>', hero_btn_programs: 'برامجنا',
-                stat_years: 'سنة من العمل', stat_branches: 'فروع في الولايات', stat_beneficiaries: 'مستفيد', stat_workers: 'عامل صحي',
+                stat_years: 'سنة من العمل', stat_clinics: 'عيادات في الولايات', stat_beneficiaries: 'مستفيد', stat_workers: 'عامل صحي',
                 strategy_badge: 'استراتيجيتنا', strategy_title: 'استراتيجية AMPF للفترة 2023-2028',
                 strategy_subtitle: 'أربعة محاور استراتيجية لتعزيز الصحة والحقوق الجنسية والإنجابية في موريتانيا',
                 strategy_pdf_btn: 'تحميل الوثيقة (PDF)',
@@ -334,17 +334,17 @@
                 programs_subtitle: 'حزمة الخدمات الـ 14 المعتمدة لدى الجمعية الموريتانية لترقية الأسرة',
                 news_badge: 'آخر الأخبار', news_title: 'أخبارنا وأنشطتنا',
                 gallery_badge: 'معرض الصور', gallery_title: 'صور من أنشطتنا',
-                branches_badge: 'عياداتنا', branches_title: 'شبكة العيادات',
-                branches_empty: 'لا توجد فروع بعد',
-                branches_detail_founded: 'سنة التأسيس', branches_detail_midwife: 'القابلة/المسؤولة',
-                branches_detail_phones: 'الهواتف', branches_detail_location: 'الموقع',
-                branches_detail_gps: 'الإحداثيات',
+                clinics_badge: 'عياداتنا', clinics_title: 'شبكة العيادات',
+                clinics_empty: 'لا توجد عيادات بعد',
+                clinics_detail_founded: 'سنة التأسيس', clinics_detail_midwife: 'القابلة/المسؤولة',
+                clinics_detail_phones: 'الهواتف', clinics_detail_location: 'الموقع',
+                clinics_detail_gps: 'الإحداثيات',
                 contact_badge: 'تواصل معنا', contact_title: 'يسعدنا تواصلكم',
                 contact_address_label: 'العنوان', contact_phone_label: 'الهاتف', contact_email_label: 'البريد الإلكتروني',
                 form_name_label: 'الاسم الكامل', form_email_label: 'البريد الإلكتروني', form_subject_label: 'الموضوع',
                 form_message_label: 'الرسالة', form_submit: 'إرسال الرسالة',
                 form_subject_general: 'استفسار عام', form_subject_partnership: 'طلب شراكة',
-                form_subject_volunteer: 'التطوع', form_subject_complaint: 'الشكاوى والمقترحات',
+                form_subject_volunteer: 'التطوع', form_subject_complaint: 'الشكاوى والمقترحات', form_subject_suggestion: 'اقتراح لتطوير الموقع',
                 footer_about: 'منظمة غير حكومية تسعى لترقية الصحة الإنجابية وتنظيم الأسرة ودعم الفئات المحتاجة في موريتانيا منذ 1988.',
                 footer_quick_links: 'روابط سريعة', footer_services: 'خدماتنا', footer_contact_us: 'تواصل معنا',
                 footer_copyright: 'جميع الحقوق محفوظة © الجمعية الموريتانية لترقية الأسرة 2026',
@@ -377,7 +377,7 @@
                 nav_home: 'Accueil', nav_strategy: 'Notre Stratégie', nav_programs: 'Programmes',
                 nav_news: 'Actualités', nav_gallery: 'Galerie', nav_contact: 'Contact', nav_admin: 'Admin',
                 hero_badge: 'Fondée en 1988', hero_btn_strategy: 'Notre Stratégie  <i class="fas fa-arrow-right"></i>', hero_btn_programs: 'Nos Programmes',
-                stat_years: 'ans d\'expérience', stat_branches: 'branches', stat_beneficiaries: 'bénéficiaires', stat_workers: 'agents de santé',
+                stat_years: 'ans d\'expérience', stat_clinics: 'cliniques', stat_beneficiaries: 'bénéficiaires', stat_workers: 'agents de santé',
                 strategy_badge: 'Notre Stratégie', strategy_title: 'Stratégie AMPF 2023-2028',
                 strategy_subtitle: 'Quatre piliers stratégiques pour promouvoir la santé et les droits sexuels et reproductifs en Mauritanie',
                 strategy_pdf_btn: 'Télécharger le document (PDF)',
@@ -387,17 +387,17 @@
                 programs_subtitle: 'Le package des 14 services officiels de l\'AMPF',
                 news_badge: 'Dernières nouvelles', news_title: 'Nos actualités et activités',
                 gallery_badge: 'Galerie photos', gallery_title: 'Photos de nos activités',
-                branches_badge: 'NOS CLINIQUES', branches_title: 'Réseau des cliniques',
-                branches_empty: 'Aucune branche pour le moment',
-                branches_detail_founded: 'Année de création', branches_detail_midwife: 'Sage-femme/Responsable',
-                branches_detail_phones: 'Téléphones', branches_detail_location: 'Emplacement',
-                branches_detail_gps: 'Coordonnées GPS',
+                clinics_badge: 'NOS CLINIQUES', clinics_title: 'Réseau des cliniques',
+                clinics_empty: 'Aucune clinique pour le moment',
+                clinics_detail_founded: 'Année de création', clinics_detail_midwife: 'Sage-femme/Responsable',
+                clinics_detail_phones: 'Téléphones', clinics_detail_location: 'Emplacement',
+                clinics_detail_gps: 'Coordonnées GPS',
                 contact_badge: 'Contactez-nous', contact_title: 'Nous sommes à votre écoute',
                 contact_address_label: 'Adresse', contact_phone_label: 'Téléphone', contact_email_label: 'Email',
                 form_name_label: 'Nom complet', form_email_label: 'Email', form_subject_label: 'Sujet',
                 form_message_label: 'Message', form_submit: 'Envoyer le message',
                 form_subject_general: 'Demande générale', form_subject_partnership: 'Demande de partenariat',
-                form_subject_volunteer: 'Bénévolat', form_subject_complaint: 'Réclamations et suggestions',
+                form_subject_volunteer: 'Bénévolat', form_subject_complaint: 'Réclamations et suggestions', form_subject_suggestion: 'Votre suggestion pour améliorer ce site',
                 footer_about: 'ONG œuvrant pour la promotion de la santé reproductive, le planning familial et le soutien aux personnes nécessiteuses en Mauritanie depuis 1988.',
                 footer_quick_links: 'Liens rapides', footer_services: 'Nos services', footer_contact_us: 'Contact',
                 footer_copyright: 'Tous droits réservés © AMPF 2026',
@@ -430,7 +430,7 @@
                 nav_home: 'Home', nav_strategy: 'Our Strategy', nav_programs: 'Programs',
                 nav_news: 'News', nav_gallery: 'Gallery', nav_contact: 'Contact', nav_admin: 'Admin',
                 hero_badge: 'Founded in 1988', hero_btn_strategy: 'Our Strategy  <i class="fas fa-arrow-right"></i>', hero_btn_programs: 'Our Programs',
-                stat_years: 'years of experience', stat_branches: 'branches', stat_beneficiaries: 'beneficiaries', stat_workers: 'health workers',
+                stat_years: 'years of experience', stat_clinics: 'clinics', stat_beneficiaries: 'beneficiaries', stat_workers: 'health workers',
                 strategy_badge: 'Our Strategy', strategy_title: 'AMPF Strategy 2023-2028',
                 strategy_subtitle: 'Four strategic pillars to promote sexual and reproductive health and rights in Mauritania',
                 strategy_pdf_btn: 'Download Document (PDF)',
@@ -440,17 +440,17 @@
                 programs_subtitle: 'The official 14-services package of AMPF',
                 news_badge: 'Latest News', news_title: 'Our news and activities',
                 gallery_badge: 'Photo Gallery', gallery_title: 'Photos of our activities',
-                branches_badge: 'OUR CLINICS', branches_title: 'Clinics Network',
-                branches_empty: 'No branches yet',
-                branches_detail_founded: 'Founded', branches_detail_midwife: 'Midwife/Responsible',
-                branches_detail_phones: 'Phones', branches_detail_location: 'Location',
-                branches_detail_gps: 'GPS Coordinates',
+                clinics_badge: 'OUR CLINICS', clinics_title: 'Clinics Network',
+                clinics_empty: 'No clinics yet',
+                clinics_detail_founded: 'Founded', clinics_detail_midwife: 'Midwife/Responsible',
+                clinics_detail_phones: 'Phones', clinics_detail_location: 'Location',
+                clinics_detail_gps: 'GPS Coordinates',
                 contact_badge: 'Contact Us', contact_title: 'We are happy to hear from you',
                 contact_address_label: 'Address', contact_phone_label: 'Phone', contact_email_label: 'Email',
                 form_name_label: 'Full Name', form_email_label: 'Email', form_subject_label: 'Subject',
                 form_message_label: 'Message', form_submit: 'Send Message',
                 form_subject_general: 'General Inquiry', form_subject_partnership: 'Partnership Request',
-                form_subject_volunteer: 'Volunteering', form_subject_complaint: 'Complaints & Suggestions',
+                form_subject_volunteer: 'Volunteering', form_subject_complaint: 'Complaints & Suggestions', form_subject_suggestion: 'Suggestion to improve the website',
                 footer_about: 'An NGO working to promote reproductive health, family planning, and support for needy groups in Mauritania since 1988.',
                 footer_quick_links: 'Quick Links', footer_services: 'Our Services', footer_contact_us: 'Contact Us',
                 footer_copyright: 'All rights reserved © AMPF 2026',
@@ -591,7 +591,7 @@
         ];
 
         let _contentData = null;
-        let _branchesData = [];
+        let _clinicsData = [];
         let _sliderData = [];
 
         function renderContent() {
@@ -715,8 +715,8 @@
 
             // Slider (rendered from the dedicated /api/slides endpoint)
             renderSlider(_sliderData);
-            // Clinics (rendered from the dedicated /api/branches endpoint)
-            renderClinics(_branchesData);
+            // Clinics (rendered from the dedicated /api/cliniques endpoint)
+            renderClinics(_clinicsData);
             // Navbar
             renderNavbar(data.navbar);
 
@@ -785,11 +785,11 @@
         document.getElementById('sliderPrev')?.addEventListener('click', prevSlide);
         document.getElementById('sliderNext')?.addEventListener('click', nextSlide);
 
-        // ─── Branches ────────────────────────────────────
+        // ─── Cliniques ────────────────────────────────────
         function renderClinics(clinics) {
             const container = document.getElementById('clinicsGrid');
             if (!clinics || !clinics.length) {
-                container.innerHTML = `<div class="col-span-full text-center text-gray-400 py-8">${t('branches_empty')}</div>`;
+                container.innerHTML = `<div class="col-span-full text-center text-gray-400 py-8">${t('clinics_empty')}</div>`;
                 return;
             }
             const clinicIcons = ['fa-map-marker-alt', 'fa-anchor', 'fa-tree', 'fa-water', 'fa-home', 'fa-city', 'fa-mosque', 'fa-school'];
@@ -808,33 +808,33 @@
                 card.addEventListener('click', () => {
                     const id = card.dataset.id;
                     const clinic = clinics.find(b => b.id === id);
-                    if (clinic) showBranchModal(clinic);
+                    if (clinic) showClinicModal(clinic);
                 });
             });
             // Re-run observer so newly rendered fade-up cards become visible
             document.querySelectorAll('.fade-up').forEach(el => observer.observe(el));
         }
 
-        function showBranchModal(b) {
-            const content = document.getElementById('branchModalContent');
+        function showClinicModal(b) {
+            const content = document.getElementById('clinicModalContent');
             content.innerHTML = `
                 <div class="text-center mb-6">
                     ${b.image ? `<img src="${b.image}" alt="${getLocalizedText(b.name)}" class="w-full h-48 object-cover rounded-xl mb-4">` : `<div class="w-20 h-20 bg-brandLight rounded-2xl flex items-center justify-center mx-auto mb-4"><i class="fas fa-map-marker-alt text-brandGreen text-3xl"></i></div>`}
                     <h3 class="text-2xl font-black text-brandDark">${getLocalizedText(b.name)}</h3>
                 </div>
                 <div class="space-y-4 text-sm">
-                    ${b.founded ? `<div class="flex items-center gap-3"><div class="w-10 h-10 bg-emerald-100 rounded-xl flex items-center justify-center"><i class="fas fa-calendar text-brandGreen"></i></div><div><div class="font-bold text-brandDark">${t('branches_detail_founded')}</div><div class="text-gray-600">${b.founded}</div></div></div>` : ''}
-                    ${getLocalizedText(b.location) ? `<div class="flex items-center gap-3"><div class="w-10 h-10 bg-blue-100 rounded-xl flex items-center justify-center"><i class="fas fa-map-pin text-blue-600"></i></div><div><div class="font-bold text-brandDark">${t('branches_detail_location')}</div><div class="text-gray-600">${getLocalizedText(b.location)}</div></div></div>` : ''}
-                    ${b.gps ? `<div class="flex items-center gap-3"><div class="w-10 h-10 bg-purple-100 rounded-xl flex items-center justify-center"><i class="fas fa-globe text-purple-600"></i></div><div><div class="font-bold text-brandDark">${t('branches_detail_gps')}</div><div class="text-gray-600">${b.gps}</div></div></div>` : ''}
-                    ${getLocalizedText(b.midwife) ? `<div class="flex items-center gap-3"><div class="w-10 h-10 bg-pink-100 rounded-xl flex items-center justify-center"><i class="fas fa-female text-pink-500"></i></div><div><div class="font-bold text-brandDark">${t('branches_detail_midwife')}</div><div class="text-gray-600">${getLocalizedText(b.midwife)}</div></div></div>` : ''}
-                    ${b.phones && b.phones.length ? `<div class="flex items-center gap-3"><div class="w-10 h-10 bg-yellow-100 rounded-xl flex items-center justify-center"><i class="fas fa-phone text-yellow-600"></i></div><div><div class="font-bold text-brandDark">${t('branches_detail_phones')}</div><div class="text-gray-600">${b.phones.join(' - ')}</div></div></div>` : ''}
+                    ${b.founded ? `<div class="flex items-center gap-3"><div class="w-10 h-10 bg-emerald-100 rounded-xl flex items-center justify-center"><i class="fas fa-calendar text-brandGreen"></i></div><div><div class="font-bold text-brandDark">${t('clinics_detail_founded')}</div><div class="text-gray-600">${b.founded}</div></div></div>` : ''}
+                    ${getLocalizedText(b.location) ? `<div class="flex items-center gap-3"><div class="w-10 h-10 bg-blue-100 rounded-xl flex items-center justify-center"><i class="fas fa-map-pin text-blue-600"></i></div><div><div class="font-bold text-brandDark">${t('clinics_detail_location')}</div><div class="text-gray-600">${getLocalizedText(b.location)}</div></div></div>` : ''}
+                    ${b.gps ? `<div class="flex items-center gap-3"><div class="w-10 h-10 bg-purple-100 rounded-xl flex items-center justify-center"><i class="fas fa-globe text-purple-600"></i></div><div><div class="font-bold text-brandDark">${t('clinics_detail_gps')}</div><div class="text-gray-600">${b.gps}</div></div></div>` : ''}
+                    ${getLocalizedText(b.midwife) ? `<div class="flex items-center gap-3"><div class="w-10 h-10 bg-pink-100 rounded-xl flex items-center justify-center"><i class="fas fa-female text-pink-500"></i></div><div><div class="font-bold text-brandDark">${t('clinics_detail_midwife')}</div><div class="text-gray-600">${getLocalizedText(b.midwife)}</div></div></div>` : ''}
+                    ${b.phones && b.phones.length ? `<div class="flex items-center gap-3"><div class="w-10 h-10 bg-yellow-100 rounded-xl flex items-center justify-center"><i class="fas fa-phone text-yellow-600"></i></div><div><div class="font-bold text-brandDark">${t('clinics_detail_phones')}</div><div class="text-gray-600">${b.phones.join(' - ')}</div></div></div>` : ''}
                 </div>
             `;
-            document.getElementById('branchModal').classList.add('active');
+            document.getElementById('clinicModal').classList.add('active');
         }
 
-        document.getElementById('closeBranchModal')?.addEventListener('click', () => document.getElementById('branchModal').classList.remove('active'));
-        document.getElementById('branchModal')?.addEventListener('click', (e) => { if (e.target === e.currentTarget) e.target.classList.remove('active'); });
+        document.getElementById('closeClinicModal')?.addEventListener('click', () => document.getElementById('clinicModal').classList.remove('active'));
+        document.getElementById('clinicModal')?.addEventListener('click', (e) => { if (e.target === e.currentTarget) e.target.classList.remove('active'); });
 
         // ─── Navbar ──────────────────────────────────────
         function renderNavbar(items) {
@@ -909,19 +909,19 @@
             }
         }
 
-        // Clinics are loaded from the dedicated /api/branches endpoint so the
+        // Clinics are loaded from the dedicated /api/cliniques endpoint so the
         // section is always in sync with the admin panel (no hardcoded data).
         async function loadClinics() {
             try {
-                const res = await fetch('/api/branches');
+                const res = await fetch('/api/cliniques');
                 if (!res.ok) throw new Error('HTTP ' + res.status);
                 const data = await res.json();
-                _branchesData = data.branches || [];
-                renderClinics(_branchesData);
-                const statEl = document.getElementById('statBranchesCount');
-                if (statEl) statEl.textContent = _branchesData.length;
+                _clinicsData = data.cliniques || [];
+                renderClinics(_clinicsData);
+                const statEl = document.getElementById('statClinicsCount');
+                if (statEl) statEl.textContent = _clinicsData.length;
             } catch (e) {
-                console.error('Failed to load branches:', e);
+                console.error('Failed to load clinics:', e);
             }
         }
 

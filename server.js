@@ -142,9 +142,9 @@ function parseStored(raw) {
     return raw;
 }
 
-// Default branches shown immediately in the admin panel (and the public site)
+// Default clinics shown immediately in the admin panel (and the public site)
 // until the site owner customises them. Seeded into Redis on first boot.
-const DEFAULT_BRANCHES = [
+const DEFAULT_CLINIQUES = [
     {
         id: '1',
         name: { ar: 'نواذيبو', fr: 'Nouadhibou', en: 'Nouadhibou' },
@@ -210,7 +210,7 @@ const DATA_DEFAULTS = {
     gallery: [],
     site_content: { socialLinks: { facebook: '', twitter: '', instagram: '', whatsapp: '' } },
     slider: [],
-    branches: DEFAULT_BRANCHES,
+    cliniques: DEFAULT_CLINIQUES,
     navbar: [],
     // ── Centre d'Excellence MGF (قسم مركز الإمتياز للقضاء على تشويه الأعضاء التناسلية للإناث) ──
     mgfContent: {
@@ -262,9 +262,21 @@ async function initStorage() {
             console.log('[AMPF] Loaded content FROM REDIS:',
                 (cData.news || []).length + ' news,',
                 (cData.gallery || []).length + ' gallery,',
-                (cData.branches || []).length + ' branches,',
+                (cData.cliniques || []).length + ' cliniques,',
                 (cData.slider || []).length + ' slider,',
                 (cData.messages || []).length + ' messages');
+
+            // ── Legacy migration ──────────────────────────────
+            // Older persisted data used the key `branches`. On first boot
+            // after the branches→cliniques rename, migrate any existing
+            // records into `cliniques` so nothing is lost, then drop the
+            // old key from the stored blob.
+            if ((cData.branches || []).length && !(cData.cliniques || []).length) {
+                cData.cliniques = cData.branches;
+                delete cData.branches;
+                await enqueueSet(contentQueue, CONTENT_KEY, cData);
+                console.log('[AMPF] Migrated existing branches data to cliniques in Redis.');
+            }
 
             // ── Programs force-sync ─────────────────────────────
             // The official 14-services package is the canonical list. If Redis
@@ -281,23 +293,23 @@ async function initStorage() {
                     curatedPrograms.length + '-services package in Redis.');
             }
 
-            // ── Clinics (branches) force-sync ───────────────────
+            // ── Cliniques force-sync ───────────────────────────
             // The 8 clinic records are the canonical seed. If Redis has an
-            // empty/missing clinics array, restore the local seed so the
-            // Clinics grid is never empty on the live site.
-            const curatedClinics = (curated && Array.isArray(curated.branches)) ? curated.branches : [];
-            const currentClinics = (cData.branches && Array.isArray(cData.branches)) ? cData.branches : [];
-            if (curatedClinics.length && !currentClinics.length) {
-                cData.branches = curatedClinics;
+            // empty/missing cliniques array, restore the local seed so the
+            // Cliniques grid is never empty on the live site.
+            const curatedCliniques = (curated && Array.isArray(curated.cliniques)) ? curated.cliniques : [];
+            const currentCliniques = (cData.cliniques && Array.isArray(cData.cliniques)) ? cData.cliniques : [];
+            if (curatedCliniques.length && !currentCliniques.length) {
+                cData.cliniques = curatedCliniques;
                 await enqueueSet(contentQueue, CONTENT_KEY, cData);
-                console.log('[AMPF] Clinics force-synced',
-                    curatedClinics.length + ' clinics in Redis.');
+                console.log('[AMPF] Cliniques force-synced',
+                    curatedCliniques.length + ' clinics in Redis.');
             }
         } else {
             const seed = readLocalFile();
             await enqueueSet(contentQueue, CONTENT_KEY, seed);
             console.log('[AMPF] Redis content key EMPTY -> seeded from local file:',
-                seed.news.length + ' news,', seed.branches.length + ' branches. (Will not overwrite again.)');
+                seed.news.length + ' news,', seed.cliniques.length + ' cliniques. (Will not overwrite again.)');
         }
 
         if (cfData && typeof cfData === 'object' && cfData.credentials) {
@@ -427,7 +439,7 @@ app.get('/api/public-content', async (req, res) => {
         documents: data.documents || [],
         gallery: data.gallery || [],
         slider: data.slider || [],
-        branches: data.branches || [],
+        cliniques: data.cliniques || [],
         navbar: data.navbar || [],
         mgf: {
             content: data.mgfContent || { logo: '', mission: {}, vision: {}, getInvolved: {}, advocacy: {} },
@@ -492,10 +504,17 @@ app.post('/api/mgf-logo', requireAuth, upload.single('logo'), async (req, res) =
     }
 });
 
-// Public: same branches data the admin panel manages (Redis-backed read/write)
+// Public: same clinics data the admin panel manages (Redis-backed read/write)
+app.get('/api/cliniques', async (req, res) => {
+    const data = await readData();
+    res.json({ cliniques: data.cliniques || [] });
+});
+
+// Backward-compatibility alias: the data used to live at /api/branches.
+// Keep serving it for old clients / bookmarks.
 app.get('/api/branches', async (req, res) => {
     const data = await readData();
-    res.json({ branches: data.branches || [] });
+    res.json({ branches: data.cliniques || [] });
 });
 
 // Public: same slider/slides data the admin panel manages (Redis-backed read/write)
@@ -735,9 +754,9 @@ app.put('/api/slider-with-image/:id', requireAuth, upload.single('image'), async
 });
 
 // =========================================================
-//  BRANCHES WITH IMAGE UPLOAD
+//  CLINIQUES WITH IMAGE UPLOAD
 // =========================================================
-app.post('/api/branches-with-image', requireAuth, upload.single('image'), async (req, res) => {
+app.post('/api/cliniques-with-image', requireAuth, upload.single('image'), async (req, res) => {
     try {
         const imageUrl = req.file ? await uploadToCloudinary(req.file) : '';
         const data = await readData();
@@ -752,8 +771,8 @@ app.post('/api/branches-with-image', requireAuth, upload.single('image'), async 
             image: imageUrl,
             createdAt: new Date().toISOString()
         };
-        if (!Array.isArray(data.branches)) data.branches = [];
-        data.branches.push(item);
+        if (!Array.isArray(data.cliniques)) data.cliniques = [];
+        data.cliniques.push(item);
         await writeData(data);
         res.json({ success: true, item });
     } catch (e) {
@@ -762,52 +781,52 @@ app.post('/api/branches-with-image', requireAuth, upload.single('image'), async 
     }
 });
 
-app.put('/api/branches-with-image/:id', requireAuth, upload.single('image'), async (req, res) => {
+app.put('/api/cliniques-with-image/:id', requireAuth, upload.single('image'), async (req, res) => {
     const data = await readData();
-    const idx = (data.branches || []).findIndex(i => i.id === req.params.id);
-    if (idx === -1) return res.status(404).json({ error: 'الفرع غير موجود' });
+    const idx = (data.cliniques || []).findIndex(i => i.id === req.params.id);
+    if (idx === -1) return res.status(404).json({ error: 'العيادة غير موجودة' });
 
     if (req.file) {
         try {
             const imageUrl = await uploadToCloudinary(req.file);
-            if (data.branches[idx].image) {
-                const pid = getFilePublicId(data.branches[idx].image);
+            if (data.cliniques[idx].image) {
+                const pid = getFilePublicId(data.cliniques[idx].image);
                 if (pid) cloudinary.uploader.destroy(pid).catch(() => {});
             }
-            data.branches[idx].image = imageUrl;
+            data.cliniques[idx].image = imageUrl;
         } catch (e) {
             console.error('[AMPF] Upload to Cloudinary failed:', e.message);
             return res.status(500).json({ error: 'فشل رفع الصورة إلى Cloudinary: ' + e.message });
         }
     }
     if (req.body.name_ar !== undefined) {
-        data.branches[idx].name = {
-            ar: req.body.name_ar || (data.branches[idx].name?.ar || ''),
-            fr: req.body.name_fr || (data.branches[idx].name?.fr || ''),
-            en: req.body.name_en || (data.branches[idx].name?.en || '')
+        data.cliniques[idx].name = {
+            ar: req.body.name_ar || (data.cliniques[idx].name?.ar || ''),
+            fr: req.body.name_fr || (data.cliniques[idx].name?.fr || ''),
+            en: req.body.name_en || (data.cliniques[idx].name?.en || '')
         };
     }
     if (req.body.location_ar !== undefined) {
-        data.branches[idx].location = {
-            ar: req.body.location_ar || (data.branches[idx].location?.ar || ''),
-            fr: req.body.location_fr || (data.branches[idx].location?.fr || ''),
-            en: req.body.location_en || (data.branches[idx].location?.en || '')
+        data.cliniques[idx].location = {
+            ar: req.body.location_ar || (data.cliniques[idx].location?.ar || ''),
+            fr: req.body.location_fr || (data.cliniques[idx].location?.fr || ''),
+            en: req.body.location_en || (data.cliniques[idx].location?.en || '')
         };
     }
     if (req.body.midwife_ar !== undefined) {
-        data.branches[idx].midwife = {
-            ar: req.body.midwife_ar || (data.branches[idx].midwife?.ar || ''),
-            fr: req.body.midwife_fr || (data.branches[idx].midwife?.fr || ''),
-            en: req.body.midwife_en || (data.branches[idx].midwife?.en || '')
+        data.cliniques[idx].midwife = {
+            ar: req.body.midwife_ar || (data.cliniques[idx].midwife?.ar || ''),
+            fr: req.body.midwife_fr || (data.cliniques[idx].midwife?.fr || ''),
+            en: req.body.midwife_en || (data.cliniques[idx].midwife?.en || '')
         };
     }
-    if (req.body.founded !== undefined) data.branches[idx].founded = req.body.founded;
-    if (req.body.gps !== undefined) data.branches[idx].gps = req.body.gps;
+    if (req.body.founded !== undefined) data.cliniques[idx].founded = req.body.founded;
+    if (req.body.gps !== undefined) data.cliniques[idx].gps = req.body.gps;
     if (req.body.phones !== undefined) {
-        data.branches[idx].phones = req.body.phones.split(',').map(p => p.trim()).filter(Boolean);
+        data.cliniques[idx].phones = req.body.phones.split(',').map(p => p.trim()).filter(Boolean);
     }
     await writeData(data);
-    res.json({ success: true, item: data.branches[idx] });
+    res.json({ success: true, item: data.cliniques[idx] });
 });
 
 // =========================================================
