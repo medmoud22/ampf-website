@@ -811,6 +811,8 @@
                     if (clinic) showBranchModal(clinic);
                 });
             });
+            // Re-run observer so newly rendered fade-up cards become visible
+            document.querySelectorAll('.fade-up').forEach(el => observer.observe(el));
         }
 
         function showBranchModal(b) {
