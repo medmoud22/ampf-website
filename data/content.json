@@ -1,6 +1,77 @@
 {
   "news": [],
-  "programs": [],
+  "programs": [
+    {
+      "id": "1",
+      "title": { "ar": "تنظيم الأسرة ومنع الحمل", "fr": "Planification familiale et contraception", "en": "Family planning and contraception" },
+      "desc": { "ar": "خدمات تنظيم الأسرة ووسائل منع الحمل الحديثة والمشورة الطبية للأزواج والأفراد.", "fr": "Services de planification familiale, contraception moderne et conseil médical pour les couples et les individus.", "en": "Family planning services, modern contraception and medical counseling for couples and individuals." }
+    },
+    {
+      "id": "2",
+      "title": { "ar": "صحة الأم", "fr": "Santé maternelle", "en": "Maternal health" },
+      "desc": { "ar": "متابعة الحمل والولادة الآمنة والرعاية قبل وبعد الولادة للحد من وفيات الأمهات.", "fr": "Suivi de grossesse, accouchement sécurisé et soins pré et postnatals pour réduire la mortalité maternelle.", "en": "Pregnancy follow-up, safe delivery and pre/postnatal care to reduce maternal mortality." }
+    },
+    {
+      "id": "3",
+      "title": { "ar": "الصحة الجنسية والإنجابية", "fr": "Santé sexuelle et reproductive", "en": "Sexual and reproductive health" },
+      "desc": { "ar": "تعزيز الحقوق والصحة الجنسية والإنجابية عبر خدمات شاملة ومشورة موثوقة.", "fr": "Promotion des droits et de la santé sexuelle et reproductive via des services complets et un conseil fiable.", "en": "Promoting sexual and reproductive health and rights through comprehensive services and trusted counseling." }
+    },
+    {
+      "id": "4",
+      "title": { "ar": "صحة الطفل", "fr": "Santé de l'enfant", "en": "Child health" },
+      "desc": { "ar": "التلقيح والفحوصات الدورية ومتابعة نمو وتطور الأطفال في مرحلة مبكرة.", "fr": "Vaccination, examens de routine et suivi de la croissance et du développement des jeunes enfants.", "en": "Vaccination, routine check-ups and early childhood growth and development monitoring." }
+    },
+    {
+      "id": "5",
+      "title": { "ar": "الوقاية من والعلاج من الأمراض المنقولة جنسياً وفيروس نقص المناعة", "fr": "Prévention et prise en charge des IST/VIH", "en": "STI/HIV prevention and care" },
+      "desc": { "ar": "الفحص والاستشارة والوقاية والعلاج للأمراض المنقولة جنسياً وفيروس نقص المناعة.", "fr": "Dépistage, conseil, prévention et traitement des IST et du VIH/SIDA.", "en": "Screening, counseling, prevention and treatment of STIs and HIV/AIDS." }
+    },
+    {
+      "id": "6",
+      "title": { "ar": "الرعاية بعد الإجهاض / حالات الإجهاض غير المكتمل", "fr": "Soins après avortement / avortements incomplets", "en": "Post-abortion care / incomplete abortions" },
+      "desc": { "ar": "علاج حالات الإجهاض غير المكتمل ومضاعفاته وتقديم الدعم النفسي والصحي بعد الإجهاض.", "fr": "Traitement des avortements incomplets et de leurs complications, soutien sanitaire et psychologique post-avortement.", "en": "Management of incomplete abortions and complications, with post-abortion health and psychological support." }
+    },
+    {
+      "id": "7",
+      "title": { "ar": "خدمات التشخيص والفحوصات الطبية", "fr": "Services de diagnostic et examens médicaux", "en": "Diagnostic services and medical examinations" },
+      "desc": { "ar": "فحوصات مخبرية وسريرية للكشف المبكر عن الأمراض ودقة التشخيص.", "fr": "Analyses de laboratoire et examens cliniques pour un dépistage précoce et un diagnostic précis.", "en": "Laboratory and clinical examinations for early detection and accurate diagnosis." }
+    },
+    {
+      "id": "8",
+      "title": { "ar": "رعاية ضحايا العنف القائم على النوع الاجتماعي", "fr": "Prise en charge des VBG", "en": "GBV care" },
+      "desc": { "ar": "استقبال ورعاية ودعم نفسي واجتماعي وقانوني لضحايا العنف القائم على النوع الاجتماعي.", "fr": "Accueil, prise en charge et soutien psychologique, social et juridique des survivantes de VBG.", "en": "Reception, care and psychological, social and legal support for GBV survivors." }
+    },
+    {
+      "id": "9",
+      "title": { "ar": "رعاية الناجيات من تشويه الأعضاء التناسلية للإناث", "fr": "Prise en charge des survivantes de MGF", "en": "Care for FGM survivors" },
+      "desc": { "ar": "دعم طبي ونفسي متكامل للناجيات من ختان الإناث داخل مركز الإمتياز.", "fr": "Soutien médical et psychologique intégré aux survivantes des MGF au Centre d'excellence.", "en": "Integrated medical and psychological support for FGM survivors at the Centre of Excellence." }
+    },
+    {
+      "id": "10",
+      "title": { "ar": "خدمات صديقة للشباب (التثقيف الجنسي الشامل)", "fr": "Services adaptés aux jeunes (ESC)", "en": "Youth-friendly services (CSE)" },
+      "desc": { "ar": "فضاءات وخدمات ملائمة للشباب والتثقيف الشامل في مجال الصحة الجنسية والإنجابية.", "fr": "Espaces et services adaptés aux jeunes et éducation à la sexualité complète (ESC).", "en": "Youth-friendly spaces and services and comprehensive sexuality education (CSE)." }
+    },
+    {
+      "id": "11",
+      "title": { "ar": "الوقاية والتوعية المجتمعية", "fr": "Prévention et sensibilisation communautaire", "en": "Community prevention and awareness" },
+      "desc": { "ar": "حملات توعية مجتمعية وأنشطة وقاية تعزز السلوكيات الصحية وتصحح المفاهيم.", "fr": "Campagnes de sensibilisation communautaire et activités de prévention favorisant les comportements sains.", "en": "Community awareness campaigns and prevention activities promoting healthy behaviors." }
+    },
+    {
+      "id": "12",
+      "title": { "ar": "الإحالة والإحالة العكسية", "fr": "Référencement et contre-référencement", "en": "Referral and counter-referral" },
+      "desc": { "ar": "ربط المستفيدين بمراكز ومؤسسات صحية متخصصة وضمان متابعة الحالات إحالة عكسية.", "fr": "Orientation des bénéficiaires vers des structures spécialisées et suivi des cas par contre-référencement.", "en": "Referral of beneficiaries to specialized facilities and case follow-up through counter-referral." }
+    },
+    {
+      "id": "13",
+      "title": { "ar": "الخدمات النفسية والاجتماعية", "fr": "Services psychosociaux", "en": "Psychosocial services" },
+      "desc": { "ar": "دعم نفسي واجتماعي للفئات الهشة والمستفيدين لتعزيز سلامتهم النفسية ودمجهم الاجتماعي.", "fr": "Soutien psychologique et social des groupes vulnérables pour leur bien-être et leur insertion sociale.", "en": "Psychological and social support for vulnerable groups to enhance well-being and social inclusion." }
+    },
+    {
+      "id": "14",
+      "title": { "ar": "طب الأسنان والفم", "fr": "Stomatologie", "en": "Stomatology / Dental care" },
+      "desc": { "ar": "فحص وعلاج أمراض الفم والأسنان والتوعية بصحة الفم لمختلف الفئات.", "fr": "Dépistage et traitement des affections bucco-dentaires et sensibilisation à la santé bucco-dentaire.", "en": "Screening and treatment of oral and dental diseases and oral health awareness." }
+    }
+  ],
   "documents": [
     {
       "id": "1785251374943",

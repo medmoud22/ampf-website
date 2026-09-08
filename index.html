@@ -180,9 +180,10 @@
             <div class="text-center mb-16 fade-up">
                 <span class="text-brandGreen font-bold text-sm uppercase tracking-wider" data-i18n="programs_badge">البرامج والخدمات</span>
                 <h2 class="text-3xl md:text-4xl font-black text-brandDark mt-3 mb-4" data-i18n="programs_title">نقدم مجموعة متكاملة من الخدمات الصحية</h2>
+                <p class="text-gray-600 mt-2 max-w-2xl mx-auto" data-i18n="programs_subtitle">حزمة الخدمات الـ 14 المعتمدة لدى الجمعية الموريتانية لترقية الأسرة</p>
                 <div class="strategy-line mx-auto"></div>
             </div>
-            <div id="programsGrid" class="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
+            <div id="programsGrid" class="grid sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
                 <div class="loading-spinner"><i class="fas fa-spinner"></i></div>
             </div>
         </div>
@@ -331,6 +332,7 @@
                 strategy_goal_label: 'هدف المحور',
                 vision_heading: 'الرؤية', mission_heading: 'الرسالة', values_heading: 'القيم',
                 programs_badge: 'البرامج والخدمات', programs_title: 'نقدم مجموعة متكاملة من الخدمات الصحية',
+                programs_subtitle: 'حزمة الخدمات الـ 14 المعتمدة لدى الجمعية الموريتانية لترقية الأسرة',
                 news_badge: 'آخر الأخبار', news_title: 'أخبارنا وأنشطتنا',
                 gallery_badge: 'معرض الصور', gallery_title: 'صور من أنشطتنا',
                 branches_badge: 'فروعنا', branches_title: 'شبكة فروع الجمعية',
@@ -383,6 +385,7 @@
                 strategy_goal_label: 'Objectif du pilier',
                 vision_heading: 'Vision', mission_heading: 'Mission', values_heading: 'Valeurs',
                 programs_badge: 'Programmes et services', programs_title: 'Nous offrons des services de santé intégrés',
+                programs_subtitle: 'Le package des 14 services officiels de l\'AMPF',
                 news_badge: 'Dernières nouvelles', news_title: 'Nos actualités et activités',
                 gallery_badge: 'Galerie photos', gallery_title: 'Photos de nos activités',
                 branches_badge: 'Nos branches', branches_title: 'Réseau des branches',
@@ -435,6 +438,7 @@
                 strategy_goal_label: 'Pillar Goal',
                 vision_heading: 'Vision', mission_heading: 'Mission', values_heading: 'Values',
                 programs_badge: 'Programs & Services', programs_title: 'We offer integrated health services',
+                programs_subtitle: 'The official 14-services package of AMPF',
                 news_badge: 'Latest News', news_title: 'Our news and activities',
                 gallery_badge: 'Photo Gallery', gallery_title: 'Photos of our activities',
                 branches_badge: 'Our Branches', branches_title: 'Association branch network',
@@ -554,15 +558,37 @@
         //  DYNAMIC CONTENT RENDERING (language-aware)
         // ══════════════════════════════════════════════════
         const programIcons = [
-            { icon: 'fa-baby', bg: 'bg-emerald-100', color: 'text-brandGreen' },
-            { icon: 'fa-syringe', bg: 'bg-blue-100', color: 'text-blue-600' },
-            { icon: 'fa-venus', bg: 'bg-pink-100', color: 'text-pink-500' },
-            { icon: 'fa-book-medical', bg: 'bg-yellow-100', color: 'text-yellow-600' },
-            { icon: 'fa-hands-helping', bg: 'bg-purple-100', color: 'text-purple-600' },
-            { icon: 'fa-heart', bg: 'bg-red-100', color: 'text-red-500' },
-            { icon: 'fa-user-md', bg: 'bg-blue-100', color: 'text-blue-600' },
-            { icon: 'fa-stethoscope', bg: 'bg-indigo-100', color: 'text-indigo-600' },
-            { icon: 'fa-hospital', bg: 'bg-teal-100', color: 'text-teal-600' },
+            { icon: 'fa-pills', bg: 'bg-emerald-100', color: 'text-brandGreen' },
+            { icon: 'fa-person-pregnant', bg: 'bg-pink-100', color: 'text-pink-600' },
+            { icon: 'fa-venus', bg: 'bg-rose-100', color: 'text-rose-500' },
+            { icon: 'fa-baby', bg: 'bg-sky-100', color: 'text-sky-600' },
+            { icon: 'fa-shield-virus', bg: 'bg-indigo-100', color: 'text-indigo-600' },
+            { icon: 'fa-hand-holding-medical', bg: 'bg-teal-100', color: 'text-teal-600' },
+            { icon: 'fa-stethoscope', bg: 'bg-cyan-100', color: 'text-cyan-600' },
+            { icon: 'fa-hands-holding-child', bg: 'bg-orange-100', color: 'text-orange-600' },
+            { icon: 'fa-hand-holding-heart', bg: 'bg-red-100', color: 'text-red-500' },
+            { icon: 'fa-graduation-cap', bg: 'bg-amber-100', color: 'text-amber-600' },
+            { icon: 'fa-bullhorn', bg: 'bg-yellow-100', color: 'text-yellow-600' },
+            { icon: 'fa-right-left', bg: 'bg-blue-100', color: 'text-blue-600' },
+            { icon: 'fa-brain', bg: 'bg-violet-100', color: 'text-violet-600' },
+            { icon: 'fa-tooth', bg: 'bg-lime-100', color: 'text-lime-600' },
+        ];
+
+        const DEFAULT_PROGRAMS = [
+            { title: { ar: 'تنظيم الأسرة ومنع الحمل', fr: 'Planification familiale et contraception', en: 'Family planning and contraception' }, desc: { ar: 'خدمات تنظيم الأسرة ووسائل منع الحمل الحديثة والمشورة الطبية للأزواج والأفراد.', fr: 'Services de planification familiale, contraception moderne et conseil médical pour les couples et les individus.', en: 'Family planning services, modern contraception and medical counseling for couples and individuals.' } },
+            { title: { ar: 'صحة الأم', fr: 'Santé maternelle', en: 'Maternal health' }, desc: { ar: 'متابعة الحمل والولادة الآمنة والرعاية قبل وبعد الولادة للحد من وفيات الأمهات.', fr: 'Suivi de grossesse, accouchement sécurisé et soins pré et postnatals pour réduire la mortalité maternelle.', en: 'Pregnancy follow-up, safe delivery and pre/postnatal care to reduce maternal mortality.' } },
+            { title: { ar: 'الصحة الجنسية والإنجابية', fr: 'Santé sexuelle et reproductive', en: 'Sexual and reproductive health' }, desc: { ar: 'تعزيز الحقوق والصحة الجنسية والإنجابية عبر خدمات شاملة ومشورة موثوقة.', fr: 'Promotion des droits et de la santé sexuelle et reproductive via des services complets et un conseil fiable.', en: 'Promoting sexual and reproductive health and rights through comprehensive services and trusted counseling.' } },
+            { title: { ar: 'صحة الطفل', fr: 'Santé de l\'enfant', en: 'Child health' }, desc: { ar: 'التلقيح والفحوصات الدورية ومتابعة نمو وتطور الأطفال في مرحلة مبكرة.', fr: 'Vaccination, examens de routine et suivi de la croissance et du développement des jeunes enfants.', en: 'Vaccination, routine check-ups and early childhood growth and development monitoring.' } },
+            { title: { ar: 'الوقاية من والعلاج من الأمراض المنقولة جنسياً وفيروس نقص المناعة', fr: 'Prévention et prise en charge des IST/VIH', en: 'STI/HIV prevention and care' }, desc: { ar: 'الفحص والاستشارة والوقاية والعلاج للأمراض المنقولة جنسياً وفيروس نقص المناعة.', fr: 'Dépistage, conseil, prévention et traitement des IST et du VIH/SIDA.', en: 'Screening, counseling, prevention and treatment of STIs and HIV/AIDS.' } },
+            { title: { ar: 'الرعاية بعد الإجهاض / حالات الإجهاض غير المكتمل', fr: 'Soins après avortement / avortements incomplets', en: 'Post-abortion care / incomplete abortions' }, desc: { ar: 'علاج حالات الإجهاض غير المكتمل ومضاعفاته وتقديم الدعم النفسي والصحي بعد الإجهاض.', fr: 'Traitement des avortements incomplets et de leurs complications, soutien sanitaire et psychologique post-avortement.', en: 'Management of incomplete abortions and complications, with post-abortion health and psychological support.' } },
+            { title: { ar: 'خدمات التشخيص والفحوصات الطبية', fr: 'Services de diagnostic et examens médicaux', en: 'Diagnostic services and medical examinations' }, desc: { ar: 'فحوصات مخبرية وسريرية للكشف المبكر عن الأمراض ودقة التشخيص.', fr: 'Analyses de laboratoire et examens cliniques pour un dépistage précoce et un diagnostic précis.', en: 'Laboratory and clinical examinations for early detection and accurate diagnosis.' } },
+            { title: { ar: 'رعاية ضحايا العنف القائم على النوع الاجتماعي', fr: 'Prise en charge des VBG', en: 'GBV care' }, desc: { ar: 'استقبال ورعاية ودعم نفسي واجتماعي وقانوني لضحايا العنف القائم على النوع الاجتماعي.', fr: 'Accueil, prise en charge et soutien psychologique, social et juridique des survivantes de VBG.', en: 'Reception, care and psychological, social and legal support for GBV survivors.' } },
+            { title: { ar: 'رعاية الناجيات من تشويه الأعضاء التناسلية للإناث', fr: 'Prise en charge des survivantes de MGF', en: 'Care for FGM survivors' }, desc: { ar: 'دعم طبي ونفسي متكامل للناجيات من ختان الإناث داخل مركز الإمتياز.', fr: 'Soutien médical et psychologique intégré aux survivantes des MGF au Centre d\'excellence.', en: 'Integrated medical and psychological support for FGM survivors at the Centre of Excellence.' } },
+            { title: { ar: 'خدمات صديقة للشباب (التثقيف الجنسي الشامل)', fr: 'Services adaptés aux jeunes (ESC)', en: 'Youth-friendly services (CSE)' }, desc: { ar: 'فضاءات وخدمات ملائمة للشباب والتثقيف الشامل في مجال الصحة الجنسية والإنجابية.', fr: 'Espaces et services adaptés aux jeunes et éducation à la sexualité complète (ESC).', en: 'Youth-friendly spaces and services and comprehensive sexuality education (CSE).' } },
+            { title: { ar: 'الوقاية والتوعية المجتمعية', fr: 'Prévention et sensibilisation communautaire', en: 'Community prevention and awareness' }, desc: { ar: 'حملات توعية مجتمعية وأنشطة وقاية تعزز السلوكيات الصحية وتصحح المفاهيم.', fr: 'Campagnes de sensibilisation communautaire et activités de prévention favorisant les comportements sains.', en: 'Community awareness campaigns and prevention activities promoting healthy behaviors.' } },
+            { title: { ar: 'الإحالة والإحالة العكسية', fr: 'Référencement et contre-référencement', en: 'Referral and counter-referral' }, desc: { ar: 'ربط المستفيدين بمراكز ومؤسسات صحية متخصصة وضمان متابعة الحالات إحالة عكسية.', fr: 'Orientation des bénéficiaires vers des structures spécialisées et suivi des cas par contre-référencement.', en: 'Referral of beneficiaries to specialized facilities and case follow-up through counter-referral.' } },
+            { title: { ar: 'الخدمات النفسية والاجتماعية', fr: 'Services psychosociaux', en: 'Psychosocial services' }, desc: { ar: 'دعم نفسي واجتماعي للفئات الهشة والمستفيدين لتعزيز سلامتهم النفسية ودمجهم الاجتماعي.', fr: 'Soutien psychologique et social des groupes vulnérables pour leur bien-être et leur insertion sociale.', en: 'Psychological and social support for vulnerable groups to enhance well-being and social inclusion.' } },
+            { title: { ar: 'طب الأسنان والفم', fr: 'Stomatologie', en: 'Stomatology / Dental care' }, desc: { ar: 'فحص وعلاج أمراض الفم والأسنان والتوعية بصحة الفم لمختلف الفئات.', fr: 'Dépistage et traitement des affections bucco-dentaires et sensibilisation à la santé bucco-dentaire.', en: 'Screening and treatment of oral and dental diseases and oral health awareness.' } },
         ];
 
         let _contentData = null;
@@ -634,22 +660,21 @@
             }
 
             // Programs
-            if (data.programs && data.programs.length) {
-                document.getElementById('programsGrid').innerHTML = data.programs.slice(0, 9).map((p, i) => {
-                    const pi = programIcons[i % programIcons.length];
-                    return `
-                        <div class="bg-gray-50 rounded-2xl p-8 card-hover fade-up border border-gray-100">
-                            <div class="w-16 h-16 ${pi.bg} rounded-2xl flex items-center justify-center mb-5">
-                                <i class="fas ${pi.icon} ${pi.color} text-2xl"></i>
-                            </div>
-                            <h3 class="text-xl font-bold text-brandDark mb-3">${getLocalizedText(p.title)}</h3>
-                            <p class="text-gray-600 text-sm leading-relaxed">${getLocalizedText(p.desc)}</p>
+            const programs = (data.programs && data.programs.length) ? data.programs : DEFAULT_PROGRAMS;
+            document.getElementById('programsGrid').innerHTML = programs.map((p, i) => {
+                const pi = programIcons[i % programIcons.length];
+                return `
+                    <div class="bg-white rounded-2xl p-7 card-hover fade-up border border-gray-100 hover:shadow-xl transition group relative overflow-hidden">
+                        <div class="absolute top-0 right-0 w-20 h-20 bg-brandLight rounded-bl-full opacity-60 group-hover:bg-brandGreen/20 transition"></div>
+                        <div class="w-14 h-14 ${pi.bg} rounded-2xl flex items-center justify-center mb-5 relative">
+                            <i class="fas ${pi.icon} ${pi.color} text-xl"></i>
                         </div>
-                    `;
-                }).join('');
-            } else {
-                document.getElementById('programsGrid').innerHTML = `<div class="col-span-full text-center text-gray-400 py-8">${t('programs_empty')}</div>`;
-            }
+                        <span class="text-xs font-bold text-gray-400">${String(i + 1).padStart(2, '0')}</span>
+                        <h3 class="text-lg font-bold text-brandDark mb-2 mt-1 leading-snug">${getLocalizedText(p.title)}</h3>
+                        <p class="text-gray-600 text-sm leading-relaxed">${getLocalizedText(p.desc)}</p>
+                    </div>
+                `;
+            }).join('');
 
             // News
             if (data.news && data.news.length) {
