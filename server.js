@@ -280,6 +280,19 @@ async function initStorage() {
                 console.log('[AMPF] Programs force-synced to the official',
                     curatedPrograms.length + '-services package in Redis.');
             }
+
+            // ── Clinics (branches) force-sync ───────────────────
+            // The 8 clinic records are the canonical seed. If Redis has an
+            // empty/missing clinics array, restore the local seed so the
+            // Clinics grid is never empty on the live site.
+            const curatedClinics = (curated && Array.isArray(curated.branches)) ? curated.branches : [];
+            const currentClinics = (cData.branches && Array.isArray(cData.branches)) ? cData.branches : [];
+            if (curatedClinics.length && !currentClinics.length) {
+                cData.branches = curatedClinics;
+                await enqueueSet(contentQueue, CONTENT_KEY, cData);
+                console.log('[AMPF] Clinics force-synced',
+                    curatedClinics.length + ' clinics in Redis.');
+            }
         } else {
             const seed = readLocalFile();
             await enqueueSet(contentQueue, CONTENT_KEY, seed);

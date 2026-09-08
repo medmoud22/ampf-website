@@ -109,7 +109,7 @@
         <a onclick="showTab('gallery')" class="tab-link flex items-center gap-3 px-4 py-3 rounded-xl text-gray-600 hover:bg-gray-50 hover:text-brandDark transition cursor-pointer" data-tab="gallery"><i class="fas fa-images w-5"></i> معرض الصور</a>
         <a onclick="showTab('programs')" class="tab-link flex items-center gap-3 px-4 py-3 rounded-xl text-gray-600 hover:bg-gray-50 hover:text-brandDark transition cursor-pointer" data-tab="programs"><i class="fas fa-heartbeat w-5"></i> البرامج</a>
         <a onclick="showTab('slider')" class="tab-link flex items-center gap-3 px-4 py-3 rounded-xl text-gray-600 hover:bg-gray-50 hover:text-brandDark transition cursor-pointer" data-tab="slider"><i class="fas fa-images w-5"></i> السلايدر</a>
-        <a onclick="showTab('branches')" class="tab-link flex items-center gap-3 px-4 py-3 rounded-xl text-gray-600 hover:bg-gray-50 hover:text-brandDark transition cursor-pointer" data-tab="branches"><i class="fas fa-map-marker-alt w-5"></i> الفروع</a>
+        <a onclick="showTab('branches')" class="tab-link flex items-center gap-3 px-4 py-3 rounded-xl text-gray-600 hover:bg-gray-50 hover:text-brandDark transition cursor-pointer" data-tab="branches"><i class="fas fa-map-marker-alt w-5"></i> العيادات</a>
         <a onclick="showTab('navbar')" class="tab-link flex items-center gap-3 px-4 py-3 rounded-xl text-gray-600 hover:bg-gray-50 hover:text-brandDark transition cursor-pointer" data-tab="navbar"><i class="fas fa-bars w-5"></i> القوائم</a>
         <a onclick="showTab('documents')" class="tab-link flex items-center gap-3 px-4 py-3 rounded-xl text-gray-600 hover:bg-gray-50 hover:text-brandDark transition cursor-pointer" data-tab="documents"><i class="fas fa-file-alt w-5"></i> الوثائق</a>
         <a onclick="showTab('excellence')" class="tab-link flex items-center gap-3 px-4 py-3 rounded-xl text-gray-600 hover:bg-gray-50 hover:text-brandDark transition cursor-pointer" data-tab="excellence"><i class="fas fa-university w-5"></i> مركز الإمتياز</a>
@@ -136,7 +136,7 @@
             <a onclick="showTab('gallery');toggleSidebar()" class="flex items-center gap-3 px-4 py-3 rounded-xl text-gray-600 hover:bg-gray-50 cursor-pointer"><i class="fas fa-images w-5"></i> المعرض</a>
             <a onclick="showTab('programs');toggleSidebar()" class="flex items-center gap-3 px-4 py-3 rounded-xl text-gray-600 hover:bg-gray-50 cursor-pointer"><i class="fas fa-heartbeat w-5"></i> البرامج</a>
             <a onclick="showTab('slider');toggleSidebar()" class="flex items-center gap-3 px-4 py-3 rounded-xl text-gray-600 hover:bg-gray-50 cursor-pointer"><i class="fas fa-images w-5"></i> السلايدر</a>
-            <a onclick="showTab('branches');toggleSidebar()" class="flex items-center gap-3 px-4 py-3 rounded-xl text-gray-600 hover:bg-gray-50 cursor-pointer"><i class="fas fa-map-marker-alt w-5"></i> الفروع</a>
+            <a onclick="showTab('branches');toggleSidebar()" class="flex items-center gap-3 px-4 py-3 rounded-xl text-gray-600 hover:bg-gray-50 cursor-pointer"><i class="fas fa-map-marker-alt w-5"></i> العيادات</a>
             <a onclick="showTab('navbar');toggleSidebar()" class="flex items-center gap-3 px-4 py-3 rounded-xl text-gray-600 hover:bg-gray-50 cursor-pointer"><i class="fas fa-bars w-5"></i> القوائم</a>
             <a onclick="showTab('documents');toggleSidebar()" class="flex items-center gap-3 px-4 py-3 rounded-xl text-gray-600 hover:bg-gray-50 cursor-pointer"><i class="fas fa-file-alt w-5"></i> الوثائق</a>
             <a onclick="showTab('excellence');toggleSidebar()" class="flex items-center gap-3 px-4 py-3 rounded-xl text-gray-600 hover:bg-gray-50 cursor-pointer"><i class="fas fa-university w-5"></i> مركز الإمتياز</a>
@@ -675,7 +675,7 @@
 <div id="branchModal" class="modal-overlay fixed inset-0 bg-black/50 z-50 items-center justify-center p-4">
     <div class="bg-white rounded-2xl p-6 w-full max-w-lg modal-scroll">
         <div class="flex justify-between items-center mb-4">
-            <h3 id="branchModalTitle" class="text-lg font-bold text-brandDark">إضافة فرع</h3>
+            <h3 id="branchModalTitle" class="text-lg font-bold text-brandDark">إضافة عيادة</h3>
             <button onclick="closeModal('branchModal')" class="text-gray-400 hover:text-gray-600"><i class="fas fa-times text-xl"></i></button>
         </div>
         <form id="branchForm" class="space-y-4" enctype="multipart/form-data">
@@ -995,7 +995,7 @@ function showTab(tab) {
     document.getElementById('tab-' + tab)?.classList.add('active');
     document.querySelectorAll('.tab-link').forEach(el => el.classList.remove('bg-gray-50', 'text-brandDark'));
     document.querySelectorAll(`.tab-link[data-tab="${tab}"]`).forEach(el => el.classList.add('bg-gray-50', 'text-brandDark'));
-    const titles = { dashboard: 'الرئيسية', news: 'الأخبار والأنشطة', gallery: 'معرض الصور', programs: 'البرامج', slider: 'السلايدر', branches: 'الفروع', navbar: 'القوائم', documents: 'الوثائق', excellence: 'مركز الإمتياز', content: 'تعديل النصوص', social: 'التواصل الاجتماعي', messages: 'الرسائل', settings: 'الإعدادات' };
+    const titles = { dashboard: 'الرئيسية', news: 'الأخبار والأنشطة', gallery: 'معرض الصور', programs: 'البرامج', slider: 'السلايدر', branches: 'العيادات', navbar: 'القوائم', documents: 'الوثائق', excellence: 'مركز الإمتياز', content: 'تعديل النصوص', social: 'التواصل الاجتماعي', messages: 'الرسائل', settings: 'الإعدادات' };
     document.getElementById('pageTitle').textContent = titles[tab] || tab;
     if (tab === 'content') loadContentEditor();
     if (tab === 'social') loadSocialLinks();
@@ -1336,7 +1336,7 @@ document.getElementById('sliderImage').addEventListener('change', function() {
 // ─── BRANCHES ─────────────────────────────
 function renderBranches(items) {
     const tb = document.getElementById('branchesTableBody');
-    if (!items.length) { tb.innerHTML = '<tr><td colspan="3" class="text-center text-gray-400 py-12">لا توجد فروع. أضف أول فرع الآن!</td></tr>'; return; }
+    if (!items.length) { tb.innerHTML = '<tr><td colspan="3" class="text-center text-gray-400 py-12">لا توجد عيادات. أضف أول عيادة الآن!</td></tr>'; return; }
     tb.innerHTML = items.map(b => `
         <tr class="border-b hover:bg-gray-50">
             <td class="px-6 py-4 font-bold">${b.name?.ar || b.name?.fr || b.name?.en || ''}</td>
@@ -1350,7 +1350,7 @@ function renderBranches(items) {
 }
 
 function openBranchModal(item) {
-    document.getElementById('branchModalTitle').textContent = item ? 'تعديل الفرع' : 'إضافة فرع';
+    document.getElementById('branchModalTitle').textContent = item ? 'تعديل العيادة' : 'إضافة عيادة';
     document.getElementById('branchId').value = item ? item.id : '';
     document.getElementById('branchNameAr').value = item ? (item.name?.ar || '') : '';
     document.getElementById('branchNameFr').value = item ? (item.name?.fr || '') : '';
@@ -1392,7 +1392,7 @@ document.getElementById('branchForm').addEventListener('submit', async (e) => {
     try {
         const res = await fetch(url, { method, body: formData });
         const result = await res.json();
-        if (result.success) { showToast(id ? 'تم تحديث الفرع' : 'تم إضافة الفرع'); closeModal('branchModal'); loadAllData(); }
+        if (result.success) { showToast(id ? 'تم تحديث العيادة' : 'تم إضافة العيادة'); closeModal('branchModal'); loadAllData(); }
         else showToast('خطأ: ' + (result.error || ''));
     } catch(e) { showToast('خطأ في الاتصال'); }
 });
@@ -1405,7 +1405,7 @@ async function editBranch(id) {
 }
 
 async function deleteBranch(id) {
-    if (!confirm('حذف هذا الفرع؟')) return;
+    if (!confirm('حذف هذه العيادة؟')) return;
     const res = await fetch(API + '/content/branches/' + id, { method: 'DELETE' });
     if ((await res.json()).success) { showToast('تم الحذف'); loadAllData(); }
 }

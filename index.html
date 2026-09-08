@@ -71,8 +71,8 @@
             .slider-arrow.next { left: 10px; }
         }
         /* Branch Modal */
-        .branch-card { cursor: pointer; transition: all 0.3s; }
-        .branch-card:hover { transform: translateY(-5px); box-shadow: 0 10px 30px -10px rgba(0,0,0,0.2); }
+.clinic-card { cursor: pointer; transition: all 0.3s; }
+.clinic-card:hover { transform: translateY(-5px); box-shadow: 0 10px 30px -10px rgba(0,0,0,0.2); }
         .branch-modal-content { max-height: 80vh; overflow-y: auto; }
     </style>
 </head>
@@ -225,7 +225,7 @@
                 <h2 class="text-3xl font-black text-brandDark mt-3 mb-4" data-i18n="branches_title">شبكة فروع الجمعية</h2>
                 <div class="strategy-line mx-auto"></div>
             </div>
-            <div id="branchesGrid" class="grid md:grid-cols-2 lg:grid-cols-4 gap-6">
+            <div id="clinicsGrid" class="grid md:grid-cols-2 lg:grid-cols-4 gap-6">
                 <div class="loading-spinner col-span-full"><i class="fas fa-spinner"></i></div>
             </div>
         </div>
@@ -716,8 +716,8 @@
 
             // Slider (rendered from the dedicated /api/slides endpoint)
             renderSlider(_sliderData);
-            // Branches (rendered from the dedicated /api/branches endpoint)
-            renderBranches(_branchesData);
+            // Clinics (rendered from the dedicated /api/branches endpoint)
+            renderClinics(_branchesData);
             // Navbar
             renderNavbar(data.navbar);
 
@@ -787,17 +787,17 @@
         document.getElementById('sliderNext')?.addEventListener('click', nextSlide);
 
         // ─── Branches ────────────────────────────────────
-        function renderBranches(branches) {
-            const container = document.getElementById('branchesGrid');
-            if (!branches || !branches.length) {
+        function renderClinics(clinics) {
+            const container = document.getElementById('clinicsGrid');
+            if (!clinics || !clinics.length) {
                 container.innerHTML = `<div class="col-span-full text-center text-gray-400 py-8">${t('branches_empty')}</div>`;
                 return;
             }
-            const branchIcons = ['fa-map-marker-alt', 'fa-anchor', 'fa-tree', 'fa-water', 'fa-home', 'fa-city', 'fa-mosque', 'fa-school'];
-            container.innerHTML = branches.map((b, i) => `
-                <div class="bg-white rounded-2xl p-6 shadow-sm border border-gray-100 branch-card fade-up" data-id="${b.id}">
+            const clinicIcons = ['fa-map-marker-alt', 'fa-anchor', 'fa-tree', 'fa-water', 'fa-home', 'fa-city', 'fa-mosque', 'fa-school'];
+            container.innerHTML = clinics.map((b, i) => `
+                <div class="bg-white rounded-2xl p-6 shadow-sm border border-gray-100 clinic-card fade-up" data-id="${b.id}">
                     <div class="w-14 h-14 bg-brandLight rounded-xl flex items-center justify-center mb-4">
-                        <i class="fas ${branchIcons[i % branchIcons.length]} text-brandGreen text-xl"></i>
+                        <i class="fas ${clinicIcons[i % clinicIcons.length]} text-brandGreen text-xl"></i>
                     </div>
                     <h3 class="text-xl font-bold text-brandDark mb-2">${getLocalizedText(b.name)}</h3>
                     <p class="text-sm text-gray-500 mb-3">${getLocalizedText(b.location) || ''}</p>
@@ -805,11 +805,11 @@
                 </div>
             `).join('');
             // Click to open modal
-            container.querySelectorAll('.branch-card').forEach(card => {
+            container.querySelectorAll('.clinic-card').forEach(card => {
                 card.addEventListener('click', () => {
                     const id = card.dataset.id;
-                    const branch = branches.find(b => b.id === id);
-                    if (branch) showBranchModal(branch);
+                    const clinic = clinics.find(b => b.id === id);
+                    if (clinic) showBranchModal(clinic);
                 });
             });
         }
@@ -908,15 +908,15 @@
             }
         }
 
-        // Branches are loaded from the dedicated /api/branches endpoint so the
+        // Clinics are loaded from the dedicated /api/branches endpoint so the
         // section is always in sync with the admin panel (no hardcoded data).
-        async function loadBranches() {
+        async function loadClinics() {
             try {
                 const res = await fetch('/api/branches');
                 if (!res.ok) throw new Error('HTTP ' + res.status);
                 const data = await res.json();
                 _branchesData = data.branches || [];
-                renderBranches(_branchesData);
+                renderClinics(_branchesData);
                 const statEl = document.getElementById('statBranchesCount');
                 if (statEl) statEl.textContent = _branchesData.length;
             } catch (e) {
@@ -989,10 +989,10 @@
 
         // Load dynamic content
         if (document.readyState === 'loading') {
-            document.addEventListener('DOMContentLoaded', () => { loadAllContent(); loadBranches(); loadSlides(); });
+            document.addEventListener('DOMContentLoaded', () => { loadAllContent(); loadClinics(); loadSlides(); });
         } else {
             loadAllContent();
-            loadBranches();
+            loadClinics();
             loadSlides();
         }
 
