@@ -265,6 +265,21 @@ async function initStorage() {
                 (cData.branches || []).length + ' branches,',
                 (cData.slider || []).length + ' slider,',
                 (cData.messages || []).length + ' messages');
+
+            // ── Programs force-sync ─────────────────────────────
+            // The official 14-services package is the canonical list. If Redis
+            // holds an incomplete/empty programs array (e.g. from an older seed
+            // or Admin having removed items), we restore the full curated list
+            // so the Services grid is never left empty/partial on the live site.
+            const curated = readLocalFile();
+            const curatedPrograms = (curated && Array.isArray(curated.programs)) ? curated.programs : [];
+            const currentPrograms = (cData.programs && Array.isArray(cData.programs)) ? cData.programs : [];
+            if (curatedPrograms.length && currentPrograms.length !== curatedPrograms.length) {
+                cData.programs = curatedPrograms;
+                await enqueueSet(contentQueue, CONTENT_KEY, cData);
+                console.log('[AMPF] Programs force-synced to the official',
+                    curatedPrograms.length + '-services package in Redis.');
+            }
         } else {
             const seed = readLocalFile();
             await enqueueSet(contentQueue, CONTENT_KEY, seed);
