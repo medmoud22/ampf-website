@@ -305,6 +305,19 @@ async function initStorage() {
                 console.log('[AMPF] Cliniques force-synced',
                     curatedCliniques.length + ' clinics in Redis.');
             }
+
+            // ── Navbar force-sync ──────────────────────────────
+            // The local content.json is the canonical navbar (kept in sync by
+            // every Admin write). If the stored navbar differs from it — e.g.
+            // it was persisted before the branches→cliniques rename — restore
+            // the local list so links/labels match the current sections.
+            const curatedNavbar = (curated && Array.isArray(curated.navbar)) ? JSON.stringify(curated.navbar) : '';
+            const currentNavbar = (cData.navbar && Array.isArray(cData.navbar)) ? JSON.stringify(cData.navbar) : '';
+            if (curatedNavbar && currentNavbar !== curatedNavbar) {
+                cData.navbar = curated.navbar;
+                await enqueueSet(contentQueue, CONTENT_KEY, cData);
+                console.log('[AMPF] Navbar force-synced to the canonical local list.');
+            }
         } else {
             const seed = readLocalFile();
             await enqueueSet(contentQueue, CONTENT_KEY, seed);
