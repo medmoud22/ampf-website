@@ -44,19 +44,19 @@
     },
     "about": {
       "vision": {
-        "ar": "الجمعية الموريتانية لترقية الأسرة هي منظمة وطنية ملتزمة بالعمل من أجل صحة الأسرة والمجتمع.",
-        "fr": "L'AMPF est une organisation nationale engagée pour la santé de la famille et de la communauté.",
-        "en": "AMPF is a national organization committed to family and community health."
+        "ar": "في موريتانيا، يمكن لجميع الأشخاص اتخاذ خيارات مطلعة فيما يتعلق برعايتهم ورفاهيتهم الجنسية والإنجابية وممارسة حقوقهم المتعلقة بالصحة الجنسية والإنجابية دون أي تمييز.",
+        "fr": "En Mauritanie, toutes les personnes peuvent prendre des choix éclairés concernant leurs soins et leur bien-être sexuels et reproductifs et exercer leurs droits en matière de santé sexuelle et reproductive sans aucune discrimination.",
+        "en": "In Mauritania, all people can make informed choices regarding their sexual and reproductive care and well-being and exercise their sexual and reproductive health rights without any discrimination."
       },
       "mission": {
-        "ar": "صحة إنجابية وأسرية وحقوق نوعية لجميع الأفراد في جميع أنحاء موريتانيا.",
-        "fr": "Santé reproductive et familiale et droits de qualité pour tous en Mauritanie.",
-        "en": "Quality reproductive and family health and rights for all individuals throughout Mauritania."
+        "ar": "في موريتانيا، يمكن لجميع الأشخاص اتخاذ خيارات مطلعة فيما يتعلق برعايتهم ورفاهيتهم الجنسية والإنجابية وممارسة حقوقهم المتعلقة بالصحة الجنسية والإنجابية دون أي تمييز.",
+        "fr": "En Mauritanie, toutes les personnes peuvent prendre des choix éclairés concernant leurs soins et leur bien-être sexuels et reproductifs et exercer leurs droits en matière de santé sexuelle et reproductive sans aucune discrimination.",
+        "en": "In Mauritania, all people can make informed choices regarding their sexual and reproductive care and well-being and exercise their sexual and reproductive health rights without any discrimination."
       },
       "values": {
-        "ar": "الشفافية والمساءلة\nالشمولية والعدالة\nالعدالة النوعية\nالالتزام والتفاني\nالتسامح واحترام الفروق",
-        "fr": "Transparence et redevabilité\nInclusivité et équité\nJustice de genre\nEngagement et dévouement\nTolérance et respect des différences",
-        "en": "Transparency and accountability\nInclusiveness and equity\nGender justice\nCommitment and dedication\nTolerance and respect for differences"
+        "ar": "الشمول الاجتماعي\nالتنوع\nالشغف\nالعمل التطوعي\nالمساءلة",
+        "fr": "Inclusion sociale\nDiversité\nPassion\nVolontariat\nRedevabilité",
+        "en": "Social inclusion\nDiversity\nPassion\nVolunteering\nAccountability"
       }
     },
     "socialLinks": {

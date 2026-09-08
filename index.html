@@ -148,8 +148,10 @@
         <div class="container mx-auto px-6">
             <div class="text-center mb-16 fade-up">
                 <span class="text-brandGreen font-bold text-sm uppercase tracking-wider" data-i18n="strategy_badge">استراتيجيتنا</span>
-                <h2 class="text-3xl md:text-4xl font-black text-brandDark mt-3 mb-4" data-i18n="strategy_title">نبني رؤية شاملة للصحة الأسرية</h2>
+                <h2 class="text-3xl md:text-4xl font-black text-brandDark mt-3 mb-4" data-i18n="strategy_title">استراتيجية AMPF للفترة 2023-2028</h2>
                 <div class="strategy-line mx-auto"></div>
+                <p class="text-gray-600 mt-4 max-w-2xl mx-auto" data-i18n="strategy_subtitle">أربعة محاور استراتيجية لتعزيز الصحة والحقوق الجنسية والإنجابية في موريتانيا</p>
+                <a id="strategyPdf" href="#" target="_blank" rel="noopener" class="inline-flex items-center gap-2 mt-6 bg-brandGreen text-white px-6 py-3 rounded-full font-bold hover:bg-brandDark transition" style="display:none;"><i class="fas fa-file-pdf"></i> <span data-i18n="strategy_pdf_btn">تحميل الوثيقة (PDF)</span></a>
             </div>
             <div class="grid md:grid-cols-3 gap-8 mb-16">
                 <div class="bg-white p-8 rounded-2xl shadow-lg card-hover fade-up">
@@ -168,7 +170,7 @@
                     <ul id="valuesList" class="text-gray-600 space-y-2"></ul>
                 </div>
             </div>
-            <div id="strategyCards" class="grid md:grid-cols-2 lg:grid-cols-4 gap-6"></div>
+            <div id="strategyCards" class="grid md:grid-cols-2 gap-8"></div>
         </div>
     </section>
 
@@ -323,7 +325,10 @@
                 nav_news: 'الأخبار', nav_gallery: 'المعرض', nav_contact: 'اتصل بنا', nav_admin: 'الإدارة',
                 hero_badge: 'تأسست سنة 1988', hero_btn_strategy: 'استراتيجيتنا  <i class="fas fa-arrow-left"></i>', hero_btn_programs: 'برامجنا',
                 stat_years: 'سنة من العمل', stat_branches: 'فروع في الولايات', stat_beneficiaries: 'مستفيد', stat_workers: 'عامل صحي',
-                strategy_badge: 'استراتيجيتنا', strategy_title: 'نبني رؤية شاملة للصحة الأسرية',
+                strategy_badge: 'استراتيجيتنا', strategy_title: 'استراتيجية AMPF للفترة 2023-2028',
+                strategy_subtitle: 'أربعة محاور استراتيجية لتعزيز الصحة والحقوق الجنسية والإنجابية في موريتانيا',
+                strategy_pdf_btn: 'تحميل الوثيقة (PDF)',
+                strategy_goal_label: 'هدف المحور',
                 vision_heading: 'الرؤية', mission_heading: 'الرسالة', values_heading: 'القيم',
                 programs_badge: 'البرامج والخدمات', programs_title: 'نقدم مجموعة متكاملة من الخدمات الصحية',
                 news_badge: 'آخر الأخبار', news_title: 'أخبارنا وأنشطتنا',
@@ -353,14 +358,18 @@
                 load_error_gallery: 'تعذر تحميل المعرض',
                 news_category_blog: 'المدونة', news_category_youth: 'الشباب', news_category_advocacy: 'المناصرة',
                 news_category_general: 'عام',
-                strategy_card_1_title: 'رعاية متمحور حول الفرد',
-                strategy_card_1_items: ['تعزيز الخيارات الصحية', 'توسيع الوصول للخدمات', 'الرعاية الرقمية'],
-                strategy_card_2_title: 'تطوير حقوق الصحة الأسرية',
-                strategy_card_2_items: ['تعزيز المناصرة', 'تطوير المعايير', 'العمل مع الشباب'],
+                strategy_card_1_title: 'تركيز الرعاية على الأشخاص',
+                strategy_card_1_goal: 'تقديم خدمات رعاية ذات جودة متميزة ومتمحورة حول الفرد لأكبر عدد من الأشخاص وفي مختلف الأماكن.',
+                strategy_card_1_items: ['توسيع الخيارات: تعزيز وتنويع الخدمات (الإجهاض، العقم، فيروس نقص المناعة، تنظيم الأسرة، مناهضة العنف والممارسات الضارة)', 'توسيع الوصول: المناطق الريفية وشبه الحضرية والفئات الهشة والتدخل في الأزمات الإنسانية (لاجئو مبرة)', 'تعزيز الحلول الرقمية والرعاية الذاتية: أدوات رقمية والاستشارة عن بُعد عبر الهواتف الذكية'],
+                strategy_card_2_title: 'تطوير قضايا الصحة الجنسية والإنجابية',
+                strategy_card_2_goal: 'إحداث تغيير مجتمعي وتوافق تشريعي لصالح الحقوق الشاملة للصحة الجنسية والإنجابية.',
+                strategy_card_2_items: ['رفع القيود القانونية: تحالفات مع البرلمانيين والإعلاميين وقادة الدين', 'تغيير النورم المجتمعية: تفعيل الشبكات المجتمعية لمحاربة الممارسات الضارة والعنف', 'العمل مع الشباب: تمكين القيادات الشبابية والتثقيف الشامل ومنصة رقمية في مركز الإمتياز'],
                 strategy_card_3_title: 'التضامن من أجل التغيير',
-                strategy_card_3_items: ['دعم الحركات الاجتماعية', 'شراكات استراتيجية', 'الابتكار ومشاركة المعرفة'],
-                strategy_card_4_title: 'العناية بالجمعية',
-                strategy_card_4_items: ['تعزيز الهوية', 'نمو الجمعية', 'القدوة في العمل'],
+                strategy_card_3_goal: 'مضاعفة الأثر بمد الجسور وخلق روابط بين المجتمعات والشبكات والقطاعات المختلفة.',
+                strategy_card_3_items: ['تطوير الشراكات الاستراتيجية: الدولة وصندوق الأمم المتحدة للسكان والمنظمات الدولية ومرجعية دولية لمركز الإمتياز', 'الابتكار وتبادل المعارف'],
+                strategy_card_4_title: 'العناية برابطتنا والنهوض بها',
+                strategy_card_4_goal: 'تجديد الجمعية وتعزيزها بالاستناد إلى قيم مشتركة وتحرير طاقتنا الجماعية لأثر أكبر.',
+                strategy_card_4_items: ['تأكيد الهوية: إبراز القيادة الوطنية وتعزيز الصورة المؤسسية', 'تطوير أنظمة الجمعية: عصرنة الإدارة والاستدامة المالية', 'القدوة والنموذج: الحوكمة الرشيدة وعدم التمييز والشمولية'],
             },
             fr: {
                 siteTitle: 'AMPF | Association Mauritanienne pour la Promotion de la Famille',
@@ -368,7 +377,10 @@
                 nav_news: 'Actualités', nav_gallery: 'Galerie', nav_contact: 'Contact', nav_admin: 'Admin',
                 hero_badge: 'Fondée en 1988', hero_btn_strategy: 'Notre Stratégie  <i class="fas fa-arrow-right"></i>', hero_btn_programs: 'Nos Programmes',
                 stat_years: 'ans d\'expérience', stat_branches: 'branches', stat_beneficiaries: 'bénéficiaires', stat_workers: 'agents de santé',
-                strategy_badge: 'Notre Stratégie', strategy_title: 'Construire une vision globale de la santé familiale',
+                strategy_badge: 'Notre Stratégie', strategy_title: 'Stratégie AMPF 2023-2028',
+                strategy_subtitle: 'Quatre piliers stratégiques pour promouvoir la santé et les droits sexuels et reproductifs en Mauritanie',
+                strategy_pdf_btn: 'Télécharger le document (PDF)',
+                strategy_goal_label: 'Objectif du pilier',
                 vision_heading: 'Vision', mission_heading: 'Mission', values_heading: 'Valeurs',
                 programs_badge: 'Programmes et services', programs_title: 'Nous offrons des services de santé intégrés',
                 news_badge: 'Dernières nouvelles', news_title: 'Nos actualités et activités',
@@ -398,14 +410,18 @@
                 load_error_gallery: 'Impossible de charger la galerie',
                 news_category_blog: 'Blog', news_category_youth: 'Jeunesse', news_category_advocacy: 'Plaidoyer',
                 news_category_general: 'Général',
-                strategy_card_1_title: 'Soins centrés sur la personne',
-                strategy_card_1_items: ['Renforcer les choix de santé', 'Élargir l\'accès aux services', 'Soins numériques'],
-                strategy_card_2_title: 'Développement des droits en santé familiale',
-                strategy_card_2_items: ['Renforcer le plaidoyer', 'Développer les normes', 'Travailler avec les jeunes'],
+                strategy_card_1_title: 'Mettre l\'individu au centre des soins',
+                strategy_card_1_goal: 'Fournir des soins de qualité supérieure et centrés sur la personne au plus grand nombre et partout.',
+                strategy_card_1_items: ['Élargir les options : renforcer et diversifier les services (IVG, stérilité, VIH, planning familial, lutte contre les violences)', 'Élargir l\'accès : zones rurales, périurbaines et populations vulnérables (réfugiés)', 'Solutions numériques et autosoins : outils numériques et téléconsultation'],
+                strategy_card_2_title: 'Faire avancer les questions de santé sexuelle et reproductive',
+                strategy_card_2_goal: 'Apporter un changement social et une harmonisation législative en faveur des droits complets en matière de santé sexuelle et reproductive.',
+                strategy_card_2_items: ['Lever les obstacles juridiques : coalitions parlementaires, médias et leaders religieux', 'Changer les normes sociales : réseaux communautaires contre les pratiques néfastes et les violences', 'Travailler avec les jeunes : leadership, éducation et plateforme numérique au Centre d\'excellence'],
                 strategy_card_3_title: 'Solidarité pour le changement',
-                strategy_card_3_items: ['Soutenir les mouvements sociaux', 'Partenariats stratégiques', 'Innovation et partage des connaissances'],
-                strategy_card_4_title: 'Soin de l\'association',
-                strategy_card_4_items: ['Renforcer l\'identité', 'Croissance de l\'association', 'Être un modèle'],
+                strategy_card_3_goal: 'Doubler l\'impact en reliant les communautés, réseaux et secteurs divers.',
+                strategy_card_3_items: ['Développer des partenariats stratégiques : État, UNFPA, organisations internationales', 'Innovation et partage des connaissances'],
+                strategy_card_4_title: 'Prendre soin et valoriser notre association',
+                strategy_card_4_goal: 'Renouveler et renforcer l\'association sur la base de valeurs communes et libérer notre énergie collective pour un plus grand impact.',
+                strategy_card_4_items: ['Affirmer l\'identité : leadership national et image institutionnelle', 'Développer les systèmes : modernisation administrative et viabilité financière', 'Exemplarité : bonne gouvernance, non-discrimination et inclusion'],
             },
             en: {
                 siteTitle: 'AMPF | Mauritanian Association for Family Promotion',
@@ -413,7 +429,10 @@
                 nav_news: 'News', nav_gallery: 'Gallery', nav_contact: 'Contact', nav_admin: 'Admin',
                 hero_badge: 'Founded in 1988', hero_btn_strategy: 'Our Strategy  <i class="fas fa-arrow-right"></i>', hero_btn_programs: 'Our Programs',
                 stat_years: 'years of experience', stat_branches: 'branches', stat_beneficiaries: 'beneficiaries', stat_workers: 'health workers',
-                strategy_badge: 'Our Strategy', strategy_title: 'Building a comprehensive vision for family health',
+                strategy_badge: 'Our Strategy', strategy_title: 'AMPF Strategy 2023-2028',
+                strategy_subtitle: 'Four strategic pillars to promote sexual and reproductive health and rights in Mauritania',
+                strategy_pdf_btn: 'Download Document (PDF)',
+                strategy_goal_label: 'Pillar Goal',
                 vision_heading: 'Vision', mission_heading: 'Mission', values_heading: 'Values',
                 programs_badge: 'Programs & Services', programs_title: 'We offer integrated health services',
                 news_badge: 'Latest News', news_title: 'Our news and activities',
@@ -443,14 +462,18 @@
                 load_error_gallery: 'Failed to load gallery',
                 news_category_blog: 'Blog', news_category_youth: 'Youth', news_category_advocacy: 'Advocacy',
                 news_category_general: 'General',
-                strategy_card_1_title: 'Person-centered Care',
-                strategy_card_1_items: ['Enhancing health choices', 'Expanding access to services', 'Digital care'],
-                strategy_card_2_title: 'Advancing Family Health Rights',
-                strategy_card_2_items: ['Strengthening advocacy', 'Developing standards', 'Working with youth'],
+                strategy_card_1_title: 'Person-Centered Care',
+                strategy_card_1_goal: 'Deliver high-quality, person-centered care to the greatest number of people, everywhere.',
+                strategy_card_1_items: ['Expand choices: strengthen and diversify services (abortion, infertility, HIV, family planning, GBV & harmful practices)', 'Expand access: rural and peri-urban areas, vulnerable groups, refugees and crisis response', 'Digital solutions & self-care: digital tools and remote counseling via smartphones'],
+                strategy_card_2_title: 'Advancing Sexual and Reproductive Health Issues',
+                strategy_card_2_goal: 'Drive social change and legislative alignment in favour of comprehensive sexual and reproductive health rights.',
+                strategy_card_2_items: ['Lift legal barriers: coalitions with parliamentarians, media and faith leaders', 'Shift social norms: community networks against harmful practices and violence', 'Youth engagement: empower youth leadership, comprehensive education, digital platform at Centre of Excellence'],
                 strategy_card_3_title: 'Solidarity for Change',
-                strategy_card_3_items: ['Supporting social movements', 'Strategic partnerships', 'Innovation and knowledge sharing'],
-                strategy_card_4_title: 'Caring for the Association',
-                strategy_card_4_items: ['Strengthening identity', 'Association growth', 'Being a role model'],
+                strategy_card_3_goal: 'Double impact by bridging communities, networks and sectors.',
+                strategy_card_3_items: ['Develop strategic partnerships: government, UNFPA, international organizations, excellence centre references', 'Innovation and knowledge sharing'],
+                strategy_card_4_title: 'Caring for and Advancing Our Association',
+                strategy_card_4_goal: 'Renew and strengthen the association based on shared values and unleash our collective energy for greater impact.',
+                strategy_card_4_items: ['Assert identity: national leadership and institutional image', 'Develop systems: administrative modernization and financial sustainability', 'Exemplarity: good governance, non-discrimination and inclusion'],
             }
         };
 
@@ -496,23 +519,31 @@
 
         function renderStrategyCards(lang) {
             const colors = [
-                { from: 'from-brandGreen', to: 'to-brandDark', icon: 'fa-heartbeat' },
+                { from: 'from-brandGreen', to: 'to-emerald-700', icon: 'fa-heartbeat' },
                 { from: 'from-blue-500', to: 'to-blue-800', icon: 'fa-balance-scale' },
                 { from: 'from-purple-500', to: 'to-purple-800', icon: 'fa-handshake' },
                 { from: 'from-orange-500', to: 'to-red-600', icon: 'fa-users-cog' },
             ];
+            const goalLabel = t('strategy_goal_label') || 'Goal';
             const container = document.getElementById('strategyCards');
             container.innerHTML = [1,2,3,4].map(i => {
                 const title = t(`strategy_card_${i}_title`);
+                const goal = translations[lang][`strategy_card_${i}_goal`] || '';
                 const items = translations[lang][`strategy_card_${i}_items`] || [];
                 return `
                     <div class="bg-white rounded-2xl overflow-hidden shadow-lg card-hover fade-up">
-                        <div class="h-48 bg-gradient-to-br ${colors[i-1].from} ${colors[i-1].to} flex items-center justify-center">
-                            <i class="fas ${colors[i-1].icon} text-white text-6xl"></i>
+                        <div class="bg-gradient-to-br ${colors[i-1].from} ${colors[i-1].to} p-6 flex items-center gap-4">
+                            <div class="w-14 h-14 rounded-full bg-white/20 flex items-center justify-center shrink-0">
+                                <i class="fas ${colors[i-1].icon} text-white text-2xl"></i>
+                            </div>
+                            <div>
+                                <span class="text-white/70 text-xs font-bold uppercase tracking-wider">${goalLabel} ${i}</span>
+                                <h4 class="text-white font-bold text-lg leading-tight">${title}</h4>
+                            </div>
                         </div>
                         <div class="p-6">
-                            <h4 class="font-bold text-brandDark mb-2">${title}</h4>
-                            <ul class="text-sm text-gray-600 space-y-1">${items.map(item => `<li>• ${item}</li>`).join('')}</ul>
+                            <p class="text-sm text-gray-700 font-semibold mb-3 leading-relaxed">${goal}</p>
+                            <ul class="text-sm text-gray-600 space-y-2">${items.map(item => `<li class="flex gap-2 items-start"><span class="text-brandGreen mt-0.5 shrink-0">•</span><span>${item}</span></li>`).join('')}</ul>
                         </div>
                     </div>
                 `;
@@ -554,6 +585,11 @@
                 if (vals) {
                     const lines = vals.split('\n').filter(v => v.trim());
                     document.getElementById('valuesList').innerHTML = lines.map(v => `<li>• ${v.trim()}</li>`).join('');
+                }
+                if (sc.about.strategy_url) {
+                    const btn = document.getElementById('strategyPdf');
+                    btn.href = sc.about.strategy_url;
+                    btn.style.display = 'inline-flex';
                 }
             }
 
