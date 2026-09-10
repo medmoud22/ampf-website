@@ -141,6 +141,27 @@
                 </div>
 
                 <div class="mt-12">
+                    <h3 class="text-2xl font-black text-brandDark mb-6 text-center" data-i18n="mgf_objectives_heading">الأهداف الرئيسية</h3>
+                    <div id="mgfObjectivesList" class="grid md:grid-cols-2 lg:grid-cols-3 gap-6"></div>
+                </div>
+
+                <div class="mt-12 bg-gradient-to-br from-emerald-50 to-white rounded-3xl p-8">
+                    <h3 class="text-2xl font-black text-brandDark mb-6 text-center" data-i18n="mgf_structure_heading">هيكل المركز وفريقه</h3>
+                    <div class="grid lg:grid-cols-2 gap-8">
+                        <div class="bg-white p-6 rounded-2xl shadow-sm border border-gray-100 card-hover fade-up">
+                            <div class="w-12 h-12 bg-emerald-100 rounded-xl flex items-center justify-center mb-4"><i class="fas fa-door-open text-brandGreen text-xl"></i></div>
+                            <h4 class="text-lg font-bold text-brandDark mb-4" data-i18n="mgf_structure_services_heading">خدمات المركز</h4>
+                            <div id="mgfStructureServices" class="space-y-4"></div>
+                        </div>
+                        <div class="bg-white p-6 rounded-2xl shadow-sm border border-gray-100 card-hover fade-up">
+                            <div class="w-12 h-12 bg-blue-100 rounded-xl flex items-center justify-center mb-4"><i class="fas fa-users text-brandGreen text-xl"></i></div>
+                            <h4 class="text-lg font-bold text-brandDark mb-4" data-i18n="mgf_structure_staff_heading">فريق العمل</h4>
+                            <div id="mgfStructureStaff" class="space-y-3"></div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="mt-12">
                     <h3 class="text-2xl font-black text-brandDark mb-6 text-center" data-i18n="mgf_team_heading">فريق المركز</h3>
                     <div id="mgfTeamGrid" class="grid md:grid-cols-2 lg:grid-cols-4 gap-6"></div>
                 </div>
@@ -148,6 +169,7 @@
                 <div class="mt-12">
                     <h3 class="text-2xl font-black text-brandDark mb-6 text-center" data-i18n="mgf_partners_heading">الشركاء</h3>
                     <div id="mgfPartnersGrid" class="grid md:grid-cols-2 lg:grid-cols-4 gap-6"></div>
+                    <div id="mgfPartnersOverview" class="mt-6 grid md:grid-cols-2 lg:grid-cols-3 gap-4"></div>
                 </div>
             </div>
 
@@ -174,6 +196,24 @@
                         <div class="w-14 h-14 bg-brandLight rounded-xl flex items-center justify-center mb-4"><i class="fas fa-bullhorn text-brandGreen text-xl"></i></div>
                         <h3 class="text-xl font-bold text-brandDark mb-3" data-i18n="mgf_advocacy_heading">المناصرة والدعوة</h3>
                         <p id="mgfAdvocacy" class="text-gray-600 leading-relaxed"></p>
+                    </div>
+                </div>
+
+                <div class="mt-12">
+                    <h3 class="text-2xl font-black text-brandDark mb-6 text-center" data-i18n="mgf_services_heading">الخدمات والأنشطة</h3>
+                    <div id="mgfServicesGrid" class="grid md:grid-cols-2 lg:grid-cols-3 gap-6"></div>
+                </div>
+
+                <div class="mt-12 grid lg:grid-cols-2 gap-8">
+                    <div class="bg-white p-8 rounded-2xl shadow-lg card-hover fade-up">
+                        <div class="w-12 h-12 bg-amber-50 rounded-xl flex items-center justify-center mb-4"><i class="fas fa-triangle-exclamation text-amber-500 text-xl"></i></div>
+                        <h3 class="text-xl font-bold text-brandDark mb-4" data-i18n="mgf_challenges_heading">التحديات</h3>
+                        <ul id="mgfChallengesList" class="list-disc ms-5 space-y-2 text-gray-600 leading-relaxed"></ul>
+                    </div>
+                    <div class="bg-white p-8 rounded-2xl shadow-lg card-hover fade-up">
+                        <div class="w-12 h-12 bg-emerald-50 rounded-xl flex items-center justify-center mb-4"><i class="fas fa-arrow-trend-up text-brandGreen text-xl"></i></div>
+                        <h3 class="text-xl font-bold text-brandDark mb-4" data-i18n="mgf_perspectives_heading">الآفاق</h3>
+                        <ul id="mgfPerspectivesList" class="list-disc ms-5 space-y-2 text-gray-600 leading-relaxed"></ul>
                     </div>
                 </div>
             </div>
@@ -224,6 +264,10 @@
                 mgf_empty_research: 'لا توجد دراسات بعد', mgf_empty_toolkits: 'لا توجد حقائب تدريبية بعد',
                 mgf_empty_news: 'لا توجد أخبار بعد', mgf_download: 'تحميل الملف', mgf_read_more: 'قراءة المزيد',
                 mgf_open_pdf: 'فتح الملف',
+                mgf_objectives_heading: 'الأهداف الرئيسية', mgf_structure_heading: 'هيكل المركز وفريقه',
+                mgf_structure_services_heading: 'خدمات المركز', mgf_structure_staff_heading: 'فريق العمل',
+                mgf_services_heading: 'الخدمات والأنشطة',
+                mgf_challenges_heading: 'التحديات', mgf_perspectives_heading: 'الآفاق',
             },
             fr: {
                 siteTitle: "Centre d'Excellence pour l'élimination des MGF | AMPF",
@@ -248,6 +292,10 @@
                 mgf_empty_research: 'Aucune étude pour le moment', mgf_empty_toolkits: 'Aucun outil pour le moment',
                 mgf_empty_news: 'Aucune actualité pour le moment', mgf_download: 'Télécharger le fichier',
                 mgf_read_more: 'Lire plus', mgf_open_pdf: 'Ouvrir le fichier',
+                mgf_objectives_heading: 'Objectifs principaux', mgf_structure_heading: 'Structure et équipe',
+                mgf_structure_services_heading: 'Services du centre', mgf_structure_staff_heading: 'Personnel',
+                mgf_services_heading: 'Services et activités',
+                mgf_challenges_heading: 'Défis', mgf_perspectives_heading: 'Perspectives',
             },
             en: {
                 siteTitle: 'Centre of Excellence for the Elimination of FGM | AMPF',
@@ -272,6 +320,10 @@
                 mgf_empty_research: 'No studies yet', mgf_empty_toolkits: 'No toolkits yet',
                 mgf_empty_news: 'No news yet', mgf_download: 'Download file',
                 mgf_read_more: 'Read more', mgf_open_pdf: 'Open file',
+                mgf_objectives_heading: 'Main Objectives', mgf_structure_heading: 'Structure & Staff',
+                mgf_structure_services_heading: 'Centre Services', mgf_structure_staff_heading: 'Staff',
+                mgf_services_heading: 'Services & Activities',
+                mgf_challenges_heading: 'Challenges', mgf_perspectives_heading: 'Perspectives',
             }
         };
 
@@ -373,6 +425,72 @@
             document.getElementById('mgfVision').textContent = getLocalizedText(content.vision) || '';
             document.getElementById('mgfGetInvolved').textContent = getLocalizedText(content.getInvolved) || '';
             document.getElementById('mgfAdvocacy').textContent = getLocalizedText(content.advocacy) || '';
+
+            // Objectives
+            const objColors = ['bg-brandLight', 'bg-emerald-50', 'bg-blue-50', 'bg-purple-50', 'bg-pink-50'];
+            document.getElementById('mgfObjectivesList').innerHTML = (content.objectives && content.objectives.length)
+                ? content.objectives.map((o, i) => `
+                    <div class="bg-white rounded-2xl p-6 shadow-sm border border-gray-100 card-hover fade-up">
+                        <div class="w-12 h-12 ${objColors[i % objColors.length]} rounded-xl flex items-center justify-center mb-4"><span class="font-black text-brandGreen text-lg">${i + 1}</span></div>
+                        <p class="text-gray-700 leading-relaxed">${getLocalizedText(o)}</p>
+                    </div>
+                `).join('')
+                : '';
+
+            // Structure & Staff
+            const structure = content.structure || {};
+            document.getElementById('mgfStructureServices').innerHTML = (structure.services && structure.services.length)
+                ? structure.services.map(s => `
+                    <div class="flex items-start gap-3">
+                        <i class="fas fa-circle-check text-brandGreen mt-1"></i>
+                        <div>
+                            <p class="font-bold text-brandDark">${getLocalizedText(s.name)}</p>
+                            ${s.desc ? `<p class="text-sm text-gray-500 mt-1">${getLocalizedText(s.desc)}</p>` : ''}
+                        </div>
+                    </div>
+                `).join('')
+                : '';
+            document.getElementById('mgfStructureStaff').innerHTML = (structure.staff && structure.staff.length)
+                ? structure.staff.map(s => `
+                    <div class="flex items-center justify-between gap-3 border-b border-gray-100 pb-3 last:border-0">
+                        <div class="flex items-center gap-3">
+                            <i class="fas fa-user-tie text-brandGreen"></i>
+                            <p class="font-bold text-brandDark">${getLocalizedText(s.role)}</p>
+                        </div>
+                        <span class="text-xs font-bold px-3 py-1 bg-brandLight text-brandDark rounded-full">${s.count || ''}</span>
+                    </div>
+                `).join('')
+                : '';
+
+            // Services & Activities
+            const servIcons = ['fa-stethoscope', 'fa-heart-pulse', 'fa-hand-holding-medical', 'fa-chalkboard-user', 'fa-bullhorn'];
+            const servColors = ['bg-brandLight', 'bg-emerald-50', 'bg-blue-50', 'bg-purple-50', 'bg-pink-50'];
+            document.getElementById('mgfServicesGrid').innerHTML = (content.services && content.services.length)
+                ? content.services.map((s, i) => `
+                    <div class="bg-white rounded-2xl p-6 shadow-sm border border-gray-100 card-hover fade-up">
+                        <div class="w-11 h-11 ${servColors[i % servColors.length]} rounded-xl flex items-center justify-center mb-3"><i class="fas ${servIcons[i % servIcons.length]} text-brandGreen text-lg"></i></div>
+                        <p class="font-bold text-brandDark leading-relaxed">${getLocalizedText(s)}</p>
+                    </div>
+                `).join('')
+                : '';
+
+            // Partners overview
+            document.getElementById('mgfPartnersOverview').innerHTML = (content.partnersOverview && content.partnersOverview.length)
+                ? content.partnersOverview.map(p => `
+                    <div class="flex items-center gap-3 bg-white rounded-xl p-4 shadow-sm border border-gray-100 card-hover fade-up">
+                        <i class="fas fa-handshake text-brandGreen text-xl"></i>
+                        <p class="text-sm text-gray-600 leading-relaxed">${getLocalizedText(p)}</p>
+                    </div>
+                `).join('')
+                : '';
+
+            // Challenges & Perspectives
+            document.getElementById('mgfChallengesList').innerHTML = (content.challenges && content.challenges.length)
+                ? content.challenges.map(c => `<li>${getLocalizedText(c)}</li>`).join('')
+                : '';
+            document.getElementById('mgfPerspectivesList').innerHTML = (content.perspectives && content.perspectives.length)
+                ? content.perspectives.map(p => `<li>${getLocalizedText(p)}</li>`).join('')
+                : '';
 
             // Team
             document.getElementById('mgfTeamGrid').innerHTML = (mgf.team && mgf.team.length)

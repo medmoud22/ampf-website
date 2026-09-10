@@ -580,25 +580,214 @@
   "mgfContent": {
     "logo": "",
     "mission": {
-      "ar": "مهمة",
-      "fr": "Mission",
-      "en": "Mission"
+      "ar": "مركز متخصص تابع للجمعية الموريتانية لترقية الأسرة، يعمل على التحسيس والتوعية بشأن استجابة النساء والفتيات المتأثرات بتشويه الأعضاء التناسلية للإناث، وتحفيز البحث والإعلام وتطوير البرامج، وتقديم الإرشادات حول خدمات الرعاية، وتطوير الأدلة وتعبئة الطاقات المحلية والدولية من أجل القضاء النهائي على هذه الممارسة.",
+      "fr": "Centre spécialisé de l'Association Mauritanienne pour la Promotion de la Famille, il œuvre à la sensibilisation et à l'information sur la prise en charge des femmes et des filles affectées par les mutilations génitales féminines, à la stimulation de la recherche, de l'information et des programmes, à l'orientation vers les services de soins, au développement des données probantes et à la mobilisation des énergies locales et internationales pour l'élimination définitive de cette pratique.",
+      "en": "A specialised centre of the Mauritanian Association for Family Promotion working to raise awareness of the care and response for women and girls affected by female genital mutilation, to stimulate research, information and programmes, to provide guidance on care services, to develop evidence and mobilise local and international energies towards the definitive elimination of this practice."
     },
     "vision": {
-      "ar": "رؤية",
-      "fr": "Vision",
-      "en": "Vision"
+      "ar": "مركز مرجعي وطني وإقليمي في مجال القضاء على تشويه الأعضاء التناسلية للإناث، يوظف البحث والتدريب والمناصرة لنشر ثقافة مناهضة لهذه الممارسة وضمان الحماية الكاملة للفتيات والنساء في موريتانيا وخارجها.",
+      "fr": "Un centre de référence national et régional pour l'élimination des mutilations génitales féminines, mettant la recherche, la formation et le plaidoyer au service de la diffusion d'une culture contre cette pratique et de la protection pleine et entière des filles et des femmes en Mauritanie et au-delà.",
+      "en": "A national and regional reference centre for the elimination of female genital mutilation, using research, training and advocacy to spread a culture against the practice and ensure full protection for girls and women in Mauritania and beyond."
     },
     "getInvolved": {
-      "ar": "شارك",
-      "fr": "Impliquez",
-      "en": "Involved"
+      "ar": "يدعو المركز الأفراد والمنظمات إلى المساهمة في جهوده عبر التطوع، ودعم الأنشطة البحثية والتوعوية، والمشاركة في الحملات، وبناء شراكات مع الفاعلين المحليين والدوليين. تواصلوا معنا لمعرفة كيفية الانضمام إلى شبكة المركز.",
+      "fr": "Le centre invite les individus et les organisations à contribuer à ses efforts par le bénévolat, le soutien aux activités de recherche et de sensibilisation, la participation aux campagnes et la construction de partenariats avec les acteurs locaux et internationaux. Contactez-nous pour savoir comment rejoindre le réseau du centre.",
+      "en": "The centre invites individuals and organisations to contribute to its efforts through volunteering, supporting research and awareness activities, joining campaigns and building partnerships with local and international actors. Contact us to find out how to join the centre's network."
     },
     "advocacy": {
-      "ar": "مناصرة",
-      "fr": "Plaidoyer",
-      "en": "Advocacy"
-    }
+      "ar": "ينفذ المركز أنشطة ترافع موجهة نحو صناع القرار والقادة الدينيين والمجتمع المدني، لتعزيز إطار الحماية القانوني للفتيات والنساء، ونشر خطاب ديني واجتماعي مناهض لختان الإناث، وضمان إدماج القضية في السياسات والبرامج الوطنية.",
+      "fr": "Le centre mène des activités de plaidoyer auprès des décideurs, des leaders religieux et de la société civile afin de renforcer le cadre légal de protection des filles et des femmes, de diffuser un discours religieux et social contre les MGF et d'assurer l'intégration de la question dans les politiques et programmes nationaux.",
+      "en": "The centre conducts advocacy activities targeting policymakers, religious leaders and civil society to strengthen the legal framework protecting girls and women, spread a religious and social discourse against FGM, and ensure the issue is integrated into national policies and programmes."
+    },
+    "objectives": [
+      {
+        "ar": "تعزيز قدرات الفاعلين ومشاركة المعرفة والأدلة حول تشويه الأعضاء التناسلية للإناث",
+        "fr": "Renforcer les capacités des acteurs et partager les connaissances et les preuves sur les mutilations génitales féminines",
+        "en": "Strengthen actors' capacities and share knowledge and evidence on female genital mutilation"
+      },
+      {
+        "ar": "التمكين الاجتماعي والاقتصادي للناجيات من تشويه الأعضاء التناسلية للإناث",
+        "fr": "Assurer l'autonomisation sociale et économique des survivantes des mutilations génitales féminines",
+        "en": "Ensure the social and economic empowerment of female genital mutilation survivors"
+      },
+      {
+        "ar": "تقديم خدمات صحة إنجابية وجنسية عالية الجودة ومرتكزة على العميل",
+        "fr": "Offrir des services de santé reproductive et sexuelle de qualité, centrés sur la cliente",
+        "en": "Deliver high-quality, client-centred sexual and reproductive health services"
+      },
+      {
+        "ar": "الترافع وبناء الأدلة وترقية البحث العلمي لدعم السياسات والبرامج",
+        "fr": "Promouvoir le plaidoyer, la production de données probantes et la recherche scientifique pour éclairer les politiques et les programmes",
+        "en": "Promote advocacy, evidence-building and scientific research to inform policies and programmes"
+      },
+      {
+        "ar": "الإسهام في التقدم نحو القضاء على ختان الإناث بين أعضاء الاتحاد الدولي لتنظيم الأسرة وشركائهم",
+        "fr": "Contribuer aux progrès vers l'élimination des MGF parmi les membres de l'IPPF (International Planned Parenthood Federation) et leurs partenaires",
+        "en": "Contribute to progress towards the elimination of FGM among IPPF (International Planned Parenthood Federation) members and their partners"
+      }
+    ],
+    "structure": {
+      "services": [
+        {
+          "name": {
+            "ar": "الاستقبال",
+            "fr": "Accueil",
+            "en": "Reception"
+          },
+          "desc": {
+            "ar": "استقبال الناجيات وفتح ملفاتهن وتوجيههن نحو الخدمات المناسبة",
+            "fr": "Réception des survivantes, ouverture de leurs dossiers et orientation vers les services appropriés",
+            "en": "Welcoming survivors, opening their case files and referring them to appropriate services"
+          }
+        },
+        {
+          "name": {
+            "ar": "الدعم والإرشاد",
+            "fr": "Counseling / Soutien",
+            "en": "Counseling / Support"
+          },
+          "desc": {
+            "ar": "مرافقة نفسية واجتماعية فردية وجماعية، وتبصير الناجيات بحقوقهن وسبل التمكين",
+            "fr": "Accompagnement psychosocial individuel et collectif, information des survivantes sur leurs droits et voies d'autonomisation",
+            "en": "Individual and group psychosocial counselling, informing survivors of their rights and empowerment pathways"
+          }
+        },
+        {
+          "name": {
+            "ar": "الدعم النفسي المتخصص",
+            "fr": "Psychologie",
+            "en": "Psychology"
+          },
+          "desc": {
+            "ar": "تدخل نفسي متخصص لمعالجة الصدمات وتعزيز القدرة على الصمود",
+            "fr": "Prise en charge psychologique spécialisée pour traiter les traumatismes et renforcer la résilience",
+            "en": "Specialised psychological care to address trauma and strengthen resilience"
+          }
+        }
+      ],
+      "staff": [
+        {
+          "role": {
+            "ar": "منسقة المركز",
+            "fr": "Coordinatrice du centre",
+            "en": "Centre Coordinator"
+          },
+          "count": 1
+        },
+        {
+          "role": {
+            "ar": "مساعدات اجتماعيات",
+            "fr": "Assistantes sociales",
+            "en": "Social Workers"
+          },
+          "count": 3
+        },
+        {
+          "role": {
+            "ar": "أخصائية نفسية",
+            "fr": "Psychologue",
+            "en": "Psychologist"
+          },
+          "count": 1
+        },
+        {
+          "role": {
+            "ar": "طاقم الدعم",
+            "fr": "Personnel de soutien",
+            "en": "Support Staff"
+          },
+          "count": 2
+        }
+      ]
+    },
+    "services": [
+      {
+        "ar": "التحري عن حالات العنف القائم على النوع الاجتماعي (VBG) واستقبال الناجيات",
+        "fr": "Dépistage des cas de violence basée sur le genre (VBG) et accueil des survivantes",
+        "en": "Screening for gender-based violence (GBV) cases and reception of survivors"
+      },
+      {
+        "ar": "خدمات الصحة والإرشاد (الصحة الإنجابية والنفسية والاجتماعية)",
+        "fr": "Services de santé et de conseil (santé reproductive, psychologique et sociale)",
+        "en": "Health and counselling services (reproductive, psychological and social health)"
+      },
+      {
+        "ar": "الإحالة نحو الخدمات التخصصية (طبية وقانونية وحماية)",
+        "fr": "Référencement vers les services spécialisés (médical, juridique, protection)",
+        "en": "Referral to specialised services (medical, legal, protection)"
+      },
+      {
+        "ar": "تنظيم دورات تدريبية وورش عمل لفائدة الفاعلين المجتمعيين",
+        "fr": "Organisation de sessions de formation et d'ateliers pour les acteurs communautaires",
+        "en": "Organising training sessions and workshops for community actors"
+      },
+      {
+        "ar": "إطلاق حملات توعوية وتحسيسية في الأوساط المجتمعية",
+        "fr": "Lancement de campagnes de sensibilisation dans les communautés",
+        "en": "Launching awareness-raising campaigns within communities"
+      }
+    ],
+    "partnersOverview": [
+      {
+        "ar": "شركاء محليون ودوليون (منظمات المجتمع المدني ووكالات الأمم المتحدة)",
+        "fr": "Partenaires locaux et internationaux (organisations de la société civile et agences des Nations Unies)",
+        "en": "Local and international partners (civil society organisations and United Nations agencies)"
+      },
+      {
+        "ar": "قيادات مجتمعية ودينية ومؤثرون",
+        "fr": "Leaders communautaires et religieux et personnalités influentes",
+        "en": "Community and religious leaders and influencers"
+      },
+      {
+        "ar": "حكومات ومؤسسات صحية وطنية",
+        "fr": "Gouvernements et institutions sanitaires nationales",
+        "en": "Governments and national health institutions"
+      }
+    ],
+    "challenges": [
+      {
+        "ar": "تسريع وثيرة القضاء على تشويه الأعضاء التناسلية للإناث وتجاوز العوائق الاجتماعية والاقتصادية والثقافية",
+        "fr": "Accélérer le rythme de l'élimination des MGF et lever les obstacles sociaux, économiques et culturels",
+        "en": "Accelerate the pace of eliminating FGM and overcome social, economic and cultural obstacles"
+      },
+      {
+        "ar": "بناء شبكة واسعة من الفاعلين المعنيين",
+        "fr": "Constituer un vaste réseau d'acteurs concernés",
+        "en": "Build a broad network of relevant actors"
+      },
+      {
+        "ar": "إشراك الرجال والشباب في عملية التغيير الاجتماعي",
+        "fr": "Impliquer les hommes et les jeunes dans le processus de changement social",
+        "en": "Involve men and young people in the process of social change"
+      },
+      {
+        "ar": "إشراك العلماء والقيادات الدينية ونشر الفتاوى الصريحة المجرّمة للممارسة",
+        "fr": "Impliquer les savants et les chefs religieux et diffuser des fatwas explicites criminalisant la pratique",
+        "en": "Involve scholars and religious leaders and disseminate explicit fatwas condemning the practice"
+      }
+    ],
+    "perspectives": [
+      {
+        "ar": "تعزيز مكانة المركز كمرجع وطني وإقليمي في مجال البحث والتدريب والمناصرة",
+        "fr": "Consolider la position du centre comme référence nationale et régionale en matière de recherche, de formation et de plaidoyer",
+        "en": "Consolidate the centre's position as a national and regional reference in research, training and advocacy"
+      },
+      {
+        "ar": "توسيع الشراكات وتعبئة موارد إضافية لبرامج الدعم والتمكين",
+        "fr": "Élargir les partenariats et mobiliser des ressources supplémentaires pour les programmes de soutien et d'autonomisation",
+        "en": "Expand partnerships and mobilise additional resources for support and empowerment programmes"
+      },
+      {
+        "ar": "توثيق أفضل الممارسات وتعميمها على الشبكة الإقليمية والدولية",
+        "fr": "Documenter les bonnes pratiques et les diffuser au niveau régional et international",
+        "en": "Document best practices and disseminate them regionally and internationally"
+      },
+      {
+        "ar": "تكامل الجهود مع الاستراتيجية الوطنية للقضاء على الممارسات الضارة بالصحة",
+        "fr": "Intégrer les efforts dans la stratégie nationale d'élimination des pratiques néfastes pour la santé",
+        "en": "Align efforts with the national strategy to eliminate harmful practices affecting health"
+      }
+    ]
   },
   "mgfTeam": [],
   "mgfPartners": [],
