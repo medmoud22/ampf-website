@@ -328,7 +328,7 @@ async function initStorage() {
             // detailed keys, so this only fires on the one-time upgrade.
             const curatedMgf = (curated && curated.mgfContent && typeof curated.mgfContent === 'object') ? curated.mgfContent : null;
             const currentMgf = (cData.mgfContent && typeof cData.mgfContent === 'object') ? cData.mgfContent : null;
-            if (curatedMgf && (!currentMgf || !Array.isArray(currentMgf.objectives))) {
+            if (curatedMgf && (!currentMgf || !Array.isArray(currentMgf.objectives) || !currentMgf.servicesIntro)) {
                 cData.mgfContent = curatedMgf;
                 await enqueueSet(contentQueue, CONTENT_KEY, cData);
                 console.log("[AMPF] MGF content upgraded with detailed Centre d'Excellence blocks in Redis.");
@@ -470,7 +470,7 @@ app.get('/api/public-content', async (req, res) => {
         cliniques: data.cliniques || [],
         navbar: data.navbar || [],
         mgf: {
-            content: data.mgfContent || { logo: '', mission: {}, vision: {}, getInvolved: {}, advocacy: {}, objectives: [], structure: {}, services: [], partnersOverview: [], challenges: [], perspectives: [] },
+            content: data.mgfContent || { logo: '', mission: {}, vision: {}, getInvolved: {}, advocacy: {}, objectives: [], servicesIntro: {}, structure: {}, services: [], partnersOverview: [], challenges: [], perspectives: [] },
             team: data.mgfTeam || [],
             partners: data.mgfPartners || [],
             research: data.mgfResearch || [],
@@ -487,7 +487,7 @@ app.get('/api/public-content', async (req, res) => {
 app.get('/api/mgf-content', async (req, res) => {
     const data = await readData();
     res.json({
-        content: data.mgfContent || { logo: '', mission: {}, vision: {}, getInvolved: {}, advocacy: {}, objectives: [], structure: {}, services: [], partnersOverview: [], challenges: [], perspectives: [] },
+        content: data.mgfContent || { logo: '', mission: {}, vision: {}, getInvolved: {}, advocacy: {}, objectives: [], servicesIntro: {}, structure: {}, services: [], partnersOverview: [], challenges: [], perspectives: [] },
         team: data.mgfTeam || [],
         partners: data.mgfPartners || [],
         research: data.mgfResearch || [],

@@ -626,42 +626,71 @@
         "en": "Contribute to progress towards the elimination of FGM among IPPF (International Planned Parenthood Federation) members and their partners"
       }
     ],
+    "servicesIntro": {
+      "ar": "يقدم مركز الامتياز للقضاء على ختان الإناث رعاية متكاملة تعتمد على مسار علاجي متعدد التخصصات، حيث يحتل الدعم النفسي والاجتماعي مكاناً محورياً لمساعدة النساء والفتيات على تجاوز الصدمات الفيزيولوجية والعاطفية.",
+      "fr": "Le centre d'excellence pour l'élimination des MGF organise une prise en charge reposant sur un parcours de soins multidisciplinaire, où l'accompagnement psychosocial occupe une place centrale.",
+      "en": "The Center of Excellence for the Elimination of FGM provides multidisciplinary care where psychosocial support plays a central role in helping women and girls overcome physical and emotional trauma."
+    },
     "structure": {
       "services": [
         {
           "name": {
-            "ar": "الاستقبال",
-            "fr": "Accueil",
-            "en": "Reception"
+            "ar": "الدعم النفسي والعلاج النفسي",
+            "fr": "Soutien psychologique et psychothérapeutique",
+            "en": "Psychological & Psychotherapeutic Support"
           },
           "desc": {
-            "ar": "استقبال الناجيات وفتح ملفاتهن وتوجيههن نحو الخدمات المناسبة",
-            "fr": "Réception des survivantes, ouverture de leurs dossiers et orientation vers les services appropriés",
-            "en": "Welcoming survivors, opening their case files and referring them to appropriate services"
+            "ar": "الاستقبال والتقييم الأولي، علاج الصدمات (اضطراب ما بعد الصدمة، القلق، الاكتئاب)، وتنظيم جلسات دعم جماعي لكسر العزلة وتعزيز التعافي.",
+            "fr": "Accueil, évaluation initiale, thérapie des traumatismes (PTSD, anxiété, dépression), et groupes de parole pour briser l'isolement.",
+            "en": "Initial intake & assessment, trauma therapy (PTSD, anxiety, depression), and support groups to break isolation and foster resilience."
           }
         },
         {
           "name": {
-            "ar": "الدعم والإرشاد",
-            "fr": "Counseling / Soutien",
-            "en": "Counseling / Support"
+            "ar": "الاستشارات وعلاج المشاكل الجنسية",
+            "fr": "Accompagnement sexologique",
+            "en": "Sexological Support"
           },
           "desc": {
-            "ar": "مرافقة نفسية واجتماعية فردية وجماعية، وتبصير الناجيات بحقوقهن وسبل التمكين",
-            "fr": "Accompagnement psychosocial individuel et collectif, information des survivantes sur leurs droits et voies d'autonomisation",
-            "en": "Individual and group psychosocial counselling, informing survivors of their rights and empowerment pathways"
+            "ar": "العلاج الجنسي لمساعدة النساء على استعادة التآلف مع أجسادهن، معالجة الآلام (عسر الجماع) وفقدان الحساسية، والدعم النفسي قبل وبعد جراحة ترميم البظر.",
+            "fr": "Thérapie sexuelle pour la réappropriation du corps, gestion des douleurs (dyspareunie), et accompagnement avant/après chirurgie reconstructrice clitoridienne.",
+            "en": "Sexual therapy, pain & dysfunction management (dyspareunia), and pre/post-operative counseling for clitoral reconstructive surgery."
           }
         },
         {
           "name": {
-            "ar": "الدعم النفسي المتخصص",
-            "fr": "Psychologie",
-            "en": "Psychology"
+            "ar": "الدعم الاجتماعي والقانوني",
+            "fr": "Accompagnement social et juridique",
+            "en": "Social & Legal Support"
           },
           "desc": {
-            "ar": "تدخل نفسي متخصص لمعالجة الصدمات وتعزيز القدرة على الصمود",
-            "fr": "Prise en charge psychologique spécialisée pour traiter les traumatismes et renforcer la résilience",
-            "en": "Specialised psychological care to address trauma and strengthen resilience"
+            "ar": "المساعدة الاجتماعية في المعاملات الإدارية والوصول للحقوق، وحماية القاصرات المعرضات لخطر الختان الوشيك وتوفير المأوى الطارئ.",
+            "fr": "Assistance sociale pour l'accès aux droits et logement, ainsi que la protection d'urgence des mineures menacées d'excision imminente.",
+            "en": "Personalized social assistance for legal rights & employment, and emergency protection for minors at risk of FGM."
+          }
+        },
+        {
+          "name": {
+            "ar": "الوساطة الثقافية والعائلية",
+            "fr": "Médiation interculturelle et familiale",
+            "en": "Intercultural & Family Mediation"
+          },
+          "desc": {
+            "ar": "الاستعانة بوسطاء لتجاوز حاجز اللغة والتابوهات، وتقديم الاستشارات الزوجية والعائلية لإشراك الشركاء وتسهيل الحوار حول الصحة الجنسية والإنجابية.",
+            "fr": "Médiation pour surmonter les barrières linguistiques et conseils de couple/famille pour impliquer les partenaires et faciliter le dialogue.",
+            "en": "Cultural mediation to overcome language barriers and couple/family counseling to engage partners in reproductive health dialogue."
+          }
+        },
+        {
+          "name": {
+            "ar": "التوعية والتعليم المجتمعي",
+            "fr": "Sensibilisation et éducation communautaire",
+            "en": "Community Awareness & Education"
+          },
+          "desc": {
+            "ar": "دورات إعلامية حول حقوق الصحة الجنسية والإنجابية، وتعبئة القادة المجتمعيين والدينيين لتشجيع التخلي التام عن هذه الممارسة.",
+            "fr": "Sessions d'information sur les droits sexuels et reproductifs, et mobilisation des leaders communautaires et religieux pour l'abandon total de la pratique.",
+            "en": "Health education sessions and community engagement with local/religious leaders to encourage total abandonment of FGM."
           }
         }
       ],
