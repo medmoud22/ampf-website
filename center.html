@@ -51,6 +51,7 @@
                 <span class="hidden sm:inline flex-shrink-0"><i class="fas fa-phone ml-1"></i> <span id="topPhone">+222 45 25 XX XX</span></span>
             </div>
             <div class="flex items-center gap-1 sm:gap-2 flex-shrink-0">
+                <div id="headerSocial" class="hidden md:flex items-center gap-1.5 me-2 sm:me-3"></div>
                 <a href="index.html" class="text-white/80 hover:text-white transition font-bold text-xs px-2"><i class="fas fa-home ml-1"></i><span data-i18n="nav_home">الرئيسية</span></a>
                 <button class="lang-btn active text-xs py-1 px-2" onclick="setLang('ar')">AR</button>
                 <button class="lang-btn text-xs py-1 px-2" onclick="setLang('fr')">FR</button>
@@ -100,7 +101,7 @@
                 </div>
                 <p class="text-lg sm:text-xl text-white/90 mb-4 max-w-3xl mx-auto leading-relaxed" data-i18n="mgf_subtitle">أبحاث وأدلة تدريبية ومناصرة للقضاء على تشويه الأعضاء التناسلية للإناث</p>
                 <p id="mgfRegionalTagline" class="text-base sm:text-lg font-bold text-white mb-6 max-w-3xl mx-auto leading-relaxed"></p>
-                <span class="bg-white/20 backdrop-blur-sm rounded-full inline-block mb-6 p-1.5"><img src="assets/ippf-logo.png" alt="IPPF AWRO" class="h-9 w-auto" onerror="this.closest('span').style.display='none'"></span>
+                <span class="bg-white rounded-full inline-block mb-6 p-1.5 shadow-lg"><img src="assets/ippf-logo.png" alt="IPPF AWRO" class="h-9 sm:h-10 w-auto" onerror="this.closest('span').style.display='none'"></span>
                 <div class="w-60 h-1 bg-white/40 mx-auto rounded-full"></div>
             </div>
         </div>
@@ -899,6 +900,17 @@
                             : '';
                     })
                     .join('');
+                const headerSocial = document.getElementById('headerSocial');
+                if (headerSocial) {
+                    headerSocial.innerHTML = Object.entries(socialIcons)
+                        .map(([key]) => {
+                            const url = social[key];
+                            return url
+                                ? `<a href="${url}" target="_blank" rel="noopener" aria-label="${key}" title="${key}" class="w-7 h-7 rounded-full bg-white/10 hover:bg-brandGreen transition flex items-center justify-center"><i class="fab fa-${socialIcons[key][0]} text-sm" style="color:#fff"></i></a>`
+                                : '';
+                        })
+                        .join('');
+                }
             } catch (e) {
                 console.error('Failed to load shared data:', e);
             }
