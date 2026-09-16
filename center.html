@@ -64,7 +64,7 @@
         <div class="container mx-auto px-4 sm:px-6 py-2 sm:py-3 flex justify-between items-center gap-2 w-full">
             <div class="flex items-center gap-2 sm:gap-4 min-w-0">
                 <a href="index.html"><img src="LOGO AMPF.png" alt="AMPF Logo" class="h-10 sm:h-14 lg:h-16 w-auto flex-shrink-0" onerror="this.style.display='none'"></a>
-                <span class="hidden md:flex items-center gap-1 bg-blue-50 text-brandBlue border border-blue-200 rounded-full px-3 py-1 text-xs font-bold flex-shrink-0"><i class="fas fa-handshake"></i> IPPF AWRO</span>
+                <span class="hidden md:flex items-center bg-blue-50 border border-blue-200 rounded-full px-3 py-1 flex-shrink-0"><img src="assets/ippf-logo.png" alt="IPPF AWRO" class="h-8 sm:h-9 w-auto" onerror="this.closest('span').style.display='none'"></span>
                 <div class="min-w-0 overflow-hidden">
                     <h1 class="text-sm sm:text-base lg:text-lg font-bold text-brandDark truncate" id="siteTitle">مركز الإمتياز للقضاء على تشويه الأعضاء التناسلية للإناث</h1>
                     <p class="hidden sm:block text-xs text-gray-500 truncate">Association Mauritanienne pour la Promotion de la Famille</p>
@@ -100,7 +100,7 @@
                 </div>
                 <p class="text-lg sm:text-xl text-white/90 mb-4 max-w-3xl mx-auto leading-relaxed" data-i18n="mgf_subtitle">أبحاث وأدلة تدريبية ومناصرة للقضاء على تشويه الأعضاء التناسلية للإناث</p>
                 <p id="mgfRegionalTagline" class="text-base sm:text-lg font-bold text-white mb-6 max-w-3xl mx-auto leading-relaxed"></p>
-                <span class="bg-white/20 backdrop-blur-sm text-white text-xs px-4 py-2 rounded-full inline-block mb-6 font-bold"><i class="fas fa-handshake ml-1"></i> <span data-i18n="mgf_regional_badge">شريك IPPF AWRO</span></span>
+                <span class="bg-white/20 backdrop-blur-sm rounded-full inline-block mb-6 p-1.5"><img src="assets/ippf-logo.png" alt="IPPF AWRO" class="h-9 w-auto" onerror="this.closest('span').style.display='none'"></span>
                 <div class="w-60 h-1 bg-white/40 mx-auto rounded-full"></div>
             </div>
         </div>
@@ -173,7 +173,7 @@
                             <p id="mgfOwnershipAmpf" class="text-gray-600 leading-relaxed text-sm"></p>
                         </div>
                         <div class="bg-white rounded-2xl p-6 shadow-sm border border-gray-100">
-                            <div class="w-12 h-12 bg-blue-100 rounded-xl flex items-center justify-center mb-4"><i class="fas fa-handshake text-brandDark text-xl"></i></div>
+                            <div class="bg-gray-50 border border-gray-100 rounded-xl h-16 flex items-center justify-center mb-4 p-2"><img src="assets/ippf-logo.png" alt="IPPF AWRO" class="h-9 w-auto object-contain" onerror="this.style.display='none'"></div>
                             <p id="mgfOwnershipIppf" class="text-gray-600 leading-relaxed text-sm"></p>
                         </div>
                         <div class="bg-white rounded-2xl p-6 shadow-sm border border-gray-100">
@@ -332,7 +332,7 @@
                     <span class="text-sm font-bold text-white/80" data-i18n="footer_partner">شريك</span>
                     <span class="bg-white/15 text-white text-xs px-4 py-1 rounded-full font-bold border border-white/20">AMPF</span>
                     <i class="fas fa-plus text-white/50"></i>
-                    <span class="bg-white text-brandBlue text-xs px-4 py-1 rounded-full font-bold">IPPF AWRO</span>
+                    <span class="bg-white rounded-full px-3 py-1.5 border border-white/40"><img src="assets/ippf-logo.png" alt="IPPF AWRO" class="h-8 w-auto" onerror="this.closest('span').style.display='none'"></span>
                 </div>
                 <div id="footerSocial" class="flex items-center gap-3"></div>
             </div>
@@ -591,7 +591,7 @@
             document.getElementById('mgfRegionalText').textContent = getLocalizedText(aboutContent.regionalScope) || '';
             document.getElementById('mgfRegionalChips').innerHTML = [
                 '<span class="bg-white/15 text-white text-xs px-3 py-1 rounded-full font-bold">AMPF</span>',
-                '<span class="bg-white/15 text-white text-xs px-3 py-1 rounded-full font-bold">IPPF AWRO</span>'
+                '<img src="assets/ippf-logo.png" alt="IPPF AWRO" class="h-8 w-auto bg-white rounded-full px-3 py-1.5" onerror="this.style.display=\'none\'">'
             ].join(' ');
             const listHtml = (arr) => (arr && arr.length) ? arr.map(i => `<li>${getLocalizedText(i)}</li>`).join('') : '';
             document.getElementById('mgfReasonsList').innerHTML = listHtml(aboutContent.foundationReasons);
