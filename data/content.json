@@ -201,20 +201,43 @@
   "site_content": {
     "hero": {
       "title": {
-        "ar": "حدث تجريبي ",
-        "fr": "Événement test",
-        "en": "Test event"
+        "ar": "الجمعية الموريتانية لترقية الأسرة",
+        "fr": "Association Mauritanienne pour la Promotion de la Famille",
+        "en": "Mauritanian Association for Family Promotion"
       },
       "desc": {
-        "ar": "نحن الان نقوم بتصميم موقع للجمعية الموريتانية لترقية الاسرة",
-        "fr": "Nous concevons actuellement le site de l'AMPF",
-        "en": "We are currently designing the AMPF website"
+        "ar": "منذ عام 1988 نعمل على ترقية الصحة والحقوق الجنسية والإنجابية، ونحتضن مركز الامتياز الإقليمي للقضاء على ختان الإناث (MGF).",
+        "fr": "Depuis 1988, nous promouvons la santé et les droits sexuels et reproductifs et abritons le Centre d'Excellence régional pour l'élimination des MGF.",
+        "en": "Since 1988, we promote sexual and reproductive health and rights and host the regional Centre of Excellence for the elimination of FGM."
       },
       "badge": {
-        "ar": "",
-        "fr": "",
-        "en": ""
+        "ar": "تأسست سنة 1988 - شريك IPPF AWRO",
+        "fr": "Fondée en 1988 - Partenaire IPPF AWRO",
+        "en": "Founded 1988 - IPPF AWRO partner"
       }
+    },
+    "excellence": {
+      "badge": {
+        "ar": "مركز الامتياز للقضاء على MGF",
+        "fr": "Centre d'Excellence pour l'élimination des MGF",
+        "en": "Centre of Excellence for the Elimination of FGM"
+      },
+      "title": {
+        "ar": "منصة إقليمية متميزة للمعرفة والتعلم والتشبيك حول ختان الإناث، مقرها موريتانيا برعاية AMPF وشراكة IPPF AWRO",
+        "fr": "Une plateforme régionale d'excellence de connaissances, d'apprentissage et de réseautage sur les MGF, basée en Mauritanie, sous l'égide de l'AMPF et en partenariat avec l'IPPF AWRO",
+        "en": "A leading regional platform of knowledge, learning and networking on FGM, based in Mauritania, under the auspices of AMPF in partnership with IPPF AWRO"
+      },
+      "desc": {
+        "ar": "يستهدف المركز الإقليم والعالم العربي وإفريقيا: رعاية الناجيات، والبحث والأدلة، والتدريب، والمناصرة من أجل القضاء التام على ختان الإناث.",
+        "fr": "Le centre cible la région, le monde arabe et l'Afrique : prise en charge des survivantes, recherche et données probantes, formation et plaidoyer pour l'élimination totale des MGF.",
+        "en": "The centre serves the region, the Arab world and Africa: care for survivors, research and evidence, training and advocacy for the total elimination of FGM."
+      },
+      "btnLabel": {
+        "ar": "اكتشف المركز",
+        "fr": "Découvrir le centre",
+        "en": "Discover the centre"
+      },
+      "link": "center.html"
     },
     "contact": {
       "address": {
@@ -288,7 +311,9 @@
       "facebook": "",
       "twitter": "",
       "instagram": "",
-      "whatsapp": ""
+      "whatsapp": "",
+      "linkedin": "",
+      "youtube": ""
     }
   },
   "gallery": [],
@@ -579,6 +604,12 @@
   ],
   "mgfContent": {
     "logo": "",
+    "mgfVersion": 4,
+    "regionalTagline": {
+      "ar": "منصة إقليمية متميزة للمعرفة والتعلم والتشبيك حول ختان الإناث (MGF)",
+      "fr": "Plateforme régionale d'excellence de connaissances, d'apprentissage et de réseautage sur les mutilations génitales féminines (MGF)",
+      "en": "A leading regional platform of knowledge, learning and networking on female genital mutilation (FGM)"
+    },
     "mission": {
       "ar": "مركز متخصص تابع للجمعية الموريتانية لترقية الأسرة، يعمل على التحسيس والتوعية بشأن استجابة النساء والفتيات المتأثرات بتشويه الأعضاء التناسلية للإناث، وتحفيز البحث والإعلام وتطوير البرامج، وتقديم الإرشادات حول خدمات الرعاية، وتطوير الأدلة وتعبئة الطاقات المحلية والدولية من أجل القضاء النهائي على هذه الممارسة.",
       "fr": "Centre spécialisé de l'Association Mauritanienne pour la Promotion de la Famille, il œuvre à la sensibilisation et à l'information sur la prise en charge des femmes et des filles affectées par les mutilations génitales féminines, à la stimulation de la recherche, de l'information et des programmes, à l'orientation vers les services de soins, au développement des données probantes et à la mobilisation des énergies locales et internationales pour l'élimination définitive de cette pratique.",
@@ -816,7 +847,304 @@
         "fr": "Intégrer les efforts dans la stratégie nationale d'élimination des pratiques néfastes pour la santé",
         "en": "Align efforts with the national strategy to eliminate harmful practices affecting health"
       }
-    ]
+    ],
+    "about": {
+      "foundationReasons": [
+        {
+          "ar": "الحاجة إلى استجابة شاملة ومتعددة التخصصات لختان الإناث تتجاوز الرعاية الطبية وحدها",
+          "fr": "La nécessité d'une réponse globale et multidisciplinaire aux MGF, au-delà de la seule prise en charge médicale",
+          "en": "The need for a holistic, multidisciplinary response to FGM beyond medical care alone"
+        },
+        {
+          "ar": "غياب فضاء مرجعي يجمع المعرفة والأدلة والفاعلين حول ختان الإناث في المنطقة العربية وإفريقيا",
+          "fr": "L'absence d'un espace de référence rassemblant connaissances, données probantes et acteurs sur les MGF au niveau arabe et africain",
+          "en": "The absence of a reference space bringing together knowledge, evidence and actors on FGM across the Arab region and Africa"
+        },
+        {
+          "ar": "التزام AMPF وشركائها بالعمل من أجل الهدف صفر من تشويه الأعضاء التناسلية للإناث ودعم الناجيات",
+          "fr": "L'engagement de l'AMPF et de ses partenaires vers l'objectif « zéro MGF » et le soutien aux survivantes",
+          "en": "AMPF and its partners' commitment to achieving zero FGM and supporting survivors"
+        }
+      ],
+      "expertiseAreas": [
+        {
+          "ar": "الرعاية النفسية والعلاج النفسي للناجيات",
+          "fr": "Prise en charge psychologique et psychothérapeutique des survivantes",
+          "en": "Psychological and psychotherapeutic care for survivors"
+        },
+        {
+          "ar": "الدعم الجنسي والاستشارات قبل وبعد الجراحة الترميمية",
+          "fr": "Accompagnement sexologique et conseil avant/après la chirurgie reconstructrice",
+          "en": "Sexological support and pre/post reconstructive surgery counseling"
+        },
+        {
+          "ar": "الدعم الاجتماعي والقانوني وحماية القاصرات",
+          "fr": "Accompagnement social et juridique et protection des mineures",
+          "en": "Social and legal support and protection of minors"
+        },
+        {
+          "ar": "البحث وجمع الأدلة والتوثيق",
+          "fr": "Recherche, production de données probantes et documentation",
+          "en": "Research, evidence generation and documentation"
+        },
+        {
+          "ar": "التدريب وبناء القدرات",
+          "fr": "Formation et renforcement des capacités",
+          "en": "Training and capacity building"
+        },
+        {
+          "ar": "المناصرة وتعبئة القادة الدينيين والمجتمعيين",
+          "fr": "Plaidoyer et mobilisation des leaders religieux et communautaires",
+          "en": "Advocacy and mobilization of religious and community leaders"
+        }
+      ],
+      "addedValue": [
+        {
+          "ar": "نموذج رعاية متكامل متعدد التخصصات مرتكز على الناجية بشكل كامل",
+          "fr": "Un modèle de soins intégré, multidisciplinaire et pleinement centré sur la survivante",
+          "en": "An integrated, multidisciplinary care model fully centred on the survivor"
+        },
+        {
+          "ar": "جسر بين المعرفة العلمية والممارسة الميدانية",
+          "fr": "Un pont entre les connaissances scientifiques et la pratique de terrain",
+          "en": "A bridge between scientific knowledge and field practice"
+        },
+        {
+          "ar": "شبكة إقليمية تربط الفاعلين في مجالات الصحة والحقوق والحماية",
+          "fr": "Un réseau régional reliant les acteurs de la santé, des droits et de la protection",
+          "en": "A regional network connecting health, rights and protection actors"
+        }
+      ],
+      "ownership": {
+        "ampf": {
+          "ar": "تتولى الجمعية الموريتانية لترقية الأسرة (AMPF) رعاية وإدارة المركز ضمن برامجها الوطنية للصحة الجنسية والإنجابية.",
+          "fr": "L'Association Mauritanienne pour la Promotion de la Famille (AMPF) assure le parrainage et la gestion du centre dans le cadre de ses programmes nationaux de santé sexuelle et reproductive.",
+          "en": "The Mauritanian Association for Family Promotion (AMPF) sponsors and manages the centre within its national sexual and reproductive health programmes."
+        },
+        "ippf": {
+          "ar": "شريك رسمي لمنظمة الاتحاد الدولي لتنظيم الأسرة - المكتب الإقليمي لغرب إفريقيا (IPPF AWRO)، بدعم تقني ومؤسسي وفق دليل الهوية البصرية للمنظمة.",
+          "fr": "Partenaire officiel de l'International Planned Parenthood Federation - Regional Office for West Africa (IPPF AWRO), avec un appui technique et institutionnel conforme à son guide d'identité visuelle.",
+          "en": "Official partner of the International Planned Parenthood Federation - Arab World & Regional Office (IPPF AWRO), with technical and institutional support in line with its visual identity guidelines."
+        },
+        "others": {
+          "ar": "ويعمل المركز في شراكة وتنسيق مع السلطات الصحية الوطنية ومنظمات المجتمع المدني ووكالات الأمم المتحدة وشركاء آخرين في المنطقة.",
+          "fr": "Le centre travaille également en partenariat et en coordination avec les autorités sanitaires nationales, les organisations de la société civile, les agences des Nations Unies et d'autres partenaires de la région.",
+          "en": "The centre also works in partnership and coordination with national health authorities, civil society organisations, United Nations agencies and other regional partners."
+        }
+      },
+      "regionalScope": {
+        "ar": "يستهدف المركز موريتانيا والإقليم والعالم العربي وإفريقيا، مع إيلاء أولوية خاصة للبلدان التي تنتشر فيها ممارسة ختان الإناث، والمساهمة في بناء القدرات الإقليمية وتبادل الخبرات.",
+        "fr": "Le centre cible la Mauritanie, la région, le monde arabe et l'Afrique, en accordant une priorité particulière aux pays pratiquant les MGF et en contribuant au renforcement des capacités régionales et au partage d'expériences.",
+        "en": "The centre targets Mauritania, the region, the Arab world and Africa, prioritising practising countries and contributing to regional capacity building and exchange of experiences."
+      }
+    },
+    "values": [
+      {
+        "title": {
+          "ar": "التركيز على الناجيات والمجتمعات",
+          "fr": "Centré sur les survivantes et les communautés",
+          "en": "Survivor- and community-centred"
+        },
+        "desc": {
+          "ar": "نضع احتياجات الناجيات ومجتمعاتهن في قلب جميع برامجنا وخدماتنا.",
+          "fr": "Nous plaçons les besoins des survivantes et de leurs communautés au cœur de tous nos programmes et services.",
+          "en": "We place the needs of survivors and their communities at the heart of all our programmes and services."
+        }
+      },
+      {
+        "title": {
+          "ar": "حقوق الإنسان",
+          "fr": "Droits humains",
+          "en": "Human rights"
+        },
+        "desc": {
+          "ar": "ختان الإناث انتهاك لحقوق الفتيات والنساء؛ نعمل على تعزيز الحماية القانونية والفعلية لهذه الحقوق.",
+          "fr": "Les MGF constituent une violation des droits des filles et des femmes ; nous œuvrons à renforcer leur protection juridique et effective.",
+          "en": "FGM is a violation of girls' and women's rights; we work to strengthen their legal and effective protection."
+        }
+      },
+      {
+        "title": {
+          "ar": "المساواة",
+          "fr": "Égalité",
+          "en": "Equality"
+        },
+        "desc": {
+          "ar": "ندافع عن مساواة حقيقية بين الجنسين في الصحة والحقوق والفرص.",
+          "fr": "Nous défendons une égalité réelle entre les genres en matière de santé, de droits et d'opportunités.",
+          "en": "We advocate for genuine gender equality in health, rights and opportunities."
+        }
+      },
+      {
+        "title": {
+          "ar": "الكرامة",
+          "fr": "Dignité",
+          "en": "Dignity"
+        },
+        "desc": {
+          "ar": "نحترم كرامة كل ناجية في استقبالها وتقييم حالتها ومرافقتها دون حكم أو تمييز.",
+          "fr": "Nous respectons la dignité de chaque survivante dans son accueil, son évaluation et son accompagnement, sans jugement ni discrimination.",
+          "en": "We respect every survivor's dignity in reception, assessment and support, without judgement or discrimination."
+        }
+      },
+      {
+        "title": {
+          "ar": "المشاركة",
+          "fr": "Participation",
+          "en": "Participation"
+        },
+        "desc": {
+          "ar": "نشرك الناجيات والفاعلين المحليين في تصميم البرامج وتقييمها وقراراتها.",
+          "fr": "Nous impliquons les survivantes et les acteurs locaux dans la conception, l'évaluation et les décisions des programmes.",
+          "en": "We involve survivors and local actors in the design, evaluation and decisions of programmes."
+        }
+      },
+      {
+        "title": {
+          "ar": "القيادة المحلية",
+          "fr": "Leadership local",
+          "en": "Local leadership"
+        },
+        "desc": {
+          "ar": "نعزز قدرات الفاعلين المحليين لقيادة التغيير في مجتمعاتهم.",
+          "fr": "Nous renforçons les capacités des acteurs locaux pour qu'ils mènent le changement dans leurs communautés.",
+          "en": "We strengthen local actors' capacities to lead change in their communities."
+        }
+      },
+      {
+        "title": {
+          "ar": "تبادل المعارف",
+          "fr": "Partage des connaissances",
+          "en": "Knowledge sharing"
+        },
+        "desc": {
+          "ar": "نتشارك المعرفة والأدلة والخبرات مع الشبكة الإقليمية والدولية.",
+          "fr": "Nous partageons connaissances, données probantes et expériences avec le réseau régional et international.",
+          "en": "We share knowledge, evidence and experience with the regional and international network."
+        }
+      }
+    ],
+    "audiences": [
+      {
+        "title": {
+          "ar": "منظمات المجتمع المدني",
+          "fr": "Organisations de la société civile",
+          "en": "Civil Society Organizations"
+        },
+        "desc": {
+          "ar": "أدوات ميدانية، تجارب قابلة للتطبيق، وفرص شراكة لتعزيز تدخلاتكم في الميدان.",
+          "fr": "Outils de terrain, expériences applicables et opportunités de partenariat pour renforcer vos interventions.",
+          "en": "Field tools, replicable experiences and partnership opportunities to strengthen your interventions."
+        }
+      },
+      {
+        "title": {
+          "ar": "الناجيات",
+          "fr": "Survivantes",
+          "en": "Survivors"
+        },
+        "desc": {
+          "ar": "خدمات سرية وآمنة دون حكم، ومرافقة نفسية وجسدية واجتماعية في كل مراحل التعافي.",
+          "fr": "Des services confidentiels et sécurisants, sans jugement, et un accompagnement physique, psychologique et social à chaque étape du rétablissement.",
+          "en": "Confidential, safe and non-judgemental services with physical, psychological and social support at every stage of recovery."
+        }
+      },
+      {
+        "title": {
+          "ar": "الباحثون",
+          "fr": "Chercheurs",
+          "en": "Researchers"
+        },
+        "desc": {
+          "ar": "بيانات موثوقة، دراسات ومنشورات معتمدة، وفضاء للتعاون العلمي الإقليمي.",
+          "fr": "Des données fiables, des études et publications validées et un espace de collaboration scientifique régionale.",
+          "en": "Reliable data, peer-reviewed studies and publications, and a space for regional scientific collaboration."
+        }
+      },
+      {
+        "title": {
+          "ar": "صناع القرار",
+          "fr": "Décideurs",
+          "en": "Policymakers"
+        },
+        "desc": {
+          "ar": "تقارير، توصيات سياساتية وبيانات أدلة لدعم سن قوانين وبرامج فعالة.",
+          "fr": "Rapports, recommandations politiques et données probantes pour appuyer des lois et programmes efficaces.",
+          "en": "Reports, policy recommendations and evidence to support effective laws and programmes."
+        }
+      },
+      {
+        "title": {
+          "ar": "الداعمون والممولون",
+          "fr": "Donateurs et soutiens",
+          "en": "Donors & Supporters"
+        },
+        "desc": {
+          "ar": "أثر قابل للقياس، تقارير شفافة، وسجل موثق من النتائج يشكل فرصة شريكة للاستثمار.",
+          "fr": "Un impact mesurable, des rapports transparents et un historique documenté de résultats, une véritable opportunité de partenariat et d'investissement.",
+          "en": "Measurable impact, transparent reporting and a documented track record — a genuine partnership and investment opportunity."
+        }
+      }
+    ],
+    "impact": {
+      "stats": [
+        {
+          "value": "600",
+          "label": {
+            "ar": "ناجية استفادت من خدمات المركز",
+            "fr": "Survivantes accompagnées par le centre",
+            "en": "Survivors supported by the centre"
+          }
+        },
+        {
+          "value": "1 200",
+          "label": {
+            "ar": "استشارة ومرافقة نفسية واجتماعية",
+            "fr": "Consultations et accompagnements psychosociaux",
+            "en": "Psychosocial consultations and follow-ups"
+          }
+        },
+        {
+          "value": "45",
+          "label": {
+            "ar": "دورة تدريبية وورشة عمل",
+            "fr": "Formations et ateliers organisés",
+            "en": "Training sessions and workshops"
+          }
+        },
+        {
+          "value": "12",
+          "label": {
+            "ar": "شريك محلي ودولي",
+            "fr": "Partenaires locaux et internationaux",
+            "en": "Local and international partners"
+          }
+        }
+      ],
+      "testimonials": [
+        {
+          "quote": {
+            "ar": "وجدت في المركز مساحة آمنة استعدت فيها الثقة بنفسي وجسدي، وأنشأت مجدداً روابط مع عائلتي ومجتمعي.",
+            "fr": "J'ai trouvé au centre un espace sûr où j'ai retrouvé confiance en moi et en mon corps, et recréé des liens avec ma famille et ma communauté.",
+            "en": "I found a safe space at the centre where I regained confidence in myself and my body, and rebuilt connections with my family and community."
+          },
+          "name": {
+            "ar": "ناجية لديها استفادة من خدمات المركز",
+            "fr": "Survivante accompagnée par le centre",
+            "en": "A survivor supported by the centre"
+          },
+          "role": {
+            "ar": "شهادة مستفيدة",
+            "fr": "Témoignage",
+            "en": "Testimonial"
+          }
+        }
+      ]
+    },
+    "publications": [],
+    "events": [],
+    "campaigns": [],
+    "jobs": []
   },
   "mgfTeam": [],
   "mgfPartners": [],

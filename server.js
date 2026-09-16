@@ -328,7 +328,12 @@ async function initStorage() {
             // detailed keys, so this only fires on the one-time upgrade.
             const curatedMgf = (curated && curated.mgfContent && typeof curated.mgfContent === 'object') ? curated.mgfContent : null;
             const currentMgf = (cData.mgfContent && typeof cData.mgfContent === 'object') ? cData.mgfContent : null;
-            if (curatedMgf && (!currentMgf || !Array.isArray(currentMgf.objectives) || !currentMgf.servicesIntro)) {
+            if (curatedMgf && (
+                !currentMgf
+                || !Array.isArray(currentMgf.objectives)
+                || !currentMgf.servicesIntro
+                || (curatedMgf.mgfVersion && (!currentMgf.mgfVersion || currentMgf.mgfVersion < curatedMgf.mgfVersion))
+            )) {
                 cData.mgfContent = curatedMgf;
                 await enqueueSet(contentQueue, CONTENT_KEY, cData);
                 console.log("[AMPF] MGF content upgraded with detailed Centre d'Excellence blocks in Redis.");
@@ -470,7 +475,7 @@ app.get('/api/public-content', async (req, res) => {
         cliniques: data.cliniques || [],
         navbar: data.navbar || [],
         mgf: {
-            content: data.mgfContent || { logo: '', mission: {}, vision: {}, getInvolved: {}, advocacy: {}, objectives: [], servicesIntro: {}, structure: {}, services: [], partnersOverview: [], challenges: [], perspectives: [] },
+            content: data.mgfContent || { logo: '', mgfVersion: 4, regionalTagline: {}, mission: {}, vision: {}, getInvolved: {}, advocacy: {}, objectives: [], servicesIntro: {}, structure: {}, services: [], partnersOverview: [], challenges: [], perspectives: [], about: {}, values: [], audiences: [], impact: {}, publications: [], events: [], campaigns: [], jobs: [] },
             team: data.mgfTeam || [],
             partners: data.mgfPartners || [],
             research: data.mgfResearch || [],
@@ -487,7 +492,7 @@ app.get('/api/public-content', async (req, res) => {
 app.get('/api/mgf-content', async (req, res) => {
     const data = await readData();
     res.json({
-        content: data.mgfContent || { logo: '', mission: {}, vision: {}, getInvolved: {}, advocacy: {}, objectives: [], servicesIntro: {}, structure: {}, services: [], partnersOverview: [], challenges: [], perspectives: [] },
+        content: data.mgfContent || { logo: '', mgfVersion: 4, regionalTagline: {}, mission: {}, vision: {}, getInvolved: {}, advocacy: {}, objectives: [], servicesIntro: {}, structure: {}, services: [], partnersOverview: [], challenges: [], perspectives: [], about: {}, values: [], audiences: [], impact: {}, publications: [], events: [], campaigns: [], jobs: [] },
         team: data.mgfTeam || [],
         partners: data.mgfPartners || [],
         research: data.mgfResearch || [],
@@ -503,16 +508,27 @@ app.put('/api/mgf-content', requireAuth, async (req, res) => {
     const prevMgf = (data.mgfContent && typeof data.mgfContent === 'object') ? data.mgfContent : {};
     data.mgfContent = {
         logo: body.logo !== undefined ? body.logo : prevMgf.logo || '',
+        mgfVersion: prevMgf.mgfVersion || 4,
+        regionalTagline: prevMgf.regionalTagline || {},
         mission: body.mission || prevMgf.mission || { ar: '', fr: '', en: '' },
         vision: body.vision || prevMgf.vision || { ar: '', fr: '', en: '' },
         getInvolved: body.getInvolved || prevMgf.getInvolved || { ar: '', fr: '', en: '' },
         advocacy: body.advocacy || prevMgf.advocacy || { ar: '', fr: '', en: '' },
         objectives: prevMgf.objectives || [],
+        servicesIntro: prevMgf.servicesIntro || {},
         structure: prevMgf.structure || {},
         services: prevMgf.services || [],
         partnersOverview: prevMgf.partnersOverview || [],
         challenges: prevMgf.challenges || [],
-        perspectives: prevMgf.perspectives || []
+        perspectives: prevMgf.perspectives || [],
+        about: prevMgf.about || {},
+        values: prevMgf.values || [],
+        audiences: prevMgf.audiences || [],
+        impact: prevMgf.impact || {},
+        publications: prevMgf.publications || [],
+        events: prevMgf.events || [],
+        campaigns: prevMgf.campaigns || [],
+        jobs: prevMgf.jobs || []
     };
     await writeData(data);
     res.json({ success: true, message: 'تم حفظ محتوى مركز الإمتياز' });

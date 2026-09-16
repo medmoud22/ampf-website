@@ -98,6 +98,7 @@
         <div class="container mx-auto px-4 sm:px-6 py-2 sm:py-3 flex justify-between items-center gap-2 w-full">
             <div class="flex items-center gap-2 sm:gap-4 min-w-0">
                 <img src="LOGO AMPF.png" alt="AMPF Logo" class="h-10 sm:h-14 lg:h-16 w-auto flex-shrink-0" onerror="this.style.display='none'">
+                <span class="hidden md:flex items-center gap-1 bg-blue-50 text-brandBlue border border-blue-200 rounded-full px-3 py-1 text-xs font-bold flex-shrink-0"><i class="fas fa-handshake"></i> IPPF AWRO</span>
                 <div class="min-w-0 overflow-hidden">
                     <h1 class="text-sm sm:text-base lg:text-lg font-bold text-brandDark truncate" id="siteTitle">الجمعية الموريتانية لترقية الأسرة</h1>
                     <p class="hidden sm:block text-xs text-gray-500 truncate">Association Mauritanienne pour la Promotion de la Famille</p>
@@ -238,6 +239,26 @@
         </div>
     </div>
 
+    <!-- Centre of Excellence promo -->
+    <section id="excellence" class="py-20 bg-gradient-to-br from-emerald-50 to-white">
+        <div class="container mx-auto px-6">
+            <div class="bg-brandDark rounded-3xl overflow-hidden shadow-xl fade-up">
+                <div class="grid lg:grid-cols-2 gap-0">
+                    <div class="p-8 sm:p-12 text-white flex flex-col justify-center">
+                        <span class="bg-white/15 text-white text-xs px-4 py-2 rounded-full font-bold inline-block w-fit mb-6"><i class="fas fa-star ml-1"></i> <span id="excBadge"></span></span>
+                        <h2 id="excTitle" class="text-2xl sm:text-3xl font-black leading-tight mb-4"></h2>
+                        <p id="excDesc" class="text-white/85 leading-relaxed mb-8"></p>
+                        <a id="excBtn" href="center.html" class="inline-flex items-center gap-2 bg-brandGreen hover:bg-brandLight hover:text-brandDark text-white px-6 py-3 rounded-full font-bold transition w-fit"><i class="fas fa-arrow-up-right-from-square"></i> <span id="excBtnLabel"></span></a>
+                    </div>
+                    <div class="relative min-h-[280px] bg-gradient-to-br from-emerald-600 to-brandBlue flex items-center justify-center">
+                        <img id="excLogo" src="LOGO AMPF.png" alt="Centre d'Excellence" class="w-48 h-48 object-cover rounded-full border-4 border-white/30 shadow-2xl" onerror="this.style.display='none'">
+                        <div class="absolute bottom-6 left-6 bg-white text-brandDark text-xs font-bold px-3 py-1 rounded-full">IPPF AWRO</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
     <!-- Contact -->
     <section id="contact" class="py-20 bg-white">
         <div class="container mx-auto px-6">
@@ -264,6 +285,8 @@
                         <a id="socialTwitter" href="#" target="_blank" rel="noopener" class="social-btn w-12 h-12 bg-brandDark rounded-xl flex items-center justify-center text-white hover:bg-brandGreen transition" style="display: none;"><i class="fab fa-twitter"></i></a>
                         <a id="socialInstagram" href="#" target="_blank" rel="noopener" class="social-btn w-12 h-12 bg-brandDark rounded-xl flex items-center justify-center text-white hover:bg-brandGreen transition" style="display: none;"><i class="fab fa-instagram"></i></a>
                         <a id="socialWhatsapp" href="#" target="_blank" rel="noopener" class="social-btn w-12 h-12 bg-brandDark rounded-xl flex items-center justify-center text-white hover:bg-brandGreen transition" style="display: none;"><i class="fab fa-whatsapp"></i></a>
+                        <a id="socialLinkedin" href="#" target="_blank" rel="noopener" class="social-btn w-12 h-12 bg-brandDark rounded-xl flex items-center justify-center text-white hover:bg-brandGreen transition" style="display: none;"><i class="fab fa-linkedin-in"></i></a>
+                        <a id="socialYoutube" href="#" target="_blank" rel="noopener" class="social-btn w-12 h-12 bg-brandDark rounded-xl flex items-center justify-center text-white hover:bg-brandGreen transition" style="display: none;"><i class="fab fa-youtube"></i></a>
                     </div>
                 </div>
                 <div class="fade-up">
@@ -290,7 +313,18 @@
             <div><h4 class="font-bold text-lg mb-5" data-i18n="footer_services">خدماتنا</h4><ul class="space-y-3 text-white/70 text-sm" id="footerServices"><li data-i18n="service1">الصحة الإنجابية</li><li data-i18n="service2">تنظيم الأسرة</li><li data-i18n="service3">التوعية الصحية</li><li data-i18n="service4">الدعم الاجتماعي</li></ul></div>
             <div><h4 class="font-bold text-lg mb-5" data-i18n="footer_contact_us">تواصل معنا</h4><ul class="space-y-3 text-white/70 text-sm"><li><i class="fas fa-map-marker-alt ml-2"></i> <span id="footerAddress"></span></li><li><i class="fas fa-phone ml-2"></i> <span id="footerPhone"></span></li><li><i class="fas fa-envelope ml-2"></i> contact@ampf.mr</li></ul></div>
         </div>
-        <div class="border-t border-white/10 pt-8 text-center text-white/50 text-sm" data-i18n="footer_copyright">جميع الحقوق محفوظة © الجمعية الموريتانية لترقية الأسرة 2026</div>
+        <div class="border-t border-white/10 pt-8 text-center">
+            <div class="flex flex-col items-center justify-center gap-4 mb-6">
+                <div class="flex flex-wrap items-center justify-center gap-3">
+                    <span class="text-sm font-bold text-white/80" data-i18n="footer_partner">شريك</span>
+                    <span class="bg-white/15 text-white text-xs px-4 py-1 rounded-full font-bold border border-white/20">AMPF</span>
+                    <i class="fas fa-plus text-white/50"></i>
+                    <span class="bg-white text-brandBlue text-xs px-4 py-1 rounded-full font-bold">IPPF AWRO</span>
+                </div>
+                <div id="footerSocial" class="flex items-center gap-3"></div>
+            </div>
+            <div class="text-white/50 text-sm" data-i18n="footer_copyright">جميع الحقوق محفوظة © الجمعية الموريتانية لترقية الأسرة 2026</div>
+        </div>
     </footer>
 
     <!-- Login Modal -->
@@ -347,6 +381,7 @@
                 form_subject_volunteer: 'التطوع', form_subject_complaint: 'شكاوى واقتراحات', form_subject_suggestion: 'اقتراح لتطوير الموقع',
                 footer_about: 'منظمة غير حكومية تسعى لترقية الصحة الإنجابية وتنظيم الأسرة ودعم الفئات المحتاجة في موريتانيا منذ 1988.',
                 footer_quick_links: 'روابط سريعة', footer_services: 'خدماتنا', footer_contact_us: 'تواصل معنا',
+                footer_partner: 'شريك',
                 footer_copyright: 'جميع الحقوق محفوظة © الجمعية الموريتانية لترقية الأسرة 2026',
                 service1: 'الصحة الإنجابية', service2: 'تنظيم الأسرة', service3: 'التوعية الصحية', service4: 'الدعم الاجتماعي',
                 login_title: 'الدخول إلى لوحة الإدارة', login_subtitle: 'أدخل بياناتك للوصول إلى النظام',
@@ -400,6 +435,7 @@
                 form_subject_volunteer: 'Bénévolat', form_subject_complaint: 'Réclamations et suggestions', form_subject_suggestion: 'Votre suggestion pour améliorer ce site',
                 footer_about: 'ONG œuvrant pour la promotion de la santé reproductive, le planning familial et le soutien aux personnes nécessiteuses en Mauritanie depuis 1988.',
                 footer_quick_links: 'Liens rapides', footer_services: 'Nos services', footer_contact_us: 'Contact',
+                footer_partner: 'Partenaires',
                 footer_copyright: 'Tous droits réservés © AMPF 2026',
                 service1: 'Santé reproductive', service2: 'Planning familial', service3: 'Sensibilisation sanitaire', service4: 'Soutien social',
                 login_title: 'Connexion à l\'administration', login_subtitle: 'Entrez vos identifiants',
@@ -453,6 +489,7 @@
                 form_subject_volunteer: 'Volunteering', form_subject_complaint: 'Complaints & Suggestions', form_subject_suggestion: 'Suggestion to improve the website',
                 footer_about: 'An NGO working to promote reproductive health, family planning, and support for needy groups in Mauritania since 1988.',
                 footer_quick_links: 'Quick Links', footer_services: 'Our Services', footer_contact_us: 'Contact Us',
+                footer_partner: 'Partners',
                 footer_copyright: 'All rights reserved © AMPF 2026',
                 service1: 'Reproductive Health', service2: 'Family Planning', service3: 'Health Awareness', service4: 'Social Support',
                 login_title: 'Admin Login', login_subtitle: 'Enter your credentials to access the system',
@@ -640,7 +677,7 @@
 
             // Social links (shown/hidden dynamically from admin panel)
             if (sc.socialLinks) {
-                const socialMap = { facebook: 'socialFacebook', twitter: 'socialTwitter', instagram: 'socialInstagram', whatsapp: 'socialWhatsapp' };
+                const socialMap = { facebook: 'socialFacebook', twitter: 'socialTwitter', instagram: 'socialInstagram', whatsapp: 'socialWhatsapp', linkedin: 'socialLinkedin', youtube: 'socialYoutube' };
                 for (const key of Object.keys(socialMap)) {
                     const el = document.getElementById(socialMap[key]);
                     if (!el) continue;
@@ -656,6 +693,37 @@
                         el.style.display = 'none';
                     }
                 }
+            }
+
+            // Footer social icon row (same socialLinks data)
+            const footerSocial = document.getElementById('footerSocial');
+            if (footerSocial) {
+                const socialIcons = {
+                    facebook: ['facebook-f', '#1877F2'],
+                    linkedin: ['linkedin-in', '#0A66C2'],
+                    instagram: ['instagram', '#E4405F'],
+                    youtube: ['youtube', '#FF0000'],
+                    twitter: ['x-twitter', '#000000'],
+                    whatsapp: ['whatsapp', '#25D366']
+                };
+                footerSocial.innerHTML = Object.entries(socialIcons)
+                    .map(([key]) => {
+                        let href = sc.socialLinks?.[key];
+                        if (!href || !String(href).trim()) return '';
+                        if (key === 'whatsapp' && !/^https?:\/\//i.test(href)) href = 'https://wa.me/' + String(href).replace(/[^0-9]/g, '');
+                        return `<a href="${href}" target="_blank" rel="noopener" aria-label="${key}" class="w-9 h-9 rounded-full bg-white/10 hover:bg-brandGreen transition flex items-center justify-center"><i class="fab fa-${socialIcons[key][0]}" style="color:#fff"></i></a>`;
+                    })
+                    .join('');
+            }
+
+            // Centre of Excellence promo block
+            const exc = sc.excellence || {};
+            if (document.getElementById('excBadge')) {
+                document.getElementById('excBadge').textContent = getLocalizedText(exc.badge) || '';
+                document.getElementById('excTitle').textContent = getLocalizedText(exc.title) || '';
+                document.getElementById('excDesc').textContent = getLocalizedText(exc.desc) || '';
+                document.getElementById('excBtnLabel').textContent = getLocalizedText(exc.btnLabel) || '';
+                if (exc.link) document.getElementById('excBtn').href = exc.link;
             }
 
             // Programs
@@ -800,7 +868,7 @@
                     </div>
                     <h3 class="text-xl font-bold text-brandDark mb-2">${getLocalizedText(b.name)}</h3>
                     <p class="text-sm text-gray-500 mb-3">${getLocalizedText(b.location) || ''}</p>
-                    <div class="flex items-center gap-2 text-sm text-gray-400"><i class="fas fa-phone"></i> ${b.phones?.[0] || ''}</div>
+                    ${(b.phones && b.phones.length) ? `<div class="flex items-start gap-2 text-sm text-gray-400"><i class="fas fa-phone mt-0.5"></i><div>${b.phones.join('<br>')}</div></div>` : `<div class="flex items-center gap-2 text-sm text-gray-300"><i class="fas fa-phone"></i>${t('clinics_empty')}</div>`}
                 </div>
             `).join('');
             // Click to open modal
