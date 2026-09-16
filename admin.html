@@ -698,7 +698,7 @@
             </div>
             <div class="grid grid-cols-2 gap-4">
                 <div><label class="block text-sm font-bold text-gray-700 mb-2">تاريخ التأسيس</label><input id="clinicFounded" type="text" class="w-full border-2 border-gray-200 rounded-xl px-4 py-3 focus:outline-none focus:border-brandGreen transition bg-gray-50"></div>
-                <div><label class="block text-sm font-bold text-gray-700 mb-2">الإحداثيات (GPS)</label><input id="clinicGps" type="text" placeholder="مثال: 16.5128, -15.8075" class="w-full border-2 border-gray-200 rounded-xl px-4 py-3 focus:outline-none focus:border-brandGreen transition bg-gray-50"></div>
+                <div><label class="block text-sm font-bold text-gray-700 mb-2">الإحداثيات (GPS / Plus Code)</label><input id="clinicGps" type="text" placeholder="مثال: 20.9230, -17.0327 أو XX46+F57 Nouadhibou, Mauritania" oninput="gpsPreview()" class="w-full border-2 border-gray-200 rounded-xl px-4 py-3 focus:outline-none focus:border-brandGreen transition bg-gray-50"><a id="clinicGpsPreview" href="#" target="_blank" rel="noopener noreferrer" class="hidden mt-1.5 text-xs font-bold text-brandGreen hover:text-brandDark hover:underline inline-flex items-center gap-1"><i class="fas fa-map-location-dot"></i> فتح في خرائط Google</a></div>
             </div>
             <div class="bg-gray-50 rounded-xl p-4 space-y-3">
                 <div class="flex gap-2 items-center mb-1"><span class="text-sm font-bold text-gray-700">الموقع</span><span class="text-xs px-2 py-0.5 rounded bg-emerald-100 text-emerald-700 font-bold">AR</span></div>
@@ -1374,7 +1374,16 @@ function openClinicModal(item) {
     document.getElementById('clinicPhones').value = item ? (item.phones || []).join(', ') : '';
     document.getElementById('clinicImage').value = '';
     document.getElementById('clinicImagePreview').innerHTML = item && item.image ? `<img src="${item.image}" class="preview-img">` : '';
+    gpsPreview();
     openModal('clinicModal');
+}
+
+function gpsPreview() {
+    const val = document.getElementById('clinicGps').value.trim();
+    const link = document.getElementById('clinicGpsPreview');
+    if (!val) { link.classList.add('hidden'); return; }
+    link.href = 'https://www.google.com/maps/search/?api=1&query=' + encodeURIComponent(val);
+    link.classList.remove('hidden');
 }
 
 document.getElementById('clinicForm').addEventListener('submit', async (e) => {
