@@ -1161,7 +1161,13 @@ app.get('/api/social-links', requireAuth, async (req, res) => {
 app.put('/api/social-links', requireAuth, async (req, res) => {
     const data = await readData();
     if (!data.site_content) data.site_content = {};
-    data.site_content.socialLinks = (req.body && typeof req.body === 'object') ? req.body : {};
+    const prev = (data.site_content.socialLinks && typeof data.site_content.socialLinks === 'object') ? data.site_content.socialLinks : {};
+    const body = (req.body && typeof req.body === 'object') ? req.body : {};
+    const keys = ['facebook', 'twitter', 'instagram', 'whatsapp', 'linkedin', 'youtube'];
+    data.site_content.socialLinks = {};
+    for (const k of keys) {
+        data.site_content.socialLinks[k] = (body[k] !== undefined && body[k] !== null) ? String(body[k]).trim() : (prev[k] || '');
+    }
     await writeData(data);
     res.json({ success: true, message: 'تم حفظ روابط التواصل الاجتماعي' });
 });

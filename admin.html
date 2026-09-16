@@ -421,6 +421,14 @@
                         <label class="block text-sm font-bold text-gray-700 mb-2"><i class="fab fa-whatsapp text-green-600 ml-1"></i> واتساب (رقم مع رمز الدولة بدون + أو رابط wa.me كاملاً)</label>
                         <input id="s_whatsapp" type="text" class="w-full border-2 border-gray-200 rounded-xl px-4 py-3 focus:outline-none focus:border-brandGreen transition bg-gray-50" placeholder="22245123456  أو  https://wa.me/22245123456">
                     </div>
+                    <div>
+                        <label class="block text-sm font-bold text-gray-700 mb-2"><i class="fab fa-linkedin-in text-blue-700 ml-1"></i> رابط لينكدإن / LinkedIn</label>
+                        <input id="s_linkedin" type="url" class="w-full border-2 border-gray-200 rounded-xl px-4 py-3 focus:outline-none focus:border-brandGreen transition bg-gray-50" placeholder="https://www.linkedin.com/...">
+                    </div>
+                    <div>
+                        <label class="block text-sm font-bold text-gray-700 mb-2"><i class="fab fa-youtube text-red-600 ml-1"></i> رابط يوتيوب / YouTube</label>
+                        <input id="s_youtube" type="url" class="w-full border-2 border-gray-200 rounded-xl px-4 py-3 focus:outline-none focus:border-brandGreen transition bg-gray-50" placeholder="https://www.youtube.com/@...">
+                    </div>
                     <p class="text-xs text-gray-400">اترك أي حقل فارغاً لإخفاء الزر المقابل من واجهة الموقع.</p>
                 </div>
                 <button type="submit" class="bg-brandGreen text-white px-8 py-3 rounded-xl font-bold hover:bg-brandDark transition"><i class="fas fa-save ml-2"></i> حفظ الروابط</button>
@@ -1975,6 +1983,8 @@ async function loadSocialLinks() {
         document.getElementById('s_twitter').value = links.twitter || '';
         document.getElementById('s_instagram').value = links.instagram || '';
         document.getElementById('s_whatsapp').value = links.whatsapp || '';
+        document.getElementById('s_linkedin').value = links.linkedin || '';
+        document.getElementById('s_youtube').value = links.youtube || '';
     } catch(e) { console.error(e); }
 }
 
@@ -1984,7 +1994,9 @@ document.getElementById('socialForm').addEventListener('submit', async (e) => {
         facebook: document.getElementById('s_facebook').value.trim(),
         twitter: document.getElementById('s_twitter').value.trim(),
         instagram: document.getElementById('s_instagram').value.trim(),
-        whatsapp: document.getElementById('s_whatsapp').value.trim()
+        whatsapp: document.getElementById('s_whatsapp').value.trim(),
+        linkedin: document.getElementById('s_linkedin').value.trim(),
+        youtube: document.getElementById('s_youtube').value.trim()
     };
     try {
         const res = await fetch(API + '/social-links', { method: 'PUT', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(data) });
