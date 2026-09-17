@@ -9,14 +9,16 @@
     <title>الجمعية الموريتانية لترقية الأسرة | AMPF</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <script>
-        tailwind.config = { theme: { extend: { colors: { brandGreen: '#10B981', brandDark: '#065F46', brandLight: '#D1FAE5', brandBlue: '#1E3A8A' } } } }
+        tailwind.config = { theme: { extend: { colors: { brandGreen: '#3BA45C', brandDark: '#5A1D6B', brandLight: '#FDE8F0', brandPink: '#E87DA5', brandViolet: '#8A3E8C', brandRed: '#D83A3A' } } } }
     </script>
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
-    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@300;400;600;700;800;900&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@300;400;600;700;800;900&family=Montserrat:wght@400;600;700;800;900&family=Open+Sans:wght@400;500;600;700&family=Noto+Sans+Arabic:wght@300;400;600;700;800&display=swap" rel="stylesheet">
     <style>
-        * { font-family: 'Cairo', sans-serif; }
+        [lang="ar"], html[lang="ar"] { font-family: 'Cairo', 'Noto Sans Arabic', sans-serif; }
+        [lang="fr"], [lang="en"], html:not([lang="ar"]) { font-family: 'Open Sans', sans-serif; }
+        h1, h2, h3, h4, h5, h6, .font-black, .font-extrabold, .font-bold { font-family: 'Montserrat', 'Cairo', sans-serif; }
+        * { font-family: inherit; }
         html { scroll-behavior: smooth; }
-        /* ── Mobile responsiveness / horizontal overflow guard ── */
         html, body { overflow-x: hidden; width: 100%; max-width: 100%; }
         *, *::before, *::after { box-sizing: border-box; }
         img, video, svg, iframe { max-width: 100%; height: auto; }
@@ -24,9 +26,9 @@
         .container .grid > *, .grid > * { min-width: 0; }
         p, h1, h2, h3, h4, h5, li, td, th, div, span, a { overflow-wrap: break-word; word-wrap: break-word; }
         input, select, textarea { max-width: 100%; }
-        .hero-gradient { background: linear-gradient(135deg, #065F46 0%, #10B981 50%, #065F46 100%); }
+        .hero-gradient { background: linear-gradient(135deg, #E87DA5 0%, #8A3E8C 50%, #5A1D6B 100%); }
         .card-hover { transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275); }
-        .card-hover:hover { transform: translateY(-10px); box-shadow: 0 25px 50px -12px rgba(0,0,0,0.25); }
+        .card-hover:hover { transform: translateY(-10px); box-shadow: 0 25px 50px -12px rgba(138,62,140,0.25); }
         .fade-up { opacity: 0; transform: translateY(40px); transition: all 0.8s ease-out; }
         .fade-up.visible { opacity: 1; transform: translateY(0); }
         .modal { opacity: 0; pointer-events: none; transition: all 0.3s ease; }
@@ -34,10 +36,10 @@
         .mobile-menu { transform: translateX(100%); transition: transform 0.4s cubic-bezier(0.4, 0, 0.2, 1); z-index: 9999; }
         .mobile-menu.active { transform: translateX(0); }
         .lang-btn { padding: 6px 12px; border-radius: 6px; font-size: 13px; font-weight: 700; cursor: pointer; transition: all 0.3s; border: 2px solid transparent; }
-        .lang-btn.active { background: #10B981; color: white; border-color: #10B981; }
+        .lang-btn.active { background: #E87DA5; color: white; border-color: #E87DA5; }
         .lang-btn:not(.active) { background: white; color: #374151; border-color: #e5e7eb; }
-        .strategy-line { width: 60px; height: 4px; background: #10B981; border-radius: 2px; }
-        .stat-counter { background: linear-gradient(135deg, #065F46, #10B981); }
+        .strategy-line { width: 60px; height: 4px; background: linear-gradient(90deg, #E87DA5, #8A3E8C); border-radius: 2px; }
+        .stat-counter { background: linear-gradient(135deg, #8A3E8C, #E87DA5); }
         .news-img { height: 208px; object-fit: cover; width: 100%; }
         .gallery-img { aspect-ratio: 1 / 1; object-fit: cover; width: 100%; border-radius: 12px; }
         .loading-spinner { display: flex; justify-content: center; align-items: center; padding: 40px; color: #9CA3AF; }
@@ -107,7 +109,7 @@
             </div>
             <div class="flex items-center gap-3 sm:gap-4 flex-shrink-0">
                 <nav id="mainNav" class="hidden lg:flex items-center gap-6 font-semibold text-gray-700" style="flex-shrink: 0;"></nav>
-                <a href="/admin" class="hidden lg:flex bg-brandGreen text-white px-5 py-2 rounded-full font-bold hover:bg-brandDark transition items-center gap-2" style="flex-shrink: 0;">
+                <a href="/admin" class="hidden lg:flex bg-gradient-to-r from-brandPink to-brandViolet text-white px-5 py-2 rounded-full font-bold hover:opacity-90 transition items-center gap-2" style="flex-shrink: 0;">
                     <i class="fas fa-user-shield text-sm"></i> <span data-i18n="nav_admin">الإدارة</span>
                 </a>
                 <button id="menuBtn" class="lg:hidden text-brandDark text-2xl p-1" style="flex-shrink: 0;" aria-label="القائمة"><i class="fas fa-bars"></i></button>
@@ -305,7 +307,7 @@
     </section>
 
     <!-- Footer -->
-    <footer class="bg-brandDark text-white py-16">
+    <footer class="bg-gradient-to-br from-brandDark to-brandViolet text-white py-16">
         <div class="container mx-auto px-6 grid md:grid-cols-4 gap-8 mb-12">
             <div>
                 <div class="flex items-center gap-3 mb-5"><img src="LOGO AMPF.png" alt="AMPF" class="h-14 w-auto" onerror="this.style.display='none'"></div>
@@ -348,7 +350,7 @@
 
     <div id="toast" class="fixed bottom-6 left-1/2 -translate-x-1/2 bg-brandDark text-white px-8 py-4 rounded-full shadow-2xl flex items-center gap-3 opacity-0 transition-opacity duration-300 z-50"><i class="fas fa-check-circle text-brandGreen text-xl"></i><span id="toastMsg" class="font-bold"></span></div>
 
-    <button id="backToTop" class="fixed bottom-6 right-6 w-14 h-14 bg-brandGreen text-white rounded-full shadow-lg hover:bg-brandDark transition opacity-0 z-40 flex items-center justify-center"><i class="fas fa-arrow-up"></i></button>
+    <button id="backToTop" class="fixed bottom-6 right-6 w-14 h-14 bg-gradient-to-br from-brandPink to-brandViolet text-white rounded-full shadow-lg hover:opacity-90 transition opacity-0 z-40 flex items-center justify-center"><i class="fas fa-arrow-up"></i></button>
 
     <script>
         // ══════════════════════════════════════════════════

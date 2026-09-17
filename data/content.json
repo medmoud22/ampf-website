@@ -606,29 +606,29 @@
     "logo": "",
     "mgfVersion": 4,
     "regionalTagline": {
-      "ar": "منصة إقليمية متميزة للمعرفة والتعلم والتشبيك حول ختان الإناث (MGF)",
-      "fr": "Plateforme régionale d'excellence de connaissances, d'apprentissage et de réseautage sur les mutilations génitales féminines (MGF)",
-      "en": "A leading regional platform of knowledge, learning and networking on female genital mutilation (FGM)"
+      "ar": "صوتنا يُسمع — معًا نضع حد لتشويه الأعضاء التناسلية للإناث",
+      "fr": "Nos voix portent — ensemble, mettons fin aux MGF",
+      "en": "Our voices are heard — together, let's end FGM"
     },
     "mission": {
-      "ar": "مركز متخصص تابع للجمعية الموريتانية لترقية الأسرة، يعمل على التحسيس والتوعية بشأن استجابة النساء والفتيات المتأثرات بتشويه الأعضاء التناسلية للإناث، وتحفيز البحث والإعلام وتطوير البرامج، وتقديم الإرشادات حول خدمات الرعاية، وتطوير الأدلة وتعبئة الطاقات المحلية والدولية من أجل القضاء النهائي على هذه الممارسة.",
-      "fr": "Centre spécialisé de l'Association Mauritanienne pour la Promotion de la Famille, il œuvre à la sensibilisation et à l'information sur la prise en charge des femmes et des filles affectées par les mutilations génitales féminines, à la stimulation de la recherche, de l'information et des programmes, à l'orientation vers les services de soins, au développement des données probantes et à la mobilisation des énergies locales et internationales pour l'élimination définitive de cette pratique.",
-      "en": "A specialised centre of the Mauritanian Association for Family Promotion working to raise awareness of the care and response for women and girls affected by female genital mutilation, to stimulate research, information and programmes, to provide guidance on care services, to develop evidence and mobilise local and international energies towards the definitive elimination of this practice."
+      "ar": "نبني المعرفة ونعمل مع المجتمعات والشراكات لوضع حد لتشويه الأعضاء التناسلية للإناث. نحول الأدلة إلى إجراءات، ون поддержива الناجيات بأمان وكرامة، ونعمل مع القيادات الدينية والمجتمعية من أجل تغيير حقيقي ودائم.",
+      "fr": "Nous construisons les connaissances et travaillons avec les communautés et les partenaires pour mettre fin aux MGF. Nous transformons les preuves en actions, accompagnons les survivantes dans la sécurité et la dignité, et œuvrons avec les leaders religieux et communautaires pour un changement réel et durable.",
+      "en": "We build knowledge and work with communities and partners to end FGM. We turn evidence into action, support survivors with safety and dignity, and work with religious and community leaders for real, lasting change."
     },
     "vision": {
-      "ar": "مركز مرجعي وطني وإقليمي في مجال القضاء على تشويه الأعضاء التناسلية للإناث، يوظف البحث والتدريب والمناصرة لنشر ثقافة مناهضة لهذه الممارسة وضمان الحماية الكاملة للفتيات والنساء في موريتانيا وخارجها.",
-      "fr": "Un centre de référence national et régional pour l'élimination des mutilations génitales féminines, mettant la recherche, la formation et le plaidoyer au service de la diffusion d'une culture contre cette pratique et de la protection pleine et entière des filles et des femmes en Mauritanie et au-delà.",
-      "en": "A national and regional reference centre for the elimination of female genital mutilation, using research, training and advocacy to spread a culture against the practice and ensure full protection for girls and women in Mauritania and beyond."
+      "ar": "مجتمع يعيش بكرامة وحرية من أي شكل من أشكال العنف — حيث كل فتاة وامرأة محمية ومحترمة وможتمكة. نسعى لأن نكون المرجع الإقليمي الذي يلهم التغيير ويقود التحول.",
+      "fr": "Une société où chacune vit dans la dignité et la liberté, sans aucune forme de violence — où chaque fille et chaque femme est protégée, respectée et autonomisée. Nous visons à être la référence régionale qui inspire et conduit le changement.",
+      "en": "A society where everyone lives in dignity and freedom from any form of violence — where every girl and woman is protected, respected and empowered. We strive to be the regional reference that inspires and drives change."
     },
     "getInvolved": {
-      "ar": "يدعو المركز الأفراد والمنظمات إلى المساهمة في جهوده عبر التطوع، ودعم الأنشطة البحثية والتوعوية، والمشاركة في الحملات، وبناء شراكات مع الفاعلين المحليين والدوليين. تواصلوا معنا لمعرفة كيفية الانضمام إلى شبكة المركز.",
-      "fr": "Le centre invite les individus et les organisations à contribuer à ses efforts par le bénévolat, le soutien aux activités de recherche et de sensibilisation, la participation aux campagnes et la construction de partenariats avec les acteurs locaux et internationaux. Contactez-nous pour savoir comment rejoindre le réseau du centre.",
-      "en": "The centre invites individuals and organisations to contribute to its efforts through volunteering, supporting research and awareness activities, joining campaigns and building partnerships with local and international actors. Contact us to find out how to join the centre's network."
+      "ar": "صوتك مهم — انضم إلينا كمتطوع، أو شارك في أبحاثنا وحملاتنا، أو ا xây شراكات معنا. كل تغيير يبدأ بخطوة. تواصل معنا اليوم وكن جزءاً من الحل.",
+      "fr": "Ta voix compte — joins-nous comme bénévole, participe à nos recherches et campagnes, ou construis un partenariat avec nous. Tout changement commence par une étape. Contacte-nous aujourd'hui et fais partie de la solution.",
+      "en": "Your voice matters — join us as a volunteer, participate in our research and campaigns, or build partnerships with us. Every change starts with one step. Contact us today and be part of the solution."
     },
     "advocacy": {
-      "ar": "ينفذ المركز أنشطة ترافع موجهة نحو صناع القرار والقادة الدينيين والمجتمع المدني، لتعزيز إطار الحماية القانوني للفتيات والنساء، ونشر خطاب ديني واجتماعي مناهض لختان الإناث، وضمان إدماج القضية في السياسات والبرامج الوطنية.",
-      "fr": "Le centre mène des activités de plaidoyer auprès des décideurs, des leaders religieux et de la société civile afin de renforcer le cadre légal de protection des filles et des femmes, de diffuser un discours religieux et social contre les MGF et d'assurer l'intégration de la question dans les politiques et programmes nationaux.",
-      "en": "The centre conducts advocacy activities targeting policymakers, religious leaders and civil society to strengthen the legal framework protecting girls and women, spread a religious and social discourse against FGM, and ensure the issue is integrated into national policies and programmes."
+      "ar": "نتحدث بصوت عالٍ من أجل الحماية والكرامة. نعمل مع صانعي القرار والقيادات الدينية والمجتمع المدني لتعزيز القوانين ونشر ثقافة عدم الوصم ودعم حقوق الإنسان للجميع.",
+      "fr": "Nous parlons fort pour la protection et la dignité. Nous travaillons avec les décideurs, les leaders religieux et la société civile pour renforcer les lois, diffuser une culture sans stigmatisation et soutenir les droits humains pour tous.",
+      "en": "We speak up for protection and dignity. We work with policymakers, religious leaders and civil society to strengthen laws, spread a culture free of stigma, and support human rights for all."
     },
     "objectives": [
       {
@@ -1124,19 +1124,19 @@
       "testimonials": [
         {
           "quote": {
-            "ar": "وجدت في المركز مساحة آمنة استعدت فيها الثقة بنفسي وجسدي، وأنشأت مجدداً روابط مع عائلتي ومجتمعي.",
-            "fr": "J'ai trouvé au centre un espace sûr où j'ai retrouvé confiance en moi et en mon corps, et recréé des liens avec ma famille et ma communauté.",
-            "en": "I found a safe space at the centre where I regained confidence in myself and my body, and rebuilt connections with my family and community."
+            "ar": "لم أعد صامتة — المركز أعطاني الشجاعة لأتحدث، وأنا الآن أعرف أنني لست وحدي. كل ناجية تستحق أن تُسمع وتحترم.",
+            "fr": "Je ne suis plus silencieuse — le centre m'a donné le courage de parler, et je sais maintenant que je ne suis pas seule. Chaque survivante mérite d'être entendue et respectée.",
+            "en": "I am no longer silent — the centre gave me the courage to speak, and I now know I am not alone. Every survivor deserves to be heard and respected."
           },
           "name": {
-            "ar": "ناجية لديها استفادة من خدمات المركز",
-            "fr": "Survivante accompagnée par le centre",
-            "en": "A survivor supported by the centre"
+            "ar": "ناجية — شهادة حقيقية",
+            "fr": "Survivante — témoignage réel",
+            "en": "Survivor — real testimonial"
           },
           "role": {
-            "ar": "شهادة مستفيدة",
-            "fr": "Témoignage",
-            "en": "Testimonial"
+            "ar": "حكاية نجاة",
+            "fr": "Récit de survie",
+            "en": "Survival story"
           }
         }
       ]
@@ -1144,7 +1144,12 @@
     "publications": [],
     "events": [],
     "campaigns": [],
-    "jobs": []
+    "jobs": [],
+    "imageryGuidance": {
+      "ar": "صور حقيقية وأصيلة للشباب والمجتمع الموريتاني — بدون صور جاهزة مبتذلة. التوازن بين الهوية المحلية والقيم العالمية. الابتعاد عن الصور الصادمة والتركيز على القوة والكرامة والتمكين.",
+      "fr": "Photos authentiques de jeunes et de communautés mauritaniennes — pas de photos banales. Équilibre entre identité locale et valeurs mondiales. Éviter les images choquantes, privilégier force, dignité et autonomisation.",
+      "en": "Authentic photos of Mauritanian youth and communities — no banal stock photos. Balance local identity with global values. Avoid shocking images, focus on strength, dignity and empowerment."
+    }
   },
   "mgfTeam": [],
   "mgfPartners": [],

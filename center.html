@@ -6,14 +6,16 @@
     <title>مركز الإمتياز للقضاء على تشويه الأعضاء التناسلية للإناث | جمعية ترقية الأسرة</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <script>
-        tailwind.config = { theme: { extend: { colors: { brandGreen: '#10B981', brandDark: '#065F46', brandLight: '#D1FAE5', brandBlue: '#1E3A8A' } } } }
+        tailwind.config = { theme: { extend: { colors: { brandGreen: '#3BA45C', brandDark: '#5A1D6B', brandLight: '#FDE8F0', brandPink: '#E87DA5', brandViolet: '#8A3E8C', brandRed: '#D83A3A' } } } }
     </script>
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
-    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@300;400;600;700;800;900&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@300;400;600;700;800;900&family=Montserrat:wght@400;600;700;800;900&family=Open+Sans:wght@400;500;600;700&family=Noto+Sans+Arabic:wght@300;400;600;700;800&display=swap" rel="stylesheet">
     <style>
-        * { font-family: 'Cairo', sans-serif; }
+        [lang="ar"], html[lang="ar"] { font-family: 'Cairo', 'Noto Sans Arabic', sans-serif; }
+        [lang="fr"], [lang="en"], html:not([lang="ar"]) { font-family: 'Open Sans', sans-serif; }
+        h1, h2, h3, h4, h5, h6, .font-black, .font-extrabold, .font-bold { font-family: 'Montserrat', 'Cairo', sans-serif; }
+        * { font-family: inherit; }
         html { scroll-behavior: smooth; }
-        /* ── Mobile responsiveness / horizontal overflow guard ── */
         html, body { overflow-x: hidden; width: 100%; max-width: 100%; }
         *, *::before, *::after { box-sizing: border-box; }
         img, video, svg, iframe { max-width: 100%; height: auto; }
@@ -21,17 +23,18 @@
         .container .grid > *, .grid > * { min-width: 0; }
         p, h1, h2, h3, h4, h5, li, td, th, div, span, a { overflow-wrap: break-word; word-wrap: break-word; }
         input, select, textarea { max-width: 100%; }
-        .hero-gradient { background: linear-gradient(135deg, #065F46 0%, #10B981 50%, #065F46 100%); }
+        .hero-gradient { background: linear-gradient(135deg, #E87DA5 0%, #8A3E8C 50%, #5A1D6B 100%); }
+        .brand-gradient { background: linear-gradient(135deg, #E87DA5 0%, #8A3E8C 100%); }
         .card-hover { transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275); }
-        .card-hover:hover { transform: translateY(-10px); box-shadow: 0 25px 50px -12px rgba(0,0,0,0.25); }
+        .card-hover:hover { transform: translateY(-10px); box-shadow: 0 25px 50px -12px rgba(138,62,140,0.25); }
         .fade-up { opacity: 0; transform: translateY(40px); transition: all 0.8s ease-out; }
         .fade-up.visible { opacity: 1; transform: translateY(0); }
         .mobile-menu { transform: translateX(100%); transition: transform 0.4s cubic-bezier(0.4, 0, 0.2, 1); z-index: 9999; }
         .mobile-menu.active { transform: translateX(0); }
         .lang-btn { padding: 6px 12px; border-radius: 6px; font-size: 13px; font-weight: 700; cursor: pointer; transition: all 0.3s; border: 2px solid transparent; }
-        .lang-btn.active { background: #10B981; color: white; border-color: #10B981; }
+        .lang-btn.active { background: #E87DA5; color: white; border-color: #E87DA5; }
         .lang-btn:not(.active) { background: white; color: #374151; border-color: #e5e7eb; }
-        .strategy-line { width: 60px; height: 4px; background: #10B981; border-radius: 2px; }
+        .strategy-line { width: 60px; height: 4px; background: linear-gradient(90deg, #E87DA5, #8A3E8C); border-radius: 2px; }
         .news-img { height: 208px; object-fit: cover; width: 100%; }
         .loading-spinner { display: flex; justify-content: center; align-items: center; padding: 40px; color: #9CA3AF; }
         .loading-spinner i { font-size: 32px; animation: spin 1s linear infinite; }
@@ -39,6 +42,8 @@
         html[lang="en"] { direction: ltr; text-align: left; }
         html[lang="fr"] { direction: ltr; text-align: left; }
         .nav-link { white-space: nowrap; }
+        .icon-circle { width: 3rem; height: 3rem; border-radius: 9999px; display: flex; align-items: center; justify-content: center; flex-shrink: 0; }
+        .icon-circle-lg { width: 3.5rem; height: 3.5rem; border-radius: 9999px; display: flex; align-items: center; justify-content: center; flex-shrink: 0; }
     </style>
 </head>
 <body class="bg-white text-gray-800">
@@ -73,7 +78,7 @@
             </div>
             <div class="flex items-center gap-3 sm:gap-4 flex-shrink-0">
                 <nav id="mainNav" class="hidden lg:flex items-center gap-6 font-semibold text-gray-700" style="flex-shrink: 0;"></nav>
-                <a href="/admin" class="hidden lg:flex bg-brandGreen text-white px-5 py-2 rounded-full font-bold hover:bg-brandDark transition items-center gap-2" style="flex-shrink: 0;">
+                <a href="/admin" class="hidden lg:flex bg-gradient-to-r from-brandPink to-brandViolet text-white px-5 py-2 rounded-full font-bold hover:opacity-90 transition items-center gap-2" style="flex-shrink: 0;">
                     <i class="fas fa-user-shield text-sm"></i> <span data-i18n="nav_admin">الإدارة</span>
                 </a>
                 <button id="menuBtn" class="lg:hidden text-brandDark text-2xl p-1" style="flex-shrink: 0;" aria-label="القائمة"><i class="fas fa-bars"></i></button>
@@ -96,7 +101,9 @@
             <div class="text-center fade-up">
                 <span class="bg-white/20 backdrop-blur-sm text-white text-sm px-4 py-2 rounded-full inline-block mb-6 font-bold" data-i18n="mgf_badge">مركز الإمتياز</span>
                 <div class="flex flex-col sm:flex-row items-center justify-center gap-6 mb-6">
-                    <img id="mgfHeroLogo" src="LOGO MGF.png" alt="Centre d'Excellence" class="h-24 sm:h-32 w-24 sm:w-32 object-cover rounded-full border-4 border-white shadow-2xl bg-white" onerror="this.onerror=null; this.src='LOGO AMPF.png';">
+                    <div class="relative p-1 rounded-full bg-gradient-to-br from-brandPink to-brandViolet shadow-2xl">
+                        <img id="mgfHeroLogo" src="LOGO MGF.png" alt="Centre d'Excellence" class="h-24 sm:h-32 w-24 sm:w-32 object-contain rounded-full bg-white p-1" onerror="this.onerror=null; this.src='LOGO AMPF.png';">
+                    </div>
                     <h1 class="text-3xl sm:text-4xl md:text-5xl font-black leading-tight max-w-4xl" data-i18n="mgf_title">مركز الإمتياز للقضاء على تشويه الأعضاء التناسلية للإناث</h1>
                 </div>
                 <p class="text-lg sm:text-xl text-white/90 mb-4 max-w-3xl mx-auto leading-relaxed" data-i18n="mgf_subtitle">أبحاث وأدلة تدريبية ومناصرة للقضاء على تشويه الأعضاء التناسلية للإناث</p>
@@ -113,7 +120,7 @@
 
             <!-- Inner language tabs -->
             <div class="flex flex-wrap justify-center gap-2 mb-10 fade-up" id="mgfTabs">
-                <button class="mgf-tab active px-4 py-2 rounded-full font-bold text-sm transition border-2 border-brandGreen text-brandDark bg-brandLight" data-mgftab="about"><i class="fas fa-university ml-1"></i> <span class="mgf-tab-label" data-i18n="mgf_tab_about">عن المركز</span></button>
+                <button class="mgf-tab active px-4 py-2 rounded-full font-bold text-sm transition border-2 border-brandPink text-brandDark bg-brandLight" data-mgftab="about"><i class="fas fa-university ml-1"></i> <span class="mgf-tab-label" data-i18n="mgf_tab_about">عن المركز</span></button>
                 <button class="mgf-tab px-4 py-2 rounded-full font-bold text-sm transition border-2 border-gray-200 text-gray-600 hover:border-brandGreen" data-mgftab="research"><i class="fas fa-flask ml-1"></i> <span class="mgf-tab-label" data-i18n="mgf_tab_research">البحوث والأدلة</span></button>
                 <button class="mgf-tab px-4 py-2 rounded-full font-bold text-sm transition border-2 border-gray-200 text-gray-600 hover:border-brandGreen" data-mgftab="toolkits"><i class="fas fa-book-open ml-1"></i> <span class="mgf-tab-label" data-i18n="mgf_tab_toolkits">التقارير والحقائب التدريبية</span></button>
                 <button class="mgf-tab px-4 py-2 rounded-full font-bold text-sm transition border-2 border-gray-200 text-gray-600 hover:border-brandGreen" data-mgftab="news"><i class="fas fa-newspaper ml-1"></i> <span class="mgf-tab-label" data-i18n="mgf_tab_news">المدونة والأخبار</span></button>
@@ -126,8 +133,10 @@
             <!-- MGF panels -->
             <div id="mgfPanelAbout" class="mgf-panel">
                 <!-- Presentation card -->
-                <div class="bg-gradient-to-r from-brandDark to-brandGreen text-white rounded-3xl p-8 mb-10 flex flex-col sm:flex-row items-center gap-6 shadow-xl fade-up">
-                    <img id="mgfIntroLogo" src="LOGO MGF.png" alt="Centre d'Excellence" class="h-20 sm:h-24 w-20 sm:w-24 object-cover rounded-full border-4 border-white shadow-lg bg-white flex-shrink-0" onerror="this.onerror=null; this.src='LOGO AMPF.png';">
+                <div class="bg-gradient-to-r from-brandViolet to-brandPink text-white rounded-3xl p-8 mb-10 flex flex-col sm:flex-row items-center gap-6 shadow-xl fade-up">
+                    <div class="relative p-1 rounded-full bg-white/20 shadow-lg flex-shrink-0">
+                        <img id="mgfIntroLogo" src="LOGO MGF.png" alt="Centre d'Excellence" class="h-20 sm:h-24 w-20 sm:w-24 object-contain rounded-full bg-white p-1" onerror="this.onerror=null; this.src='LOGO AMPF.png';">
+                    </div>
                     <div class="text-center sm:text-start">
                         <h3 class="text-2xl font-black mb-3" data-i18n="mgf_intro_heading">عن مركز الإمتياز</h3>
                         <p class="text-emerald-50/90 leading-relaxed" data-i18n="mgf_intro_text">مركز متخصص تابع للجمعية الموريتانية لترقية الأسرة يعمل على تطوير المعرفة العلمية والأدلة حول تشويه الأعضاء التناسلية للإناث، والمساهمة في القضاء عليها عبر البحث والتدريب والمناصرة وبناء الشراكات.</p>
@@ -135,9 +144,9 @@
                 </div>
 
                 <!-- Regional positioning strip -->
-                <div class="bg-gradient-to-br from-brandDark to-brandBlue text-white rounded-3xl p-8 mb-10 shadow-xl fade-up">
+                <div class="bg-gradient-to-br from-brandDark to-brandViolet text-white rounded-3xl p-8 mb-10 shadow-xl fade-up">
                     <div class="flex items-start gap-4">
-                        <div class="w-14 h-14 bg-white/10 rounded-xl flex items-center justify-center flex-shrink-0"><i class="fas fa-earth-africa text-2xl"></i></div>
+                        <div class="w-14 h-14 bg-white/15 rounded-full flex items-center justify-center flex-shrink-0"><i class="fas fa-earth-africa text-2xl"></i></div>
                         <div class="min-w-0">
                             <h3 class="text-xl font-black mb-2" data-i18n="mgf_about_heading">تحديد الموقع الإقليمي والرسالة</h3>
                             <p id="mgfRegionalText" class="text-emerald-50/90 leading-relaxed"></p>
@@ -149,36 +158,36 @@
                 <!-- About: reasons, expertise, added value -->
                 <div class="grid lg:grid-cols-3 gap-8 mb-10">
                     <div class="bg-white p-8 rounded-2xl shadow-lg card-hover fade-up">
-                        <div class="w-14 h-14 bg-brandLight rounded-xl flex items-center justify-center mb-4"><i class="fas fa-circle-question text-brandGreen text-xl"></i></div>
+                        <div class="icon-circle bg-pink-100 mb-4"><i class="fas fa-circle-question text-brandPink text-xl"></i></div>
                         <h3 class="text-xl font-bold text-brandDark mb-4" data-i18n="mgf_about_reasons_heading">لماذا أنشئ المركز؟</h3>
                         <ul id="mgfReasonsList" class="list-disc ms-5 space-y-2 text-gray-600 leading-relaxed"></ul>
                     </div>
                     <div class="bg-white p-8 rounded-2xl shadow-lg card-hover fade-up">
-                        <div class="w-14 h-14 bg-brandLight rounded-xl flex items-center justify-center mb-4"><i class="fas fa-star text-brandGreen text-xl"></i></div>
+                        <div class="icon-circle bg-violet-100 mb-4"><i class="fas fa-star text-brandViolet text-xl"></i></div>
                         <h3 class="text-xl font-bold text-brandDark mb-4" data-i18n="mgf_about_expertise_heading">مجالات الخبرة</h3>
                         <ul id="mgfExpertiseList" class="list-disc ms-5 space-y-2 text-gray-600 leading-relaxed"></ul>
                     </div>
                     <div class="bg-white p-8 rounded-2xl shadow-lg card-hover fade-up">
-                        <div class="w-14 h-14 bg-brandLight rounded-xl flex items-center justify-center mb-4"><i class="fas fa-layer-group text-brandGreen text-xl"></i></div>
+                        <div class="icon-circle bg-green-100 mb-4"><i class="fas fa-layer-group text-brandGreen text-xl"></i></div>
                         <h3 class="text-xl font-bold text-brandDark mb-4" data-i18n="mgf_about_value_heading">القيمة المضافة</h3>
                         <ul id="mgfValueList" class="list-disc ms-5 space-y-2 text-gray-600 leading-relaxed"></ul>
                     </div>
                 </div>
 
                 <!-- Ownership & governance -->
-                <div class="bg-emerald-50 rounded-3xl p-8 mb-10 fade-up">
+                <div class="bg-pink-50 rounded-3xl p-8 mb-10 fade-up">
                     <h3 class="text-2xl font-black text-brandDark mb-6 text-center" data-i18n="mgf_ownership_heading">الرعاية والحوكمة</h3>
                     <div class="grid md:grid-cols-3 gap-6">
                         <div class="bg-white rounded-2xl p-6 shadow-sm border border-gray-100">
-                            <div class="w-12 h-12 bg-brandLight rounded-xl flex items-center justify-center mb-4"><i class="fas fa-flag text-brandGreen text-xl"></i></div>
+                            <div class="icon-circle bg-pink-100 mb-4"><i class="fas fa-flag text-brandPink text-xl"></i></div>
                             <p id="mgfOwnershipAmpf" class="text-gray-600 leading-relaxed text-sm"></p>
                         </div>
                         <div class="bg-white rounded-2xl p-6 shadow-sm border border-gray-100">
-                            <div class="bg-gray-50 border border-gray-100 rounded-xl h-16 flex items-center justify-center mb-4 p-2"><img src="assets/ippf-logo.png" alt="IPPF AWRO" class="h-9 w-auto object-contain" onerror="this.style.display='none'"></div>
+                            <div class="bg-gray-50 border border-gray-100 rounded-full h-16 w-16 flex items-center justify-center mb-4 p-2 mx-auto"><img src="assets/ippf-logo.png" alt="IPPF AWRO" class="h-9 w-auto object-contain" onerror="this.style.display='none'"></div>
                             <p id="mgfOwnershipIppf" class="text-gray-600 leading-relaxed text-sm"></p>
                         </div>
                         <div class="bg-white rounded-2xl p-6 shadow-sm border border-gray-100">
-                            <div class="w-12 h-12 bg-purple-100 rounded-xl flex items-center justify-center mb-4"><i class="fas fa-people-arrows text-brandDark text-xl"></i></div>
+                            <div class="icon-circle bg-violet-100 mb-4"><i class="fas fa-people-arrows text-brandViolet text-xl"></i></div>
                             <p id="mgfOwnershipOthers" class="text-gray-600 leading-relaxed text-sm"></p>
                         </div>
                     </div>
@@ -199,12 +208,12 @@
 
                 <div class="grid md:grid-cols-2 gap-8">
                     <div class="bg-white p-8 rounded-2xl shadow-lg card-hover fade-up">
-                        <div class="w-14 h-14 bg-brandLight rounded-xl flex items-center justify-center mb-4"><i class="fas fa-bullseye text-brandGreen text-xl"></i></div>
+                        <div class="icon-circle bg-pink-100 mb-4"><i class="fas fa-bullseye text-brandPink text-xl"></i></div>
                         <h3 class="text-xl font-bold text-brandDark mb-3" data-i18n="mgf_mission_heading">الرسالة</h3>
                         <p id="mgfMission" class="text-gray-600 leading-relaxed"></p>
                     </div>
                     <div class="bg-white p-8 rounded-2xl shadow-lg card-hover fade-up">
-                        <div class="w-14 h-14 bg-brandLight rounded-xl flex items-center justify-center mb-4"><i class="fas fa-eye text-brandGreen text-xl"></i></div>
+                        <div class="icon-circle bg-violet-100 mb-4"><i class="fas fa-eye text-brandViolet text-xl"></i></div>
                         <h3 class="text-xl font-bold text-brandDark mb-3" data-i18n="mgf_vision_heading">الرؤية</h3>
                         <p id="mgfVision" class="text-gray-600 leading-relaxed"></p>
                     </div>
@@ -215,17 +224,17 @@
                     <div id="mgfObjectivesList" class="grid md:grid-cols-2 lg:grid-cols-3 gap-6"></div>
                 </div>
 
-                <div class="mt-12 bg-gradient-to-br from-emerald-50 to-white rounded-3xl p-8">
+                <div class="mt-12 bg-gradient-to-br from-pink-50 to-white rounded-3xl p-8">
                     <h3 class="text-2xl font-black text-brandDark mb-6 text-center" data-i18n="mgf_structure_heading">خدمات وفريق المركز</h3>
                     <div class="grid lg:grid-cols-2 gap-8">
                         <div class="bg-white p-6 rounded-2xl shadow-sm border border-gray-100 card-hover fade-up">
-                            <div class="w-12 h-12 bg-emerald-100 rounded-xl flex items-center justify-center mb-4"><i class="fas fa-door-open text-brandGreen text-xl"></i></div>
+                            <div class="icon-circle bg-green-100 mb-4"><i class="fas fa-door-open text-brandGreen text-xl"></i></div>
                             <h4 class="text-lg font-bold text-brandDark mb-4" data-i18n="mgf_structure_services_heading">الخدمات المقدمة</h4>
                             <p id="mgfServicesIntro" class="text-sm text-gray-500 leading-relaxed mb-5"></p>
                             <div id="mgfStructureServices" class="space-y-4"></div>
                         </div>
                         <div class="bg-white p-6 rounded-2xl shadow-sm border border-gray-100 card-hover fade-up">
-                            <div class="w-12 h-12 bg-blue-100 rounded-xl flex items-center justify-center mb-4"><i class="fas fa-users text-brandGreen text-xl"></i></div>
+                            <div class="icon-circle bg-violet-100 mb-4"><i class="fas fa-users text-brandViolet text-xl"></i></div>
                             <h4 class="text-lg font-bold text-brandDark mb-4" data-i18n="mgf_structure_staff_heading">فريق المركز</h4>
                             <div id="mgfStructureStaff" class="space-y-3"></div>
                         </div>
@@ -243,7 +252,7 @@
                 </div>
 
                 <!-- Impact -->
-                <div class="mt-12 bg-brandDark text-white rounded-3xl p-8 sm:p-12 fade-up">
+                <div class="mt-12 bg-gradient-to-br from-brandViolet to-brandDark text-white rounded-3xl p-8 sm:p-12 fade-up">
                     <h3 class="text-2xl font-black mb-10 text-center" data-i18n="mgf_impact_heading">أثر المركز</h3>
                     <div id="mgfImpactStats" class="grid grid-cols-2 lg:grid-cols-4 gap-6 mb-12"></div>
                     <div id="mgfImpactQuote" class="max-w-3xl mx-auto text-center"></div>
@@ -284,12 +293,12 @@
             <div id="mgfPanelAdvocacy" class="mgf-panel hidden">
                 <div class="grid lg:grid-cols-2 gap-8">
                     <div class="bg-white p-8 rounded-2xl shadow-lg card-hover fade-up">
-                        <div class="w-14 h-14 bg-brandLight rounded-xl flex items-center justify-center mb-4"><i class="fas fa-users text-brandGreen text-xl"></i></div>
+                        <div class="icon-circle bg-green-100 mb-4"><i class="fas fa-users text-brandGreen text-xl"></i></div>
                         <h3 class="text-xl font-bold text-brandDark mb-3" data-i18n="mgf_involved_heading">شارك معنا</h3>
                         <p id="mgfGetInvolved" class="text-gray-600 leading-relaxed"></p>
                     </div>
                     <div class="bg-white p-8 rounded-2xl shadow-lg card-hover fade-up">
-                        <div class="w-14 h-14 bg-brandLight rounded-xl flex items-center justify-center mb-4"><i class="fas fa-bullhorn text-brandGreen text-xl"></i></div>
+                        <div class="icon-circle bg-pink-100 mb-4"><i class="fas fa-bullhorn text-brandPink text-xl"></i></div>
                         <h3 class="text-xl font-bold text-brandDark mb-3" data-i18n="mgf_advocacy_heading">المناصرة والدعوة</h3>
                         <p id="mgfAdvocacy" class="text-gray-600 leading-relaxed"></p>
                     </div>
@@ -302,12 +311,12 @@
 
                 <div class="mt-12 grid lg:grid-cols-2 gap-8">
                     <div class="bg-white p-8 rounded-2xl shadow-lg card-hover fade-up">
-                        <div class="w-12 h-12 bg-amber-50 rounded-xl flex items-center justify-center mb-4"><i class="fas fa-triangle-exclamation text-amber-500 text-xl"></i></div>
+                        <div class="icon-circle bg-red-100 mb-4"><i class="fas fa-triangle-exclamation text-brandRed text-xl"></i></div>
                         <h3 class="text-xl font-bold text-brandDark mb-4" data-i18n="mgf_challenges_heading">التحديات</h3>
                         <ul id="mgfChallengesList" class="list-disc ms-5 space-y-2 text-gray-600 leading-relaxed"></ul>
                     </div>
                     <div class="bg-white p-8 rounded-2xl shadow-lg card-hover fade-up">
-                        <div class="w-12 h-12 bg-emerald-50 rounded-xl flex items-center justify-center mb-4"><i class="fas fa-arrow-trend-up text-brandGreen text-xl"></i></div>
+                        <div class="icon-circle bg-green-100 mb-4"><i class="fas fa-arrow-trend-up text-brandGreen text-xl"></i></div>
                         <h3 class="text-xl font-bold text-brandDark mb-4" data-i18n="mgf_perspectives_heading">الآفاق</h3>
                         <ul id="mgfPerspectivesList" class="list-disc ms-5 space-y-2 text-gray-600 leading-relaxed"></ul>
                     </div>
@@ -317,7 +326,7 @@
     </section>
 
     <!-- Footer -->
-    <footer class="bg-brandDark text-white py-16">
+    <footer class="bg-gradient-to-br from-brandDark to-brandViolet text-white py-16">
         <div class="container mx-auto px-6 grid md:grid-cols-4 gap-8 mb-12">
             <div>
                 <div class="flex items-center gap-3 mb-5"><img src="LOGO AMPF.png" alt="AMPF" class="h-14 w-auto" onerror="this.style.display='none'"></div>
@@ -341,7 +350,7 @@
         </div>
     </footer>
 
-    <button id="backToTop" class="fixed bottom-6 right-6 w-14 h-14 bg-brandGreen text-white rounded-full shadow-lg hover:bg-brandDark transition opacity-0 z-40 flex items-center justify-center"><i class="fas fa-arrow-up"></i></button>
+    <button id="backToTop" class="fixed bottom-6 right-6 w-14 h-14 bg-gradient-to-br from-brandPink to-brandViolet text-white rounded-full shadow-lg hover:opacity-90 transition opacity-0 z-40 flex items-center justify-center"><i class="fas fa-arrow-up"></i></button>
 
     <script>
         // ══════════════════════════════════════════════════
@@ -359,40 +368,40 @@
                 service1: 'الصحة الإنجابية', service2: 'تنظيم الأسرة', service3: 'التوعية الصحية', service4: 'الدعم الاجتماعي',
                 mgf_badge: 'مركز الإمتياز',
                 mgf_title: 'مركز الإمتياز للقضاء على تشويه الأعضاء التناسلية للإناث',
-                mgf_subtitle: 'أبحاث وأدلة تدريبية ومناصرة للقضاء على تشويه الأعضاء التناسلية للإناث',
+                mgf_subtitle: 'معاً من أجل القضاء على تشويه الأعضاء التناسلية للإناث — بحث، تدريب، ومناصرة لحياة كريمة للجميع',
                 mgf_intro_heading: 'عن مركز الإمتياز',
-                mgf_intro_text: 'مركز متخصص تابع للجمعية الموريتانية لترقية الأسرة يعمل على تطوير المعرفة العلمية والأدلة حول تشويه الأعضاء التناسلية للإناث، والمساهمة في القضاء عليها عبر البحث والتدريب والمناصرة وبناء الشراكات.',
+                mgf_intro_text: 'مركز متخصص تابع للجمعية الموريتانية لترقية الأسرة، نبني المعرفة العلمية ونعمل مع المجتمعات والشراكات لوضع حد لتشويه الأعضاء التناسلية للإناث. صوتنا مسموع، ونحول الأدلة إلى إجراءات تحقق التغيير.',
                 mgf_mission_heading: 'الرسالة', mgf_vision_heading: 'الرؤية',
                 mgf_team_heading: 'فريق المركز', mgf_partners_heading: 'الشركاء',
-                mgf_involved_heading: 'شارك معنا', mgf_advocacy_heading: 'المناصرة والدعوة',
+                mgf_involved_heading: 'كن شريكاً في التغيير', mgf_advocacy_heading: 'مناصرة ودعوة',
                 mgf_tab_about: 'عن المركز', mgf_tab_research: 'البحوث والأدلة',
                 mgf_tab_toolkits: 'التقارير والحقائب التدريبية', mgf_tab_news: 'المدونة والأخبار',
                 mgf_tab_events: 'الأنشطة والتدريب', mgf_tab_campaigns: 'الحملات', mgf_tab_jobs: 'الفرص والشراكات',
                 mgf_tab_advocacy: 'المشاركة والتعاون',
-                mgf_empty_team: 'لا يوجد أعضاء بعد', mgf_empty_partners: 'لا يوجد شركاء بعد',
-                mgf_empty_research: 'لا توجد دراسات بعد', mgf_empty_toolkits: 'لا توجد حقائب تدريبية بعد',
-                mgf_empty_news: 'لا توجد أخبار بعد', mgf_download: 'تحميل الملف', mgf_read_more: 'قراءة المزيد',
+                mgf_empty_team: 'قريباً — فريق ملتزم بالتغيير', mgf_empty_partners: 'انضم إلينا كشريك',
+                mgf_empty_research: 'البحث في قيد الإعداد — تابعونا', mgf_empty_toolkits: 'حقائب تدريبية قادمة قريباً',
+                mgf_empty_news: 'تابعوا أخبارنا وقصص نجاحنا', mgf_download: 'تحميل الملف', mgf_read_more: 'اقرأ المزيد',
                 mgf_open_pdf: 'فتح الملف',
-                mgf_objectives_heading: 'الأهداف الرئيسية', mgf_structure_heading: 'خدمات وفريق المركز',
+                mgf_objectives_heading: 'أهدافنا الرئيسية', mgf_structure_heading: 'خدمات وفريق المركز',
                 mgf_structure_services_heading: 'الخدمات المقدمة', mgf_structure_staff_heading: 'فريق المركز',
                 mgf_services_heading: 'الخدمات والأنشطة',
-                mgf_challenges_heading: 'التحديات', mgf_perspectives_heading: 'الآفاق',
+                mgf_challenges_heading: 'التحديات', mgf_perspectives_heading: 'الآفاق والفرص',
                 mgf_regional_badge: 'شريك IPPF AWRO',
                 mgf_about_heading: 'تحديد الموقع الإقليمي والرسالة',
-                mgf_about_reasons_heading: 'لماذا أنشئ المركز؟',
-                mgf_about_expertise_heading: 'مجالات الخبرة',
+                mgf_about_reasons_heading: 'لماذا أنشأنا هذا المركز؟',
+                mgf_about_expertise_heading: 'مجالات خبرتنا',
                 mgf_about_value_heading: 'القيمة المضافة',
                 mgf_ownership_heading: 'الرعاية والحوكمة',
                 mgf_values_heading: 'قيمنا',
                 mgf_audiences_heading: 'الجمهور المستهدف',
-                mgf_impact_heading: 'أثر المركز',
+                mgf_impact_heading: 'أثرنا — أصوات وتجارب حقيقية',
                 mgf_pubs_heading: 'المنشورات والموارد',
-                mgf_empty_pubs: 'لا توجد منشورات بعد',
-                mgf_empty_events: 'لا توجد أنشطة أو دورات تدريبية مسجلة حالياً',
-                mgf_empty_campaigns: 'لا توجد حملات مفتوحة حالياً',
-                mgf_empty_jobs: 'لا توجد فرص أو وظائف شاغرة في الوقت الحالي - اتصلوا بنا لمزيد من المعلومات',
+                mgf_empty_pubs: 'منشورات قادمة قريباً',
+                mgf_empty_events: 'الأنشطة والدورات التدريبية قادمة — تابعونا',
+                mgf_empty_campaigns: 'حملاتنا قائمة — انضموا إلينا',
+                mgf_empty_jobs: 'تابعوا الفرص والشراكات — تواصلوا معنا لمزيد من المعلومات',
                 mgf_url: 'الرابط',
-                mgf_view: 'فعالية',
+                mgf_view: 'المزيد',
                 mgf_apply: 'معلومات إضافية',
             },
             fr: {
@@ -406,40 +415,40 @@
                 service1: 'Santé reproductive', service2: 'Planning familial', service3: 'Sensibilisation sanitaire', service4: 'Soutien social',
                 mgf_badge: "Centre d'Excellence",
                 mgf_title: "Centre d'Excellence pour l'élimination des mutilations génitales féminines",
-                mgf_subtitle: "Recherches, outils de formation et plaidoyer pour l'élimination des mutilations génitales féminines",
+                mgf_subtitle: "Ensemble pour éliminer les MGF — recherche, formation et plaidoyer pour une vie digne pour toutes",
                 mgf_intro_heading: "À propos du Centre d'Excellence",
-                mgf_intro_text: "Centre spécialisé de l'Association Mauritanienne pour la Promotion de la Famille dédié à l'accumulation de connaissances et de preuves sur les mutilations génitales féminines et à leur élimination par la recherche, la formation, le plaidoyer et les partenariats.",
+                mgf_intro_text: "Centre spécialisé de l'Association Mauritanienne pour la Promotion de la Famille. Nous accumulons les connaissances et travaillons avec les communautés et les partenaires pour mettre fin aux MGF. Nos voix portent et nous transformons les preuves en actions concrètes.",
                 mgf_mission_heading: 'Mission', mgf_vision_heading: 'Vision',
                 mgf_team_heading: 'Équipe du centre', mgf_partners_heading: 'Partenaires',
-                mgf_involved_heading: 'Impliquez-vous', mgf_advocacy_heading: 'Plaidoyer',
+                mgf_involved_heading: 'Devenez acteur du changement', mgf_advocacy_heading: 'Plaidoyer et mobilisation',
                 mgf_tab_about: 'À propos', mgf_tab_research: 'Recherche & Évidence',
                 mgf_tab_toolkits: 'Rapports & Outils', mgf_tab_news: 'Blog & Actualités',
                 mgf_tab_events: 'Activités & Formation', mgf_tab_campaigns: 'Campagnes', mgf_tab_jobs: 'Opportunités & Partenariats',
                 mgf_tab_advocacy: 'Participation & Coopération',
-                mgf_empty_team: 'Aucun membre pour le moment', mgf_empty_partners: 'Aucun partenaire pour le moment',
-                mgf_empty_research: 'Aucune étude pour le moment', mgf_empty_toolkits: 'Aucun outil pour le moment',
-                mgf_empty_news: 'Aucune actualité pour le moment', mgf_download: 'Télécharger le fichier',
+                mgf_empty_team: 'Équipe bientôt présentée — engagée pour le changement', mgf_empty_partners: 'Rejoignez-nous en tant que partenaire',
+                mgf_empty_research: 'Recherche en cours — restez connectés', mgf_empty_toolkits: 'Outils de formation à venir',
+                mgf_empty_news: 'Suivez nos actualités et récits de réussite', mgf_download: 'Télécharger le fichier',
                 mgf_read_more: 'Lire plus', mgf_open_pdf: 'Ouvrir le fichier',
-                mgf_objectives_heading: 'Objectifs principaux', mgf_structure_heading: 'Services & Équipe du centre',
+                mgf_objectives_heading: 'Nos objectifs principaux', mgf_structure_heading: 'Services & Équipe du centre',
                 mgf_structure_services_heading: 'Services offerts', mgf_structure_staff_heading: 'Équipe du centre',
                 mgf_services_heading: 'Services et activités',
-                mgf_challenges_heading: 'Défis', mgf_perspectives_heading: 'Perspectives',
+                mgf_challenges_heading: 'Défis', mgf_perspectives_heading: 'Perspectives et opportunités',
                 mgf_regional_badge: 'Partenaire IPPF AWRO',
                 mgf_about_heading: 'Positionnement régional et mission',
-                mgf_about_reasons_heading: "Pourquoi le centre a été créé ?",
-                mgf_about_expertise_heading: "Domaines d'expertise",
+                mgf_about_reasons_heading: "Pourquoi avons-nous créé ce centre ?",
+                mgf_about_expertise_heading: "Nos domaines d'expertise",
                 mgf_about_value_heading: 'Valeur ajoutée',
                 mgf_ownership_heading: 'Parrainage & gouvernance',
                 mgf_values_heading: 'Nos valeurs',
                 mgf_audiences_heading: 'Notre public cible',
-                mgf_impact_heading: "L'impact du centre",
+                mgf_impact_heading: 'Notre impact — voix et expériences réelles',
                 mgf_pubs_heading: 'Publications & ressources',
-                mgf_empty_pubs: 'Aucune publication pour le moment',
-                mgf_empty_events: "Aucune activité ou formation enregistrée pour le moment",
-                mgf_empty_campaigns: 'Aucune campagne ouverte pour le moment',
-                mgf_empty_jobs: "Aucune opportunité ou poste vacant actuellement - contactez-nous pour plus d'informations",
+                mgf_empty_pubs: 'Publications à venir',
+                mgf_empty_events: 'Activités et formations à venir — suivez-nous',
+                mgf_empty_campaigns: 'Nos campagnes sont en cours — rejoignez-nous',
+                mgf_empty_jobs: 'Suivez les opportunités et partenariats — contactez-nous pour plus d\'informations',
                 mgf_url: 'Lien',
-                mgf_view: 'Consulter',
+                mgf_view: 'En savoir plus',
                 mgf_apply: "Plus d'informations",
             },
             en: {
@@ -453,40 +462,40 @@
                 service1: 'Reproductive Health', service2: 'Family Planning', service3: 'Health Awareness', service4: 'Social Support',
                 mgf_badge: 'Centre of Excellence',
                 mgf_title: 'Centre of Excellence for the Elimination of Female Genital Mutilation',
-                mgf_subtitle: 'Research, training toolkits and advocacy to eliminate female genital mutilation (FGM)',
+                mgf_subtitle: 'Together to end FGM — research, training, and advocacy for a dignified life for all',
                 mgf_intro_heading: 'About the Centre of Excellence',
-                mgf_intro_text: 'A specialised centre of the Mauritanian Association for Family Promotion dedicated to building scientific knowledge and evidence on female genital mutilation and contributing to its elimination through research, training, advocacy and partnerships.',
+                mgf_intro_text: 'A specialised centre of the Mauritanian Association for Family Promotion. We build scientific knowledge and work with communities and partners to end FGM. Our voices are heard, and we turn evidence into action that drives real change.',
                 mgf_mission_heading: 'Mission', mgf_vision_heading: 'Vision',
                 mgf_team_heading: 'Centre Team', mgf_partners_heading: 'Partners',
-                mgf_involved_heading: 'Get Involved', mgf_advocacy_heading: 'Advocacy',
+                mgf_involved_heading: 'Be a Partner for Change', mgf_advocacy_heading: 'Advocacy & Mobilisation',
                 mgf_tab_about: 'About', mgf_tab_research: 'Research & Evidence',
                 mgf_tab_toolkits: 'Reports & Toolkits', mgf_tab_news: 'Blogs & Stories',
                 mgf_tab_events: 'Events & Training', mgf_tab_campaigns: 'Campaigns', mgf_tab_jobs: 'Opportunities & Partnerships',
                 mgf_tab_advocacy: 'Get Involved / Advocacy',
-                mgf_empty_team: 'No members yet', mgf_empty_partners: 'No partners yet',
-                mgf_empty_research: 'No studies yet', mgf_empty_toolkits: 'No toolkits yet',
-                mgf_empty_news: 'No news yet', mgf_download: 'Download file',
+                mgf_empty_team: 'Team coming soon — committed to change', mgf_empty_partners: 'Join us as a partner',
+                mgf_empty_research: 'Research in progress — stay tuned', mgf_empty_toolkits: 'Training toolkits coming soon',
+                mgf_empty_news: 'Follow our news and success stories', mgf_download: 'Download file',
                 mgf_read_more: 'Read more', mgf_open_pdf: 'Open file',
                 mgf_objectives_heading: 'Main Objectives', mgf_structure_heading: 'Services & Centre Team',
                 mgf_structure_services_heading: 'Services Offered', mgf_structure_staff_heading: 'Centre Team',
                 mgf_services_heading: 'Services & Activities',
-                mgf_challenges_heading: 'Challenges', mgf_perspectives_heading: 'Perspectives',
+                mgf_challenges_heading: 'Challenges', mgf_perspectives_heading: 'Perspectives & Opportunities',
                 mgf_regional_badge: 'IPPF AWRO partner',
                 mgf_about_heading: 'Regional positioning & mission',
-                mgf_about_reasons_heading: 'Why was the centre created?',
-                mgf_about_expertise_heading: 'Areas of expertise',
+                mgf_about_reasons_heading: 'Why did we create this centre?',
+                mgf_about_expertise_heading: 'Our areas of expertise',
                 mgf_about_value_heading: 'Added value',
                 mgf_ownership_heading: 'Ownership & governance',
                 mgf_values_heading: 'Our values',
                 mgf_audiences_heading: 'Target audiences',
-                mgf_impact_heading: 'The centre’s impact',
+                mgf_impact_heading: 'Our impact — real voices and experiences',
                 mgf_pubs_heading: 'Publications & resources',
-                mgf_empty_pubs: 'No publications yet',
-                mgf_empty_events: 'No events or trainings registered yet',
-                mgf_empty_campaigns: 'No open campaigns for now',
-                mgf_empty_jobs: 'No current opportunities or vacancies - contact us for more information',
+                mgf_empty_pubs: 'Publications coming soon',
+                mgf_empty_events: 'Events and trainings coming soon — follow us',
+                mgf_empty_campaigns: 'Our campaigns are active — join us',
+                mgf_empty_jobs: 'Follow opportunities and partnerships — contact us for more information',
                 mgf_url: 'Link',
-                mgf_view: 'View',
+                mgf_view: 'Learn more',
                 mgf_apply: 'More information',
             }
         };
@@ -568,7 +577,7 @@
                 const active = b.dataset.mgftab === name;
                 b.classList.toggle('active', active);
                 b.classList.toggle('bg-brandLight', active);
-                b.classList.toggle('border-brandGreen', active);
+                b.classList.toggle('border-brandPink', active);
                 b.classList.toggle('text-brandDark', active);
                 b.classList.toggle('border-gray-200', !active);
                 b.classList.toggle('text-gray-600', !active);
@@ -605,11 +614,12 @@
 
             // Values
             const valIcons = ['fa-hand-holding-heart', 'fa-scale-balanced', 'fa-venus-mars', 'fa-heart', 'fa-people-group', 'fa-map-location-dot', 'fa-share-nodes'];
-            const valColors = ['bg-emerald-50', 'bg-blue-50', 'bg-purple-50', 'bg-pink-50', 'bg-amber-50', 'bg-teal-50', 'bg-indigo-50'];
+            const valColors = ['bg-pink-100', 'bg-violet-100', 'bg-green-100', 'bg-red-100', 'bg-pink-100', 'bg-violet-100', 'bg-green-100'];
+            const valIconColors = ['text-brandPink', 'text-brandViolet', 'text-brandGreen', 'text-brandRed', 'text-brandPink', 'text-brandViolet', 'text-brandGreen'];
             document.getElementById('mgfValuesGrid').innerHTML = (content.values && content.values.length)
                 ? content.values.map((v, i) => `
                     <div class="bg-white rounded-2xl p-6 shadow-sm border border-gray-100 card-hover fade-up">
-                        <div class="w-12 h-12 ${valColors[i % valColors.length]} rounded-xl flex items-center justify-center mb-4"><i class="fas ${valIcons[i % valIcons.length]} text-brandGreen text-lg"></i></div>
+                        <div class="icon-circle ${valColors[i % valColors.length]} mb-4"><i class="fas ${valIcons[i % valIcons.length]} ${valIconColors[i % valIconColors.length]} text-lg"></i></div>
                         <h4 class="font-bold text-brandDark mb-2">${getLocalizedText(v.title)}</h4>
                         <p class="text-sm text-gray-500 leading-relaxed">${getLocalizedText(v.desc)}</p>
                     </div>
@@ -618,11 +628,12 @@
 
             // Audiences
             const audIcons = ['fa-building-user', 'fa-people-pulling', 'fa-microscope', 'fa-landmark-dome', 'fa-handshake-angle'];
-            const audColors = ['bg-brandLight', 'bg-emerald-50', 'bg-blue-50', 'bg-purple-50', 'bg-amber-50'];
+            const audColors = ['bg-pink-100', 'bg-violet-100', 'bg-green-100', 'bg-red-100', 'bg-pink-100'];
+            const audIconColors = ['text-brandPink', 'text-brandViolet', 'text-brandGreen', 'text-brandRed', 'text-brandPink'];
             document.getElementById('mgfAudiencesGrid').innerHTML = (content.audiences && content.audiences.length)
                 ? content.audiences.map((a, i) => `
                     <div class="bg-white rounded-2xl p-6 shadow-sm border border-gray-100 card-hover fade-up">
-                        <div class="w-12 h-12 ${audColors[i % audColors.length]} rounded-xl flex items-center justify-center mb-4"><i class="fas ${audIcons[i % audIcons.length]} text-brandGreen text-lg"></i></div>
+                        <div class="icon-circle ${audColors[i % audColors.length]} mb-4"><i class="fas ${audIcons[i % audIcons.length]} ${audIconColors[i % audIconColors.length]} text-lg"></i></div>
                         <h4 class="font-bold text-brandDark mb-2">${getLocalizedText(a.title)}</h4>
                         <p class="text-sm text-gray-500 leading-relaxed">${getLocalizedText(a.desc)}</p>
                     </div>
@@ -655,11 +666,11 @@
             document.getElementById('mgfAdvocacy').textContent = getLocalizedText(content.advocacy) || '';
 
             // Objectives
-            const objColors = ['bg-brandLight', 'bg-emerald-50', 'bg-blue-50', 'bg-purple-50', 'bg-pink-50'];
+            const objColors = ['bg-pink-100', 'bg-violet-100', 'bg-green-100', 'bg-red-100', 'bg-pink-100'];
             document.getElementById('mgfObjectivesList').innerHTML = (content.objectives && content.objectives.length)
                 ? content.objectives.map((o, i) => `
                     <div class="bg-white rounded-2xl p-6 shadow-sm border border-gray-100 card-hover fade-up">
-                        <div class="w-12 h-12 ${objColors[i % objColors.length]} rounded-xl flex items-center justify-center mb-4"><span class="font-black text-brandGreen text-lg">${i + 1}</span></div>
+                        <div class="icon-circle ${objColors[i % objColors.length]} mb-4"><span class="font-black text-brandViolet text-lg">${i + 1}</span></div>
                         <p class="text-gray-700 leading-relaxed">${getLocalizedText(o)}</p>
                     </div>
                 `).join('')
@@ -669,10 +680,12 @@
             const structure = content.structure || {};
             document.getElementById('mgfServicesIntro').textContent = getLocalizedText(content.servicesIntro) || '';
             const structServIcons = ['fa-brain', 'fa-heart-pulse', 'fa-scale-balanced', 'fa-people-arrows', 'fa-bullhorn'];
+            const structServColors = ['bg-pink-100', 'bg-violet-100', 'bg-green-100', 'bg-red-100', 'bg-pink-100'];
+            const structServIconColors = ['text-brandPink', 'text-brandViolet', 'text-brandGreen', 'text-brandRed', 'text-brandPink'];
             document.getElementById('mgfStructureServices').innerHTML = (structure.services && structure.services.length)
                 ? structure.services.map((s, i) => `
                     <div class="flex items-start gap-3 bg-white rounded-xl p-4 border border-gray-100">
-                        <div class="w-10 h-10 bg-emerald-50 rounded-lg flex items-center justify-center flex-shrink-0"><i class="fas ${structServIcons[i % structServIcons.length]} text-brandGreen text-lg"></i></div>
+                        <div class="icon-circle ${structServColors[i % structServColors.length]} flex-shrink-0"><i class="fas ${structServIcons[i % structServIcons.length]} ${structServIconColors[i % structServIconColors.length]} text-lg"></i></div>
                         <div>
                             <p class="font-bold text-brandDark">${getLocalizedText(s.name)}</p>
                             ${s.desc ? `<p class="text-sm text-gray-500 mt-1 leading-relaxed">${getLocalizedText(s.desc)}</p>` : ''}
@@ -694,11 +707,12 @@
 
             // Services & Activities
             const servIcons = ['fa-stethoscope', 'fa-heart-pulse', 'fa-hand-holding-medical', 'fa-chalkboard-user', 'fa-bullhorn'];
-            const servColors = ['bg-brandLight', 'bg-emerald-50', 'bg-blue-50', 'bg-purple-50', 'bg-pink-50'];
+            const servColors = ['bg-pink-100', 'bg-violet-100', 'bg-green-100', 'bg-red-100', 'bg-pink-100'];
+            const servIconColors = ['text-brandPink', 'text-brandViolet', 'text-brandGreen', 'text-brandRed', 'text-brandPink'];
             document.getElementById('mgfServicesGrid').innerHTML = (content.services && content.services.length)
                 ? content.services.map((s, i) => `
                     <div class="bg-white rounded-2xl p-6 shadow-sm border border-gray-100 card-hover fade-up">
-                        <div class="w-11 h-11 ${servColors[i % servColors.length]} rounded-xl flex items-center justify-center mb-3"><i class="fas ${servIcons[i % servIcons.length]} text-brandGreen text-lg"></i></div>
+                        <div class="icon-circle ${servColors[i % servColors.length]} mb-3"><i class="fas ${servIcons[i % servIcons.length]} ${servIconColors[i % servIconColors.length]} text-lg"></i></div>
                         <p class="font-bold text-brandDark leading-relaxed">${getLocalizedText(s)}</p>
                     </div>
                 `).join('')
@@ -726,7 +740,7 @@
             document.getElementById('mgfTeamGrid').innerHTML = (mgf.team && mgf.team.length)
                 ? mgf.team.map((m, i) => `
                     <div class="bg-white rounded-2xl p-6 shadow-sm border border-gray-100 card-hover fade-up">
-                        <div class="w-16 h-16 ${['bg-emerald-100','bg-blue-100','bg-purple-100','bg-pink-100'][i%4]} rounded-full flex items-center justify-center mx-auto mb-4">
+                        <div class="w-16 h-16 ${['bg-pink-100','bg-violet-100','bg-green-100','bg-red-100'][i%4]} rounded-full flex items-center justify-center mx-auto mb-4">
                             ${m.photo ? `<img src="${m.photo}" alt="${getLocalizedText(m.name)}" class="w-full h-full object-cover rounded-full">` : `<i class="fas fa-user-tie text-2xl text-brandGreen"></i>`}
                         </div>
                         <h4 class="font-bold text-brandDark text-center">${getLocalizedText(m.name)}</h4>
@@ -739,7 +753,7 @@
             document.getElementById('mgfPartnersGrid').innerHTML = (mgf.partners && mgf.partners.length)
                 ? mgf.partners.map((p, i) => `
                     <div class="bg-white rounded-2xl p-6 shadow-sm border border-gray-100 card-hover fade-up">
-                        <div class="w-14 h-14 ${['bg-emerald-100','bg-blue-100','bg-purple-100','bg-pink-100'][i%4]} rounded-xl flex items-center justify-center mx-auto mb-4">
+                        <div class="w-14 h-14 ${['bg-pink-100','bg-violet-100','bg-green-100','bg-red-100'][i%4]} rounded-full flex items-center justify-center mx-auto mb-4">
                             ${p.logo ? `<img src="${p.logo}" alt="${getLocalizedText(p.name)}" class="w-full h-full object-contain rounded-xl">` : `<i class="fas fa-handshake text-2xl text-brandGreen"></i>`}
                         </div>
                         <h4 class="font-bold text-brandDark text-center">${getLocalizedText(p.name)}</h4>
@@ -752,7 +766,7 @@
             document.getElementById('mgfResearchGrid').innerHTML = (mgf.research && mgf.research.length)
                 ? mgf.research.map(r => `
                     <div class="bg-white rounded-2xl p-6 shadow-sm border border-gray-100 card-hover fade-up">
-                        <div class="w-12 h-12 bg-blue-100 rounded-xl flex items-center justify-center mb-4"><i class="fas fa-flask text-blue-600"></i></div>
+                        <div class="icon-circle bg-violet-100 mb-4"><i class="fas fa-flask text-brandViolet"></i></div>
                         <h4 class="font-bold text-brandDark mb-2">${getLocalizedText(r.title)}</h4>
                         <p class="text-sm text-gray-500 mb-3">${getLocalizedText(r.desc)}</p>
                         <div class="text-xs text-gray-400 mb-3">${r.date || ''}</div>
@@ -765,7 +779,7 @@
             document.getElementById('mgfToolkitsGrid').innerHTML = (mgf.toolkits && mgf.toolkits.length)
                 ? mgf.toolkits.map(tk => `
                     <div class="bg-white rounded-2xl p-6 shadow-sm border border-gray-100 card-hover fade-up">
-                        <div class="w-12 h-12 bg-purple-100 rounded-xl flex items-center justify-center mb-4"><i class="fas fa-book-open text-purple-600"></i></div>
+                        <div class="icon-circle bg-pink-100 mb-4"><i class="fas fa-book-open text-brandPink"></i></div>
                         <h4 class="font-bold text-brandDark mb-2">${getLocalizedText(tk.title)}</h4>
                         <p class="text-sm text-gray-500 mb-3">${getLocalizedText(tk.desc)}</p>
                         ${tk.file ? `<a href="${tk.file}" target="_blank" rel="noopener" class="inline-flex items-center gap-2 text-sm font-bold text-brandGreen hover:text-brandDark transition"><i class="fas fa-download"></i> ${t('mgf_download')}</a>` : ''}
@@ -780,7 +794,7 @@
                         <div class="overflow-hidden">
                             ${n.image
                                 ? `<img src="${n.image}" alt="${getLocalizedText(n.title)}" class="news-img" onerror="this.style.display='none'">`
-                                : `<div class="news-img bg-gradient-to-br from-brandGreen to-emerald-600 flex items-center justify-center"><i class="fas fa-newspaper text-white text-4xl"></i></div>`
+                                : `<div class="news-img bg-gradient-to-br from-brandPink to-brandViolet flex items-center justify-center"><i class="fas fa-newspaper text-white text-4xl"></i></div>`
                             }
                         </div>
                         <div class="p-6">
@@ -796,7 +810,7 @@
             document.getElementById('mgfPublicationsGrid').innerHTML = (content.publications && content.publications.length)
                 ? content.publications.map(p => `
                     <div class="bg-white rounded-2xl p-6 shadow-sm border border-gray-100 card-hover fade-up">
-                        <div class="w-12 h-12 bg-brandLight rounded-xl flex items-center justify-center mb-4"><i class="fas fa-book text-brandGreen text-xl"></i></div>
+                        <div class="icon-circle bg-green-100 mb-4"><i class="fas fa-book text-brandGreen text-xl"></i></div>
                         <h4 class="font-bold text-brandDark mb-2">${getLocalizedText(p.title)}</h4>
                         <p class="text-sm text-gray-500 mb-3">${getLocalizedText(p.desc)}</p>
                         ${p.file ? `<a href="${p.file}" target="_blank" rel="noopener" class="inline-flex items-center gap-2 text-sm font-bold text-brandGreen hover:text-brandDark transition"><i class="fas fa-file-pdf"></i> ${t('mgf_open_pdf')}</a>` : ''}
@@ -809,7 +823,7 @@
                 ? content.events.map(e => `
                     <div class="bg-white rounded-2xl p-6 shadow-sm border border-gray-100 card-hover fade-up">
                         <div class="flex items-center justify-between mb-3">
-                            <div class="w-11 h-11 bg-amber-50 rounded-xl flex items-center justify-center"><i class="fas fa-calendar-days text-amber-500 text-lg"></i></div>
+                            <div class="icon-circle bg-violet-100"><i class="fas fa-calendar-days text-brandViolet text-lg"></i></div>
                             ${e.date ? `<span class="text-xs font-bold text-gray-400">${e.date}</span>` : ''}
                         </div>
                         <h4 class="font-bold text-brandDark mb-2">${getLocalizedText(e.title)}</h4>
@@ -823,7 +837,7 @@
             document.getElementById('mgfCampaignsGrid').innerHTML = (content.campaigns && content.campaigns.length)
                 ? content.campaigns.map(c => `
                     <div class="bg-white rounded-2xl p-6 shadow-sm border border-gray-100 card-hover fade-up">
-                        <div class="w-12 h-12 bg-pink-50 rounded-xl flex items-center justify-center mb-4"><i class="fas fa-bullhorn text-pink-500 text-xl"></i></div>
+                        <div class="icon-circle bg-pink-100 mb-4"><i class="fas fa-bullhorn text-brandPink text-xl"></i></div>
                         <h4 class="font-bold text-brandDark mb-2">${getLocalizedText(c.title)}</h4>
                         <p class="text-sm text-gray-500 mb-3">${getLocalizedText(c.desc)}</p>
                         ${c.link ? `<a href="${c.link}" target="_blank" rel="noopener" class="inline-flex items-center gap-2 text-sm font-bold text-brandGreen hover:text-brandDark transition"><i class="fas fa-arrow-up-right-from-square"></i> ${t('mgf_read_more')}</a>` : ''}
@@ -835,7 +849,7 @@
             document.getElementById('mgfJobsGrid').innerHTML = (content.jobs && content.jobs.length)
                 ? content.jobs.map(j => `
                     <div class="bg-white rounded-2xl p-6 shadow-sm border border-gray-100 card-hover fade-up">
-                        <div class="w-12 h-12 bg-blue-50 rounded-xl flex items-center justify-center mb-4"><i class="fas fa-briefcase text-blue-500 text-xl"></i></div>
+                        <div class="icon-circle bg-violet-100 mb-4"><i class="fas fa-briefcase text-brandViolet text-xl"></i></div>
                         <h4 class="font-bold text-brandDark mb-2">${getLocalizedText(j.title)}</h4>
                         <p class="text-sm text-gray-500 mb-3">${getLocalizedText(j.desc)}</p>
                         <div class="flex flex-wrap items-center gap-2">
