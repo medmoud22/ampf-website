@@ -801,7 +801,7 @@
             document.getElementById('mgfComponentsGrid').innerHTML = (kc.components && kc.components.length)
                 ? kc.components.map((c, i) => `
                     <div class="bg-white rounded-2xl overflow-hidden shadow-sm border border-gray-100 card-hover fade-up">
-                        ${c.image ? `<div class="h-40 bg-gradient-to-br from-brandPink/20 to-brandViolet/20 flex items-center justify-center"><i class="fas ${c.icon || 'fa-star'} ${c.iconColor || 'text-brandPink'} text-4xl"></i></div>` : `<div class="h-20 bg-gradient-to-br from-brandPink/10 to-brandViolet/10 flex items-center justify-center"><i class="fas ${c.icon || 'fa-star'} ${c.iconColor || 'text-brandPink'} text-2xl"></i></div>`}
+                        ${c.image ? `<div class="h-48 overflow-hidden"><img src="${c.image}" alt="${getLocalizedText(c.title)}" class="w-full h-full object-cover" onerror="this.parentElement.innerHTML='<div class=\\'h-48 bg-gradient-to-br from-brandPink/20 to-brandViolet/20 flex items-center justify-center\\'><i class=\\'fas ${c.icon || 'fa-star'} ${c.iconColor || 'text-brandPink'} text-4xl\\'></i></div>'"></div>` : `<div class="h-20 bg-gradient-to-br from-brandPink/10 to-brandViolet/10 flex items-center justify-center"><i class="fas ${c.icon || 'fa-star'} ${c.iconColor || 'text-brandPink'} text-2xl"></i></div>`}
                         <div class="p-6">
                             <h4 class="font-bold text-brandDark mb-2 text-lg">${getLocalizedText(c.title)}</h4>
                             <p class="text-sm text-gray-500 leading-relaxed">${getLocalizedText(c.desc)}</p>
