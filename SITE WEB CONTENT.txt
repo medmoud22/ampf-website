@@ -1,0 +1,72 @@
+CENTRE D’EXCELLENCE
+Contenu détaillé par section
+Une Portée Globale (Global Reach)
+Titre : Centre d'Excellence pour l'Élimination des MGF d’IPPF
+Sous-titre : Un centre global, au service des associations membres de l'IPPF et des communautés.
+Texte d'introduction : Le Centre d'Excellence pour l'Élimination des MGF est un centre de l'IPPF, géré par l'AMPF en Mauritanie. Il constitue une plateforme de référence pour l'échange de connaissances, le renforcement des capacités et la promotion de services de qualité pour mettre fin aux mutilations génitales féminines à l'échelle mondiale.
+Hub d'Apprentissage MA-to-MA : Le Centre sert de plateforme pour les Associations Membres (MA) de l'IPPF afin d'échanger des expertises et de travailler ensemble à l'élimination des MGF.
+Accompagnement Global : Il vise à accompagner les associations membres de l'IPPF dans le monde entier, en particulier dans les pays où la pratique est prévalente.
+Mobilisation Internationale : Le Centre mobilise des énergies et des ressources à l'échelle mondiale, tant dans des contextes stables que humanitaires, pour atteindre l'ODD 5.
+Appels à l'action :
+[Bouton] Découvrir notre mission
+[Bouton] Rejoindre le réseau
+À propos du Centre
+1. Qui sommes-nous ?
+Le Centre d'Excellence pour l'Élimination des MGF a été créé pour répondre à un besoin urgent : unir les efforts et partager les expertises à l'échelle mondiale pour éradiquer les MGF. Basé en Mauritanie et porté par IPPF et de ses partenaires.
+Notre Mandat : Accompagner les associations membres de l'IPPF, les gouvernements et la société civile en fournissant une expertise technique, des données probantes et des formations.
+Notre Valeur Ajoutée : Une approche centrée sur les survivantes, une expertise de terrain et une capacité à mobiliser les acteurs à l'échelle internationale.
+2. Vision, Mission et Valeurs
+Vision : Un monde où les filles et les femmes vivent à l'abri de toutes les formes de violence sexuelle et basée sur le genre, y compris les MGF, et où leurs droits sexuels et reproductifs sont pleinement respectés.
+Mission : Stimuler la recherche, les médias et les programmes éducatifs/formation ; fournir des conseils sur des services de soins de haute qualité ; développer des preuves et mobiliser les énergies pour contribuer à l'élimination des MGF dans le monde, dans des conditions normales comme dans des contextes humanitaires.
+
+
+Valeurs :
+Approche centrée sur les survivantes : Les survivantes sont des leaders et des agents de changement.
+Droits Humains et Dignité : Nous plaçons les droits et la dignité de chaque personne au cœur de nos actions.
+Inclusion et Équité : Nous nous engageons à atteindre les populations les plus vulnérables et marginalisées.
+Collaboration et Apprentissage entre Pairs : Nous croyons au pouvoir du partage de connaissances et de l'action collective.
+Leadership Local : Nous soutenons les solutions portées par les communautés et les acteurs locaux.
+Notre Approche (Théorie du Changement)
+Titre : Notre Feuille de Route pour un Impact Durable
+Introduction : Notre action est guidée par une Théorie du Changement construite sur quatre piliers interconnectés.
+Pilier 1 : Changement Social
+Objectif : Transformer les normes et attitudes qui perpétuent les MGF.
+Actions : Sessions de sensibilisation de pair à pair, implication des hommes et des garçons, Groupe des Championnes.
+Pilier 2 : Plaidoyer et Politiques
+Objectif : Influencer les législations et les cadres institutionnels.
+Actions : Dialogue avec les décideurs, ateliers avec les leaders religieux, participation aux efforts internationaux.
+Pilier 3 : Prestation de Services
+Objectif : Offrir des soins centrés sur les survivantes.
+Actions : Dépistage des VBG, services de santé et de conseil, référencement, campagnes de sensibilisation.
+Pilier 4 : Recherche et Données Probantes
+Objectif : Générer des données et des connaissances pour guider les programmes.
+Actions : Comité International d'Experts, validation d'indicateurs, enquêtes et bases de référence.
+Nos Composantes Clés (Onglets)
+Le Comité d'Experts : Créé en juillet 2024, il fournit une orientation stratégique et une expertise diversifiée. Il a tenu 8 réunions virtuelles et 2 réunions annuelles.
+ 
+Le Groupe des Championnes : Composé de survivantes, ce sont des leaders qui sensibilisent leurs communautés et font évoluer les mentalités.
+ 
+Les Jeunes Volontaires : Un réseau de jeunes formés qui animent des sessions de sensibilisation de pair à pair.
+ 
+ 
+Masculinité Positive : Engagement des hommes et des garçons comme alliés pour remettre en question les normes de genre toxiques.
+ 
+Les Guides Religieux : Collaboration avec les leaders religieux pour développer des modèles de plaidoyer respectant la foi et rejetant les MGF.
+ 
+ 
+3. Recommandations techniques et graphiques pour le Designer
+Charte graphique : Trouver le fichier joint charte graphique du CoE 
+Typographie : Choisir des polices lisibles et modernes.
+Logos : Le logo de l'AMPF,du CoE et celui de l'IPPF AWRO doivent être clairement visibles (en-tête et pied de page). Le logo de l'AMPF en bas de page doit être agrandi et son contraste amélioré.
+Expérience Utilisateur (UX) :
+Navigation : Simple, intuitive, avec un menu clair. Utiliser des onglets ou des accordéons pour les sections denses.
+Publics Cibles : Créer des sections ou des parcours dédiés pour les différents publics (ex: "Espace Partenaires", "Espace Chercheurs", "Ressources pour les Survivantes").
+Appels à l'Action (CTA) : Bien visibles et incitatifs ("Nous contacter", "Devenir partenaire", "Télécharger le rapport").
+Contenu Multimédia :
+Photos : Utiliser des photos de haute résolution, professionnelles et respectueuses. Éviter les images floues ou de faible qualité.
+Vidéos : Intégrer des témoignages, des webinaires ou des présentations.
+Fonctionnalités :
+Carte Interactive : Montrer la portée globale du Centre.
+Espace Membre : Envisager un espace sécurisé pour les associations membres (partage de documents, forums).
+SEO : Optimiser le contenu pour les moteurs de recherche (mots-clés : MGF, FGM, IPPF, AMPF, Centre d'Excellence, Mauritanie, Afrique).
+
