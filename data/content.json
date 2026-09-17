@@ -936,91 +936,77 @@
         "ar": "يستهدف المركز موريتانيا والإقليم والعالم العربي وإفريقيا، مع إيلاء أولوية خاصة للبلدان التي تنتشر فيها ممارسة ختان الإناث، والمساهمة في بناء القدرات الإقليمية وتبادل الخبرات.",
         "fr": "Le centre cible la Mauritanie, la région, le monde arabe et l'Afrique, en accordant une priorité particulière aux pays pratiquant les MGF et en contribuant au renforcement des capacités régionales et au partage d'expériences.",
         "en": "The centre targets Mauritania, the region, the Arab world and Africa, prioritising practising countries and contributing to regional capacity building and exchange of experiences."
+      },
+      "mandat": {
+        "ar": "يتمثل mandated المركز في بناء وتوزيع المعرفة العلمية والأدلة حول تشويه الأعضاء التناسلية للإناث، وتقديم خدمات رعاية متكاملة للناجيات، والمناصرة لتعزيز الحماية القانونية والاجتماعية، وتعبئة الشركاء المحليين والدوليين من أجل القضاء على هذه الممارسة.",
+        "fr": "Le mandat du centre consiste à produire et diffuser les connaissances et données probantes sur les MGF, à fournir des services de soins intégrés aux survivantes, à plaider pour le renforcement de la protection juridique et sociale, et à mobiliser les partenaires locaux et internationaux pour l'élimination de cette pratique.",
+        "en": "The centre's mandate is to generate and disseminate knowledge and evidence on FGM, provide integrated care services for survivors, advocate for strengthened legal and social protection, and mobilise local and international partners for the elimination of this practice."
+      },
+      "valeurAjoutee": {
+        "ar": "يقدم المركز قيمة فريدة من خلال نموذج رعاية متكامل يجمع بين البحث العلمي والتدخل الميداني، مع تركيز خاص على تمكين الناجيات والتنسيق مع الشبكة الإقليمية والدولية لضمان استدامة التغيير.",
+        "fr": "Le centre apporte une valeur ajoutée unique grâce à un modèle de soins intégré combinant recherche scientifique et intervention de terrain, avec un accent particulier sur l'autonomisation des survivantes et la coordination avec le réseau régional et international pour assurer la pérennité du changement.",
+        "en": "The centre brings unique added value through an integrated care model combining scientific research and field intervention, with a particular focus on survivor empowerment and coordination with the regional and international network to ensure sustainability of change."
       }
     },
     "values": [
       {
         "title": {
-          "ar": "التركيز على الناجيات والمجتمعات",
-          "fr": "Centré sur les survivantes et les communautés",
-          "en": "Survivor- and community-centred"
+          "ar": "التركيز على الناجيات",
+          "fr": "Approche centrée sur les survivantes",
+          "en": "Survivor-centred approach"
         },
         "desc": {
-          "ar": "نضع احتياجات الناجيات ومجتمعاتهن في قلب جميع برامجنا وخدماتنا.",
-          "fr": "Nous plaçons les besoins des survivantes et de leurs communautés au cœur de tous nos programmes et services.",
-          "en": "We place the needs of survivors and their communities at the heart of all our programmes and services."
+          "ar": "نضع احتياجات الناجيات ومجتمعاتهن في قلب جميع برامجنا وخدماتنا. صوتنا يُسمع وتجاربنا توجيه عملنا.",
+          "fr": "Nous plaçons les besoins des survivantes et de leurs communautés au cœur de tous nos programmes et services. Leurs voix guident notre action.",
+          "en": "We place the needs of survivors and their communities at the heart of all our programmes and services. Their voices guide our work."
         }
       },
       {
         "title": {
-          "ar": "حقوق الإنسان",
-          "fr": "Droits humains",
-          "en": "Human rights"
+          "ar": "حقوق الإنسان والكرامة",
+          "fr": "Droits Humains et Dignité",
+          "en": "Human Rights and Dignity"
         },
         "desc": {
-          "ar": "ختان الإناث انتهاك لحقوق الفتيات والنساء؛ نعمل على تعزيز الحماية القانونية والفعلية لهذه الحقوق.",
-          "fr": "Les MGF constituent une violation des droits des filles et des femmes ; nous œuvrons à renforcer leur protection juridique et effective.",
-          "en": "FGM is a violation of girls' and women's rights; we work to strengthen their legal and effective protection."
+          "ar": "ختان الإناث انتهاك صريح لحقوق الفتيات والنساء. نعمل على تعزيز الحماية القانونية والفعلية مع احترام كرامة كل ناجية دون حكم أو تمييز.",
+          "fr": "Les MGF constituent une violation flagrante des droits des filles et des femmes. Nous œuvrons à renforcer leur protection juridique et effective, dans le respect de la dignité de chaque survivante, sans jugement ni discrimination.",
+          "en": "FGM is a flagrant violation of girls' and women's rights. We work to strengthen their legal and effective protection, respecting every survivor's dignity without judgement or discrimination."
         }
       },
       {
         "title": {
-          "ar": "المساواة",
-          "fr": "Égalité",
-          "en": "Equality"
+          "ar": "الشمولية والإنصاف",
+          "fr": "Inclusion et Équité",
+          "en": "Inclusion and Equity"
         },
         "desc": {
-          "ar": "ندافع عن مساواة حقيقية بين الجنسين في الصحة والحقوق والفرص.",
-          "fr": "Nous défendons une égalité réelle entre les genres en matière de santé, de droits et d'opportunités.",
-          "en": "We advocate for genuine gender equality in health, rights and opportunities."
+          "ar": "نضمن أن خدماتنا وبرامجنا متاحة للجميع دون استثناء. نعمل على تعزيز المساواة في الصحة والحقوق والفرص للفتيات والنساء.",
+          "fr": "Nous garantissons que nos services et programmes sont accessibles à tous, sans exception. Nous œuvrons pour promouvoir l'égalité en matière de santé, de droits et d'opportunités pour les filles et les femmes.",
+          "en": "We ensure our services and programmes are accessible to all without exception. We work to promote equality in health, rights and opportunities for girls and women."
         }
       },
       {
         "title": {
-          "ar": "الكرامة",
-          "fr": "Dignité",
-          "en": "Dignity"
+          "ar": "التعاون والتعلم من الأقران",
+          "fr": "Collaboration et Apprentissage entre Pairs",
+          "en": "Collaboration and Peer Learning"
         },
         "desc": {
-          "ar": "نحترم كرامة كل ناجية في استقبالها وتقييم حالتها ومرافقتها دون حكم أو تمييز.",
-          "fr": "Nous respectons la dignité de chaque survivante dans son accueil, son évaluation et son accompagnement, sans jugement ni discrimination.",
-          "en": "We respect every survivor's dignity in reception, assessment and support, without judgement or discrimination."
-        }
-      },
-      {
-        "title": {
-          "ar": "المشاركة",
-          "fr": "Participation",
-          "en": "Participation"
-        },
-        "desc": {
-          "ar": "نشرك الناجيات والفاعلين المحليين في تصميم البرامج وتقييمها وقراراتها.",
-          "fr": "Nous impliquons les survivantes et les acteurs locaux dans la conception, l'évaluation et les décisions des programmes.",
-          "en": "We involve survivors and local actors in the design, evaluation and decisions of programmes."
+          "ar": "نتعلم من بعضنا البعض ونتشارك المعرفة والخبرات مع الشبكة الإقليمية والدولية. التعاون الفعال يحقق التغيير المستدام.",
+          "fr": "Nous apprenons les uns des autres et partageons connaissances et expériences avec le réseau régional et international. La collaboration efficace permet un changement durable.",
+          "en": "We learn from each other and share knowledge and experience with the regional and international network. Effective collaboration drives sustainable change."
         }
       },
       {
         "title": {
           "ar": "القيادة المحلية",
-          "fr": "Leadership local",
-          "en": "Local leadership"
+          "fr": "Leadership Local",
+          "en": "Local Leadership"
         },
         "desc": {
-          "ar": "نعزز قدرات الفاعلين المحليين لقيادة التغيير في مجتمعاتهم.",
-          "fr": "Nous renforçons les capacités des acteurs locaux pour qu'ils mènent le changement dans leurs communautés.",
-          "en": "We strengthen local actors' capacities to lead change in their communities."
-        }
-      },
-      {
-        "title": {
-          "ar": "تبادل المعارف",
-          "fr": "Partage des connaissances",
-          "en": "Knowledge sharing"
-        },
-        "desc": {
-          "ar": "نتشارك المعرفة والأدلة والخبرات مع الشبكة الإقليمية والدولية.",
-          "fr": "Nous partageons connaissances, données probantes et expériences avec le réseau régional et international.",
-          "en": "We share knowledge, evidence and experience with the regional and international network."
+          "ar": "نعزز قدرات الفاعلين المحليين لقيادة التغيير في مجتمعاتهم. النجاح الحقيقي يبدأ من الميدان ويعتمد على المشاركة الفعالة للمجتمعات.",
+          "fr": "Nous renforçons les capacités des acteurs locaux pour qu'ils mènent le changement dans leurs communautés. La réussite véritable commence sur le terrain et repose sur la participation active des communautés.",
+          "en": "We strengthen local actors' capacities to lead change in their communities. True success starts on the ground and depends on active community participation."
         }
       }
     ],
@@ -1149,6 +1135,233 @@
       "ar": "صور حقيقية وأصيلة للشباب والمجتمع الموريتاني — بدون صور جاهزة مبتذلة. التوازن بين الهوية المحلية والقيم العالمية. الابتعاد عن الصور الصادمة والتركيز على القوة والكرامة والتمكين.",
       "fr": "Photos authentiques de jeunes et de communautés mauritaniennes — pas de photos banales. Équilibre entre identité locale et valeurs mondiales. Éviter les images choquantes, privilégier force, dignité et autonomisation.",
       "en": "Authentic photos of Mauritanian youth and communities — no banal stock photos. Balance local identity with global values. Avoid shocking images, focus on strength, dignity and empowerment."
+    },
+    "globalReach": {
+      "title": {
+        "ar": "نطاقنا العالمي",
+        "fr": "Centre d'Excellence pour l'Élimination des MGF d'IPPF",
+        "en": "IPPF Centre of Excellence for the Elimination of FGM"
+      },
+      "subtitle": {
+        "ar": "مركز عالمي في خدمة الجمعيات الأعضاء في الاتحاد الدولي لتنظيم الأسرة والمجتمعات",
+        "fr": "Un centre global, au service des associations membres de l'IPPF et des communautés.",
+        "en": "A global centre, serving IPPF member associations and communities."
+      },
+      "intro": {
+        "ar": "مركز الامتياز التابع للاتحاد الدولي لتنظيم الأسرة (IPPF) وتديره الجمعية الموريتانية لترقية الأسرة (AMPF) في موريتانيا، كمنصة مرجعية وتبادل خبرات إقليمية ودولية.",
+        "fr": "Centre d'Excellence de l'International Planned Parenthood Federation (IPPF), géré par l'Association Mauritanienne pour la Promotion de la Famille (AMPF) en Mauritanie, en tant que plateforme de référence et d'échange d'expertises régionales et internationales.",
+        "en": "A Centre of Excellence of the International Planned Parenthood Federation (IPPF), managed by the Mauritanian Association for Family Promotion (AMPF) in Mauritania, as a reference platform for regional and international exchange of expertise."
+      },
+      "points": [
+        {
+          "ar": "مركز تعلم تعاوني بين الجمعيات الأعضاء — تبادل المعرفة والخبرات والممارسات الفعالة",
+          "fr": "Hub d'Apprentissage MA-to-MA — partage de connaissances, d'expériences et de bonnes pratiques entre associations membres",
+          "en": "MA-to-MA Learning Hub — sharing knowledge, experience and best practices among member associations"
+        },
+        {
+          "ar": "مرافقة عالمية للجمعيات الأعضاء في برامج القضاء على ختان الإناث",
+          "fr": "Accompagnement Global des associations membres dans leurs programmes d'élimination des MGF",
+          "en": "Global Accompaniment of member associations in their FGM elimination programmes"
+        },
+        {
+          "ar": "تعبئة دولية لدعم المجتمعات والجمعيات في مكافحة ختان الإناث",
+          "fr": "Mobilisation Internationale pour soutenir les communautés et associations dans la lutte contre les MGF",
+          "en": "International Mobilisation to support communities and associations in the fight against FGM"
+        }
+      ],
+      "ctas": [
+        {
+          "ar": "اكتشف مهمتنا",
+          "fr": "Découvrir notre mission",
+          "en": "Discover our mission"
+        },
+        {
+          "ar": "انضم إلى الشبكة",
+          "fr": "Rejoindre le réseau",
+          "en": "Join the network"
+        }
+      ]
+    },
+    "theoryOfChange": {
+      "title": {
+        "ar": "نظرية التغيير",
+        "fr": "Théorie du Changement",
+        "en": "Theory of Change"
+      },
+      "subtitle": {
+        "ar": "أربعة ركائز أساسية لتحقيق التغيير الاجتماعي المستدام",
+        "fr": "Quatre piliers fondamentaux pour un changement social durable",
+        "en": "Four fundamental pillars for sustainable social change"
+      },
+      "pillars": [
+        {
+          "title": {
+            "ar": "الركيزة الأولى: التغيير الاجتماعي",
+            "fr": "Pilier 1 : Changement Social",
+            "en": "Pillar 1: Social Change"
+          },
+          "desc": {
+            "ar": "تغيير المعايير الاجتماعية وال jade through ورش التوعية المجتمعية ولقاءات التحسيس مع القادة المحليين والدينيين لتعزيز التخلي عن ممارسة ختان الإناث.",
+            "fr": "Changement des normes sociales à travers des ateliers de sensibilisation communautaire et des rencontres avec les leaders locaux et religieux pour promouvoir l'abandon des MGF.",
+            "en": "Changing social norms through community awareness workshops and meetings with local and religious leaders to promote the abandonment of FGM."
+          },
+          "icon": "fa-people-group",
+          "color": "bg-pink-100",
+          "iconColor": "text-brandPink"
+        },
+        {
+          "title": {
+            "ar": "الركيزة الثانية: المناصرة والسياسات",
+            "fr": "Pilier 2 : Plaidoyer et Politiques",
+            "en": "Pillar 2: Advocacy & Policies"
+          },
+          "desc": {
+            "ar": "المناصرة لتعزيز الأطر القانونية والسياسية وambio向け الحوار مع صانعي القرار لضمان حماية الفتيات والنساء ودعم الحقوق الإنسانية.",
+            "fr": "Plaidoyer pour le renforcement des cadres juridiques et politiques et dialogue avec les décideurs pour assurer la protection des filles et des femmes et promouvoir les droits humains.",
+            "en": "Advocacy to strengthen legal and policy frameworks and dialogue with policymakers to ensure the protection of girls and women and promote human rights."
+          },
+          "icon": "fa-landmark",
+          "color": "bg-violet-100",
+          "iconColor": "text-brandViolet"
+        },
+        {
+          "title": {
+            "ar": "الركيزة الثالثة: تقديم الخدمات",
+            "fr": "Pilier 3 : Prestation de Services",
+            "en": "Pillar 3: Service Delivery"
+          },
+          "desc": {
+            "ar": "تقديم خدمات الرعاية الصحية والنفسية والاستشارات المتخصصة للناجيات من تشويه الأعضاء التناسلية للإناث مع ضمان السرية والاحترام.",
+            "fr": "Fourniture de services de santé, d'accompagnement psychologique et de consultations spécialisées pour les survivantes des MGF, en garantissant confidentialité et respect.",
+            "en": "Providing health care, psychological support and specialised counselling for FGM survivors, ensuring confidentiality and respect."
+          },
+          "icon": "fa-hand-holding-heart",
+          "color": "bg-green-100",
+          "iconColor": "text-brandGreen"
+        },
+        {
+          "title": {
+            "ar": "الركيزة الرابعة: البحث والأدلة",
+            "fr": "Pilier 4 : Recherche et Données Probantes",
+            "en": "Pillar 4: Research & Evidence"
+          },
+          "desc": {
+            "ar": "إجراء البحوث العلمية وجمع الأدلة الميدانية عبر اللجنة الدولية للخبراء لدعم السياسات والبرامج وتعزيز المعرفة العلمية.",
+            "fr": "Conduite de recherches scientifiques et collecte de données probantes via le Comité international d'experts pour éclairer les politiques et programmes et renforcer les connaissances.",
+            "en": "Conducting scientific research and gathering evidence through the International Expert Committee to inform policies and programmes and strengthen knowledge."
+          },
+          "icon": "fa-microscope",
+          "color": "bg-red-100",
+          "iconColor": "text-brandRed"
+        }
+      ]
+    },
+    "keyComponents": {
+      "title": {
+        "ar": "المكونات والركائز الرئيسية",
+        "fr": "Nos Composantes Clés",
+        "en": "Our Key Components"
+      },
+      "subtitle": {
+        "ar": "أنشطة و亥动يات متنوعة تخدم المجتمعات والجمعيات الأعضاء",
+        "fr": "Des activités diversifiées au service des communautés et des associations membres",
+        "en": "Diversified activities serving communities and member associations"
+      },
+      "components": [
+        {
+          "title": {
+            "ar": "اللجنة الدولية للخبراء",
+            "fr": "Le Comité d'Experts",
+            "en": "The Expert Committee"
+          },
+          "desc": {
+            "ar": "تأسست في يوليو 2024 وتضم 8 اجتماعات افتراضية واجتماعين سنويين. تجمع خبراء دوليين لتقديم الإرشادات العلمية الاستشارية.",
+            "fr": "Fondé en juillet 2024, le comité se réunit 8 fois en visioconférence et 2 fois en personne chaque année. Il rassemble des experts internationaux pour fournir des orientations scientifiques et consultatives.",
+            "en": "Established in July 2024, the committee meets 8 times virtually and 2 times in person annually. It brings together international experts to provide scientific and advisory guidance."
+          },
+          "icon": "fa-user-tie",
+          "color": "bg-violet-100",
+          "iconColor": "text-brandViolet",
+          "image": "assets/images/expert-committee.jpg"
+        },
+        {
+          "title": {
+            "ar": "مجموعة البطلات الناجيات",
+            "fr": "Le Groupe des Championnes",
+            "en": "The Champions Group"
+          },
+          "desc": {
+            "ar": "ناجيات متطوعات يقفن في صدارة التغيير، يشاركن قصصهن ويقعن على البرامج ويكن محركات للتوعية المجتمعية.",
+            "fr": "Des survivantes volontaires en première ligne du changement, qui partagent leurs expériences, conseillent les programmes et inspirent la sensibilisation communautaire.",
+            "en": "Volunteer survivors at the forefront of change, sharing their experiences, advising on programmes and inspiring community awareness."
+          },
+          "icon": "fa-female",
+          "color": "bg-pink-100",
+          "iconColor": "text-brandPink",
+          "image": "assets/images/champions.jpg"
+        },
+        {
+          "title": {
+            "ar": "الشباب المتطوعون",
+            "fr": "Les Jeunes Volontaires",
+            "en": "Youth Volunteers"
+          },
+          "desc": {
+            "ar": "شبكة من الشباب المتطوعين يقودون حملات التوعية ويشاركون في الأنشطة المجتمعية ويعززون التواصل مع الأقران.",
+            "fr": "Un réseau de jeunes bénévoles qui mènent des campagnes de sensibilisation, participent aux activités communautaires et renforcent la communication entre pairs.",
+            "en": "A network of young volunteers leading awareness campaigns, participating in community activities and strengthening peer-to-peer communication."
+          },
+          "icon": "fa-people-arrows",
+          "color": "bg-green-100",
+          "iconColor": "text-brandGreen",
+          "image": "assets/images/youth-volunteers.jpg"
+        },
+        {
+          "title": {
+            "ar": "الرجولية الإيجابية",
+            "fr": "Masculinité Positive",
+            "en": "Positive Masculinity"
+          },
+          "desc": {
+            "ar": "برنامج يهدف لإشراك الرجال والفتيان في مكافحة ختان الإناث وتعزيز دورهم كشركاء في التغيير الاجتماعي الإيجابي.",
+            "fr": "Un programme visant à impliquer les hommes et les garçons dans la lutte contre les MGF et à renforcer leur rôle comme partenaires du changement social positif.",
+            "en": "A programme engaging men and boys in the fight against FGM and strengthening their role as partners in positive social change."
+          },
+          "icon": "fa-mars",
+          "color": "bg-red-100",
+          "iconColor": "text-brandRed",
+          "image": "assets/images/masculinity.jpg"
+        },
+        {
+          "title": {
+            "ar": "القادة والعلماء الدينيون",
+            "fr": "Les Guides Religieux",
+            "en": "Religious Leaders"
+          },
+          "desc": {
+            "ar": "شركاء استراتيجيون في نشر الخطاب الديني الم.chomp ومناهضة الختان عبر الفتاوى والدروس والبرامج التعليمية.",
+            "fr": "Partenaires stratégiques dans la diffusion du discours religieux contre les MGF via des fatwas, des enseignements et des programmes éducatifs.",
+            "en": "Strategic partners in spreading religious discourse against FGM through fatwas, teachings and educational programmes."
+          },
+          "icon": "fa-mosque",
+          "color": "bg-amber-100",
+          "iconColor": "text-amber-600",
+          "image": "assets/images/religious-leaders.jpg"
+        }
+      ]
+    },
+    "seo": {
+      "title": {
+        "ar": "مركز الإمتياز للقضاء على تشويه الأعضاء التناسلية للإناث | AMPF Mauritania",
+        "fr": "Centre d'Excellence pour l'Élimination des MGF | AMPF Mauritanie",
+        "en": "Centre of Excellence for the Elimination of FGM | AMPF Mauritania"
+      },
+      "description": {
+        "ar": "مركز متخصص تابع للاتحاد الدولي لتنظيم الأسرة (IPPF) يعمل على القضاء على تشويه الأعضاء التناسلية للإناث عبر البحث والتدريب والمناصرة في موريتانيا والإقليم",
+        "fr": "Centre spécialisé de l'IPPF pour l'élimination des mutilations génitales féminines par la recherche, la formation et le plaidoyer en Mauritanie et dans la région",
+        "en": "An IPPF specialist centre working to eliminate female genital mutilation through research, training and advocacy in Mauritania and the region"
+      },
+      "keywords": "MGF, FGM, IPPF, AMPF, Centre d'Excellence, Mauritanie, mutilations génitales féminines, female genital mutilation, تشويه الأعضاء التناسلية للإناث, ختان الإناث"
     }
   },
   "mgfTeam": [],
