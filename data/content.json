@@ -1279,7 +1279,7 @@
             "fr": "Créé en juillet 2024, il fournit une orientation stratégique et une expertise diversifiée. Il a tenu 8 réunions virtuelles et 2 réunions annuelles.",
             "en": "Established in July 2024, it provides strategic orientation and diverse expertise. It has held 8 virtual meetings and 2 annual meetings."
           },
-          "image": "assets/1.jpg",
+          "image": "https://raw.githubusercontent.com/medmoud22/ampf-website/main/assets/1.jpg",
           "icon": "fa-user-tie",
           "color": "bg-violet-100",
           "iconColor": "text-brandViolet"
@@ -1295,7 +1295,7 @@
             "fr": "Composé de survivantes, ce sont des leaders qui sensibilisent leurs communautés et font évoluer les mentalités.",
             "en": "Composed of survivors, these are leaders who raise awareness in their communities and change attitudes."
           },
-          "image": "assets/2.jpg",
+          "image": "https://raw.githubusercontent.com/medmoud22/ampf-website/main/assets/2.jpg",
           "icon": "fa-female",
           "color": "bg-pink-100",
           "iconColor": "text-brandPink"
@@ -1311,7 +1311,7 @@
             "fr": "Un réseau de jeunes formés qui animent des sessions de sensibilisation de pair à pair.",
             "en": "A network of trained young people who run peer-to-peer awareness sessions."
           },
-          "image": "assets/3.jpg",
+          "image": "https://raw.githubusercontent.com/medmoud22/ampf-website/main/assets/3.jpg",
           "icon": "fa-people-arrows",
           "color": "bg-green-100",
           "iconColor": "text-brandGreen"
@@ -1327,7 +1327,7 @@
             "fr": "Engagement des hommes et des garçons comme alliés pour remettre en question les normes de genre toxiques.",
             "en": "Engaging men and boys as allies to challenge harmful gender norms."
           },
-          "image": "assets/5.jpg",
+          "image": "https://raw.githubusercontent.com/medmoud22/ampf-website/main/assets/5.jpg",
           "icon": "fa-mars",
           "color": "bg-red-100",
           "iconColor": "text-brandRed"
@@ -1343,7 +1343,7 @@
             "fr": "Collaboration avec les leaders religieux pour développer des modèles de plaidoyer respectant la foi et rejetant les MGF.",
             "en": "Collaboration with religious leaders to develop advocacy models that respect faith and reject FGM."
           },
-          "image": "assets/6.jpg",
+          "image": "https://raw.githubusercontent.com/medmoud22/ampf-website/main/assets/6.jpg",
           "icon": "fa-mosque",
           "color": "bg-amber-100",
           "iconColor": "text-amber-600"
