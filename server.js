@@ -332,6 +332,10 @@ async function initStorage() {
                 !currentMgf
                 || !Array.isArray(currentMgf.objectives)
                 || !currentMgf.servicesIntro
+                || !currentMgf.globalReach
+                || !currentMgf.theoryOfChange
+                || !currentMgf.keyComponents
+                || !currentMgf.seo
                 || (curatedMgf.mgfVersion && (!currentMgf.mgfVersion || currentMgf.mgfVersion < curatedMgf.mgfVersion))
             )) {
                 cData.mgfContent = curatedMgf;
@@ -475,7 +479,7 @@ app.get('/api/public-content', async (req, res) => {
         cliniques: data.cliniques || [],
         navbar: data.navbar || [],
         mgf: {
-            content: data.mgfContent || { logo: '', mgfVersion: 4, regionalTagline: {}, mission: {}, vision: {}, getInvolved: {}, advocacy: {}, objectives: [], servicesIntro: {}, structure: {}, services: [], partnersOverview: [], challenges: [], perspectives: [], about: {}, values: [], audiences: [], impact: {}, publications: [], events: [], campaigns: [], jobs: [] },
+            content: data.mgfContent || { logo: '', mgfVersion: 4, regionalTagline: {}, mission: {}, vision: {}, getInvolved: {}, advocacy: {}, objectives: [], servicesIntro: {}, structure: {}, services: [], partnersOverview: [], challenges: [], perspectives: [], about: {}, values: [], audiences: [], impact: {}, globalReach: {}, theoryOfChange: {}, keyComponents: {}, seo: {}, imageryGuidance: '', publications: [], events: [], campaigns: [], jobs: [] },
             team: data.mgfTeam || [],
             partners: data.mgfPartners || [],
             research: data.mgfResearch || [],
@@ -492,7 +496,7 @@ app.get('/api/public-content', async (req, res) => {
 app.get('/api/mgf-content', async (req, res) => {
     const data = await readData();
     res.json({
-        content: data.mgfContent || { logo: '', mgfVersion: 4, regionalTagline: {}, mission: {}, vision: {}, getInvolved: {}, advocacy: {}, objectives: [], servicesIntro: {}, structure: {}, services: [], partnersOverview: [], challenges: [], perspectives: [], about: {}, values: [], audiences: [], impact: {}, publications: [], events: [], campaigns: [], jobs: [] },
+        content: data.mgfContent || { logo: '', mgfVersion: 4, regionalTagline: {}, mission: {}, vision: {}, getInvolved: {}, advocacy: {}, objectives: [], servicesIntro: {}, structure: {}, services: [], partnersOverview: [], challenges: [], perspectives: [], about: {}, values: [], audiences: [], impact: {}, globalReach: {}, theoryOfChange: {}, keyComponents: {}, seo: {}, imageryGuidance: '', publications: [], events: [], campaigns: [], jobs: [] },
         team: data.mgfTeam || [],
         partners: data.mgfPartners || [],
         research: data.mgfResearch || [],
@@ -525,6 +529,11 @@ app.put('/api/mgf-content', requireAuth, async (req, res) => {
         values: prevMgf.values || [],
         audiences: prevMgf.audiences || [],
         impact: prevMgf.impact || {},
+        globalReach: prevMgf.globalReach || {},
+        theoryOfChange: prevMgf.theoryOfChange || {},
+        keyComponents: prevMgf.keyComponents || {},
+        seo: prevMgf.seo || {},
+        imageryGuidance: prevMgf.imageryGuidance || '',
         publications: prevMgf.publications || [],
         events: prevMgf.events || [],
         campaigns: prevMgf.campaigns || [],
