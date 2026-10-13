@@ -145,7 +145,7 @@
                     </div>
                     <div class="text-center sm:text-start">
                         <h3 class="text-2xl font-black mb-3" data-i18n="mgf_intro_heading">عن مركز الإمتياز</h3>
-                        <p class="text-emerald-50/90 leading-relaxed" data-i18n="mgf_intro_text">مركز متخصص تابع للجمعية الموريتانية لترقية الأسرة يعمل على تطوير المعرفة العلمية والأدلة حول تشويه الأعضاء التناسلية للإناث، والمساهمة في القضاء عليها عبر البحث والتدريب والمناصرة وبناء الشراكات.</p>
+                        <p id="mgfIntroText" class="text-emerald-50/90 leading-relaxed">مركز الإمتياز للقضاء على تشويه الأعضاء التناسلية للإناث هو مركز تابع للاتحاد الدولي لتنظيم الأسرة (IPPF)، تديره الجمعية الموريتانية لترقية الأسرة (AMPF) في موريتانيا. يُشكّل منصة مرجعية لتبادل المعرفة والخبرات وبناء قدرات الفاعلين في مجال القضاء على ختان الإناث على مستوى العالم.</p>
                     </div>
                 </div>
 
@@ -677,8 +677,10 @@
                 if (heroLogo) heroLogo.src = content.logo;
                 if (introLogo) introLogo.src = content.logo;
             }
-            // Regional tagline (hero) + About / Values / Audiences / Impact content
+            // About: intro (presentation card) + regional positioning
             const aboutContent = content.about || {};
+            const introEl = document.getElementById('mgfIntroText');
+            if (introEl) introEl.textContent = getLocalizedText(aboutContent.intro) || getLocalizedText(aboutContent.regionalScope) || '';
             const tagline = getLocalizedText(content.regionalTagline);
             if (tagline) document.getElementById('mgfRegionalTagline').textContent = tagline;
             document.getElementById('mgfRegionalText').textContent = getLocalizedText(aboutContent.regionalScope) || '';

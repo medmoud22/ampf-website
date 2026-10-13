@@ -849,6 +849,11 @@
       }
     ],
     "about": {
+      "intro": {
+        "ar": "مركز الإمتياز للقضاء على تشويه الأعضاء التناسلية للإناث هو مركز تابع للاتحاد الدولي لتنظيم الأسرة (IPPF)، تديره الجمعية الموريتانية لترقية الأسرة (AMPF) في موريتانيا. يُشكّل منصة مرجعية لتبادل المعرفة والخبرات وبناء قدرات الفاعلين في مجال القضاء على ختان الإناث على مستوى العالم.",
+        "fr": "Le Centre d'Excellence pour l'Élimination des MGF est un centre de l'IPPF, géré par l'AMPF en Mauritanie. Il constitue une plateforme de référence pour l'échange de connaissances, le renforcement des capacités et la promotion de services de qualité pour mettre fin aux mutilations génitales féminines à l'échelle mondiale.",
+        "en": "The Centre of Excellence for the Elimination of FGM is an IPPF centre managed by AMPF in Mauritania. It serves as a reference platform for knowledge exchange, capacity building and the promotion of quality services to end female genital mutilation worldwide."
+      },
       "foundationReasons": [
         {
           "ar": "الحاجة إلى استجابة شاملة ومتعددة التخصصات لختان الإناث تتجاوز الرعاية الطبية وحدها",
